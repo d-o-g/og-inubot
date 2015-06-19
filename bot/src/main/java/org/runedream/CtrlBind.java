@@ -6,7 +6,6 @@
  */
 package org.runedream;
 
-import builder.map.RSMap;
 import org.runedream.api.methods.*;
 import org.runedream.api.methods.traversal.Movement;
 import org.runedream.api.oldschool.GameObject.Landmark;
@@ -72,11 +71,6 @@ public enum CtrlBind {
         public void onActivation() {
             Inventory.dropAllExcept(new NameFilter<>("Coins"));
         }
-    }, MAP_VIEW(KeyEvent.VK_Z) {
-        @Override
-        public void onActivation() {
-            new RSMap();
-        }
     }, POSITION(KeyEvent.VK_E) {
         @Override
         public void onActivation() {
@@ -101,56 +95,6 @@ public enum CtrlBind {
         @Override
         public void onActivation() {
             Movement.walkTo(new Tile(Players.getLocal().getX() + 5, Players.getLocal().getY()));
-        }
-    }, TOGGLE_ACTION_BAR(KeyEvent.VK_0) {
-        @Override
-        public void onActivation() {
-            ActionBar.setVisible(!ActionBar.isVisible());
-        }
-    }, ACTION_1(KeyEvent.VK_1) {
-        @Override
-        public void onActivation() {
-            ActionBar.select(1);
-        }
-    }, ACTION_2(KeyEvent.VK_2) {
-        @Override
-        public void onActivation() {
-            ActionBar.select(2);
-        }
-    }, ACTION_3(KeyEvent.VK_3) {
-        @Override
-        public void onActivation() {
-            ActionBar.select(3);
-        }
-    }, ACTION_4(KeyEvent.VK_4) {
-        @Override
-        public void onActivation() {
-            ActionBar.select(4);
-        }
-    }, ACTION_5(KeyEvent.VK_5) {
-        @Override
-        public void onActivation() {
-            ActionBar.select(5);
-        }
-    }, ACTION_6(KeyEvent.VK_6) {
-        @Override
-        public void onActivation() {
-            ActionBar.select(6);
-        }
-    }, ACTION_7(KeyEvent.VK_7) {
-        @Override
-        public void onActivation() {
-            ActionBar.select(7);
-        }
-    }, ACTION_8(KeyEvent.VK_8) {
-        @Override
-        public void onActivation() {
-            ActionBar.select(8);
-        }
-    }, ACTION_9(KeyEvent.VK_9) {
-        @Override
-        public void onActivation() {
-            ActionBar.select(9);
         }
     }, TEST_INPUT(KeyEvent.VK_K) {
         @Override

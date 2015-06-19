@@ -65,7 +65,6 @@ public class RuneDream extends JFrame implements Runnable {
     private final ScriptFlux scriptFlux;
     private RSClient client;
     private BotToolBar toolBar;
-    private ActionBar actionBar;
 
     public RuneDream() {
         super(Configuration.APPLICATION_NAME);
@@ -191,11 +190,6 @@ public class RuneDream extends JFrame implements Runnable {
             }
         }
         CacheLoader.load(client);
-        this.actionBar = new ActionBar();
-        getCanvas().addMouseListener(actionBar);
-        getCanvas().addMouseMotionListener(actionBar);
-        getCanvas().addKeyListener(actionBar);
-        getCanvas().paintables.add(actionBar);
         getCanvas().addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 if (!e.isControlDown())
@@ -214,9 +208,5 @@ public class RuneDream extends JFrame implements Runnable {
 
     public BotToolBar getToolBar() {
         return toolBar;
-    }
-
-    public ActionBar getActionBar() {
-        return actionBar;
     }
 }

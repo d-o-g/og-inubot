@@ -42,13 +42,6 @@ public class GameCanvas extends Canvas {
 
     @Override
     public void processEvent(AWTEvent e) {
-        if (ActionBar.isVisible() && Game.isLoggedIn()
-                && e instanceof MouseEvent && ActionBar.getBounds().contains(((MouseEvent) e).getPoint())
-                && ((MouseEvent) e).getButton() == MouseEvent.BUTTON1) {
-            ActionBar bar = RuneDream.getInstance().getActionBar();
-            bar.mouseClicked((MouseEvent) e);
-            return;
-        }
         super.processEvent(e);
     }
 
