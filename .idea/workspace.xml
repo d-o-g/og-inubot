@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c2d8377-9935-4af3-ba6b-f54a67d052e3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="inubot.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -512,7 +517,7 @@
       <workItem from="1434687045402" duration="640000" />
       <workItem from="1434687732493" duration="9229000" />
       <workItem from="1434755032270" duration="121000" />
-      <workItem from="1434755167298" duration="69000" />
+      <workItem from="1434755167298" duration="145000" />
     </task>
     <task id="LOCAL-00001" summary="Hi">
       <created>1434689137687</created>
@@ -556,11 +561,17 @@
       <option name="project" value="LOCAL" />
       <updated>1434755196592</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="asd">
+      <created>1434755244104</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1434755244104</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10059000" />
+    <option name="totallyTimeSpent" value="10135000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-4" width="1297" height="773" extended-state="6" />
@@ -608,7 +619,8 @@
     <MESSAGE value="Cleaned some stuff... Removed action bar..." />
     <MESSAGE value="Changed package name..." />
     <MESSAGE value="lls.ge" />
-    <option name="LAST_COMMIT_MESSAGE" value="lls.ge" />
+    <MESSAGE value="asd" />
+    <option name="LAST_COMMIT_MESSAGE" value="asd" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
