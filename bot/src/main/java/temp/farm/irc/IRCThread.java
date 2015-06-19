@@ -1,7 +1,5 @@
-package com.inubot.bot.farm.irc;
+package temp.farm.irc;
 
-import com.inubot.api.methods.Game;
-import com.inubot.api.methods.Players;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Players;
 import com.inubot.api.util.Time;

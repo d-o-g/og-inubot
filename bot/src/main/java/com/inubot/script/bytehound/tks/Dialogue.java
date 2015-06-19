@@ -2,8 +2,6 @@ package com.inubot.script.bytehound.tks;
 
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.Widget;
-import com.inubot.api.methods.Interfaces;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.script.memes.Action;
 
 /**

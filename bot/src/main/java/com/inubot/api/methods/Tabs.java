@@ -9,9 +9,6 @@ package com.inubot.api.methods;
 import com.inubot.api.oldschool.Tab;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.oldschool.Tab;
-import com.inubot.api.oldschool.Widget;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 
 /**
  * @author unsigned

@@ -15,9 +15,6 @@ import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.script.Script;
 import com.inubot.api.oldschool.Skill;
-import com.inubot.api.oldschool.WidgetItem;
-import com.inubot.api.util.filter.NameFilter;
-import com.inubot.script.Script;
 
 import java.awt.*;
 

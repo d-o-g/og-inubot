@@ -4,11 +4,7 @@ import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.script.memes.Action;
-import com.inubot.api.methods.Client;
-import com.inubot.api.methods.Interfaces;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
-import com.inubot.script.memes.Action;
 
 /**
  * Created by Cameron on 2015-04-24.

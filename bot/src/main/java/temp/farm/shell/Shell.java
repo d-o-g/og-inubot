@@ -1,6 +1,6 @@
-package com.inubot.bot.farm.shell;
+package temp.farm.shell;
 
-import com.inubot.bot.farm.shell.commands.*;
+import temp.farm.shell.commands.*;
 
 
 /**

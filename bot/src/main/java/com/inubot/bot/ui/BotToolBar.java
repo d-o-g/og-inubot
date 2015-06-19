@@ -1,11 +1,9 @@
 package com.inubot.bot.ui;
 
-import com.inubot.RuneDream;
-import com.inubot.bot.account.AccountManager;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
+import temp.account.AccountManager;
 import com.inubot.api.methods.Client;
-import com.inubot.bot.account.Account;
-import com.inubot.bot.account.AccountManager;
+import temp.account.Account;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +18,7 @@ public class BotToolBar extends JPanel {
 
     public BotToolBar() {
         super.setLayout(new FlowLayout());
-        run.setEnabled(!RuneDream.getInstance().getScriptFlux().isRunning());
+        run.setEnabled(!Inubot.getInstance().getScriptFlux().isRunning());
         run.addActionListener(e -> new ScriptSelector().setVisible(true));
         JButton randomAcc = new JButton("Generate Account");
         randomAcc.addActionListener(e -> {
@@ -29,14 +27,14 @@ public class BotToolBar extends JPanel {
                 a.enterCredentials();
             }
         });
-        pause.setEnabled(RuneDream.getInstance().getScriptFlux().isRunning());
+        pause.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
         pause.addActionListener(e -> {
-            RuneDream.getInstance().getScriptFlux().switchState();
+            Inubot.getInstance().getScriptFlux().switchState();
             updateButtonStates();
         });
-        stop.setEnabled(RuneDream.getInstance().getScriptFlux().isRunning());
+        stop.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
         stop.addActionListener(e -> {
-            RuneDream.getInstance().getScriptFlux().stop();
+            Inubot.getInstance().getScriptFlux().stop();
             updateButtonStates();
         });
         painting = new NexusTogglableButton("Painting", () -> Client.PAINTING);
@@ -61,9 +59,9 @@ public class BotToolBar extends JPanel {
     }
 
     public void updateButtonStates() {
-        run.setEnabled(!RuneDream.getInstance().getScriptFlux().isRunning());
-        stop.setEnabled(RuneDream.getInstance().getScriptFlux().isRunning());
-        pause.setEnabled(RuneDream.getInstance().getScriptFlux().isRunning());
-        pause.setText(RuneDream.getInstance().getScriptFlux().isPaused() ? "Resume" : "Pause");
+        run.setEnabled(!Inubot.getInstance().getScriptFlux().isRunning());
+        stop.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
+        pause.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
+        pause.setText(Inubot.getInstance().getScriptFlux().isPaused() ? "Resume" : "Pause");
     }
 }

@@ -7,7 +7,6 @@
 package com.inubot.api.oldschool;
 
 import com.inubot.client.natives.RSBuffer;
-import com.inubot.client.natives.RSBuffer;
 
 /**
  * @author unsigned

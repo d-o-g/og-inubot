@@ -9,9 +9,6 @@ package com.inubot.api.oldschool.action.tree;
 import com.inubot.api.methods.Game;
 import com.inubot.api.oldschool.EntityType;
 import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.methods.Game;
-import com.inubot.api.oldschool.EntityType;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 
 // For all entity types
 public abstract class EntityAction extends Action {

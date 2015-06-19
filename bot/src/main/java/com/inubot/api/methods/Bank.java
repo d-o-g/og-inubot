@@ -9,10 +9,6 @@ package com.inubot.api.methods;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.exceptions.BankClosedException;
-import com.inubot.api.methods.ItemTables.Entry;
-import com.inubot.api.oldschool.GameObject.Landmark;
-import com.inubot.api.oldschool.Widget;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.oldschool.action.tree.WidgetAction;
@@ -22,6 +18,7 @@ import com.inubot.api.util.filter.IdFilter;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.client.natives.RSVarpBit;
 import com.inubot.client.natives.RSWidget;
+import com.inubot.api.oldschool.GameObject;
 
 import java.util.*;
 
@@ -215,7 +212,7 @@ public class Bank {
     }
 
     public static void open() {
-        Processable p = GameObjects.getNearest(Landmark.BANK);
+        Processable p = GameObjects.getNearest(GameObject.Landmark.BANK);
         if (p == null)
             p = Npcs.getNearest(new NameFilter<>("Banker", "Emerald Benedict"));
         if (p == null)
@@ -250,7 +247,7 @@ public class Bank {
 
     public static int getCount(Filter<ItemTables.Entry> filter) {
         int count = 0;
-        for (Entry entry : ItemTables.getBank()) {
+        for (ItemTables.Entry entry : ItemTables.getBank()) {
             if (filter.accept(entry))
                 count++;
         }

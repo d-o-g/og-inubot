@@ -38,7 +38,7 @@ public abstract class ButtonAction extends Action {
     }
 
     public static int buttonForOpcode(final int opcode) {
-        switch (Action.pruneOpcode(opcode)) {
+        switch (pruneOpcode(opcode)) {
             case ActionOpcodes.BUTTON_INPUT: {
                 return Interfaces.BUTTON_INPUT;
             }

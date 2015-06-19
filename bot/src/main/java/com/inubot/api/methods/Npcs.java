@@ -6,17 +6,12 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.RSNpc;
-import com.inubot.RuneDream;
-import com.inubot.api.oldschool.Locatable;
-import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.collection.NpcPool;
-import com.inubot.api.util.filter.Filter;
-import com.inubot.client.natives.RSNpc;
 
 import java.util.*;
 
@@ -37,14 +32,14 @@ public class Npcs {
     }
 
     public static RSNpc[] raw() {
-        return RuneDream.getInstance().getClient().getNpcs();
+        return Inubot.getInstance().getClient().getNpcs();
     }
 
     public static Npc[] getLoaded(Filter<Npc> filter) {
         RSNpc[] raws = raw();
         if (raws == null || raws.length == 0)
             return new Npc[0];
-        int[] indices = RuneDream.getInstance().getClient().getNpcIndices();
+        int[] indices = Inubot.getInstance().getClient().getNpcIndices();
         if (indices == null || indices.length == 0)
             return new Npc[0];
         List<Npc> npcs = new ArrayList<>(indices.length);

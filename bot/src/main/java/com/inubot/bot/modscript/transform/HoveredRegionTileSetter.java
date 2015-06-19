@@ -9,8 +9,6 @@ package com.inubot.bot.modscript.transform;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import jdk.internal.org.objectweb.asm.tree.*;
-import com.inubot.bot.modscript.ModScript;
-import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.FieldHook;
 
 import java.util.Map;

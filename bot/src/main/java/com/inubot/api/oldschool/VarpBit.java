@@ -6,9 +6,7 @@
  */
 package com.inubot.api.oldschool;
 
-import com.inubot.RuneDream;
-import com.inubot.client.natives.RSVarpBit;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.client.natives.RSVarpBit;
 
 /**
@@ -44,7 +42,7 @@ public class VarpBit extends Wrapper<RSVarpBit> implements RSVarpBit {
     }
 
     public static VarpBit get(int id) {
-        RSVarpBit raw = RuneDream.getInstance().getClient().getVarpBit(id);
+        RSVarpBit raw = Inubot.getInstance().getClient().getVarpBit(id);
         return raw == null ? null : new VarpBit(raw, id);
     }
 

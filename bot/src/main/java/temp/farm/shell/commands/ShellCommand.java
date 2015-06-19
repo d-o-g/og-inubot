@@ -1,4 +1,4 @@
-package com.inubot.bot.farm.shell.commands;
+package temp.farm.shell.commands;
 
 /**
  * Created by luckruns0ut on 02/05/15.

@@ -1,7 +1,6 @@
 package com.inubot.bot.modscript.transform.util;
 
 import com.inubot.bot.modscript.hooks.FieldHook;
-import com.inubot.bot.modscript.hooks.FieldHook;
 import jdk.internal.org.objectweb.asm.Opcodes;
 import jdk.internal.org.objectweb.asm.tree.*;
 

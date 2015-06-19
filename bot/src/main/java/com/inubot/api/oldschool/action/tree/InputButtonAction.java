@@ -7,7 +7,6 @@
 package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 
 public class InputButtonAction extends ButtonAction {
 
@@ -16,6 +15,6 @@ public class InputButtonAction extends ButtonAction {
     }
 
     public static boolean isInstance(int opcode) {
-        return Action.pruneOpcode(opcode) == ActionOpcodes.BUTTON_INPUT;
+        return pruneOpcode(opcode) == ActionOpcodes.BUTTON_INPUT;
     }
 }

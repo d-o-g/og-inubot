@@ -1,14 +1,13 @@
 package com.inubot.script.memes;
 
 import com.inubot.api.methods.*;
-import com.inubot.api.oldschool.*;
-import com.inubot.api.oldschool.Character;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.Time;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
+import com.inubot.api.oldschool.*;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -71,7 +70,7 @@ public class PestControl extends Script implements Paintable {
     public int loop() {
         switchStyle();
         if (Players.getLocal().getTargetIndex() != -1) {
-            Character<?> target = Players.getLocal().getTarget();
+            com.inubot.api.oldschool.Character<?> target = Players.getLocal().getTarget();
             if (target.isDying() && "Splatter".equals(target.getName())) {
                 Movement.walkTo(safeTileFor(Players.getLocal().getLocation(), target.getLocation()));
             }

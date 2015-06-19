@@ -1,6 +1,6 @@
-package com.inubot.bot.farm.irc;
+package temp.farm.irc;
 
-import com.inubot.bot.farm.shell.Shell;
+import temp.farm.shell.Shell;
 
 /**
  * Created by luckruns0ut on 02/05/15.

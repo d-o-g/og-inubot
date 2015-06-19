@@ -6,15 +6,12 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.NodeTable;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.client.natives.RSItemDefinition;
 import com.inubot.client.natives.RSItemTable;
 import com.inubot.client.natives.RSNode;
-import com.inubot.RuneDream;
-import com.inubot.api.oldschool.NodeTable;
-import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Identifiable;
 import com.inubot.client.natives.RSNodeTable;
 
@@ -40,7 +37,7 @@ public class ItemTables {
     public static final int EXCHANGE_COLLECTION = 518;
 
     public static RSNodeTable getRaw() {
-        return RuneDream.getInstance().getClient().getItemTables();
+        return Inubot.getInstance().getClient().getItemTables();
     }
 
     public static NodeTable getStorage() {
@@ -89,8 +86,15 @@ public class ItemTables {
         int len = table.getIds().length;
         if (len != table.getStackSizes().length)
             return new int[0];
-        //Consider: filter out -1 values or continue returning raw values?
-        return table.getIds();
+        List<Integer> values = new ArrayList<>();
+        for (int value : table.getIds()) {
+            if (value > 0)
+                values.add(value);
+        }
+        int[] valuesNew = new int[values.size()];
+        for (int i = 0; i < valuesNew.length; i++)
+            valuesNew[i] = values.get(i);
+        return valuesNew;
     }
 
     public static int getIdAt(int tableKey, int index) {
@@ -124,8 +128,15 @@ public class ItemTables {
         int len = table.getStackSizes().length;
         if (len != table.getIds().length)
             return new int[0];
-        //Consider: filter out -1 elements? or return raw values?
-        return table.getStackSizes();
+        List<Integer> values = new ArrayList<>();
+        for (int value : table.getStackSizes()) {
+            if (value > 0)
+                values.add(value);
+        }
+        int[] valuesNew = new int[values.size()];
+        for (int i = 0; i < valuesNew.length; i++)
+            valuesNew[i] = values.get(i);
+        return valuesNew;
     }
 
     public static Entry[] getInventory() {

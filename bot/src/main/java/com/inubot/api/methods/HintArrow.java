@@ -6,11 +6,9 @@
  */
 package com.inubot.api.methods;
 
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Player;
-import com.inubot.client.natives.RSNpc;
-import com.inubot.RuneDream;
-import com.inubot.api.oldschool.Character;
 import com.inubot.client.natives.RSNpc;
 import com.inubot.client.natives.RSPlayer;
 
@@ -27,7 +25,7 @@ public class HintArrow {
      * @return The X position of the current hint arrow
      */
     public static int getX() {
-        return RuneDream.getInstance().getClient().getHintArrowX();
+        return Inubot.getInstance().getClient().getHintArrowX();
     }
 
     /**
@@ -37,7 +35,7 @@ public class HintArrow {
      * @return The Y position of the current hint arrow
      */
     public static int getY() {
-        return RuneDream.getInstance().getClient().getHintArrowY();
+        return Inubot.getInstance().getClient().getHintArrowY();
     }
 
     /**
@@ -45,20 +43,20 @@ public class HintArrow {
      * would like to use are #getX and #getY.
      * @return the target character of the current HintArrow
      */
-    public static Character<?> getTarget() {
-        int index = RuneDream.getInstance().getClient().getHintArrowNpcIndex();
+    public static com.inubot.api.oldschool.Character<?> getTarget() {
+        int index = Inubot.getInstance().getClient().getHintArrowNpcIndex();
         if (index < 0)
             return null;
         RSNpc npc = Npcs.raw()[index];
         if (npc != null)
             return new Npc(npc, index);
-        RSPlayer player = Players.raw()[index = RuneDream.getInstance().getClient().getHintArrowPlayerIndex()];
+        RSPlayer player = Players.raw()[index = Inubot.getInstance().getClient().getHintArrowPlayerIndex()];
         if (player != null)
             return new Player(player, index);
         return null;
     }
 
     public static int getType() {
-        return RuneDream.getInstance().getClient().getHintArrowType();
+        return Inubot.getInstance().getClient().getHintArrowType();
     }
 }

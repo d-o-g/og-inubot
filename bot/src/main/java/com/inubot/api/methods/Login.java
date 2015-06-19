@@ -6,8 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 
 import java.awt.*;
 
@@ -23,14 +22,14 @@ public class Login {
     public static final int STATE_CREDENTIALS = 2;
 
     public static void setUsername(String to) {
-        RuneDream.getInstance().getClient().setUsername(to);
+        Inubot.getInstance().getClient().setUsername(to);
     }
 
     public static void setPassword(String to) {
-        RuneDream.getInstance().getClient().setPassword(to);
+        Inubot.getInstance().getClient().setPassword(to);
     }
 
     public static int getState() {
-        return RuneDream.getInstance().getClient().getLoginState();
+        return Inubot.getInstance().getClient().getLoginState();
     }
 }

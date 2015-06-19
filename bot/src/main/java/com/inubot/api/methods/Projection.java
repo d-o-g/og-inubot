@@ -6,12 +6,11 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Player;
 import com.inubot.api.oldschool.Tile;
 import com.inubot.api.oldschool.Widget;
-import com.inubot.RuneDream;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -120,15 +119,15 @@ public class Projection {
     }
 
     public static int getZoom() {
-        return RuneDream.getInstance().getClient().getScreenZoom();
+        return Inubot.getInstance().getClient().getScreenZoom();
     }
 
     public static int getWidth() {
-        return RuneDream.getInstance().getClient().getScreenWidth();
+        return Inubot.getInstance().getClient().getScreenWidth();
     }
 
     public static int getHeight() {
-        return RuneDream.getInstance().getClient().getScreenHeight();
+        return Inubot.getInstance().getClient().getScreenHeight();
     }
 
     public static Point groundToMap(int x, int y, boolean ignoreDist) {
@@ -186,11 +185,11 @@ public class Projection {
     }
 
     public static byte[][][] getRenderRules() {
-        return RuneDream.getInstance().getClient().getRenderRules();
+        return Inubot.getInstance().getClient().getRenderRules();
     }
 
     public static int[][][] getTileHeights() {
-        return RuneDream.getInstance().getClient().getTileHeights();
+        return Inubot.getInstance().getClient().getTileHeights();
     }
 
     public static Point[] getPointsIn(Shape shape) {

@@ -3,7 +3,6 @@ package com.inubot.script.memes.range;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.methods.Inventory;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.script.memes.Action;
 
 /**

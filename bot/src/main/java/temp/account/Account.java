@@ -1,7 +1,6 @@
-package com.inubot.bot.account;
+package temp.account;
 
-import com.inubot.RuneDream;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 
 /**
  * Created by luckruns0ut on 30/04/15.
@@ -25,7 +24,7 @@ public class Account {
 
     // puts this account's stuff into the login/pass fields
     public void enterCredentials() {
-        RuneDream.getInstance().getClient().setUsername(username);
-        RuneDream.getInstance().getClient().setPassword(password);
+        Inubot.getInstance().getClient().setUsername(username);
+        Inubot.getInstance().getClient().setPassword(password);
     }
 }

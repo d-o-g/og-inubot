@@ -1,6 +1,6 @@
 package com.inubot.script.memes.range;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Skills;
 import com.inubot.api.methods.Varps;
@@ -9,12 +9,6 @@ import com.inubot.api.oldschool.Widget;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
-import com.inubot.api.util.filter.Filter;
-import com.inubot.script.Script;
-import com.inubot.script.memes.Action;
-import com.inubot.RuneDream;
-import com.inubot.api.oldschool.Skill;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
 import com.inubot.script.memes.Action;
@@ -65,8 +59,8 @@ public class RangeGuild extends Script implements Paintable {
     public int loop() {
         if (!Game.isLoggedIn())
             return 300;
-        RuneDream.getInstance().getCanvas().pressKey(KeyEvent.VK_RIGHT, 200);
-        RuneDream.getInstance().getCanvas().releaseKey(KeyEvent.VK_RIGHT);
+        Inubot.getInstance().getCanvas().pressKey(KeyEvent.VK_RIGHT, 200);
+        Inubot.getInstance().getCanvas().releaseKey(KeyEvent.VK_RIGHT);
         for (Action task : tasks) {
             if (task.validate()) {
                 task.execute();

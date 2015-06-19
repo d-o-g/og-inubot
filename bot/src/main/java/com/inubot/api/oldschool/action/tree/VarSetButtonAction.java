@@ -15,6 +15,6 @@ public class VarSetButtonAction extends ButtonAction {
     }
 
     public static boolean isInstance(int opcode) {
-        return Action.pruneOpcode(opcode) == ActionOpcodes.BUTTON_VAR_SET;
+        return pruneOpcode(opcode) == ActionOpcodes.BUTTON_VAR_SET;
     }
 }

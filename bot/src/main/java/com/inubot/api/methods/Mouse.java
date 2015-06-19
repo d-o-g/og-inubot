@@ -6,8 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 
 import java.awt.*;
 
@@ -18,11 +17,11 @@ import java.awt.*;
 public class Mouse {
 
     public static int getX() {
-        return RuneDream.getInstance().getCanvas().mouseX;
+        return Inubot.getInstance().getCanvas().mouseX;
     }
 
     public static int getY() {
-        return RuneDream.getInstance().getCanvas().mouseY;
+        return Inubot.getInstance().getCanvas().mouseY;
     }
 
     public static Point getLocation() {
@@ -30,14 +29,14 @@ public class Mouse {
     }
 
     public static void hop(int x, int y) {
-        RuneDream.getInstance().getCanvas().setMouseLocation(x, y);
+        Inubot.getInstance().getCanvas().setMouseLocation(x, y);
     }
 
     public static int getIdleTime() {
-        return RuneDream.getInstance().getClient().getMouseIdleTime();
+        return Inubot.getInstance().getClient().getMouseIdleTime();
     }
 
     public static void click(boolean left) {
-        RuneDream.getInstance().getCanvas().clickMouse(left);
+        Inubot.getInstance().getCanvas().clickMouse(left);
     }
 }

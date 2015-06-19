@@ -11,9 +11,6 @@ import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.tree.*;
-import com.inubot.api.methods.Client;
-import com.inubot.bot.modscript.ModScript;
-import com.inubot.bot.modscript.asm.ClassStructure;
 
 import java.lang.reflect.Modifier;
 import java.util.Map;

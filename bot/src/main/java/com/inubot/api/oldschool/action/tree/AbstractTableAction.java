@@ -8,8 +8,6 @@ package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.Widget;
-import com.inubot.api.methods.Interfaces;
-import com.inubot.api.oldschool.Widget;
 
 // Named abstract since TableAction can not be named
 // The rest follow for simplicity through commonality

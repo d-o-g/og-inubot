@@ -6,17 +6,12 @@
  */
 package com.inubot.script.memes.hunter;
 
+import com.inubot.api.util.Paintable;
+import com.inubot.api.util.StopWatch;
+import com.inubot.api.util.filter.NameFilter;
+import com.inubot.script.Script;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.*;
-import com.inubot.api.util.Paintable;
-import com.inubot.api.util.StopWatch;
-import com.inubot.api.util.filter.NameFilter;
-import com.inubot.script.Script;
-import com.inubot.api.oldschool.Character;
-import com.inubot.api.util.Paintable;
-import com.inubot.api.util.StopWatch;
-import com.inubot.api.util.filter.NameFilter;
-import com.inubot.script.Script;
 
 import java.awt.*;
 

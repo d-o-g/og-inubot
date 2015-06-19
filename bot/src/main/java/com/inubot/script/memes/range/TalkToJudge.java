@@ -10,10 +10,6 @@ import com.inubot.api.methods.Interfaces;
 import com.inubot.api.methods.Npcs;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.script.memes.Action;
-import com.inubot.api.methods.Interfaces;
-import com.inubot.api.methods.Npcs;
-import com.inubot.api.oldschool.Npc;
-import com.inubot.script.memes.Action;
 
 /**
  * @author unsigned

@@ -6,14 +6,13 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
-import com.inubot.client.natives.*;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.GameObject.Landmark;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.collection.GameObjectPool;
 import com.inubot.api.util.filter.Filter;
+import com.inubot.client.natives.*;
 
 import java.util.*;
 
@@ -37,7 +36,7 @@ public class GameObjects {
         if (rx > 104 || rx < 0 || ry > 104 || ry < 0 || z < 0 || z > 3)
             return new GameObject[0];
         List<GameObject> objs = new ArrayList<>();
-        RSTile[][][] tiles = RuneDream.getInstance().getClient().getRegion().getTiles();
+        RSTile[][][] tiles = Inubot.getInstance().getClient().getRegion().getTiles();
         if (tiles == null)
             return new GameObject[0];
         RSTile tile = tiles[z][rx][ry];

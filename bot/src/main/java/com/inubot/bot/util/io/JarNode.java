@@ -2,7 +2,6 @@ package com.inubot.bot.util.io;
 
 import com.inubot.bot.modscript.asm.ClassStructure;
 import jdk.internal.org.objectweb.asm.ClassReader;
-import com.inubot.bot.modscript.asm.ClassStructure;
 
 import java.io.*;
 import java.util.*;

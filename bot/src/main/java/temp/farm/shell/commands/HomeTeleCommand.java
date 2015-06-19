@@ -4,7 +4,7 @@
  * License as published by the Free Software Foundation; either
  * version 2 of the license, or (at your option) any later version.
  */
-package com.inubot.bot.farm.shell.commands;
+package temp.farm.shell.commands;
 
 import com.inubot.api.methods.Client;
 

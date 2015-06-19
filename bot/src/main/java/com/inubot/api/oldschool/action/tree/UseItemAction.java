@@ -7,7 +7,6 @@
 package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 
 public class UseItemAction extends AbstractTableAction {
 

@@ -2,9 +2,7 @@ package com.inubot.bot.modscript.transform;
 
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
-import com.inubot.bot.modscript.ModScript;
 import jdk.internal.org.objectweb.asm.tree.ClassNode;
-import com.inubot.bot.modscript.asm.ClassStructure;
 
 import java.util.Map;
 

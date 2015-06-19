@@ -6,10 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
-import com.inubot.api.oldschool.Locatable;
-import com.inubot.api.oldschool.Tile;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Tile;
 
@@ -20,23 +17,23 @@ import com.inubot.api.oldschool.Tile;
 public class Camera {
 
     public static int getX() {
-        return RuneDream.getInstance().getClient().getCameraX();
+        return Inubot.getInstance().getClient().getCameraX();
     }
 
     public static int getY() {
-        return RuneDream.getInstance().getClient().getCameraY();
+        return Inubot.getInstance().getClient().getCameraY();
     }
 
     public static int getZ() {
-        return RuneDream.getInstance().getClient().getCameraZ();
+        return Inubot.getInstance().getClient().getCameraZ();
     }
 
     public static int getAltitude() {
-        return RuneDream.getInstance().getClient().getCameraPitch();
+        return Inubot.getInstance().getClient().getCameraPitch();
     }
 
     public static int getYaw() {
-        return RuneDream.getInstance().getClient().getCameraYaw();
+        return Inubot.getInstance().getClient().getCameraYaw();
     }
 
     public static int getAngle() {

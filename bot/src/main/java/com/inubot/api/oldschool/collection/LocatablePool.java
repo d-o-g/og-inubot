@@ -8,9 +8,7 @@ package com.inubot.api.oldschool.collection;
 
 import com.inubot.api.methods.Players;
 import com.inubot.api.oldschool.Tile;
-import com.inubot.api.methods.Players;
 import com.inubot.api.oldschool.Locatable;
-import com.inubot.api.oldschool.Tile;
 
 public class LocatablePool<T extends Locatable, K extends LocatablePool<T, K>> extends Pool<T, K> {
 

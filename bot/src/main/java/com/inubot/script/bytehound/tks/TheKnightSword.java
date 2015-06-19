@@ -6,14 +6,8 @@ import com.inubot.api.oldschool.Widget;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
 import com.inubot.script.memes.Action;
-import com.inubot.api.methods.Interfaces;
-import com.inubot.api.methods.Varps;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
-import com.inubot.api.util.filter.Filter;
-import com.inubot.script.Script;
-import com.inubot.script.memes.Action;
 
 import java.awt.*;
 import java.util.*;

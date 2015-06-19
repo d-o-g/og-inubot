@@ -5,12 +5,7 @@ import com.inubot.api.methods.GameObjects;
 import com.inubot.api.methods.Inventory;
 import com.inubot.api.util.Time;
 import com.inubot.script.memes.blastfurnace.BlastFurnace;
-import com.inubot.api.methods.Bank;
-import com.inubot.api.methods.GameObjects;
-import com.inubot.api.methods.Inventory;
 import com.inubot.api.oldschool.GameObject;
-import com.inubot.api.util.Time;
-import com.inubot.script.memes.blastfurnace.BlastFurnace;
 
 /**
  * Created by luckruns0ut on 03/05/15.

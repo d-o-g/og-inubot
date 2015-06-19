@@ -8,7 +8,6 @@ import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.util.Time;
-import com.inubot.api.util.filter.NameFilter;
 
 /**
  * Created by Cameron on 2015-04-30.

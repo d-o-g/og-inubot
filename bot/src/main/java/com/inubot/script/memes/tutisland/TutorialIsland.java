@@ -3,12 +3,9 @@ package com.inubot.script.memes.tutisland;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Varps;
 import com.inubot.script.Script;
-import com.inubot.script.memes.tutisland.tasks.*;
-import com.inubot.api.methods.Game;
-import com.inubot.api.methods.Varps;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
-import com.inubot.script.Script;
+import com.inubot.script.memes.tutisland.tasks.*;
 
 import java.awt.*;
 import java.util.ArrayList;

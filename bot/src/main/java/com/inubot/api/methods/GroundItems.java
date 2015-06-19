@@ -6,18 +6,14 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.GroundItem;
 import com.inubot.api.oldschool.collection.GroundItemPool;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.RSItem;
 import com.inubot.client.natives.RSNode;
 import com.inubot.client.natives.RSNodeDeque;
-import com.inubot.RuneDream;
-import com.inubot.api.oldschool.GroundItem;
 import com.inubot.api.oldschool.NodeDeque;
-import com.inubot.api.oldschool.collection.GroundItemPool;
-import com.inubot.api.util.filter.Filter;
 
 import java.util.*;
 
@@ -39,8 +35,8 @@ public class GroundItems {
 
     public static GroundItem[] getLoaded(Filter<GroundItem> filter) {
         List<GroundItem> items = new ArrayList<>();
-        //for (RSNodeDeque[][] deques : RuneDream.getInstance().getClient().getGroundItems()) {
-        RSNodeDeque[][][] bonecodeLicksChinkyDicks = RuneDream.getInstance().getClient().getGroundItems();
+        //for (RSNodeDeque[][] deques : Inubot.getInstance().getClient().getGroundItems()) {
+        RSNodeDeque[][][] bonecodeLicksChinkyDicks = Inubot.getInstance().getClient().getGroundItems();
         for(int i = 0; i < bonecodeLicksChinkyDicks.length; i++) {
             RSNodeDeque[][] deques = bonecodeLicksChinkyDicks[i];
             for (RSNodeDeque[] xd : deques) {

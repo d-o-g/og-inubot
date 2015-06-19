@@ -9,7 +9,6 @@ package com.inubot.api.oldschool.action.tree;
 import com.inubot.client.natives.RSNpc;
 import com.inubot.api.methods.Npcs;
 import com.inubot.api.oldschool.Npc;
-import com.inubot.client.natives.RSNpc;
 
 public class SpellOnNpc extends CharacterAction {
 

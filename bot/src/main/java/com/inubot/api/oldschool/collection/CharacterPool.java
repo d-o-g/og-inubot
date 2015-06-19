@@ -7,12 +7,8 @@
 package com.inubot.api.oldschool.collection;
 
 import com.inubot.api.methods.Game;
-import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.Character;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.api.methods.Game;
-import com.inubot.api.util.filter.Filter;
-import com.inubot.api.oldschool.Character;
 
 public class CharacterPool<T extends com.inubot.api.oldschool.Character, K extends CharacterPool<T, K>> extends IdentifiableEntityPool<T, K> {
 

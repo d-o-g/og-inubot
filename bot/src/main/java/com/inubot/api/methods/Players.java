@@ -6,7 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.Player;
 import com.inubot.client.natives.RSPlayer;
 
@@ -23,12 +23,12 @@ public class Players {
     public static final int LOCAL_PLAYER_INDEX = 2047;
 
     public static Player getLocal() {
-        RSPlayer player = RuneDream.getInstance().getClient().getPlayer();
+        RSPlayer player = Inubot.getInstance().getClient().getPlayer();
         return player != null ? new Player(player, LOCAL_PLAYER_INDEX) : null;
     }
 
     public static RSPlayer[] raw() {
-        return RuneDream.getInstance().getClient().getPlayers();
+        return Inubot.getInstance().getClient().getPlayers();
     }
 
     public static Player[] getLoaded() {

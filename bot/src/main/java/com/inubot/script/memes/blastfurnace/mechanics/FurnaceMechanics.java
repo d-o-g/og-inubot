@@ -7,7 +7,6 @@
 package com.inubot.script.memes.blastfurnace.mechanics;
 
 import com.inubot.api.methods.Varps;
-import com.inubot.api.methods.Varps;
 
 /**
  * @author unsigned

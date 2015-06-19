@@ -1,16 +1,14 @@
 package com.inubot.script.memes.shittyfighter;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.script.Script;
-import com.inubot.RuneDream;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.action.tree.InputButtonAction;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.script.Script;
 
 /**
  * Created by luckruns0ut on 01/05/15.
@@ -54,11 +52,11 @@ public class ShittyFighter extends Script {
         loops++;
         if(loops == 20) {
             if (str < att) {
-                RuneDream.getInstance().getClient().processAction(-1, 38862859, 57, 1, "Slash", "", 0, 0);
+                Inubot.getInstance().getClient().processAction(-1, 38862859, 57, 1, "Slash", "", 0, 0);
             } else if (def < str) {
-                RuneDream.getInstance().getClient().processAction(-1, 38862863, 57, 1, "Block", "", 0, 0);
+                Inubot.getInstance().getClient().processAction(-1, 38862863, 57, 1, "Block", "", 0, 0);
             } else {
-                RuneDream.getInstance().getClient().processAction(-1, 38862851, 57, 1, "Stab", "", 0, 0);
+                Inubot.getInstance().getClient().processAction(-1, 38862851, 57, 1, "Stab", "", 0, 0);
             }
             loops = 0;
         }

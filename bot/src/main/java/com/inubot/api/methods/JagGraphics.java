@@ -6,7 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.client.natives.RSFont;
 
 /**
@@ -18,10 +18,10 @@ public class JagGraphics {
     //TODO hook more string plotting methods, and other drawing shit like drawRectangle, drawLine etc
 
     public static RSFont getFont_p12full() {
-        return RuneDream.getInstance().getClient().getFont_p12full();
+        return Inubot.getInstance().getClient().getFont_p12full();
     }
 
     public static void drawRect(int x, int y, int w, int h, int rgb) {
-        RuneDream.getInstance().getClient().drawRectangle(x, y, w, h, rgb);
+        Inubot.getInstance().getClient().drawRectangle(x, y, w, h, rgb);
     }
 }

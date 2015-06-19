@@ -6,13 +6,11 @@
  */
 package com.inubot.client.natives;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Varps;
 import com.inubot.client.Artificial;
-import com.inubot.RuneDream;
 import com.inubot.api.oldschool.VarpBit;
-import com.inubot.client.Artificial;
 
 /**
  * @author unsigned
@@ -70,6 +68,6 @@ public interface RSVarpBit extends ClientNative {
     }
 
     public static VarpBit get(int id) {
-        return new VarpBit(RuneDream.getInstance().getClient().getVarpBit(id), id);
+        return new VarpBit(Inubot.getInstance().getClient().getVarpBit(id), id);
     }
 }

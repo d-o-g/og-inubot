@@ -1,12 +1,6 @@
 package com.inubot.client;
 
-import com.inubot.RuneDream;
-import com.inubot.api.methods.Client;
-import com.inubot.api.oldschool.action.tree.Action;
-import com.inubot.api.util.Time;
-import com.inubot.script.Script;
-import com.inubot.script.Task;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.util.Time;
@@ -25,7 +19,7 @@ public class Callback {
 
     @ClientInvoked
     public static void messageReceived(int type, String sender, String message, String channel) {
-        Script script = RuneDream.getInstance().getScriptFlux().getRunning();
+        Script script = Inubot.getInstance().getScriptFlux().getRunning();
         if (script != null && script.isRunning())
             script.messageReceived(type, sender, message, channel);
     }
@@ -35,7 +29,7 @@ public class Callback {
         Client.processActions();
         if (Client.GAME_TICK_SLEEP != -1)
             Time.sleep(Client.GAME_TICK_SLEEP);
-        Script script = RuneDream.getInstance().getScriptFlux().getRunning();
+        Script script = Inubot.getInstance().getScriptFlux().getRunning();
         if (script == null || script.isPaused())
             return;
         script.getTickTasks().forEach(Task::execute);

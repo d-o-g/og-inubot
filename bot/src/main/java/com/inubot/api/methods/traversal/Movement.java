@@ -6,7 +6,7 @@
  */
 package com.inubot.api.methods.traversal;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Players;
@@ -14,8 +14,6 @@ import com.inubot.api.methods.Varps;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Player;
 import com.inubot.api.oldschool.Tile;
-import com.inubot.api.util.Time;
-import com.inubot.RuneDream;
 import com.inubot.api.util.Time;
 
 /**
@@ -35,7 +33,7 @@ public class Movement {
     }
 
     public static int getRunEnergy() {
-        return RuneDream.getInstance().getClient().getEnergy();
+        return Inubot.getInstance().getClient().getEnergy();
     }
 
     public static void walk(Tile... tiles) {
@@ -60,8 +58,8 @@ public class Movement {
         if (y < 0)  y = 0;
         if (y > 104) y = 104;
 
-        RuneDream.getInstance().getClient().setHoveredRegionTileX(x);
-        RuneDream.getInstance().getClient().setHoveredRegionTileY(y);
+        Inubot.getInstance().getClient().setHoveredRegionTileX(x);
+        Inubot.getInstance().getClient().setHoveredRegionTileY(y);
     }
 
     public static boolean isReachable(Locatable target) {
@@ -108,7 +106,7 @@ public class Movement {
         tileQueueY[head] = startY;
         head++;
         int pathLength = tileQueueX.length;
-        int blocks[][] = RuneDream.getInstance().getClient().getCollisionMaps()[Game.getPlane()].getFlags();
+        int blocks[][] = Inubot.getInstance().getClient().getCollisionMaps()[Game.getPlane()].getFlags();
         while (tail != head) {
             curX = tileQueueX[tail];
             curY = tileQueueY[tail];

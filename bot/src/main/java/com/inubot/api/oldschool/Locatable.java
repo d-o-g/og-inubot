@@ -7,7 +7,6 @@
 package com.inubot.api.oldschool;
 
 import com.inubot.api.methods.Players;
-import com.inubot.api.methods.Players;
 import com.inubot.api.methods.Projection;
 
 /**

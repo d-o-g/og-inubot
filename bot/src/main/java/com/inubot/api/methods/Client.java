@@ -6,9 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
-import com.inubot.api.oldschool.action.tree.Action;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.action.tree.Action;
 
 import java.util.Iterator;
@@ -63,11 +61,11 @@ public class Client {
     }
 
     public static boolean isLowMemory() {
-        return RuneDream.getInstance().getClient().isLowMemory();
+        return Inubot.getInstance().getClient().isLowMemory();
     }
 
     public static void setLowMemory(boolean lowMemory) {
-        RuneDream.getInstance().getClient().setLowMemory(lowMemory);
+        Inubot.getInstance().getClient().setLowMemory(lowMemory);
     }
 
     public static void processAction(Action action, String actionText, String targetText, int x, int y) {
@@ -98,7 +96,7 @@ public class Client {
         private String targetText;
 
         private void fire() {
-            RuneDream.getInstance().getClient().processAction(arg1, arg2, opcode, arg0, actionText, targetText, 50, 50);
+            Inubot.getInstance().getClient().processAction(arg1, arg2, opcode, arg0, actionText, targetText, 50, 50);
         }
     }
 }

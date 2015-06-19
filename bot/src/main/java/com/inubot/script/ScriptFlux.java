@@ -6,8 +6,7 @@
  */
 package com.inubot.script;
 
-import com.inubot.RuneDream;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 
 /**
  * @author unsigned
@@ -25,7 +24,7 @@ public class ScriptFlux {
         stop();
         this.running = runningScript;
         this.running.start();
-        RuneDream.getInstance().getToolBar().updateButtonStates();
+        Inubot.getInstance().getToolBar().updateButtonStates();
     }
 
     public void switchState() {

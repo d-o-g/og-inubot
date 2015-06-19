@@ -7,7 +7,6 @@
 package com.inubot.api.methods;
 
 import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.Time;
 
 /**

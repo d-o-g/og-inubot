@@ -1,10 +1,8 @@
-package com.inubot.bot.farm.shell.commands;
+package temp.farm.shell.commands;
 
 import com.inubot.api.methods.Game;
 import com.inubot.api.oldschool.Tile;
-import com.inubot.api.methods.Game;
 import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.oldschool.Tile;
 
 /**
  * Created by luckruns0ut on 03/05/15.

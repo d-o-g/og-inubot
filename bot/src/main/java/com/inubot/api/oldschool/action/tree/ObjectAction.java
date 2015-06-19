@@ -8,7 +8,6 @@ package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.oldschool.action.UID;
 import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.oldschool.action.UID;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.client.natives.RSObjectDefinition;
 

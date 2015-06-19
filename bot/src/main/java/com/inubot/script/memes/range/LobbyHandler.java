@@ -9,7 +9,6 @@ package com.inubot.script.memes.range;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Interfaces;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.tree.InputButtonAction;
 import com.inubot.script.memes.Action;
 

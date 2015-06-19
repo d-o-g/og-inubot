@@ -1,8 +1,5 @@
-package com.inubot.bot.farm.shell.commands;
+package temp.farm.shell.commands;
 
-import com.inubot.api.methods.Inventory;
-import com.inubot.api.methods.Players;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.methods.Inventory;
 import com.inubot.api.methods.Players;
 import com.inubot.api.oldschool.WidgetItem;

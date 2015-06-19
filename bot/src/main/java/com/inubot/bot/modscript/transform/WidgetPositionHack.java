@@ -4,9 +4,6 @@ import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.FieldHook;
 import jdk.internal.org.objectweb.asm.tree.*;
-import com.inubot.bot.modscript.ModScript;
-import com.inubot.bot.modscript.asm.ClassStructure;
-import com.inubot.bot.modscript.hooks.FieldHook;
 import com.inubot.bot.modscript.transform.util.ASMFactory;
 import com.inubot.bot.modscript.transform.util.RIS;
 

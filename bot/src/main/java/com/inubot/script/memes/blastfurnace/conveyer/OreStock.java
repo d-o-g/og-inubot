@@ -7,7 +7,6 @@
 package com.inubot.script.memes.blastfurnace.conveyer;
 
 import com.inubot.api.methods.Varps;
-import com.inubot.api.methods.Varps;
 import com.inubot.client.natives.RSVarpBit;
 import com.inubot.script.memes.blastfurnace.mechanics.MechanicUtils;
 

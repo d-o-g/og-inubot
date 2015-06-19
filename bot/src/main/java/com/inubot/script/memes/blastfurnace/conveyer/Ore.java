@@ -9,9 +9,6 @@ package com.inubot.script.memes.blastfurnace.conveyer;
 import com.inubot.api.methods.Inventory;
 import com.inubot.api.util.filter.IdFilter;
 import com.inubot.client.natives.RSVarpBit;
-import com.inubot.api.methods.Inventory;
-import com.inubot.api.util.filter.IdFilter;
-import com.inubot.client.natives.RSVarpBit;
 
 /**
  * @author unsigned

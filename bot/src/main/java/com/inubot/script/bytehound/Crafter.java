@@ -1,19 +1,14 @@
 package com.inubot.script.bytehound;
 
-import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Spell;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
 import com.inubot.api.oldschool.GameObject;
-import com.inubot.api.oldschool.Spell;
-import com.inubot.api.oldschool.Widget;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
-import com.inubot.api.util.filter.Filter;
-import com.inubot.script.Script;
+import com.inubot.api.methods.*;
 
 import java.awt.*;
 

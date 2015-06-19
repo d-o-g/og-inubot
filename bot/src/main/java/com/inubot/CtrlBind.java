@@ -14,12 +14,9 @@ import com.inubot.api.oldschool.Tile;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.oldschool.GameObject.Landmark;
-import com.inubot.api.oldschool.Tile;
 import com.inubot.api.oldschool.VarpBit;
-import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.util.Time;
-import com.inubot.api.util.filter.NameFilter;
+import com.inubot.api.oldschool.GameObject;
 
 import java.awt.event.KeyEvent;
 import java.util.*;
@@ -44,7 +41,7 @@ public enum CtrlBind {
                 cache[bit.getVarpIndex()].add(bit);
             }
             System.out.println("Cache Built.... Listening");
-            int[] vars = RuneDream.getInstance().getClient().getVarps();
+            int[] vars = Inubot.getInstance().getClient().getVarps();
             int[] copy = Arrays.copyOf(vars, vars.length);
             new Thread(() -> {
                 while (true) {
@@ -104,8 +101,8 @@ public enum CtrlBind {
         @Override
         public void onActivation() {
             for (char c : "13".toCharArray())
-                RuneDream.getInstance().getCanvas().sendKey(c, 20);
-            RuneDream.getInstance().getCanvas().pressEnter();
+                Inubot.getInstance().getCanvas().sendKey(c, 20);
+            Inubot.getInstance().getCanvas().pressEnter();
         }
     }, OPEN_AMYLASE_PACKS(KeyEvent.VK_O) {
         @Override
@@ -115,7 +112,7 @@ public enum CtrlBind {
     }, OPEN_NEAREST_BANK_OBJECT(KeyEvent.VK_B) {
         @Override
         public void onActivation() {
-            Processable p = GameObjects.getNearest(Landmark.BANK);
+            Processable p = GameObjects.getNearest(GameObject.Landmark.BANK);
             if (p == null)
                 p = Npcs.getNearest(new NameFilter<>("Banker", "Emerald Benedict"));
             if (p == null)
@@ -127,13 +124,13 @@ public enum CtrlBind {
         public void onActivation() {
             new Thread(() -> {
                 while (true) {
-                    RuneDream.getInstance().getClient().getWidgets()[149][0].getStackSizes()[0] = 1284765393;
-                    RuneDream.getInstance().getClient().getWidgets()[149][0].getItemIds()[1] = 11804;
-                    RuneDream.getInstance().getClient().getWidgets()[149][0].getStackSizes()[1] = 128;
-                    RuneDream.getInstance().getClient().getWidgets()[149][0].getItemIds()[2] = 12819;
-                    RuneDream.getInstance().getClient().getWidgets()[149][0].getStackSizes()[2] = 12;
-                    //RuneDream.getInstance().getClient().getFont_p12full().drawString("Penis", 50, 50);
-                    //RuneDream.getInstance().getClient().drawRectangle(400, 300, 200, 200, Color.RED.getRGB());
+                    Inubot.getInstance().getClient().getWidgets()[149][0].getStackSizes()[0] = 1284765393;
+                    Inubot.getInstance().getClient().getWidgets()[149][0].getItemIds()[1] = 11804;
+                    Inubot.getInstance().getClient().getWidgets()[149][0].getStackSizes()[1] = 128;
+                    Inubot.getInstance().getClient().getWidgets()[149][0].getItemIds()[2] = 12819;
+                    Inubot.getInstance().getClient().getWidgets()[149][0].getStackSizes()[2] = 12;
+                    //Inubot.getInstance().getClient().getFont_p12full().drawString("Penis", 50, 50);
+                    //Inubot.getInstance().getClient().drawRectangle(400, 300, 200, 200, Color.RED.getRGB());
                 }
             }).start();
         }

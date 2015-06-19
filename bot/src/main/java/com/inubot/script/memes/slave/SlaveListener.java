@@ -7,7 +7,6 @@
 package com.inubot.script.memes.slave;
 
 import com.inubot.script.Script;
-import com.inubot.script.Script;
 
 /**
  * @author unsigned

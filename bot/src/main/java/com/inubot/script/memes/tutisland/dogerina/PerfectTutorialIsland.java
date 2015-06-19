@@ -12,7 +12,6 @@ import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Tab;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.script.Script;
-import com.inubot.script.Script;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

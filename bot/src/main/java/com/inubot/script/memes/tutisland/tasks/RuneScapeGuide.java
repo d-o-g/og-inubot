@@ -5,7 +5,6 @@ import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Tab;
-import com.inubot.api.oldschool.Widget;
 
 /**
  * Created by Cameron on 2015-04-30.

@@ -8,7 +8,6 @@ package com.inubot.bot.modscript.transform.util.factory.services;
 
 import com.inubot.bot.modscript.transform.util.factory.AbstractInsnFactory;
 import jdk.internal.org.objectweb.asm.tree.*;
-import com.inubot.bot.modscript.transform.util.factory.AbstractInsnFactory;
 
 /**
  * @author unsigned

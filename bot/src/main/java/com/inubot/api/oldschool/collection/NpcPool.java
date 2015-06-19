@@ -7,7 +7,6 @@
 package com.inubot.api.oldschool.collection;
 
 import com.inubot.api.oldschool.Npc;
-import com.inubot.api.oldschool.Npc;
 
 import java.util.ArrayList;
 

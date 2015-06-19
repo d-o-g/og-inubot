@@ -6,9 +6,7 @@
  */
 package com.inubot.bot.ui;
 
-import com.inubot.RuneDream;
-import com.inubot.script.Script;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.script.Script;
 
 import javax.swing.*;
@@ -27,7 +25,7 @@ public class ScriptSelector extends JFrame {
 
         JPanel scripts = new JPanel();
         scripts.setLayout(new GridLayout(3, 3, 5, 5));
-        for (Class clazz : RuneDream.SCRIPT_CLASSES)
+        for (Class clazz : Inubot.SCRIPT_CLASSES)
             scripts.add(new Entity(clazz));
         super.add(scripts, BorderLayout.EAST);
 
@@ -57,7 +55,7 @@ public class ScriptSelector extends JFrame {
             start.addActionListener(e -> {
                 try {
                     Script targetInstance = target.newInstance();
-                    RuneDream.getInstance().getScriptFlux().execute(targetInstance);
+                    Inubot.getInstance().getScriptFlux().execute(targetInstance);
                     dispose();
                 } catch (InstantiationException | IllegalAccessException e1) {
                     e1.printStackTrace();

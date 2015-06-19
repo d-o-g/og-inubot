@@ -6,17 +6,13 @@
  */
 package com.inubot.script.memes;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
 import com.inubot.script.Script;
-import com.inubot.RuneDream;
-import com.inubot.api.methods.Interfaces;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.script.Script;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -93,13 +89,13 @@ public class CoolWidgetExplorer extends Script implements Paintable, MouseMotion
 
     @Override
     public boolean setup() {
-        RuneDream.getInstance().getCanvas().addMouseMotionListener(this);
+        Inubot.getInstance().getCanvas().addMouseMotionListener(this);
         return true;
     }
 
     @Override
     public void onFinish() {
-        RuneDream.getInstance().getCanvas().removeMouseMotionListener(this);
+        Inubot.getInstance().getCanvas().removeMouseMotionListener(this);
     }
 
     @Override

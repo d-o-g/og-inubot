@@ -1,4 +1,4 @@
-package com.inubot.bot.account;
+package temp.account;
 
 import java.io.BufferedReader;
 import java.io.IOException;

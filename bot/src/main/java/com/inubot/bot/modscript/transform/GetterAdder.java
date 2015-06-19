@@ -3,9 +3,6 @@ package com.inubot.bot.modscript.transform;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.FieldHook;
-import com.inubot.bot.modscript.ModScript;
-import com.inubot.bot.modscript.asm.ClassStructure;
-import com.inubot.bot.modscript.hooks.FieldHook;
 import com.inubot.bot.modscript.transform.util.ASMFactory;
 import jdk.internal.org.objectweb.asm.tree.ClassNode;
 

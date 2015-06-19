@@ -6,12 +6,10 @@
  */
 package com.inubot.api.methods;
 
+import com.inubot.api.oldschool.Character;
+import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.*;
-import com.inubot.api.oldschool.Character;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.tree.*;
-import com.inubot.api.oldschool.Character;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 
 /**
  * @author unsigned

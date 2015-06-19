@@ -6,13 +6,12 @@
  */
 package com.inubot.script.memes;
 
-import com.google.code.chatterbotapi.*;
-import com.inubot.RuneDream;
+import com.google.code.chatterbotapi.ChatterBotFactory;
+import com.inubot.Inubot;
 import com.inubot.api.methods.Game;
 import com.inubot.script.Script;
-import com.inubot.RuneDream;
-import com.inubot.api.methods.Game;
-import com.inubot.script.Script;
+import com.google.code.chatterbotapi.ChatterBotSession;
+import com.google.code.chatterbotapi.ChatterBotType;
 
 import java.util.Stack;
 
@@ -50,8 +49,8 @@ public class ChatTest extends Script {
                 String reply = session.think(pending);
                 System.out.println("Replying to <" + pending + "> with <" + reply + ">");
                 for (char c : reply.toCharArray())
-                    RuneDream.getInstance().getCanvas().sendKey(c, 5);
-                RuneDream.getInstance().getCanvas().pressEnter();
+                    Inubot.getInstance().getCanvas().sendKey(c, 5);
+                Inubot.getInstance().getCanvas().pressEnter();
             } catch (Exception e) {
                 e.printStackTrace();
             }

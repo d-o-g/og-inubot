@@ -8,9 +8,6 @@ import com.inubot.api.oldschool.Tab;
 import com.inubot.api.oldschool.Tile;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
 import com.inubot.api.util.Time;
-import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.oldschool.action.tree.DialogButtonAction;
-import com.inubot.api.util.Time;
 
 /**
  * Created by Cameron on 2015-04-30.

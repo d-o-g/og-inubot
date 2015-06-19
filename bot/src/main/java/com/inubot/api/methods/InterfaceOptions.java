@@ -7,7 +7,6 @@
 package com.inubot.api.methods;
 
 import com.inubot.api.oldschool.VarpBit;
-import com.inubot.api.oldschool.VarpBit;
 
 /**
  * @author Dogerina

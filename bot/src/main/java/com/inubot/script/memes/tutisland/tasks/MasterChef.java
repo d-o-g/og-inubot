@@ -1,9 +1,9 @@
 package com.inubot.script.memes.tutisland.tasks;
 
-import com.inubot.api.methods.*;
-import com.inubot.api.oldschool.*;
 import com.inubot.api.methods.traversal.Movement;
+import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Time;
+import com.inubot.api.methods.*;
 
 /**
  * Created by Cameron on 2015-04-30.

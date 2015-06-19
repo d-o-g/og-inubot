@@ -1,7 +1,6 @@
 package com.inubot.client.natives;
 
 import com.inubot.client.Artificial;
-import com.inubot.client.Artificial;
 
 /**
  * @author unsigned

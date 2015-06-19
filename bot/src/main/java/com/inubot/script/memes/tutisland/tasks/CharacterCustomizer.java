@@ -2,8 +2,6 @@ package com.inubot.script.memes.tutisland.tasks;
 
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.Widget;
-import com.inubot.api.methods.Interfaces;
-import com.inubot.api.oldschool.Widget;
 
 /**
  * Created by luckruns0ut on 29/04/15.

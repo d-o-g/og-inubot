@@ -6,8 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.Skill;
 
 /**
@@ -30,21 +29,21 @@ public class Skills {
     }
 
     public static int[] getExperiences() {
-        return RuneDream.getInstance().getClient().getExperiences();
+        return Inubot.getInstance().getClient().getExperiences();
     }
 
     /**
      * @return the 'real' levels
      */
     public static int[] getLevels() {
-        return RuneDream.getInstance().getClient().getRealLevels();
+        return Inubot.getInstance().getClient().getRealLevels();
     }
 
     /**
      * @return gets the current level, accounts for potions and drained levels
      */
     public static int[] getCurrentLevels() {
-        return RuneDream.getInstance().getClient().getLevels();
+        return Inubot.getInstance().getClient().getLevels();
     }
 
     /**

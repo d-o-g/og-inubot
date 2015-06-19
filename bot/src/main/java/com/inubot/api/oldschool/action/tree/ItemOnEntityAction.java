@@ -12,8 +12,6 @@ package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.oldschool.EntityType;
 import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.oldschool.EntityType;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 
 public class ItemOnEntityAction extends EntityAction {
 

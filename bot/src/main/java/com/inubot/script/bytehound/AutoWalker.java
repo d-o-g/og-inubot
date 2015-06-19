@@ -3,9 +3,6 @@ package com.inubot.script.bytehound;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.Tile;
 import com.inubot.script.Script;
-import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.oldschool.Tile;
-import com.inubot.script.Script;
 
 import javax.swing.*;
 import java.awt.*;

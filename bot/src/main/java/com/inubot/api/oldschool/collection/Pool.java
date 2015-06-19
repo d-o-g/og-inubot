@@ -11,7 +11,6 @@ package com.inubot.api.oldschool.collection;
  * @since 06-06-2015
  */
 
-import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
 
 import java.util.*;
@@ -292,11 +291,11 @@ public class Pool<T, K extends Pool<T, K>> implements Iterable<T> {
      * @return A random element in the pool
      */
     public final T fish(final int maxIndex) {
-        return fish(0, com.inubot.api.util.Random.nextInt(maxIndex));
+        return fish(0, Random.nextInt(maxIndex));
     }
 
     public final T fish(final int minIndex, final int maxIndex) {
-        return get(com.inubot.api.util.Random.nextInt(minIndex, maxIndex));
+        return get(Random.nextInt(minIndex, maxIndex));
     }
 
     /**

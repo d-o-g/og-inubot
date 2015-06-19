@@ -7,8 +7,6 @@
 package com.inubot.bot.ui;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author unsigned
@@ -16,23 +14,13 @@ import java.util.List;
  */
 public class BotMenuBar extends JMenuBar {
 
-    private final List<JMenu> menus = new ArrayList<JMenu>() {
-        {
-            super.add(new JMenu("Dev Tools"));
-            super.add(new JMenu("Settings"));
-            super.add(new JMenu("View Handler"));
-        }
-    };
+    private final JMenuItem widget = new JMenuItem("Widget Explorer");
+
+    private final JMenu debug = new JMenu("Debug");
 
     public BotMenuBar() {
-        final JMenuItem widget = new JMenuItem("Widget Explorer");
         widget.addActionListener(e -> new WidgetExplorer().setVisible(true));
-        this.menus.forEach(BotMenuBar.this::add);
-
-        for (JMenu menu : menus) {
-            if (menu.getText().equals("Dev Tools")) {
-                add(widget);
-            }
-        }
+        debug.add(widget);
+        add(debug);
     }
 }

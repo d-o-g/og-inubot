@@ -6,13 +6,7 @@
  */
 package com.inubot.api.oldschool;
 
-import com.inubot.RuneDream;
-import com.inubot.api.methods.Client;
-import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.oldschool.action.tree.Action;
-import com.inubot.api.oldschool.action.tree.PlayerAction;
-import com.inubot.client.natives.RSPlayer;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.tree.Action;
@@ -39,7 +33,7 @@ public class Player extends Character<RSPlayer> {
     }
 
     public String[] getActions() {
-        return RuneDream.getInstance().getClient().getPlayerActions();
+        return Inubot.getInstance().getClient().getPlayerActions();
     }
 
     @Override
@@ -50,7 +44,7 @@ public class Player extends Character<RSPlayer> {
     }
 
     public void processAction(String action) {
-        String[] actions = RuneDream.getInstance().getClient().getPlayerActions();
+        String[] actions = Inubot.getInstance().getClient().getPlayerActions();
         if (actions == null)
             return;
         int index = Action.indexOf(actions, action);

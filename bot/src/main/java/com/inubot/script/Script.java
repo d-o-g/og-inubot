@@ -6,14 +6,13 @@
  */
 package com.inubot.script;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Login;
-import com.inubot.RuneDream;
 import com.inubot.api.methods.Mouse;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
-import com.inubot.bot.account.AccountManager;
+import temp.account.AccountManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,17 +41,17 @@ public abstract class Script extends LoopTask {
         if (!started) {
             if (started = setup()) {
                 if(AccountManager.getCurrentAccount() == null) {
-                    username = RuneDream.getInstance().getClient().getUsername();
-                    password = RuneDream.getInstance().getClient().getPassword();
+                    username = Inubot.getInstance().getClient().getUsername();
+                    password = Inubot.getInstance().getClient().getPassword();
                 } else {
                     username = AccountManager.getCurrentAccount().getUsername();
                     password = AccountManager.getCurrentAccount().getPassword();
                 }
                 if (this instanceof Paintable)
-                    RuneDream.getInstance().getCanvas().paintables.add((Paintable) this);
+                    Inubot.getInstance().getCanvas().paintables.add((Paintable) this);
                 super.run();
             } else {
-                RuneDream.getInstance().getCanvas().paintables.clear();
+                Inubot.getInstance().getCanvas().paintables.clear();
                 stop();
             }
             throw new RuntimeException("haha i stopped script");
@@ -67,7 +66,7 @@ public abstract class Script extends LoopTask {
     public final void onExit() {
         shutdownTasks.forEach(Task::execute);
         if (this instanceof Paintable)
-            RuneDream.getInstance().getCanvas().paintables.clear();
+            Inubot.getInstance().getCanvas().paintables.clear();
     }
 
     @Override

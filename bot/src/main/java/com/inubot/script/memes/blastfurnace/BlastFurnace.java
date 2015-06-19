@@ -2,8 +2,6 @@ package com.inubot.script.memes.blastfurnace;
 
 import com.inubot.api.methods.Varps;
 import com.inubot.script.Script;
-import com.inubot.api.methods.Varps;
-import com.inubot.script.Script;
 import com.inubot.script.memes.blastfurnace.task.BankTask;
 import com.inubot.script.memes.blastfurnace.task.BlastFurnaceTask;
 

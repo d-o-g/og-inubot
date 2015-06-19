@@ -11,25 +11,24 @@ import com.inubot.bot.util.Configuration;
 import com.inubot.bot.util.ProxyUtils;
 import com.inubot.bot.util.RSClassLoader;
 import com.inubot.client.GameCanvas;
+import com.inubot.script.dank.Powermine;
 import com.inubot.script.memes.CombatTrainerPRO;
 import com.inubot.script.memes.hunter.BirdSnarePRO;
 import com.inubot.script.memes.hunter.FalconryPRO;
 import com.inubot.script.memes.hunter.RedChinsPRO;
-import com.inubot.bot.account.Account;
-import com.inubot.bot.account.AccountManager;
-import com.inubot.bot.farm.irc.IRC;
+import temp.account.Account;
+import temp.account.AccountManager;
+import com.inubot.script.memes.range.RangeGuild;
+import temp.farm.irc.IRC;
 import com.inubot.bot.modscript.Injector;
-import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.ui.BotMenuBar;
 import com.inubot.bot.ui.BotToolBar;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.JarNode;
-import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.RSClient;
 import com.inubot.script.Script;
 import com.inubot.script.ScriptFlux;
 import com.inubot.script.memes.agility.PerfectAgility;
-import com.inubot.script.memes.range.RangeGuild;
 import com.inubot.script.memes.tutisland.TutorialIsland;
 
 import javax.swing.*;
@@ -45,7 +44,7 @@ import java.util.Map;
  * @author unsigned
  * @since 20-04-2015
  */
-public class RuneDream extends JFrame implements Runnable {
+public class Inubot extends JFrame implements Runnable {
 
     public static final Class[] SCRIPT_CLASSES = new Class[]{
             PerfectAgility.class,
@@ -59,14 +58,15 @@ public class RuneDream extends JFrame implements Runnable {
             RedChinsPRO.class,
             //PrayerFlick.class,
             CombatTrainerPRO.class,
-            RangeGuild.class
+            RangeGuild.class,
+            Powermine.class,
             //PestControl.class,
             //WineMeker.class,
             //Fletcher.class,
             //ChatTest.class
     };
 
-    private static RuneDream instance;
+    private static Inubot instance;
     private static boolean useProxy = false;
     private static String autoStartScript = null;
     private final Crawler crawler;
@@ -74,7 +74,7 @@ public class RuneDream extends JFrame implements Runnable {
     private RSClient client;
     private BotToolBar toolBar;
 
-    public RuneDream() {
+    public Inubot() {
         super(Configuration.APPLICATION_NAME);
         setBackground(Color.BLACK);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -92,7 +92,7 @@ public class RuneDream extends JFrame implements Runnable {
         }));
     }
 
-    public static RuneDream getInstance() {
+    public static Inubot getInstance() {
         return instance;
     }
 
@@ -125,7 +125,7 @@ public class RuneDream extends JFrame implements Runnable {
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                instance = new RuneDream();
+                instance = new Inubot();
             } catch (Exception e) {
                 e.printStackTrace();
             }

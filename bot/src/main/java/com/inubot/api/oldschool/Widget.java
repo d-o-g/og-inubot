@@ -6,7 +6,7 @@
  */
 package com.inubot.api.oldschool;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.action.Processable;
@@ -65,7 +65,7 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
     }
 
     public int getX() {
-        int[] positionsX = RuneDream.getInstance().getClient().getWidgetPositionsX();
+        int[] positionsX = Inubot.getInstance().getClient().getWidgetPositionsX();
         int index = getBoundsArrayIndex();
         int relX = getRelativeX();
         Widget owner = getOwner();
@@ -84,7 +84,7 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
     }
 
     public int getY() {
-        int[] positionsY = RuneDream.getInstance().getClient().getWidgetPositionsY();
+        int[] positionsY = Inubot.getInstance().getClient().getWidgetPositionsY();
         int index = getBoundsArrayIndex();
         int relY = getRelativeY();
         Widget owner = getOwner();

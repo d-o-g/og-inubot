@@ -1,6 +1,5 @@
 package com.inubot.script.bytehound;
 
-import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.oldschool.action.tree.InputButtonAction;
@@ -9,14 +8,9 @@ import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
 import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.Skill;
-import com.inubot.api.oldschool.Widget;
-import com.inubot.api.oldschool.WidgetItem;
-import com.inubot.api.oldschool.action.tree.InputButtonAction;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
-import com.inubot.api.util.Time;
-import com.inubot.api.util.filter.Filter;
-import com.inubot.script.Script;
+import com.inubot.api.methods.*;
 
 import java.awt.*;
 

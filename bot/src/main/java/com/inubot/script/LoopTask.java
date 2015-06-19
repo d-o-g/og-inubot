@@ -7,7 +7,6 @@
 package com.inubot.script;
 
 import com.inubot.api.util.Time;
-import com.inubot.api.util.Time;
 
 /**
  * @author unsigned

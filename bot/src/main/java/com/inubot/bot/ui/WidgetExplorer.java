@@ -1,11 +1,6 @@
 package com.inubot.bot.ui;
 
-import com.inubot.RuneDream;
-import com.inubot.api.methods.Game;
-import com.inubot.api.methods.Interfaces;
-import com.inubot.api.oldschool.Widget;
-import com.inubot.api.util.Paintable;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.Widget;
@@ -118,7 +113,7 @@ public class WidgetExplorer extends JFrame implements Paintable {
         this.add(searchPanel, BorderLayout.SOUTH);
 
         //EventManager.subscribeListener(this);
-        RuneDream.getInstance().getCanvas().paintables.add(this);
+        Inubot.getInstance().getCanvas().paintables.add(this);
     }
 
 

@@ -2,8 +2,6 @@ package com.inubot.bot.modscript.hooks;
 
 import com.inubot.bot.modscript.Crypto;
 import com.inubot.bot.modscript.ModScript;
-import com.inubot.bot.modscript.Crypto;
-import com.inubot.bot.modscript.ModScript;
 
 import java.io.DataInputStream;
 import java.io.IOException;

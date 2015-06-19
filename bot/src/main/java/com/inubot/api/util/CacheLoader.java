@@ -8,8 +8,6 @@ package com.inubot.api.util;
 
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.hooks.InvokeHook;
-import com.inubot.bot.modscript.ModScript;
-import com.inubot.bot.modscript.hooks.InvokeHook;
 import com.inubot.client.natives.RSClient;
 import com.inubot.client.natives.RSItemDefinition;
 import com.inubot.client.natives.RSNpcDefinition;

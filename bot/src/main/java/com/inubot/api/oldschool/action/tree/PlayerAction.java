@@ -9,10 +9,7 @@ package com.inubot.api.oldschool.action.tree;
 import com.inubot.api.methods.Players;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.client.natives.RSPlayer;
-import com.inubot.api.methods.Players;
 import com.inubot.api.oldschool.Player;
-import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.client.natives.RSPlayer;
 
 public class PlayerAction extends CharacterAction {
 

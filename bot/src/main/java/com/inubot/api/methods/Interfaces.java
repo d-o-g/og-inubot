@@ -6,15 +6,12 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.client.natives.RSWidget;
-import com.inubot.RuneDream;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.RSInterface;
-import com.inubot.client.natives.RSWidget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +33,7 @@ public class Interfaces {
     public static final int BUTTON_DIALOG = 6;
 
     public static RSInterface[] raw() {
-        return RuneDream.getInstance().getClient().getInterfaces();
+        return Inubot.getInstance().getClient().getInterfaces();
     }
 
     public static RSInterface getContainer(int index) {
@@ -51,7 +48,7 @@ public class Interfaces {
     }
 
     public static Widget[][] getAll() {
-        int l = RuneDream.getInstance().getClient().getWidgets().length;
+        int l = Inubot.getInstance().getClient().getWidgets().length;
         Widget[][] widgets = new Widget[l][];
         for (int i = 0; i < l; i++) {
             widgets[i] = widgetsFor(i);
@@ -60,7 +57,7 @@ public class Interfaces {
     }
 
     public static Widget[] widgetsFor(int index) {
-        RSWidget[][] accessor = RuneDream.getInstance().getClient().getWidgets();
+        RSWidget[][] accessor = Inubot.getInstance().getClient().getWidgets();
         if (accessor == null)
             return null;
         if (accessor.length < index)

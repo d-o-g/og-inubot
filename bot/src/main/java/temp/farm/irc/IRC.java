@@ -1,4 +1,4 @@
-package com.inubot.bot.farm.irc;
+package temp.farm.irc;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

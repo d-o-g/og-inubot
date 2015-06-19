@@ -9,9 +9,6 @@ package com.inubot.script.memes;
 import com.inubot.api.methods.Prayers;
 import com.inubot.api.oldschool.Prayer;
 import com.inubot.script.Script;
-import com.inubot.api.methods.Prayers;
-import com.inubot.api.oldschool.Prayer;
-import com.inubot.script.Script;
 
 /**
  * @author unsigned

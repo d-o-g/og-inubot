@@ -8,8 +8,6 @@ package com.inubot.script.memes.blastfurnace.dispenser;
 
 import com.inubot.api.methods.Varps;
 import com.inubot.client.natives.RSVarpBit;
-import com.inubot.api.methods.Varps;
-import com.inubot.client.natives.RSVarpBit;
 
 /**
  * @author unsigned

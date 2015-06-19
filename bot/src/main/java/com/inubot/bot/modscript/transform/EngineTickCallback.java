@@ -9,8 +9,6 @@ package com.inubot.bot.modscript.transform;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.client.Callback;
 import jdk.internal.org.objectweb.asm.tree.*;
-import com.inubot.bot.modscript.asm.ClassStructure;
-import com.inubot.client.Callback;
 
 import java.util.Map;
 

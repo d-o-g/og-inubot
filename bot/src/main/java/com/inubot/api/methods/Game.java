@@ -6,7 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.client.natives.RSClient;
 
 /**
@@ -20,19 +20,19 @@ public class Game {
     public static final int STATE_IN_GAME = 30;
 
     public static int getState() {
-        return RuneDream.getInstance().getClient().getGameState();
+        return Inubot.getInstance().getClient().getGameState();
     }
 
     public static int getRegionBaseX() {
-        return RuneDream.getInstance().getClient().getBaseX();
+        return Inubot.getInstance().getClient().getBaseX();
     }
 
     public static int getRegionBaseY() {
-        return RuneDream.getInstance().getClient().getBaseY();
+        return Inubot.getInstance().getClient().getBaseY();
     }
 
     public static int getPlane() {
-        return RuneDream.getInstance().getClient().getPlane();
+        return Inubot.getInstance().getClient().getPlane();
     }
 
     public static boolean isLoggedIn() {
@@ -40,10 +40,10 @@ public class Game {
     }
 
     public static int getEngineCycle() {
-        return RuneDream.getInstance().getClient().getEngineCycle();
+        return Inubot.getInstance().getClient().getEngineCycle();
     }
 
     public static RSClient getClient() {
-        return RuneDream.getInstance().getClient();
+        return Inubot.getInstance().getClient();
     }
 }

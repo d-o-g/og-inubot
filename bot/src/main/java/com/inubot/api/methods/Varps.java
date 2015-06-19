@@ -6,7 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.client.natives.RSVarpBit;
 
 /**
@@ -16,7 +16,7 @@ import com.inubot.client.natives.RSVarpBit;
 public class Varps {
 
     public static int[] getAll() {
-        int[] vars = RuneDream.getInstance().getClient().getVarps();
+        int[] vars = Inubot.getInstance().getClient().getVarps();
         return vars == null ? null : vars;
     }
 
@@ -34,6 +34,6 @@ public class Varps {
     }
 
     public static RSVarpBit getBit(int id) {
-        return RuneDream.getInstance().getClient().getVarpBit(id);
+        return Inubot.getInstance().getClient().getVarpBit(id);
     }
 }

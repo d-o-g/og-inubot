@@ -12,7 +12,6 @@ import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.Tile;
 import com.inubot.script.Script;
 import com.inubot.api.util.filter.IdFilter;
-import com.inubot.script.Script;
 
 import java.util.EnumSet;
 

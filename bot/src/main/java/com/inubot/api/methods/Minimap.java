@@ -6,9 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.RuneDream;
-import com.inubot.api.oldschool.Widget;
-import com.inubot.RuneDream;
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.Widget;
 
 /**
@@ -18,15 +16,15 @@ import com.inubot.api.oldschool.Widget;
 public class Minimap {
 
     public static int getScale() {
-        return RuneDream.getInstance().getClient().getMapScale();
+        return Inubot.getInstance().getClient().getMapScale();
     }
 
     public static int getRotation() {
-        return RuneDream.getInstance().getClient().getMapAngle();
+        return Inubot.getInstance().getClient().getMapAngle();
     }
 
     public static int getOffset() {
-        return RuneDream.getInstance().getClient().getMapOffset();
+        return Inubot.getInstance().getClient().getMapOffset();
     }
 
     public static Widget getWidget() {

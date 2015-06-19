@@ -7,7 +7,6 @@
 package com.inubot.api.methods;
 
 import com.inubot.api.oldschool.*;
-import com.inubot.api.methods.ItemTables.Entry;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.api.util.filter.NameFilter;
@@ -73,7 +72,7 @@ public class Inventory {
     }
 
     public static boolean contains(String s) {
-        for (Entry widgetItem : ItemTables.getInventory()) {
+        for (ItemTables.Entry widgetItem : ItemTables.getInventory()) {
             if (widgetItem.getName().equals(s)) {
                 return true;
             }
@@ -94,7 +93,7 @@ public class Inventory {
 
     public static int getCount(String name) {
         int i = 0;
-        for (Entry entry : ItemTables.getInventory()) {
+        for (ItemTables.Entry entry : ItemTables.getInventory()) {
             if (entry.getName().equals(name)) {
                 i++;
             }
@@ -104,7 +103,7 @@ public class Inventory {
 
     public static int getCount(Filter<ItemTables.Entry> filter) {
         int count = 0;
-        for (Entry entry : ItemTables.getInventory()) {
+        for (ItemTables.Entry entry : ItemTables.getInventory()) {
             if (filter.accept(entry))
                 count++;
         }
