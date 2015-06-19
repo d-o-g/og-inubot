@@ -20,13 +20,6 @@ public class BotToolBar extends JPanel {
         super.setLayout(new FlowLayout());
         run.setEnabled(!Inubot.getInstance().getScriptFlux().isRunning());
         run.addActionListener(e -> new ScriptSelector().setVisible(true));
-        JButton randomAcc = new JButton("Generate Account");
-        randomAcc.addActionListener(e -> {
-            Account a = AccountManager.generateRandomAccount();
-            if (a != null) {
-                a.enterCredentials();
-            }
-        });
         pause.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
         pause.addActionListener(e -> {
             Inubot.getInstance().getScriptFlux().switchState();
@@ -55,7 +48,6 @@ public class BotToolBar extends JPanel {
         add(stop);
         add(painting);
         add(farming);
-        add(randomAcc);
     }
 
     public void updateButtonStates() {
