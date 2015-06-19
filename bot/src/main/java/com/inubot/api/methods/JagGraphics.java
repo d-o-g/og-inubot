@@ -24,4 +24,11 @@ public class JagGraphics {
     public static void drawRect(int x, int y, int w, int h, int rgb) {
         Inubot.getInstance().getClient().drawRectangle(x, y, w, h, rgb);
     }
+
+    public static void drawString(String string, int x, int y) {
+        RSFont font = getFont_p12full();
+        if (font == null)
+            throw new IllegalStateException("null font_p12full?");
+        font.drawString(string, x, y);
+    }
 }
