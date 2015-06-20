@@ -80,6 +80,15 @@ public class Inventory {
         return false;
     }
 
+    public static boolean contains(int id) {
+        for (ItemTables.Entry widgetItem : ItemTables.getInventory()) {
+            if (widgetItem.getId() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static int getCount(boolean stacks) {
         int count = 0;
         for (int stack : ItemTables.getQuantitiesIn(ItemTables.INVENTORY))
