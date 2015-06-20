@@ -5,6 +5,7 @@ import com.inubot.api.methods.Game;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Random;
 import com.inubot.api.util.Time;
+import com.inubot.bot.irc.IRCConnection;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.transform.*;
 import com.inubot.bot.util.Configuration;
@@ -71,6 +72,7 @@ public class Inubot extends JFrame implements Runnable {
     private static String autoStartScript = null;
     private final Crawler crawler;
     private final ScriptFlux scriptFlux;
+    private final IRCConnection connection;
     private RSClient client;
     private BotToolBar toolBar;
 
@@ -90,6 +92,9 @@ public class Inubot extends JFrame implements Runnable {
                 e.printStackTrace();
             }
         }));
+
+        connection = new IRCConnection("irc.rizon.net", 6667);
+        new Thread(connection).start();
     }
 
     public static Inubot getInstance() {
@@ -121,7 +126,7 @@ public class Inubot extends JFrame implements Runnable {
                 Client.MODEL_RENDERING_ENABLED = false;
             }
         }
-        IRC.init("irc.rizon.net", 6667, "RDBot" + Random.nextInt(111111, 999999), "Septron", "rd-bot");
+
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -209,6 +214,8 @@ public class Inubot extends JFrame implements Runnable {
             }
         });
     }
+
+    public IRCConnection getConnection() { return connection; }
 
     public ScriptFlux getScriptFlux() {
         return scriptFlux;
