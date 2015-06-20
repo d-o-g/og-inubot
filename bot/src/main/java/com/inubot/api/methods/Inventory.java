@@ -38,11 +38,11 @@ public class Inventory {
             int[] itemQtys = inventory.getItemQuantities();
             if (itemIds != null) {
                 for (int i = 0; i < itemIds.length; i++) {
-                    int id = itemIds[i] - 1;
+                    int id = itemIds[i];
                     if (id == -1 || itemQtys[i] == 0)
                         continue;
                     WidgetItem item = new WidgetItem(inventory, i);
-                    if (!filter.accept(item))
+                    if (!filter.accept(item))//wat
                         continue;
                     items.add(item);
                 }
@@ -56,11 +56,9 @@ public class Inventory {
                     if (child == null || child.getItemId() == -1)
                         continue;
                     WidgetItem item = new WidgetItem(child, i);
-                    if (item != null) {
-                        if (!filter.accept(item))
-                            continue;
-                        items.add(item);
-                    }
+                    if (!filter.accept(item))
+                        continue;
+                    items.add(item);
                 }
             }
         }

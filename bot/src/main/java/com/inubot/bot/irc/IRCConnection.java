@@ -18,7 +18,7 @@ public class IRCConnection implements Runnable {
 
     private static final String NAME_BASE = "BOT-";
     private static final String CHANNEL = "#rd-bot";
-    private static final String MASTER = "Septron";
+    private static final String MASTER = "dogerina";
 
     private final String address;
     private final int port;

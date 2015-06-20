@@ -45,7 +45,7 @@ public class Callback {
                 }
             } else if (!sender.equals("")) {
                 try {
-                    Inubot.getInstance().getConnection().message(String.format("%s: %-40s (%s)", sender, message, type));
+                    Inubot.getInstance().getConnection().message(String.format("%s: %s (%s)", sender, message, type));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
