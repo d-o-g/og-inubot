@@ -1,9 +1,13 @@
 package com.inubot.bot.irc.commands;
 
+import com.inubot.CtrlBind;
 import com.inubot.Inubot;
 import com.inubot.api.methods.Players;
 import com.inubot.bot.irc.IRCCommand;
 import com.inubot.bot.irc.IRCConnection;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author Dank Memes
@@ -18,13 +22,17 @@ public class Say implements IRCCommand {
 
     @Override
     public void handle(IRCConnection connection, String[] params) {
-        if (params.length > 2) {
-            if (params[0].equals(Players.getLocal().getName())) {
+        if (params.length > 0) {
+            if (params[1].equals(Inubot.getInstance().getConnection().getUsername())) {
                 StringBuilder builder = new StringBuilder();
-                for (int i = 1; i < (params.length - 1); i++) {
-                    builder.append(params[i]);
-                }
-                //TODO: How the fuck do I send a message
+                if (params[2] == null)
+                    return;
+                for (int i = 2; i < params.length; i++)
+                    builder.append(params[i] + " ");
+                System.out.println(builder.toString());
+                for (char c : builder.toString().toCharArray())
+                    Inubot.getInstance().getCanvas().sendKey(c, 20);
+                Inubot.getInstance().getCanvas().pressEnter();
             }
         }
     }

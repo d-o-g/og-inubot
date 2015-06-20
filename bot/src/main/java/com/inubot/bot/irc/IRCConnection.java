@@ -6,6 +6,7 @@ import com.inubot.bot.irc.commands.Say;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +19,7 @@ public class IRCConnection implements Runnable {
 
     private static final String NAME_BASE = "BOT-";
     private static final String CHANNEL = "#rd-bot";
-    private static final String MASTER = "dogerina";
+    private static final String MASTER = "Septron";
 
     private final String address;
     private final int port;
@@ -56,7 +57,7 @@ public class IRCConnection implements Runnable {
                 if (line.contains("004")) {
                     System.out.println("Successfully logged into irc!");
                     break;
-                } else if (line.contains("433")) {
+                } else if (line.indexOf("433") >= 1) {
                     System.out.println("Username already in use...");
                     username = NAME_BASE + Random.nextInt(9999);
                     return false;
@@ -83,9 +84,13 @@ public class IRCConnection implements Runnable {
         send("PRIVMSG " + CHANNEL + " :@" + MASTER + " " + message);
     }
 
-    public void send(String message) throws IOException {
-        writer.write(message + "\r\n");
-        writer.flush();
+    public void send(String message) {
+        try {
+            writer.write(message + "\r\n");
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -113,10 +118,9 @@ public class IRCConnection implements Runnable {
                                                     continue;
                                                 String[] params = message.substring(index).split(" ");
                                                 String command = message.substring(1, index);
-                                                commands().stream().filter(
-                                                        commands -> commands.name().equals(command)).forEach(
-                                                        commands -> commands.handle(this, params)
-                                                );
+                                                for (IRCCommand c : commands()) {
+                                                    c.handle(this, params);
+                                                }
                                             } else {
                                                 commands().stream().filter(
                                                         command -> message.substring(1).equals(command.name())).forEach(
@@ -143,5 +147,9 @@ public class IRCConnection implements Runnable {
                 }
             }
         }
+    }
+
+    public String getUsername() {
+        return this.username;
     }
 } 

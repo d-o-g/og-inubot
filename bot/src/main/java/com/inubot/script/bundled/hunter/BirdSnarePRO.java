@@ -57,7 +57,6 @@ public class BirdSnarePRO extends Script implements Paintable {
             }
         }
         if (Players.getLocal().getAnimation() != -1) {
-            System.out.println("I AM A FAGGOT");
             return 400;
         }
         if (Inventory.getCount() > 25)
@@ -66,34 +65,25 @@ public class BirdSnarePRO extends Script implements Paintable {
         if (next != null) {
             GroundItem gi = GroundItems.getNearest(t -> t.getLocation().equals(next) && "Bird snare".equals(t.getName()));
             GameObject obj = GameObjects.getNearest(t -> t.getLocation().equals(next));
-            System.out.println("I AM A NIGGER");
             if (obj != null && (obj.containsAction("Check") || !obj.containsAction("Investigate"))) {
-                System.out.println("I AM A NIGGERJEW");
                 obj.processAction(obj.containsAction("Check") ? "Check" : "Dismantle");
                 Time.await(() -> GameObjects.getNearest(t -> t.getLocation().equals(next)) == null
                         && Players.getLocal().getAnimation() == -1, 1500);
             } else if (gi != null) {
-                System.out.println("I AM A PAKI");
                 gi.processAction(ActionOpcodes.GROUND_ITEM_ACTION_3, "Lay");
                 Time.await(() -> GameObjects.getNearest(t -> t.getLocation().equals(next)) != null
                         && Players.getLocal().getAnimation() == -1, 1500);
             }
             if (gi == null && obj == null && Players.getLocal().getAnimation() == -1) {
-                System.out.println("I AM A WYD");
                 if (!Players.getLocal().getLocation().equals(next)) {
-                    System.out.println("I AM A FAGGOTWYD");
                     Movement.walkTo(next);
                     Time.await(() -> Players.getLocal().getLocation().equals(next), 1500);
                 }
                 WidgetItem snare = Inventory.getFirst("Bird snare");
-                if (snare != null)
-                    System.out.println("ayyyyy");
                 if (snare != null && Players.getLocal().getLocation().equals(next)) {
-                    System.out.println("I AM A FAGGOAT");
                     snare.processAction(ActionOpcodes.ITEM_ACTION_0, "Lay");
                     Time.sleep(300, 400);
                     if (Time.await(() -> Players.getLocal().getAnimation() == -1, 1500)) {
-                        System.out.println("I AM NOT A FAGGOT");
                         Movement.walkTo(next.derive(0, 1));
                     }
                 }
