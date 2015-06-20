@@ -115,7 +115,7 @@ public class CombatTrainerPRO extends Script implements Paintable {
         if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 10) {
             Movement.toggleRun(true);
         }
-        //switchStyles();
+        switchStyles();
         switch (Target.getCurrent()) {
             case SEAGULL: {
                 Npc npc = Npcs.getNearest(n -> n.getName() != null && n.getName().equals("Seagull") && n.getTargetIndex() == -1 && n.getAnimation() == -1);

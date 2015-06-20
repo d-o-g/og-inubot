@@ -31,6 +31,7 @@ public class Callback {
                 try {
                     if (message.contains("Congratulations")) {
                         String a = message.replace("Congratulations, you just advanced a ", "").replace(" level.", "");
+                        a = a.replace("Congratulations, you just advanced an ", "");
                         int level = 0;
                         for (Skill skill : Skill.values()) {
                             if (a.equalsIgnoreCase(skill.name()))
@@ -44,7 +45,7 @@ public class Callback {
                 }
             } else if (!sender.equals("")) {
                 try {
-                    Inubot.getInstance().getConnection().message(sender + ": " + message + " (" + type + ")");
+                    Inubot.getInstance().getConnection().message(String.format("%s: %-40s (%s)", sender, message, type));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

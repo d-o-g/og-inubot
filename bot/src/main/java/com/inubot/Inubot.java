@@ -36,6 +36,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
@@ -101,11 +103,27 @@ public class Inubot extends JFrame implements Runnable {
         return instance;
     }
 
+
     public static void main(String[] args) {
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
             if (arg.equals("-proxy")) {
-                useProxy = true;
+                String username = args[i + 1];
+                String password = args[i + 2];
+                String address = args[i + 3];
+                String port = args[i + 4];
+
+                Authenticator authenticator = new Authenticator() {
+
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password.toCharArray());
+                    }
+                };
+                System.setProperty("java.net.socks.username", username);
+                System.setProperty("java.net.socks.password", password);
+                System.setProperty("socksProxyHost", address);
+                System.setProperty("socksProxyPort", port);
+                java.net.Authenticator.setDefault(authenticator);
             }
             if (arg.equals("-account")) {
                 String user = args[i + 1];

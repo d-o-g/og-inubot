@@ -18,6 +18,7 @@ public class Naggers extends JDialog {
     private List<? extends Script> scripts;
 
     private JComboBox accounts;
+    private JButton reload;
     private JButton start;
     private JTable table;
 
@@ -28,6 +29,7 @@ public class Naggers extends JDialog {
 
     private void init() {
         setLayout(new BorderLayout());
+
 
     }
 
