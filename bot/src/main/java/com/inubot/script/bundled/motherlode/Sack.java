@@ -19,5 +19,4 @@ public class Sack {
     public static boolean isEmpty() {
         return !hasOre();
     }
-
 }
