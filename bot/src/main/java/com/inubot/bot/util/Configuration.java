@@ -18,7 +18,7 @@ public class Configuration {
         return !Inubot.class.getResource(Inubot.class.getSimpleName() + ".class").toString().contains("jar:");
     }
 
-    public static void setup() {
+    static {
         for (String dir : DIRECTORIES)
             new File(dir).mkdirs();
     }

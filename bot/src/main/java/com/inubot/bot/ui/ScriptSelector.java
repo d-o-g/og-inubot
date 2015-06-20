@@ -7,10 +7,14 @@
 package com.inubot.bot.ui;
 
 import com.inubot.Inubot;
+import com.inubot.bot.util.Configuration;
 import com.inubot.script.Script;
+import com.inubot.script.loader.LocalScriptLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author unsigned
@@ -27,6 +31,15 @@ public class ScriptSelector extends JFrame {
         scripts.setLayout(new GridLayout(3, 3, 5, 5));
         for (Class clazz : Inubot.SCRIPT_CLASSES)
             scripts.add(new Entity(clazz));
+        LocalScriptLoader loader = new LocalScriptLoader();
+        try {
+            loader.parse(new File(Configuration.SCRIPTS));
+            Class<?>[] definitions = loader.getMainClasses();
+            for (Class def : definitions)
+                scripts.add(new Entity(def));
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         super.add(scripts, BorderLayout.EAST);
 
         JPanel auths = new JPanel();
