@@ -9,17 +9,23 @@ package com.inubot.script.bundled;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.WidgetItem;
+import com.inubot.api.util.Paintable;
 import com.inubot.script.Script;
+
+import java.awt.*;
 
 /**
  * @author unsigned
  * @since 21-06-2015
  */
-public class NMZAfker extends Script {
+public class NMZAfker extends Script implements Paintable {
+
+    private int start;
 
     @Override
     public boolean setup() {
         super.setForceIdleTimeClick(false);
+        start = Skills.getExperience(Skill.DEFENCE);
         return true;
     }
 
@@ -36,5 +42,11 @@ public class NMZAfker extends Script {
                 lob.processAction("Eat");
         }
         return 1000;
+    }
+
+    @Override
+    public void render(Graphics2D g) {
+        int xp = Skills.getExperience(Skill.DEFENCE) - start;
+        g.drawString("Exp: " + xp, 20, 20);
     }
 }
