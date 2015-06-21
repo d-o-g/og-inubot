@@ -36,13 +36,14 @@ public class FalconryPRO extends Script implements Paintable {
     public int loop() {
         if (Players.getLocal().getAnimation() != -1)
             return 500;
+        /*
         if (!contains(ItemTables.EQUIPMENT, GLOVE_ID)) {
             Npc naziguy = Npcs.getNearest("Matthias");
             if (naziguy != null) {
                 naziguy.processAction("Talk-to");
             }
             return 500;
-        }
+        }*/
         if (Inventory.getCount() > 20)
             Inventory.dropAllExcept(new NameFilter<>("Coins"));
         com.inubot.api.oldschool.Character<?> target;

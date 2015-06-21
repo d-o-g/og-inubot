@@ -12,6 +12,7 @@ import com.inubot.bot.util.Configuration;
 import com.inubot.bot.util.ProxyUtils;
 import com.inubot.bot.util.RSClassLoader;
 import com.inubot.client.GameCanvas;
+import com.inubot.script.bundled.motherlode.MotherloadMine;
 import com.inubot.script.others.Powermine;
 import com.inubot.script.bundled.combattrainer.CombatTrainerPRO;
 import com.inubot.script.bundled.hunter.BirdSnarePRO;
@@ -61,7 +62,8 @@ public class Inubot extends JFrame implements Runnable {
             RedChinsPRO.class,
             //PrayerFlick.class,
             CombatTrainerPRO.class,
-            RangeGuild.class,
+            //RangeGuild.class,
+            MotherloadMine.class,
             Powermine.class,
             //PestControl.class,
             //WineMeker.class,
