@@ -6,8 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.api.oldschool.Prayer;
-import com.inubot.api.oldschool.Widget;
+import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Time;
 
 import java.util.ArrayList;
@@ -37,6 +36,10 @@ public class Prayers {
 
     public static boolean isAllDeactivated() {
         return !isAnyActivated();
+    }
+
+    public static int getPoints() {
+        return Skills.getCurrentLevel(Skill.PRAYER);
     }
 
     public static Prayer[] getActive() {
