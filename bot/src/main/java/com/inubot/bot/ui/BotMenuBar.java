@@ -6,6 +6,8 @@
  */
 package com.inubot.bot.ui;
 
+import com.inubot.Inubot;
+import com.inubot.api.methods.Client;
 import temp.account.Account;
 import temp.account.AccountManager;
 
@@ -22,21 +24,67 @@ public class BotMenuBar extends JMenuBar {
     private final JMenuItem widget = new JMenuItem("Widget Explorer");
     private final JMenuItem acc = new JMenuItem("Account Creator");
 
+    private final NexusTogglableButton rendering = new NexusTogglableButton("Rendering",
+            () -> Client.PAINTING);
+    private final NexusTogglableButton farm = new NexusTogglableButton("Farm Mode",
+            () -> !Client.LANDSCAPE_RENDERING_ENABLED);
+
+    private final JButton pause = new JButton("Pause");
+    private final JButton start = new JButton("Start");
+    private final JButton stop = new JButton("Stop");
+
     private final JMenu debug = new JMenu("Debug");
     private final JMenu tools = new JMenu("Tools");
 
     public BotMenuBar() {
-        widget.addActionListener(e -> new WidgetExplorer().setVisible(true));
-        acc.addActionListener(e -> {
-            Account a = AccountManager.generateRandomAccount();
-            if (a != null) {
-                a.enterCredentials();
-            }
-        });
-        debug.add(widget);
-        add(debug);
+//        widget.addActionListener(e -> new WidgetExplorer().setVisible(true));
+//        acc.addActionListener(e -> {
+//            Account a = AccountManager.generateRandomAccount();
+//            if (a != null) {
+//                a.enterCredentials();
+//            }
+//        });
 
-        tools.add(acc);
-        add(tools);
+        start.setEnabled(!Inubot.getInstance().getScriptFlux().isRunning());
+        start.addActionListener(e -> new ScriptSelector().setVisible(true));
+
+        pause.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
+        pause.addActionListener(e -> {
+            Inubot.getInstance().getScriptFlux().switchState();
+            updateButtonStates();
+        });
+        pause.setEnabled(false);
+
+        stop.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
+        stop.addActionListener(e -> {
+            Inubot.getInstance().getScriptFlux().stop();
+            updateButtonStates();
+        });
+        stop.setEnabled(false);
+
+        rendering.addActionListener(e -> Client.PAINTING = !Client.PAINTING);
+
+        farm.addActionListener(e -> {
+            Client.LANDSCAPE_RENDERING_ENABLED = !Client.LANDSCAPE_RENDERING_ENABLED;
+            Client.MODEL_RENDERING_ENABLED = !Client.MODEL_RENDERING_ENABLED;
+            Client.GAME_TICK_SLEEP = Client.LANDSCAPE_RENDERING_ENABLED ? -1 : 100;
+            Client.setLowMemory(!Client.isLowMemory());
+        });
+
+        add(start);
+        add(pause);
+        add(stop);
+
+        add(Box.createHorizontalGlue());
+
+        add(rendering);
+        add(farm);
+    }
+
+    public void updateButtonStates() {
+        start.setEnabled(!Inubot.getInstance().getScriptFlux().isRunning());
+        stop.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
+        pause.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
+        pause.setText(Inubot.getInstance().getScriptFlux().isPaused() ? "Resume" : "Pause");
     }
 }

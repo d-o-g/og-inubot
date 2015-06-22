@@ -68,9 +68,7 @@ public class AccountManager {
         boolean failed = false;
         while ((line = br.readLine()) != null) {
             //System.out.println(line);
-            if (line.contains("Sorry, you are not eligible to play.")
-                    || line.contains("Sorry, you have entered an invalid age.")
-                    || line.contains("Please fill out this field.")) {
+            if (line.contains("Sorry, you are not eligible to play.") || line.contains("Sorry, you have entered an invalid age.") || line.contains("Please fill out this field.")) {
                 failed = true;
             }
             if(line.contains("blocked from creating too many")) {

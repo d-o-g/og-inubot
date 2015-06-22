@@ -166,7 +166,7 @@ public class Inubot extends JFrame implements Runnable {
     @Override
     public void run() {
         this.toolBar = new BotToolBar();
-        add(toolBar, BorderLayout.NORTH);
+        //add(toolBar, BorderLayout.NORTH);
         BotMenuBar menuBar = new BotMenuBar();
         super.setJMenuBar(menuBar);
         crawler.crawl();

@@ -28,7 +28,7 @@ public class Say implements IRCCommand {
                 if (params[2] == null)
                     return;
                 for (int i = 2; i < params.length; i++)
-                    builder.append(params[i] + " ");
+                    builder.append(params[i]).append(" ");
                 System.out.println(builder.toString());
                 for (char c : builder.toString().toCharArray())
                     Inubot.getInstance().getCanvas().sendKey(c, 20);
