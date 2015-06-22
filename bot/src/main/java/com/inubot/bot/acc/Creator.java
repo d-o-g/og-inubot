@@ -1,10 +1,9 @@
-package temp.acc;
+package com.inubot.bot.acc;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -29,6 +28,11 @@ public class Creator {
     }
 
     public static boolean create(String email, String username, String password) {
+        if (username.length() > 12) {
+            System.out.println("Username too long!");
+            return false;
+        }
+
         String[][] post = {
                 { "age",                "18"        },
                 { "email1",             email       },
@@ -54,7 +58,6 @@ public class Creator {
             try (BufferedReader br = new BufferedReader(
                     new InputStreamReader(connection.getInputStream()))) {
                 while ((line = br.readLine()) != null) {
-                    System.out.println(line);
                     if (line.contains("Sorry, you are not eligible to play.")
                             || line.contains("Sorry, you have entered an invalid age.")
                             || line.contains("Please fill out this field.")) {
@@ -69,7 +72,7 @@ public class Creator {
                     System.out.println("Failed to create account : " + email + " / " + username);
                     return false;
                 } else {
-                    System.out.println("Created account : " + email + " / " + username + " / " + password + "!");
+                    System.out.println("Created account : " + email + " / " + username + " / " + password);
                     return true;
                 }
             }

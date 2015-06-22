@@ -17,8 +17,10 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.VarpBit;
 import com.inubot.api.util.Time;
 import com.inubot.api.oldschool.GameObject;
+import com.inubot.bot.acc.CreaterGUI;
 
 import java.awt.event.KeyEvent;
+import java.security.Key;
 import java.util.*;
 import java.util.List;
 
@@ -133,6 +135,11 @@ public enum CtrlBind {
                     //Inubot.getInstance().getClient().drawRectangle(400, 300, 200, 200, Color.RED.getRGB());
                 }
             }).start();
+        }
+    }, CREATE_ACCOUNT(KeyEvent.VK_N) {
+        @Override
+        public void onActivation() {
+            new CreaterGUI().setVisible(true);
         }
     };
 
