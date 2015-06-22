@@ -3,40 +3,33 @@ package com.inubot;
 import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Game;
 import com.inubot.api.util.CacheLoader;
-import com.inubot.api.util.Random;
 import com.inubot.api.util.Time;
 import com.inubot.bot.irc.IRCConnection;
+import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.transform.*;
-import com.inubot.bot.util.Configuration;
-import com.inubot.bot.util.ProxyUtils;
-import com.inubot.bot.util.RSClassLoader;
-import com.inubot.client.GameCanvas;
-import com.inubot.script.bundled.NMZAfker;
-import com.inubot.script.bundled.motherlode.MotherloadMine;
-import com.inubot.script.others.Powermine;
-import com.inubot.script.bundled.combattrainer.CombatTrainerPRO;
-import com.inubot.script.bundled.hunter.BirdSnarePRO;
-import com.inubot.script.bundled.hunter.FalconryPRO;
-import com.inubot.script.bundled.hunter.RedChinsPRO;
-import temp.account.Account;
-import temp.account.AccountManager;
-import com.inubot.script.bundled.rangeguild.RangeGuild;
-import temp.farm.irc.IRC;
-import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.ui.BotMenuBar;
-import com.inubot.bot.ui.BotToolBar;
+import com.inubot.bot.util.*;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.JarNode;
+import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.RSClient;
 import com.inubot.script.Script;
 import com.inubot.script.ScriptFlux;
+import com.inubot.script.bundled.NMZAfker;
 import com.inubot.script.bundled.agility.PerfectAgility;
+import com.inubot.script.bundled.combattrainer.CombatTrainerPRO;
+import com.inubot.script.bundled.hunter.*;
+import com.inubot.script.bundled.motherlode.MotherloadMine;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
+import com.inubot.script.others.Powermine;
+import temp.account.Account;
+import temp.account.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
@@ -80,7 +73,6 @@ public class Inubot extends JFrame implements Runnable {
     private final ScriptFlux scriptFlux;
     private final IRCConnection connection;
     private RSClient client;
-    private BotToolBar toolBar;
 
     public Inubot() {
         super(Configuration.APPLICATION_NAME);
@@ -168,8 +160,12 @@ public class Inubot extends JFrame implements Runnable {
     }
 
     @Override
+    public BotMenuBar getJMenuBar() {
+        return (BotMenuBar) super.getJMenuBar();
+    }
+
+    @Override
     public void run() {
-        this.toolBar = new BotToolBar();
         //add(toolBar, BorderLayout.NORTH);
         BotMenuBar menuBar = new BotMenuBar();
         super.setJMenuBar(menuBar);
@@ -237,13 +233,11 @@ public class Inubot extends JFrame implements Runnable {
         });
     }
 
-    public IRCConnection getConnection() { return connection; }
+    public IRCConnection getConnection() {
+        return connection;
+    }
 
     public ScriptFlux getScriptFlux() {
         return scriptFlux;
-    }
-
-    public BotToolBar getToolBar() {
-        return toolBar;
     }
 }

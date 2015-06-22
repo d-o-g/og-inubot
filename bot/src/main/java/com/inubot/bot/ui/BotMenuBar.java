@@ -45,7 +45,7 @@ public class BotMenuBar extends JMenuBar {
 //            }
 //        });
 
-        start.setEnabled(!Inubot.getInstance().getScriptFlux().isRunning());
+        start.setEnabled(true);
         start.addActionListener(e -> new ScriptSelector().setVisible(true));
 
         pause.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());

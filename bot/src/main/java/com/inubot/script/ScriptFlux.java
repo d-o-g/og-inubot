@@ -24,7 +24,7 @@ public class ScriptFlux {
         stop();
         this.running = runningScript;
         this.running.start();
-        Inubot.getInstance().getToolBar().updateButtonStates();
+        Inubot.getInstance().getJMenuBar().updateButtonStates();
     }
 
     public void switchState() {
