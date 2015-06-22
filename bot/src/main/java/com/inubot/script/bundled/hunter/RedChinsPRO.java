@@ -60,7 +60,7 @@ public class RedChinsPRO extends Script implements Paintable {
             if (item == null) {
                 if (!Players.getLocal().getLocation().equals(next)) {
                     Movement.walkTo(next);
-                    return 1000;
+                    return 600;
                 }
                 WidgetItem trap = Inventory.getFirst("Box trap");
                 if (trap != null && Players.getLocal().getLocation().equals(next)) {
@@ -80,7 +80,7 @@ public class RedChinsPRO extends Script implements Paintable {
                 }
             }
         }
-        return 420;
+        return 600;
     }
 
     private int getMaxTraps() {
