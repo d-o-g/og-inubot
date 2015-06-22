@@ -8,12 +8,8 @@ package com.inubot.bot.ui;
 
 import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
-import temp.account.Account;
-import temp.account.AccountManager;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author unsigned
@@ -23,11 +19,6 @@ public class BotMenuBar extends JMenuBar {
 
     private final JMenuItem widget = new JMenuItem("Widget Explorer");
     private final JMenuItem acc = new JMenuItem("Account Creator");
-
-    private final NexusTogglableButton rendering = new NexusTogglableButton("Rendering",
-            () -> Client.PAINTING);
-    private final NexusTogglableButton farm = new NexusTogglableButton("Farm Mode",
-            () -> !Client.LANDSCAPE_RENDERING_ENABLED);
 
     private final JButton pause = new JButton("Pause");
     private final JButton start = new JButton("Start");
@@ -62,8 +53,12 @@ public class BotMenuBar extends JMenuBar {
         });
         stop.setEnabled(false);
 
+        NexusToggleableButton rendering = new NexusToggleableButton("Rendering",
+                () -> Client.PAINTING);
         rendering.addActionListener(e -> Client.PAINTING = !Client.PAINTING);
 
+        NexusToggleableButton farm = new NexusToggleableButton("Farm Mode",
+                () -> !Client.LANDSCAPE_RENDERING_ENABLED);
         farm.addActionListener(e -> {
             Client.LANDSCAPE_RENDERING_ENABLED = !Client.LANDSCAPE_RENDERING_ENABLED;
             Client.MODEL_RENDERING_ENABLED = !Client.MODEL_RENDERING_ENABLED;

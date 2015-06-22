@@ -14,16 +14,16 @@ import java.util.function.BooleanSupplier;
  * @author unsigned
  * @since 27-04-2015
  */
-public class NexusTogglableButton extends JButton {
+public class NexusToggleableButton extends JButton {
 
     private final BooleanSupplier condition;
 
-    public NexusTogglableButton(String text) {
+    public NexusToggleableButton(String text) {
         this(text, () -> true);
         super.setFocusable(false);
     }
 
-    public NexusTogglableButton(String text, BooleanSupplier condition) {
+    public NexusToggleableButton(String text, BooleanSupplier condition) {
         super(text);
         super.setMinimumSize(new Dimension(getWidth() + 20, getHeight())); //resize for square
         this.condition = condition;
