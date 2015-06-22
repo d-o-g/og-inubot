@@ -1,10 +1,9 @@
 package com.inubot.script.others.test.combat;
 
-import com.inubot.api.methods.Combat;
-import com.inubot.api.methods.Players;
-import com.inubot.api.methods.Skills;
-import com.inubot.api.oldschool.Skill;
-import com.inubot.api.oldschool.Tile;
+import com.inubot.api.methods.*;
+import com.inubot.api.methods.traversal.Movement;
+import com.inubot.api.oldschool.*;
+import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
 
 /**
@@ -14,10 +13,10 @@ import com.inubot.script.Script;
 public class Combot extends Script {
 
     private enum Monster {
-        PIGEONS     (new Tile(3030, 3236), 10),
-        GOBLINS     (new Tile(0, 0), 20),
-        COWS        (new Tile(0, 0), 40);
-        // ???
+        SEAGULL     (new Tile(3030, 3236), 10),
+        GOBLINS     (new Tile(3259, 3232), 20),
+        COWS        (new Tile(3031, 3315), 40),
+        MONKS       (new Tile(0, 0), 99);
 
         public final Tile tile;
         public final int max;
@@ -27,6 +26,8 @@ public class Combot extends Script {
             this.max = max;
         }
     }
+
+    private static Tile GATE_TILE = new Tile(3031, 3313, 0);
 
     private int[] getMeleeSkills() {
         return new int[] {
@@ -64,9 +65,53 @@ public class Combot extends Script {
         return lowest;
     }
 
+    public Monster getCurrent() {
+        for (Monster monster : Monster.values()) {
+            if (getLowestSkillLevel() < monster.max)
+                return monster;
+        }
+        return Monster.GOBLINS;
+    }
+
+    public boolean attack(Monster monster) {
+        Npc npc = Npcs.getNearest(npc1 -> npc1.getTarget() == null && Movement.isReachable(npc1) && npc1.getName().toLowerCase().equals(monster.name().toLowerCase()));
+        if (npc != null) {
+            npc.processAction("Attack");
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public int loop() {
-
-        return 0;
+        if (!Game.isLoggedIn())
+            return 1000;
+        switchStyles();
+        Monster monster = getCurrent();
+        switch (monster) {
+            case SEAGULL:
+            case GOBLINS:
+                if (Players.getLocal().getTarget() == null)
+                    if (!attack(monster))
+                        if (monster.tile.distance() > 15)
+                            Movement.walkTo(monster.tile);
+                break;
+            case COWS:
+                Npc npc = Npcs.getNearest(n -> n.getName() != null && (n.getName().equals("Cow") || n.getName().equals("Cow calf")) && n.getTargetIndex() == -1 && n.getAnimation() == -1);
+                if (npc != null) {
+                    if (Movement.isEntityReachable(npc)) {
+                        npc.processAction("Attack");
+                    } else {
+                        GameObject fence = GameObjects.getNearest(t -> t.getLocation().equals(GATE_TILE));
+                        if (fence != null && fence.containsAction("Open")) {
+                            fence.processAction("Open");
+                            return 1500;
+                        }
+                    }
+                } else if (monster.tile.distance() > 13) {
+                    Movement.walkTo(monster.tile);
+                }
+        }
+        return 600;
     }
 }
