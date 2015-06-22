@@ -28,6 +28,10 @@ public class ScriptSelector extends JFrame {
         super.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         JPanel scripts = new JPanel();
+
+        JScrollPane scroll = new JScrollPane(scripts);
+        scroll.setPreferredSize(new Dimension(450, 110));
+
         scripts.setLayout(new GridLayout(3, 3, 5, 5));
         for (Class clazz : Inubot.SCRIPT_CLASSES)
             scripts.add(new Entity(clazz));
@@ -40,16 +44,7 @@ public class ScriptSelector extends JFrame {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        super.add(scripts, BorderLayout.EAST);
-
-        JPanel auths = new JPanel();
-        auths.setLayout(new BorderLayout());
-        auths.add(new JLabel("Auth codes"), BorderLayout.NORTH);
-        JList<String> authList = new JList<>(new String[]{"Click to reveal"});
-        authList.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-        auths.add(authList, BorderLayout.CENTER);
-        authList.setSize(authList.getWidth(), auths.getHeight() - authList.getHeight());
-        super.add(auths, BorderLayout.WEST);
+        super.add(scroll);
 
         super.pack();
         super.setResizable(false);
