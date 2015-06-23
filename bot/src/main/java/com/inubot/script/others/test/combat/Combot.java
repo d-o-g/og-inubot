@@ -14,7 +14,7 @@ public class Combot extends Script {
 
     private enum Monster {
         SEAGULL     (new Tile(3030, 3236), 15),
-        GOBLIN     (new Tile(3259, 3232), 25),
+        GOBLIN      (new Tile(3183, 3246), 25),
         COWS        (new Tile(3031, 3315), 40),
         MONKS       (new Tile(0, 0), 99);
 
@@ -119,7 +119,7 @@ public class Combot extends Script {
         switch (monster) {
             case SEAGULL:
             case GOBLIN:
-                if (Players.getLocal().getTarget() == null && Players.getLocal().getTarget().getTarget() == null)
+                if (Players.getLocal().getTarget() == null || Players.getLocal().getTarget().getTarget() == null)
                     if (!attack(monster))
                         if (monster.tile.distance() > 15)
                             Movement.walkTo(monster.tile);

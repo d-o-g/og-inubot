@@ -25,7 +25,7 @@ public class BankArea extends TutorialIslandTask {
             Interfaces.clickContinue();
         } else {
             if (Varps.get(281) == 510) {
-                if (Interfaces.getWidget(t -> t.getId() == 14352384) != null) {
+                if (Interfaces.getWidget(t -> t.getText().equals("Yes") && t.isVisible()) != null) {
                     Client.processAction(new DialogButtonAction(14352384, 0), "Continue", "");
                 } else {
                     final GameObject bank = GameObjects.getNearest("Bank booth");
