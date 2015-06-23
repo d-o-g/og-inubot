@@ -13,8 +13,8 @@ import com.inubot.script.Script;
 public class Combot extends Script {
 
     private enum Monster {
-        SEAGULL     (new Tile(3030, 3236), 10),
-        GOBLINS     (new Tile(3259, 3232), 20),
+        SEAGULL     (new Tile(3030, 3236), 15),
+        GOBLIN     (new Tile(3259, 3232), 25),
         COWS        (new Tile(3031, 3315), 40),
         MONKS       (new Tile(0, 0), 99);
 
@@ -28,6 +28,8 @@ public class Combot extends Script {
     }
 
     private static Tile GATE_TILE = new Tile(3031, 3313, 0);
+
+    private boolean bones = true;
 
     private int[] getMeleeSkills() {
         return new int[] {
@@ -47,9 +49,12 @@ public class Combot extends Script {
             case 1:
                 if (skills[1] > skills[2])
                     Combat.setStyle(2);
+                break;
             case 2:
+            case 3:
                 if (skills[2] >= skills[0])
                     Combat.setStyle(0);
+                break;
         }
     }
 
@@ -70,11 +75,12 @@ public class Combot extends Script {
             if (getLowestSkillLevel() < monster.max)
                 return monster;
         }
-        return Monster.GOBLINS;
+        return Monster.GOBLIN;
     }
 
     public boolean attack(Monster monster) {
-        Npc npc = Npcs.getNearest(npc1 -> npc1.getTarget() == null && !npc1.isHealthBarVisible() && Movement.isReachable(npc1) && npc1.getName().toLowerCase().equals(monster.name().toLowerCase()));
+        Npc npc = Npcs.getNearest(target -> target.getTarget() == null && !target.isHealthBarVisible() && Movement.isReachable(target)
+                    && target.getName().toLowerCase().equals(monster.name().toLowerCase()));
         if (npc != null) {
             npc.processAction("Attack");
             return true;
@@ -85,13 +91,35 @@ public class Combot extends Script {
     @Override
     public int loop() {
         if (!Game.isLoggedIn())
-            return 1000;
+            return 1500;
+
+        if (Interfaces.canContinue())
+            Interfaces.clickContinue();
         switchStyles();
+
+        if (Players.getLocal().getTarget() != null) {
+            return 600;
+        }
+
+        if (bones) {
+            GroundItem gi = GroundItems.getNearest(a -> a.getName().toLowerCase().contains("bone") && a.distance() < 8);
+            if (gi != null && Players.getLocal().getAnimation() == -1) {
+                gi.processAction("Take");
+                return 1000;
+            }
+
+            WidgetItem ii = Inventory.getFirst(a -> a.getName().toLowerCase().contains("bone"));
+            if (ii != null) {
+                ii.processAction("Bury");
+                return 600;
+            }
+        }
+
         Monster monster = getCurrent();
         switch (monster) {
             case SEAGULL:
-            case GOBLINS:
-                if (Players.getLocal().getTarget() == null)
+            case GOBLIN:
+                if (Players.getLocal().getTarget() == null && Players.getLocal().getTarget().getTarget() == null)
                     if (!attack(monster))
                         if (monster.tile.distance() > 15)
                             Movement.walkTo(monster.tile);
