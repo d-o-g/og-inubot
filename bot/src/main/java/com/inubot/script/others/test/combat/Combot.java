@@ -45,7 +45,7 @@ public class Combot extends Script {
                     Combat.setStyle(1);
                 break;
             case 1:
-                if (skills[1] < skills[2])
+                if (skills[1] > skills[2])
                     Combat.setStyle(2);
             case 2:
                 if (skills[2] >= skills[0])
