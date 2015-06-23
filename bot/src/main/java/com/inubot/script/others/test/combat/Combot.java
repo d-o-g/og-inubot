@@ -48,21 +48,9 @@ public class Combot extends Script {
                 if (skills[1] > skills[2])
                     Combat.setStyle(2);
             case 2:
-                if (skills[2] > skills[0])
+                if (skills[2] >= skills[0])
                     Combat.setStyle(0);
         }
-    }
-
-    public int getHighestSkillLevel() {
-        final int[] skills = getMeleeSkills();
-
-        int highest = skills[0];
-        for (int i = 1; i < skills.length; i++) {
-            if (highest > skills[i])
-                highest = skills[i];
-        }
-
-        return highest;
     }
 
     public int getLowestSkillLevel() {
