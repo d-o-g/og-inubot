@@ -18,6 +18,7 @@ import com.inubot.api.oldschool.VarpBit;
 import com.inubot.api.util.Time;
 import com.inubot.api.oldschool.GameObject;
 import com.inubot.bot.acc.CreaterGUI;
+import com.inubot.bot.ui.WidgetExplorer;
 
 import java.awt.event.KeyEvent;
 import java.security.Key;
@@ -140,6 +141,11 @@ public enum CtrlBind {
         @Override
         public void onActivation() {
             new CreaterGUI().setVisible(true);
+        }
+    }, SHOW_WIDGET(KeyEvent.VK_G) {
+        @Override
+        public void onActivation() {
+            new WidgetExplorer().setVisible(true);
         }
     };
 

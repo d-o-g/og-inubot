@@ -46,7 +46,7 @@ public class CreaterGUI extends JFrame {
         submit.addActionListener(e -> new Thread(() -> {
             setVisible(false);
             dispose();
-            Creator.create(username.getText().replace(" ", ".") + "@live.com", username.getText(),
+            Creator.create(username.getText().replace(" ", ".").toLowerCase() + "@live.com", username.getText(),
                     String.valueOf(password.getPassword()));
         }).start());
 

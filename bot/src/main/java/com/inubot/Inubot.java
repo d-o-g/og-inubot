@@ -23,6 +23,7 @@ import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.motherlode.MotherloadMine;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.Powermine;
+import com.inubot.script.others.test.combat.Combot;
 import temp.account.Account;
 import temp.account.AccountManager;
 
@@ -59,7 +60,8 @@ public class Inubot extends JFrame implements Runnable {
             //RangeGuild.class,
             MotherloadMine.class,
             Powermine.class,
-            NMZAfker.class
+            NMZAfker.class,
+            Combot.class
             //PestControl.class,
             //WineMeker.class,
             //Fletcher.class,

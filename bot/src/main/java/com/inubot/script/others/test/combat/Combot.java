@@ -18,8 +18,8 @@ public class Combot extends Script {
         COWS        (new Tile(3031, 3315), 40),
         MONKS       (new Tile(0, 0), 99);
 
-        public final Tile tile;
-        public final int max;
+        private final Tile tile;
+        private final int max;
 
         Monster(Tile tile, int max) {
             this.tile = tile;
@@ -53,6 +53,18 @@ public class Combot extends Script {
         }
     }
 
+    public int getHighestSkillLevel() {
+        final int[] skills = getMeleeSkills();
+
+        int highest = skills[0];
+        for (int i = 1; i < skills.length; i++) {
+            if (highest > skills[i])
+                highest = skills[i];
+        }
+
+        return highest;
+    }
+
     public int getLowestSkillLevel() {
         final int[] skills = getMeleeSkills();
 
@@ -74,7 +86,7 @@ public class Combot extends Script {
     }
 
     public boolean attack(Monster monster) {
-        Npc npc = Npcs.getNearest(npc1 -> npc1.getTarget() == null && Movement.isReachable(npc1) && npc1.getName().toLowerCase().equals(monster.name().toLowerCase()));
+        Npc npc = Npcs.getNearest(npc1 -> npc1.getTarget() == null && !npc1.isHealthBarVisible() && Movement.isReachable(npc1) && npc1.getName().toLowerCase().equals(monster.name().toLowerCase()));
         if (npc != null) {
             npc.processAction("Attack");
             return true;
