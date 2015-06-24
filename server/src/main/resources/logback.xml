@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-    <logger name="me.septron" level="debug" additivity="false">
+    <logger name="com.inubot" level="debug" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 
