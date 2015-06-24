@@ -14,6 +14,7 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
 
 /**
  * Created by luckruns0ut on 03/05/15.
@@ -170,13 +171,11 @@ public class WidgetExplorer extends JFrame implements Paintable {
             return;
         if (selected instanceof Widget[]) {
             Widget[] i = (Widget[]) selected;
-
-            if (i != null && i.length > 0) {
+            if (i.length > 0) {
                 for (Widget c : i) {
                     if (c != null) {
                         if (c.getChildren().length > 0 && drawComponentChildren) {
                             g.setColor(Color.green);
-
                             if (c.getChildren() != null) {
                                 for (Widget child : c.getChildren()) {
                                     if (child != null) {
@@ -307,7 +306,8 @@ public class WidgetExplorer extends JFrame implements Paintable {
                             + "<b> Texture Id: </b>" + c.getTextureId() + "<br>"
                             + "<b> Visible: </b>" + c.isVisible() + "<br>"
                             + "<b> Text: </b>" + c.getText() + "<br>"
-                            + "<b> Id: </b>" + c.getId() + "<br>");
+                            + "<b> Id: </b>" + c.getId() + "<br>"
+                            + "<b> Type: </b>" + c.getType() + "<br>");
                 }
             }
         });
