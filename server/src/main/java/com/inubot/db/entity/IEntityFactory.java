@@ -8,9 +8,9 @@ import com.inubot.db.connection.IConnect;
  */
 public interface IEntityFactory<T> {
 
-    public IConnect connection();
+    IConnect connection();
 
-    public T get(String column, String search) throws Exception;
-    public T update(T entity)throws Exception;
-    public boolean put(T entity) throws Exception;
+    T get(String column, String search) throws Exception;
+    T update(T entity)throws Exception;
+    boolean put(T entity) throws Exception;
 }

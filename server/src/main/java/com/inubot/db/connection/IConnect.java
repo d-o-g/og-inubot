@@ -6,10 +6,10 @@ package com.inubot.db.connection;
  */
 public interface IConnect<T> {
 
-    public boolean connect() throws Exception;
-    public boolean destroy() throws Exception;
+    boolean connect() throws Exception;
+    boolean destroy() throws Exception;
 
-    public void init() throws Exception;
+    void init() throws Exception;
 
-    public T connection();
+    T connection();
 }
