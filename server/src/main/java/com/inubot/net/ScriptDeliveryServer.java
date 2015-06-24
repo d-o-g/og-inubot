@@ -13,7 +13,7 @@ import com.inubot.net.handlers.LoginHandler;
  * @author Septron
  * @since June 21, 2015
  */
-public class ScriptDeliveryServer implements Runnable{
+public class ScriptDeliveryServer implements Runnable {
 
     private final EventLoopGroup worker = new NioEventLoopGroup();
     private final EventLoopGroup boss = new NioEventLoopGroup(1);

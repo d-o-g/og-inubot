@@ -1,5 +1,6 @@
 package com.inubot;
 
+import com.inubot.net.ScriptDeliveryServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,7 @@ public class Application {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String... args) {
-        logger.info("Hello, world!");
+        logger.info("Starting server...");
+        new Thread(new ScriptDeliveryServer("127.0.0.1", 40506)).start();
     }
 }

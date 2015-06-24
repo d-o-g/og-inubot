@@ -10,6 +10,9 @@
     <logger name="com.inubot" level="debug" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
+    <logger name="io.netty" level="error" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
 
     <root level="DEBUG">
         <appender-ref ref="STDOUT" />
