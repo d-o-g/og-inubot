@@ -1,4 +1,4 @@
-package me.septron.db.entity;
+package com.inubot.db.entity;
 
 /**
  * @author Septron

@@ -1,4 +1,4 @@
-package me.septron.db;
+package com.inubot.db;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -9,9 +9,6 @@ import java.lang.annotation.Retention;
  * @since June 24, 2015
  */
 @Retention(RUNTIME)
-public @interface Column {
-
-    boolean increment() default false;
-
+public @interface Table {
     String name();
 }

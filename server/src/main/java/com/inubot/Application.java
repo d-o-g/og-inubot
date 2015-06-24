@@ -1,4 +1,4 @@
-package me.septron;
+package com.inubot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

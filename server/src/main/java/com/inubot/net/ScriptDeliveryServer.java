@@ -1,13 +1,13 @@
-package me.septron.net;
+package com.inubot.net;
 
+import com.inubot.net.handlers.RequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
-import me.septron.net.handlers.LoginHandler;
-import me.septron.net.handlers.RequestHandler;
+import com.inubot.net.handlers.LoginHandler;
 
 /**
  * @author Septron

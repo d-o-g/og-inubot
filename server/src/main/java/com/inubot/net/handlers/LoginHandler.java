@@ -1,4 +1,4 @@
-package me.septron.net.handlers;
+package com.inubot.net.handlers;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;

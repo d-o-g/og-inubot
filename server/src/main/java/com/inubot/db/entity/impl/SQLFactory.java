@@ -1,10 +1,10 @@
-package me.septron.db.entity.impl;
+package com.inubot.db.entity.impl;
 
-import me.septron.db.Column;
-import me.septron.db.Table;
-import me.septron.db.connection.IConnect;
-import me.septron.db.connection.impl.SQLConnection;
-import me.septron.db.entity.IEntityFactory;
+import com.inubot.db.Column;
+import com.inubot.db.Table;
+import com.inubot.db.connection.impl.SQLConnection;
+import com.inubot.db.entity.IEntityFactory;
+import com.inubot.db.connection.IConnect;
 
 import java.lang.reflect.Field;
 import java.sql.SQLException;

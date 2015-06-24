@@ -1,4 +1,4 @@
-package me.septron.net.handlers;
+package com.inubot.net.handlers;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;

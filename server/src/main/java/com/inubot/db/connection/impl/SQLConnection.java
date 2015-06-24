@@ -1,6 +1,6 @@
-package me.septron.db.connection.impl;
+package com.inubot.db.connection.impl;
 
-import me.septron.db.connection.IConnect;
+import com.inubot.db.connection.IConnect;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

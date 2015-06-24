@@ -1,6 +1,6 @@
-package me.septron.db.entity;
+package com.inubot.db.entity;
 
-import me.septron.db.connection.IConnect;
+import com.inubot.db.connection.IConnect;
 
 /**
  * Created by Septron.

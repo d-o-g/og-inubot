@@ -1,11 +1,11 @@
-package me.septron.db.example;
+package com.inubot.db.example;
 
-import me.septron.db.Column;
-import me.septron.db.Table;
-import me.septron.db.connection.impl.SQLConnection;
-import me.septron.db.entity.IEntity;
-import me.septron.db.entity.IEntityFactory;
-import me.septron.db.entity.impl.SQLFactory;
+import com.inubot.db.Column;
+import com.inubot.db.Table;
+import com.inubot.db.connection.impl.SQLConnection;
+import com.inubot.db.entity.IEntity;
+import com.inubot.db.entity.IEntityFactory;
+import com.inubot.db.entity.impl.SQLFactory;
 
 public class Example {
 
