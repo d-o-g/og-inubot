@@ -10,7 +10,6 @@ import com.inubot.script.Script;
 import com.inubot.script.Task;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class Callback {
 
@@ -28,27 +27,19 @@ public class Callback {
         if (script != null && script.isRunning()) {
             script.messageReceived(type, sender, message, channel);
             if (type == 0) {
-                try {
-                    if (message.contains("Congratulations")) {
-                        String a = message.replace("Congratulations, you just advanced a ", "").replace(" level.", "");
-                        a = a.replace("Congratulations, you just advanced an ", "");
-                        int level = 0;
-                        for (Skill skill : Skill.values()) {
-                            if (a.equalsIgnoreCase(skill.name()))
-                                level = Skills.getLevel(skill);
-                        }
-
-                        Inubot.getInstance().getConnection().message("I am now level " + level + " in " + a);
+                if (message.contains("Congratulations")) {
+                    String a = message.replace("Congratulations, you just advanced a ", "").replace(" level.", "");
+                    a = a.replace("Congratulations, you just advanced an ", "");
+                    int level = 0;
+                    for (Skill skill : Skill.values()) {
+                        if (a.equalsIgnoreCase(skill.name()))
+                            level = Skills.getLevel(skill);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                    Inubot.getInstance().getIRCConnection().sendNotice("I am now level " + level + " in " + a);
                 }
             } else if (!sender.equals("")) {
-                try {
-                    Inubot.getInstance().getConnection().message(String.format("%s: %s (%s)", sender, message, type));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Inubot.getInstance().getIRCConnection().sendNotice(String.format("%s: %s (%s)", sender, message, type));
             }
         }
     }

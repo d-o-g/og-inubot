@@ -8,5 +8,5 @@ public interface IRCCommand {
 
     String name();
 
-    void handle(IRCConnection connection, String[] params);
+    void handle(String[] params);
 }

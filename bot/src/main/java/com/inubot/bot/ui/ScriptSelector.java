@@ -46,6 +46,7 @@ public class ScriptSelector extends JFrame {
         }
         super.add(scroll);
 
+        super.setLocationRelativeTo(null);
         super.pack();
         super.setResizable(false);
     }

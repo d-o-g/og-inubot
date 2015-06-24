@@ -12,4 +12,11 @@
     <artifactId>bot</artifactId>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>pircbot</groupId>
+            <artifactId>pircbot</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -73,8 +73,12 @@ public class Inubot extends JFrame implements Runnable {
     private static String autoStartScript = null;
     private final Crawler crawler;
     private final ScriptFlux scriptFlux;
-    private final IRCConnection connection;
+
+    private static final String IRC_CHANNEL = "#rd-bot";
+
     private RSClient client;
+
+    private final IRCConnection irc;
 
     public Inubot() {
         super(Configuration.APPLICATION_NAME);
@@ -93,8 +97,13 @@ public class Inubot extends JFrame implements Runnable {
             }
         }));
 
-        connection = new IRCConnection("irc.rizon.net", 6667);
-        new Thread(connection).start();
+        irc = new IRCConnection();
+        try {
+            irc.connect("irc.foonetic.net");
+            irc.joinChannel(IRC_CHANNEL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static Inubot getInstance() {
@@ -235,8 +244,8 @@ public class Inubot extends JFrame implements Runnable {
         });
     }
 
-    public IRCConnection getConnection() {
-        return connection;
+    public IRCConnection getIRCConnection() {
+        return irc;
     }
 
     public ScriptFlux getScriptFlux() {

@@ -72,7 +72,6 @@ public class Creator {
                     System.out.println("Failed to create account : " + username);
                     return false;
                 } else {
-                    System.out.println("Created account " + username + " : " + email + " - " + password);
                     return true;
                 }
             }

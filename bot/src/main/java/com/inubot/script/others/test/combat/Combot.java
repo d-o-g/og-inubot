@@ -15,8 +15,8 @@ public class Combot extends Script {
     private enum Monster {
         SEAGULL     (new Tile(3030, 3236), 15),
         GOBLIN      (new Tile(3183, 3246), 25),
-        COWS        (new Tile(3031, 3315), 40),
-        MONKS       (new Tile(0, 0), 99);
+        COWS        (new Tile(3031, 3315), 99);
+        //MONK        (new Tile(0, 0), 99);
 
         private final Tile tile;
         private final int max;
@@ -93,6 +93,8 @@ public class Combot extends Script {
         if (!Game.isLoggedIn())
             return 1500;
 
+
+
         if (Interfaces.canContinue())
             Interfaces.clickContinue();
         switchStyles();
@@ -100,6 +102,9 @@ public class Combot extends Script {
         if (Players.getLocal().getTarget() != null) {
             return 600;
         }
+
+        if (Movement.getRunEnergy() > 10 && !Movement.isRunEnabled())
+            Movement.toggleRun(true);
 
         if (bones) {
             GroundItem gi = GroundItems.getNearest(a -> a.getName().toLowerCase().contains("bone") && a.distance() < 8);

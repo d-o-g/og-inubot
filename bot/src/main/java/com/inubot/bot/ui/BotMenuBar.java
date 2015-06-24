@@ -39,14 +39,14 @@ public class BotMenuBar extends JMenuBar {
         start.setEnabled(true);
         start.addActionListener(e -> new ScriptSelector().setVisible(true));
 
-        pause.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
+        pause.setEnabled(false);
         pause.addActionListener(e -> {
             Inubot.getInstance().getScriptFlux().switchState();
             updateButtonStates();
         });
         pause.setEnabled(false);
 
-        stop.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
+        stop.setEnabled(false);
         stop.addActionListener(e -> {
             Inubot.getInstance().getScriptFlux().stop();
             updateButtonStates();

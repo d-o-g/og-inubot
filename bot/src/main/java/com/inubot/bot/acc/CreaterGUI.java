@@ -1,5 +1,8 @@
 package com.inubot.bot.acc;
 
+import temp.account.Account;
+import temp.account.AccountManager;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -29,6 +32,8 @@ public class CreaterGUI extends JFrame {
         GridBagLayout layout = new GridBagLayout();
         setLayout(layout);
 
+        setLocationRelativeTo(null);
+
         constraints.gridx = 0;
         constraints.gridy = 0;
         add(a, constraints);
@@ -46,8 +51,15 @@ public class CreaterGUI extends JFrame {
         submit.addActionListener(e -> new Thread(() -> {
             setVisible(false);
             dispose();
-            Creator.create(username.getText().replace(" ", ".").toLowerCase() + "@live.com", username.getText(),
-                    String.valueOf(password.getPassword()));
+            String name = username.getText();
+            String pass = String.valueOf(password.getPassword());
+            String email = name.replace(" ", ".").toLowerCase() + "@live.com";
+
+            if (Creator.create(email, name, pass)) {
+                AccountManager.setCurrentAccount(new Account(email, pass));
+                System.out.println("Set account - " + email + ":" + pass);
+            }
+
         }).start());
 
         constraints.gridx = 0;
