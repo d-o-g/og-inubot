@@ -16,9 +16,10 @@ public class IRCConnection extends PircBot {
 
     private static final String NAME_BASE = "BOT-";
 
-    private String[] MASTER = { "Septron", "Dogerina" };
+    private String[] masters = { "Septron", "Dogerina" };
 
     private List<IRCCommand> commands = new ArrayList<>();
+
     {
         commands.add(new Say());
     }
@@ -28,7 +29,7 @@ public class IRCConnection extends PircBot {
     }
 
     public final void sendNotice(String notice) {
-        for (String master : MASTER) {
+        for (String master : masters) {
             sendRawLine("NOTICE " + master + " :" + notice);
         }
     }
@@ -45,8 +46,8 @@ public class IRCConnection extends PircBot {
     }
 
     public void addMaster(String name) {
-        String[] masters = Arrays.copyOf(MASTER, MASTER.length + 1);
+        String[] masters = Arrays.copyOf(this.masters, this.masters.length + 1);
         masters[masters.length] = name;
-        MASTER = masters;
+        this.masters = masters;
     }
 }

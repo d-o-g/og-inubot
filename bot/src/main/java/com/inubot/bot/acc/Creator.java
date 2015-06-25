@@ -13,10 +13,6 @@ import java.net.URLConnection;
  */
 public class Creator {
 
-    public static void main(String... args) {
-        Creator.create("fag@emo.com", "emo", "wrists");
-    }
-
     private static final String PAGE = "https://secure.runescape.com/m=account-creation/g=oldscape/";
 
     private static URLConnection connection(String address) throws IOException {
