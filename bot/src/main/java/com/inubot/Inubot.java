@@ -18,7 +18,7 @@ import com.inubot.script.Script;
 import com.inubot.script.ScriptFlux;
 import com.inubot.script.bundled.NMZAfker;
 import com.inubot.script.bundled.agility.PerfectAgility;
-import com.inubot.script.bundled.combattrainer.CombatTrainerPRO;
+import com.inubot.script.bundled.combat.CombatTrainerPRO;
 import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.motherlode.MotherloadMine;
 import com.inubot.script.bundled.tutisland.TutorialIsland;

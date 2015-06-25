@@ -93,8 +93,6 @@ public class Combot extends Script {
         if (!Game.isLoggedIn())
             return 1500;
 
-
-
         if (Interfaces.canContinue())
             Interfaces.clickContinue();
         switchStyles();
@@ -132,7 +130,7 @@ public class Combot extends Script {
             case COWS:
                 Npc npc = Npcs.getNearest(n -> n.getName() != null && (n.getName().equals("Cow") || n.getName().equals("Cow calf")) && n.getTargetIndex() == -1 && n.getAnimation() == -1);
                 if (npc != null) {
-                    if (Movement.isEntityReachable(npc)) {
+                    if (Movement.isReachable(npc)) {
                         npc.processAction("Attack");
                     } else {
                         GameObject fence = GameObjects.getNearest(t -> t.getLocation().equals(GATE_TILE));
