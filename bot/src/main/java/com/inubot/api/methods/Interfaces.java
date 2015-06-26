@@ -168,11 +168,10 @@ public class Interfaces {
     }
 
     public static boolean canContinue() {
-        return getWidgets(w -> w.getText().contains("Click here to continue") && w.isVisible()).length > 0;
+        return getWidgets(w -> w.getText().contains("Click here to continue") && w.isVisible() && !w.isHidden()).length > 0;
     }
 
     public static boolean clickContinue() {
-        boolean ok = false;
         for (Widget widget : getWidgets(t -> t.getText().toLowerCase().contains("continue")
                 && t.isVisible() && !t.isHidden())) {
             Client.processAction(DialogButtonAction.clickHereToContinue(widget.getId()), "Continue", "");
