@@ -17,9 +17,6 @@ public class SurvivalExpert extends TutorialIslandTask {
 
     @Override
     public void run() {
-        if (Interfaces.canContinue()) {
-            Interfaces.clickContinue();
-        } else {
             if (Varps.get(281) == 20 || Varps.get(281) == 70) {
                 final Npc survivalExpert = Npcs.getNearest("Survival Expert");
                 if (survivalExpert != null) {
@@ -75,6 +72,5 @@ public class SurvivalExpert extends TutorialIslandTask {
                     Time.sleep(500);
                 }
             }
-        }
     }
 }

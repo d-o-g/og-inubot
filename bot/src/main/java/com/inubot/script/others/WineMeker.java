@@ -10,7 +10,7 @@ import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
-import com.inubot.CtrlBind;
+import com.inubot.Hotkeys;
 import com.inubot.api.util.Time;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.util.filter.IdFilter;
@@ -39,7 +39,7 @@ public class WineMeker extends Script implements Paintable {
     public int loop() {
         if (Inventory.getCount("Grapes") == 0 || Inventory.getCount("Jug of water") == 0) {
             if (!Bank.isOpen()) {
-                CtrlBind.OPEN_NEAREST_BANK_OBJECT.onActivation();
+                Hotkeys.OPEN_NEAREST_BANK_OBJECT.onActivation();
                 return 800;
             }
             Bank.depositInventory();

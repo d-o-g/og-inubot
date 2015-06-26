@@ -21,7 +21,6 @@ import com.inubot.bot.acc.CreaterGUI;
 import com.inubot.bot.ui.WidgetExplorer;
 
 import java.awt.event.KeyEvent;
-import java.security.Key;
 import java.util.*;
 import java.util.List;
 
@@ -29,7 +28,7 @@ import java.util.List;
  * @author unsigned
  * @since 16-05-2015
  */
-public enum CtrlBind {
+public enum Hotkeys {
 
     VAR_LISTENER(KeyEvent.VK_Q) {
         @Override
@@ -151,7 +150,7 @@ public enum CtrlBind {
 
     private final int key;
 
-    private CtrlBind(int key) {
+    private Hotkeys(int key) {
         this.key = key;
     }
 

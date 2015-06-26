@@ -21,9 +21,6 @@ public class BankArea extends TutorialIslandTask {
 
     @Override
     public void run() {
-        if (Interfaces.canContinue()) {
-            Interfaces.clickContinue();
-        } else {
             if (Varps.get(281) == 510) {
                 if (Interfaces.getWidget(t -> t.getText().equals("Yes") && t.isVisible()) != null) {
                     Client.processAction(new DialogButtonAction(14352384, 0), "Continue", "");
@@ -86,6 +83,5 @@ public class BankArea extends TutorialIslandTask {
                     door.processAction("Open");
                 }
             }
-        }
     }
 }

@@ -20,9 +20,6 @@ public class MagicInstructor extends TutorialIslandTask {
 
     @Override
     public void run() {
-        if (Interfaces.canContinue()) {
-            Interfaces.clickContinue();
-        } else {
             if (Varps.get(281) == 620 || Varps.get(281) == 640 || Varps.get(281) == 670) {
                 Tile near = new Tile(3133, 3088);
                 if (near.distance() > 7)
@@ -39,6 +36,5 @@ public class MagicInstructor extends TutorialIslandTask {
                 Magic.cast(Spell.Modern.WIND_STRIKE, npc);
                 //magic.cast(spell, npc);
             }
-        }
     }
 }

@@ -17,9 +17,6 @@ public class MasterChef extends TutorialIslandTask {
 
     @Override
     public void run() {
-        if (Interfaces.canContinue()) {
-            Interfaces.clickContinue();
-        } else {
             if (Varps.get(281) == 140) {
                 final Npc masterChef = Npcs.getNearest("Master Chef");
                 if (masterChef != null) {
@@ -84,6 +81,5 @@ public class MasterChef extends TutorialIslandTask {
                     Time.sleep(2500);
                 }
             }
-        }
     }
 }

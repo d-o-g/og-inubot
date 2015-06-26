@@ -172,12 +172,13 @@ public class Interfaces {
     }
 
     public static boolean clickContinue() {
-        boolean ret = false;
-        for (Widget widget : getWidgets(t -> t.getText().toLowerCase().contains("continue") && t.isVisible() && t.isVisible())) {
-            Client.processAction(DialogButtonAction.clickHereToContinue(widget.getId()), "Continue", "");
-            ret = true;
+        for (Widget widget : getWidgets(t -> t.getText().toLowerCase().contains("continue") && t.isVisible())) {
+            if ((widget.getOwner() == null)) {
+                Client.processAction(DialogButtonAction.clickHereToContinue(widget.getId()), "Continue", "");
+                return true;
+            }
         }
-        return ret;
+        return false;
     }
 
 }

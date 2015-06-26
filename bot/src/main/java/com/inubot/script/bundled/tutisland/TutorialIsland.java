@@ -1,6 +1,7 @@
 package com.inubot.script.bundled.tutisland;
 
 import com.inubot.api.methods.Game;
+import com.inubot.api.methods.Interfaces;
 import com.inubot.api.methods.Varps;
 import com.inubot.script.Script;
 import com.inubot.api.util.AWTUtil;
@@ -38,14 +39,18 @@ public class TutorialIsland extends Script implements Paintable {
     @Override
     public int loop() {
         if(Game.isLoggedIn()) {
+            if (Interfaces.canContinue()) {
+                Interfaces.clickContinue();
+                return 600;
+            }
             for (TutorialIslandTask task : tasks) {
                 if (task.verify()) {
                     task.run();
-                    return 500;
+                    return 600;
                 }
             }
         }
-        return 500;
+        return 600;
     }
 
     @Override

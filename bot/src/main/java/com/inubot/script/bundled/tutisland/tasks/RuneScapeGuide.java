@@ -19,10 +19,6 @@ public class RuneScapeGuide extends TutorialIslandTask {
 
     @Override
     public void run() {
-        if (Interfaces.canContinue()) {
-            Interfaces.clickContinue();
-            return;
-        }
         if (Varps.get(281) == 0 || Varps.get(281) == 7) {
             final Npc runescapeGuide = Npcs.getNearest("RuneScape Guide");
             if (runescapeGuide != null) {

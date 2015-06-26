@@ -21,9 +21,7 @@ public class MiningInstructor extends TutorialIslandTask {
 
     @Override
     public void run() {
-        if (Interfaces.canContinue()) {
-            Interfaces.clickContinue();
-        } else {
+
             if (Varps.get(281) == 260 || Varps.get(281) == 290 || Varps.get(281) == 330) {
                 final Npc miningInstructor = Npcs.getNearest("Mining Instructor");
                 if (miningInstructor != null) {
@@ -48,7 +46,7 @@ public class MiningInstructor extends TutorialIslandTask {
                     rocks.processAction("Prospect");
                 }
             } else if (Varps.get(281) == 300 && Players.getLocal().getAnimation() == -1) {
-                while (Inventory.getCount(new NameFilter<>("Tin ore")) != 2) {
+                while (Inventory.getCount(new NameFilter<>("Tin ore")) != 1) {
                     Movement.walkTo(new Tile(3078, 9504));
                     Time.sleep(2000);
                     final GameObject rocks = GameObjects.getNearest("Rocks");
@@ -58,7 +56,7 @@ public class MiningInstructor extends TutorialIslandTask {
                     }
                 }
             } else if (Varps.get(281) == 310) {
-                while (Inventory.getCount(new NameFilter<>("Copper ore")) != 2) {
+                while (Inventory.getCount(new NameFilter<>("Copper ore")) != 1) {
                     Movement.walkTo(new Tile(3082, 9501));
                     Time.sleep(2000);
                     final GameObject rocks = GameObjects.getNearest("Rocks");
@@ -90,6 +88,5 @@ public class MiningInstructor extends TutorialIslandTask {
                     gate.processAction("Open");
                 }
             }
-        }
     }
 }

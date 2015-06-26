@@ -17,9 +17,6 @@ public class CombatInstructor extends TutorialIslandTask {
 
     @Override
     public void run() {
-        if (Interfaces.canContinue()) {
-            Interfaces.clickContinue();
-        } else {
             if (Varps.get(281) == 370 || Varps.get(281) == 410) {
                 final Npc combatInstructor = Npcs.getNearest("Combat Instructor");
                 if (combatInstructor != null) {
@@ -89,6 +86,5 @@ public class CombatInstructor extends TutorialIslandTask {
                     gate.processAction("Climb-up");
                 }
             }
-        }
     }
 }

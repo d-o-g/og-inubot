@@ -23,6 +23,7 @@ import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.motherlode.MotherloadMine;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.Powermine;
+import com.inubot.script.others.test.Continue;
 import com.inubot.script.others.test.combat.Combot;
 import temp.account.Account;
 import temp.account.AccountManager;
@@ -61,11 +62,12 @@ public class Inubot extends JFrame implements Runnable {
             MotherloadMine.class,
             Powermine.class,
             NMZAfker.class,
-            Combot.class
+            Combot.class,
             //PestControl.class,
             //WineMeker.class,
             //Fletcher.class,
             //ChatTest.class
+            Continue.class,
     };
 
     private static Inubot instance;
@@ -236,7 +238,7 @@ public class Inubot extends JFrame implements Runnable {
             public void keyPressed(KeyEvent e) {
                 if (!e.isControlDown())
                     return;
-                for (CtrlBind cb : CtrlBind.values()) {
+                for (Hotkeys cb : Hotkeys.values()) {
                     if (e.getKeyCode() == cb.getKey())
                         cb.onActivation();
                 }

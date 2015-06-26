@@ -17,9 +17,6 @@ public class QuestGuide extends TutorialIslandTask {
 
     @Override
     public void run() {
-        if (Interfaces.canContinue()) {
-            Interfaces.clickContinue();
-        } else {
             if (Varps.get(281) == 220 || Varps.get(281) == 240) {
                 final Npc questGuide = Npcs.getNearest("Quest Guide");
                 if (questGuide != null) {
@@ -33,6 +30,5 @@ public class QuestGuide extends TutorialIslandTask {
                     ladder.processAction("Climb-down");
                 }
             }
-        }
     }
 }
