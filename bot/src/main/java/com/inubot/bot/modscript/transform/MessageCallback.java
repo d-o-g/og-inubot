@@ -9,6 +9,8 @@ package com.inubot.bot.modscript.transform;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import jdk.internal.org.objectweb.asm.tree.*;
 import com.inubot.client.Callback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Modifier;
 import java.util.Map;
@@ -18,6 +20,8 @@ import java.util.Map;
  * @since 27-04-2015
  */
 public class MessageCallback implements Transform {
+
+    private static final Logger logger = LoggerFactory.getLogger(MessageCallback.class);
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
@@ -35,7 +39,7 @@ public class MessageCallback implements Transform {
                 list.add(new MethodInsnNode(INVOKESTATIC, Callback.class.getName().replace('.', '/'),
                         "messageReceived", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", false));
                 mn.instructions.insertBefore(mn.instructions.getFirst(), list);
-                System.out.println("Injected message @ " + cn.name + "." + mn.name + mn.desc);
+                logger.debug("Injected message @ " + cn.name + "." + mn.name + mn.desc);
             }
         }
     }

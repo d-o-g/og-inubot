@@ -1,5 +1,8 @@
 package com.inubot.bot.acc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,6 +18,8 @@ public class Creator {
 
     private static final String PAGE = "https://secure.runescape.com/m=account-creation/g=oldscape/";
 
+    private static final Logger logger = LoggerFactory.getLogger(Creator.class);
+
     private static URLConnection connection(String address) throws IOException {
         URLConnection connection = new URL(address).openConnection();
         connection.setRequestProperty("User-Agent",
@@ -25,7 +30,7 @@ public class Creator {
 
     public static boolean create(String email, String username, String password) {
         if (username.length() > 12) {
-            System.out.println("Username too long!");
+            logger.info("Username too long!");
             return false;
         }
 
@@ -60,12 +65,12 @@ public class Creator {
                         failed = true;
                     }
                     if(line.contains("blocked from creating too many")) {
-                        System.out.println("Runescape has blocked for creating too many accounts.");
-                        System.out.println("Please wait an hour or activate a proxy and then continue.");
+                        logger.info("Runescape has blocked for creating too many accounts.");
+                        logger.info("Please wait an hour or activate a proxy and then continue.");
                     }
                 }
                 if (failed) {
-                    System.out.println("Failed to create account : " + username);
+                    logger.info("Failed to create account : " + username);
                     return false;
                 } else {
                     return true;

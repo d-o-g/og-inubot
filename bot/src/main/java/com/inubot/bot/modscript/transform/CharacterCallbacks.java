@@ -13,6 +13,8 @@ import com.inubot.client.listener.HealthListener;
 import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.Type;
 import jdk.internal.org.objectweb.asm.tree.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Modifier;
 import java.util.Map;
@@ -22,6 +24,8 @@ import java.util.Map;
  * @since 23-05-2015
  */
 public class CharacterCallbacks implements Transform {
+
+    private static final Logger logger = LoggerFactory.getLogger(CharacterCallbacks.class);
 
     private static int getOpenVar(MethodNode mn) {
         int maxVar = Type.getArgumentTypes(mn.desc).length;
@@ -113,7 +117,7 @@ public class CharacterCallbacks implements Transform {
                             stack.add(new MethodInsnNode(INVOKEVIRTUAL, HealthListener.class.getName().replace('.', '/'), "onChange", "(II)V", true));
                             stack.add(exitFlow);
                             mn.instructions.insert(ain, stack); //insert before the field is set so we can delegate old value
-                            System.out.println("Injected health listener @" + cs.name + "#" + mn.name + mn.desc);
+                            logger.debug("Injected health listener @" + cs.name + "#" + mn.name + mn.desc);
                         }
                     }
                 }

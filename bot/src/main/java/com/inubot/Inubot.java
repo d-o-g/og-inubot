@@ -26,6 +26,8 @@ import com.inubot.script.others.HerbCleaner;
 import com.inubot.script.others.Powermine;
 import com.inubot.script.others.test.Continue;
 import com.inubot.script.others.test.combat.Combot;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import temp.account.Account;
 import temp.account.AccountManager;
 
@@ -46,6 +48,8 @@ import java.util.Map;
  * @since 20-04-2015
  */
 public class Inubot extends JFrame implements Runnable {
+
+    private final static Logger logger = LoggerFactory.getLogger(Inubot.class);
 
     public static final Class[] SCRIPT_CLASSES = new Class[]{
             PerfectAgility.class,
@@ -139,7 +143,7 @@ public class Inubot extends JFrame implements Runnable {
                 String user = args[i + 1];
                 String pass = args[i + 2];
                 AccountManager.setCurrentAccount(new Account(user, pass));
-                System.out.println("Account is now " + user + " : " + pass);
+                logger.info("Account is now " + user + " : " + pass);
             }
             if (arg.equals("-script")) {
                 String name = args[i + 1];

@@ -10,6 +10,8 @@ import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.InvokeHook;
 import jdk.internal.org.objectweb.asm.tree.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Modifier;
 import java.util.*;
@@ -19,6 +21,8 @@ import java.util.*;
  * @since 20-04-2015
  */
 public class InvokerTransform implements Transform {
+
+    public static final Logger logger = LoggerFactory.getLogger(InvokerTransform.class);
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
@@ -81,7 +85,7 @@ public class InvokerTransform implements Transform {
                         invoker.instructions.add(new MethodInsnNode(INVOKESTATIC, cn.name, mn.name, mn.desc, false));
                         invoker.instructions.add(new InsnNode(RETURN));
                         client.methods.add(invoker);
-                        System.out.println("Injected drawRectangle invoker...");
+                        logger.debug("Injected drawRectangle invoker...");
                         break outer;
                     }
                 }

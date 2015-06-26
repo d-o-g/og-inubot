@@ -2,6 +2,8 @@ package com.inubot.bot.modscript;
 
 import com.inubot.bot.modscript.hooks.*;
 import com.inubot.bot.util.RSClassLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -9,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModScript {
+
+    private static final Logger logger = LoggerFactory.getLogger(ModScript.class);
 
     public static final Map<String, String> CLASS_MAP = new HashMap<>();
     public static final Map<String, FieldHook> FIELD_HOOK_MAP = new HashMap<>();
@@ -75,7 +79,7 @@ public class ModScript {
         try {
             return INVOKE_HOOK_MAP.get(name);
         } catch (Exception e) {
-            System.out.println(name + " isn't a valid invoke hook");
+            logger.error(name + " isn't a valid invoke hook");
             return null;
         }
     }

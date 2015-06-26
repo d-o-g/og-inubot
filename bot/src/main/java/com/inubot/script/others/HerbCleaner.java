@@ -18,7 +18,7 @@ import com.inubot.script.Script;
  */
 public class HerbCleaner extends Script {
 
-    private static final String GRIMY = "Grimy guam leaf";
+    private static final String GRIMY = "Grimy harralander";
 
     @Override
     public int loop() {

@@ -17,6 +17,9 @@ import com.inubot.api.oldschool.action.tree.InputButtonAction;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.misc.Perf;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -28,6 +31,8 @@ import java.util.List;
  * @since 26-04-2015
  */
 public class PerfectAgility extends Script implements Paintable {
+
+    private static final Logger logger = LoggerFactory.getLogger(PerfectAgility.class);
 
     public static final Tile[] TRAWLER_TO_SEERS = {new Tile(2627, 3169), new Tile(2604, 3259), new Tile(2612, 3340),
             new Tile(2622, 3387), new Tile(2668, 3451), new Tile(2725, 3484)};
@@ -112,7 +117,7 @@ public class PerfectAgility extends Script implements Paintable {
                 for(Obstacle obs : cours.getObstacles()) {
                     if(obs.getLocation().contains(Players.getLocal().getLocation())) {
                         this.course = cours;
-                        System.out.println("Using course: " + course.toString());
+                        logger.info("Using course: " + course.toString());
                     }
                 }
             }

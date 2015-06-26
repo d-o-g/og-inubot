@@ -1,5 +1,7 @@
 package com.inubot.bot.acc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import temp.account.Account;
 import temp.account.AccountManager;
 
@@ -11,6 +13,8 @@ import java.awt.*;
  * @since June 22, 2015
  */
 public class CreaterGUI extends JFrame {
+
+    private Logger logger = LoggerFactory.getLogger(CreaterGUI.class);
 
     private JPasswordField password = new JPasswordField(30);
 
@@ -57,7 +61,7 @@ public class CreaterGUI extends JFrame {
 
             if (Creator.create(email, name, pass)) {
                 AccountManager.setCurrentAccount(new Account(email, pass));
-                System.out.println("Set account - " + email + ":" + pass);
+                logger.info("Set account - " + email + ":" + pass);
             }
 
         }).start());

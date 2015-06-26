@@ -25,12 +25,6 @@ public class JConsole extends JInternalFrame implements Runnable {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(new Dimension(100, 100));
         frame.setVisible(true);
-
-        System.out.println("Spam");
-        System.out.println("Spam");
-        System.out.println("Spam");
-        System.out.println("Spam");
-        System.out.println("Spam");
     }
 
     private JTextArea text = new JTextArea(30, 30);
