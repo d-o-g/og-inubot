@@ -68,6 +68,18 @@ public class Client {
         Inubot.getInstance().getClient().setLowMemory(lowMemory);
     }
 
+    public static void setEngineTick(int value) {
+        Client.GAME_TICK_SLEEP = value;
+    }
+
+    public static void setModelRendering(boolean value) {
+        Client.MODEL_RENDERING_ENABLED = value;
+    }
+
+    public static void setLandscapeRendering(boolean value) {
+        Client.LANDSCAPE_RENDERING_ENABLED = value;
+    }
+
     public static void processAction(Action action, String actionText, String targetText, int x, int y) {
         processAction(action.arg0, action.arg1, action.arg2, action.opcode, actionText, targetText, x, y);
     }

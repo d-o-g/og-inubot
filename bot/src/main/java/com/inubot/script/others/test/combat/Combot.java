@@ -29,7 +29,7 @@ public class Combot extends Script {
 
     private static Tile GATE_TILE = new Tile(3031, 3313, 0);
 
-    private boolean bones = true;
+    private boolean bones = false;
 
     private int[] getMeleeSkills() {
         return new int[] {

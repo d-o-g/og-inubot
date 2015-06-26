@@ -53,12 +53,7 @@ public class BotMenuBar extends JMenuBar {
         });
         stop.setEnabled(false);
 
-        NexusToggleableButton rendering = new NexusToggleableButton("Rendering",
-                () -> Client.PAINTING);
-        rendering.addActionListener(e -> Client.PAINTING = !Client.PAINTING);
-
-        NexusToggleableButton farm = new NexusToggleableButton("Farm Mode",
-                () -> !Client.LANDSCAPE_RENDERING_ENABLED);
+        NexusToggleableButton farm = new NexusToggleableButton("Low CPU", () -> !Client.LANDSCAPE_RENDERING_ENABLED);
         farm.addActionListener(e -> {
             Client.LANDSCAPE_RENDERING_ENABLED = !Client.LANDSCAPE_RENDERING_ENABLED;
             Client.MODEL_RENDERING_ENABLED = !Client.MODEL_RENDERING_ENABLED;
@@ -71,8 +66,6 @@ public class BotMenuBar extends JMenuBar {
         add(stop);
 
         add(Box.createHorizontalGlue());
-
-        add(rendering);
         add(farm);
     }
 
