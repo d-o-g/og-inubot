@@ -8,10 +8,10 @@ package com.inubot.api.methods;
 
 import com.inubot.Inubot;
 import com.inubot.api.oldschool.Widget;
-import com.inubot.client.natives.RSWidget;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.RSInterface;
+import com.inubot.client.natives.RSWidget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,11 +172,11 @@ public class Interfaces {
     }
 
     public static boolean clickContinue() {
-        for (Widget widget : getWidgets(t -> t.getText().toLowerCase().contains("continue") && t.isVisible())) {
-            if ((widget.getOwner() == null)) {
-                Client.processAction(DialogButtonAction.clickHereToContinue(widget.getId()), "Continue", "");
-                return true;
-            }
+        boolean ok = false;
+        for (Widget widget : getWidgets(t -> t.getText().toLowerCase().contains("continue")
+                && t.isVisible() && !t.isHidden())) {
+            Client.processAction(DialogButtonAction.clickHereToContinue(widget.getId()), "Continue", "");
+            return true;
         }
         return false;
     }

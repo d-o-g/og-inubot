@@ -1,8 +1,6 @@
 package com.inubot.bot.modscript;
 
-import com.inubot.bot.modscript.hooks.FieldHook;
-import com.inubot.bot.modscript.hooks.Hook;
-import com.inubot.bot.modscript.hooks.InvokeHook;
+import com.inubot.bot.modscript.hooks.*;
 import com.inubot.bot.util.RSClassLoader;
 
 import java.io.*;
@@ -80,6 +78,10 @@ public class ModScript {
             System.out.println(name + " isn't a valid invoke hook");
             return null;
         }
+    }
+
+    public static int inverseFor(int value) {
+        return BigInteger.valueOf(value).modInverse(new BigInteger(String.valueOf(1L << 32))).intValue();
     }
 
     public static void load(byte[] bytes, String hash) throws Exception {

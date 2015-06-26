@@ -307,7 +307,9 @@ public class WidgetExplorer extends JFrame implements Paintable {
                             + "<b> Visible: </b>" + c.isVisible() + "<br>"
                             + "<b> Text: </b>" + c.getText() + "<br>"
                             + "<b> Id: </b>" + c.getId() + "<br>"
-                            + "<b> Type: </b>" + c.getType() + "<br>");
+                            + "<b> Type: </b>" + c.getType() + "<br>"
+                            + "<b> Hidden: </b>" + c.isHidden() + "<br>"
+                            + "<b> Explicitly Hidden: </b>" + c.isExplicitlyHidden() + "<br>");
                 }
             }
         });

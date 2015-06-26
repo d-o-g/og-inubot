@@ -179,6 +179,10 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         return (owner != null && owner.isHidden()) || raw.isHidden();
     }
 
+    public boolean isExplicitlyHidden() {
+        return raw.isHidden();
+    }
+
     public boolean isVisible() {
         return getBoundsArrayIndex() != -1;
     }

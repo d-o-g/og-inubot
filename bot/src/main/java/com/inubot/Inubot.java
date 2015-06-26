@@ -238,7 +238,7 @@ public class Inubot extends JFrame implements Runnable {
             public void keyPressed(KeyEvent e) {
                 if (!e.isControlDown())
                     return;
-                for (Hotkeys cb : Hotkeys.values()) {
+                for (Hotkey cb : Hotkey.values()) {
                     if (e.getKeyCode() == cb.getKey())
                         cb.onActivation();
                 }

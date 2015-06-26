@@ -28,7 +28,7 @@ import java.util.List;
  * @author unsigned
  * @since 16-05-2015
  */
-public enum Hotkeys {
+public enum Hotkey {
 
     VAR_LISTENER(KeyEvent.VK_Q) {
         @Override
@@ -150,7 +150,7 @@ public enum Hotkeys {
 
     private final int key;
 
-    private Hotkeys(int key) {
+    private Hotkey(int key) {
         this.key = key;
     }
 

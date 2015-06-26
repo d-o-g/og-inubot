@@ -2,10 +2,7 @@ package com.inubot.script.bundled.tutisland.tasks;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.oldschool.GameObject;
-import com.inubot.api.oldschool.Npc;
-import com.inubot.api.oldschool.Tab;
-import com.inubot.api.oldschool.Tile;
+import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
 import com.inubot.api.util.Time;
 
@@ -22,8 +19,9 @@ public class BankArea extends TutorialIslandTask {
     @Override
     public void run() {
             if (Varps.get(281) == 510) {
-                if (Interfaces.getWidget(t -> t.getText().equals("Yes") && t.isVisible()) != null) {
-                    Client.processAction(new DialogButtonAction(14352384, 0), "Continue", "");
+                Widget w = Interfaces.getWidget(t -> t.getText().equals("Yes") || t.getText().equals("Yes.") && t.isVisible());
+                if (w != null) {
+                    Client.processAction(new DialogButtonAction(w.getId(), 1), "Continue", "");
                 } else {
                     final GameObject bank = GameObjects.getNearest("Bank booth");
                     if (bank != null) {
