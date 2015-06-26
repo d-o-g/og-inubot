@@ -77,7 +77,7 @@ public class Bank {
         if (!isOpen())
             return new WidgetItem[0];
         Widget[] children = Interfaces.widgetsFor(BANK_PARENT);
-        Widget container = children[10];
+        Widget container = children[12];
         if (container != null) {
             List<WidgetItem> items = new ArrayList<>();
             Widget[] slots = container.getChildren();
@@ -118,7 +118,7 @@ public class Bank {
 
     public static void close() {
         if (Bank.isOpen()) {
-            Widget w = Interfaces.getWidget(12, 1).getChild(c -> c.getIndex() == 11);
+            Widget w = Interfaces.getWidget(12, 3).getChild(c -> c.getIndex() == 11);
             if (w != null)
                 Client.processAction(new WidgetAction(ActionOpcodes.WIDGET_ACTION, 0, w.getIndex(), w.getId()), "Close", "");
         }
@@ -208,7 +208,10 @@ public class Bank {
     }
 
     public static void depositInventory() {
-        depositAll(Filter.always());
+        Widget[] children = Interfaces.widgetsFor(BANK_PARENT);
+        Widget button = children[27];
+        if (button != null)
+            button.processAction("Deposit inventory");
     }
 
     public static void open() {

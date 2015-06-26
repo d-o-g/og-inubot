@@ -22,6 +22,7 @@ import com.inubot.script.bundled.combat.CombatTrainerPRO;
 import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.motherlode.MotherloadMine;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
+import com.inubot.script.others.HerbCleaner;
 import com.inubot.script.others.Powermine;
 import com.inubot.script.others.test.Continue;
 import com.inubot.script.others.test.combat.Combot;
@@ -67,7 +68,7 @@ public class Inubot extends JFrame implements Runnable {
             //WineMeker.class,
             //Fletcher.class,
             //ChatTest.class
-            Continue.class,
+            HerbCleaner.class
     };
 
     private static Inubot instance;
