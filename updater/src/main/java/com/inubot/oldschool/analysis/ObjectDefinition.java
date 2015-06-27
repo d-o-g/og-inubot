@@ -1,19 +1,18 @@
 package com.inubot.oldschool.analysis;
 
-import com.inubot.visitor.GraphVisitor;
-import com.inubot.visitor.VisitorInfo;
 import com.inubot.modscript.hook.FieldHook;
 import com.inubot.modscript.hook.InvokeHook;
+import com.inubot.visitor.GraphVisitor;
+import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.commons.cfg.Block;
 import org.objectweb.asm.commons.cfg.BlockVisitor;
 import org.objectweb.asm.commons.cfg.tree.NodeVisitor;
 import org.objectweb.asm.commons.cfg.tree.node.*;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.*;
 
 import java.lang.reflect.Modifier;
 
-@VisitorInfo(hooks = {"name", "actions", "id", "transformIds", "varpIndex", "transform", "mapFunction"})
+@VisitorInfo(hooks = {"name", "actions", "id", "transformIds", "varpIndex", "transform", "mapFunction", "colors", "newColors"})
 public class ObjectDefinition extends GraphVisitor {
 
     @Override
@@ -29,10 +28,57 @@ public class ObjectDefinition extends GraphVisitor {
         visit(new TransformIds());
         visit(new TransformIndex());
         visitAll(new MapFunction());
+        visitAll(new Colors());
         for (MethodNode mn : cn.methods) {
             if (!Modifier.isStatic(mn.access) && mn.desc.endsWith("L" + cn.name + ";")) {
                 addHook(new InvokeHook("transform", mn));
             }
+        }
+    }
+
+    private class Colors extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(final Block block) {
+            block.tree().accept(new NodeVisitor() {
+                public void visitMethod(MethodMemberNode mmn) {
+                    if (mmn.opcode() != INVOKEVIRTUAL)
+                        return;
+                    ClassNode refowner = updater.classnodes.get(mmn.owner());
+                    if (refowner == null)
+                        return;
+                    MethodNode mn = refowner.getMethod(mmn.name(), mmn.desc());
+                    if (mn != null && !contains(mn.instructions, IFNONNULL)) {
+                        mmn.tree().accept(new NodeVisitor() {
+                            @Override
+                            public void visitField(FieldMemberNode fmn) {
+                                if (!fmn.desc().equals("[S") || !fmn.owner().equals(cn.name))
+                                    return;
+                                if (!hooks.containsKey("colors")) {
+                                    addHook(new FieldHook("colors", fmn.fin()));
+                                } else if (!hooks.containsKey("newColors")) {
+                                    addHook(new FieldHook("newColors", fmn.fin()));
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+
+        private boolean contains(InsnList iList, int op) {
+            for (AbstractInsnNode ain : iList.toArray()) {
+                if (ain.opcode() == op) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

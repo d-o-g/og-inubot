@@ -98,6 +98,16 @@ public class Inventory {
         return getCount(false);
     }
 
+    public static int getCount(int id) {
+        int i = 0;
+        for (ItemTables.Entry entry : ItemTables.getInventory()) {
+            if (entry.getId() == id) {
+                i++;
+            }
+        }
+        return i;
+    }
+
     public static int getCount(String name) {
         int i = 0;
         for (ItemTables.Entry entry : ItemTables.getInventory()) {

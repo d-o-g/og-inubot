@@ -13,4 +13,7 @@ public interface RSObjectDefinition extends RSCacheNode {
 
     @Artificial
     RSObjectDefinition transform();
+
+    short[] getNewColors();
+    short[] getColors();
 }

@@ -5,11 +5,9 @@ import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Random;
 import com.inubot.api.util.StopWatch;
-import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
 
 import java.awt.*;
-import java.awt.font.TextLayout;
 
 /**
  * @author Septron
@@ -41,7 +39,7 @@ public class Woodcutter extends Script implements Paintable {
             return false;
         }
         xp = Skills.getExperience(Skill.WOODCUTTING);
-        price = Exchange.price(1519);
+        price = Exchange.getPrice(1519);
         runtime = new StopWatch(0);
         return true;
     }

@@ -1,5 +1,8 @@
 package com.inubot.api.oldschool;
 
+import com.inubot.api.util.CacheLoader;
+import com.inubot.client.natives.RSItemDefinition;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,8 +19,8 @@ public class Exchange {
 
     private static final String BASE_URL = "https://api.rsbuddy.com/grandExchange?a=guidePrice&i=";
 
-    private static String data(int item) throws IOException {
-        URLConnection connection = new URL(BASE_URL + item).openConnection();
+    private static String getData(int itemId) throws IOException {
+        URLConnection connection = new URL(BASE_URL + itemId).openConnection();
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(connection.getInputStream()))) {
             String line = reader.readLine();
@@ -27,9 +30,9 @@ public class Exchange {
         return null;
     }
 
-    public static int price(int item) {
+    public static int getPrice(int itemId) {
         try {
-            String line = data(item);
+            String line = getData(itemId);
             if (line != null) {
                 Matcher matcher = Pattern.compile("\"selling\":(\\d+)").matcher(line);
                 if (matcher.find()) {
@@ -40,5 +43,10 @@ public class Exchange {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public static int getPrice(String itemName) {
+        int id = CacheLoader.itemIdFor(itemName);
+        return id == -1 ? 0 : getPrice(id);
     }
 }

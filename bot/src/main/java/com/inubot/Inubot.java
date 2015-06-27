@@ -49,7 +49,7 @@ import java.util.Map;
  */
 public class Inubot extends JFrame implements Runnable {
 
-    private final static Logger logger = LoggerFactory.getLogger(Inubot.class);
+    private static final Logger logger = LoggerFactory.getLogger(Inubot.class);
 
     public static final Class[] SCRIPT_CLASSES = new Class[]{
             PerfectAgility.class,

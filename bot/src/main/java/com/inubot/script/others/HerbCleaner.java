@@ -18,7 +18,7 @@ import com.inubot.script.Script;
  */
 public class HerbCleaner extends Script {
 
-    private static final String GRIMY = "Grimy harralander";
+    private static final String GRIMY = "Grimy avantoe"; //grimy harralander
 
     @Override
     public int loop() {
@@ -31,13 +31,11 @@ public class HerbCleaner extends Script {
                 if (item != null)
                     item.processAction("Withdraw-All");
             }
+        } else if (Bank.isOpen()) {
+            Bank.close();
         } else {
-            if (Bank.isOpen()) {
-                Bank.close();
-            } else {
-                Inventory.apply(new NameFilter<>(GRIMY), e -> e.processAction("Clean"));
-            }
+            Inventory.apply(new NameFilter<>(GRIMY), e -> e.processAction("Clean"));
         }
-        return 500;
+        return 1000;
     }
 }
