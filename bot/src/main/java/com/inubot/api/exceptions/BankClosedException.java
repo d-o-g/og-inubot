@@ -7,10 +7,6 @@
 package com.inubot.api.exceptions;
 
 /**
- * @author unsigned
- * @since 01-05-2015
- */
-/**
  * A unique exception for the bank class that signifies that
  * a 'bank-open dependant' logic was attempted when the bank
  * was closed, an explicit default return could not be made.

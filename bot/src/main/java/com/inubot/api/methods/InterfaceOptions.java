@@ -45,7 +45,7 @@ public class InterfaceOptions {
             if (viewMode.getState() == screenState)
                 return viewMode;
         }
-        throw new IllegalStateException("Unknown state..?");
+        throw new IllegalStateException("Unknown state..? " + screenState);
     }
 
     public static enum ViewMode {
