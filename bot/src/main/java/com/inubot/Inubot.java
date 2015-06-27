@@ -73,7 +73,7 @@ public class Inubot extends JFrame implements Runnable {
             //Fletcher.class,
             //ChatTest.class
             Woodcutter.class,
-            HerbCleaner.class
+            HerbCleaner.class,
     };
 
     private static Inubot instance;
@@ -207,7 +207,7 @@ public class Inubot extends JFrame implements Runnable {
                 new ModelHack(), new CanvasHack(), new WidgetPositionHack(), new GetterAdder(),
                 new InvokerTransform(), new IdleTimeSetter(), new HoveredRegionTileSetter(),
                 new GroundItemPosition(), new MessageCallback(), new UserDetailsSetter(),
-                new VarpBitHack(), new LandscapeHack(), new LowMemorySetter()/*, new CharacterCallbacks()*/);
+                new VarpBitHack(), new LandscapeHack(), new LowMemorySetter(), new CatchBlockSweeper());
         Map<String, byte[]> classes = injector.inject();
 
         RSClassLoader classloader = new RSClassLoader(classes);
