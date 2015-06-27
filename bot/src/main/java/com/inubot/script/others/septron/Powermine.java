@@ -1,10 +1,12 @@
-package com.inubot.script.others;
+package com.inubot.script.others.septron;
 
 import com.inubot.api.methods.*;
+import com.inubot.api.oldschool.Exchange;
 import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.Paintable;
+import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.api.util.filter.IdFilter;
 import com.inubot.script.Script;
@@ -22,6 +24,35 @@ public class Powermine extends Script implements Paintable {
 
 
     private static final int[] SELECTED = IRON;
+
+    private int price = 0, xp = 0;
+
+    private StopWatch runtime;
+
+    @Override
+    public void render(Graphics2D graphics) {
+        graphics.setFont(new Font("Dialog", Font.BOLD, 12));
+        graphics.setColor(Color.YELLOW);
+        graphics.drawString("PRO Rock Destruction", 10, 40);
+        graphics.drawString("Runtime: " + runtime.toElapsedString(), 10, 55);
+
+        int gain = Skills.getExperience(Skill.MINING) - xp;
+        int mined = gain / 35;
+        graphics.drawString("Mined " + mined + " ore", 10, 70);
+        graphics.drawString("XP Gained: " + gain, 10, 85);
+        graphics.drawString("Made: " + (mined * price) + "gp", 10, 100);
+    }
+
+    @Override
+    public boolean setup() {
+        if (!Game.isLoggedIn()) {
+            return false;
+        }
+        xp = Skills.getExperience(Skill.MINING);
+        price = Exchange.price(440);
+        runtime = new StopWatch(0);
+        return true;
+    }
 
     @Override
     public int loop() {
@@ -47,10 +78,5 @@ public class Powermine extends Script implements Paintable {
             }
         }
         return 600;
-    }
-
-    @Override
-    public void render(Graphics2D g) {
-
     }
 }

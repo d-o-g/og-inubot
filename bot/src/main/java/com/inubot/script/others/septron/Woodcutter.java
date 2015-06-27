@@ -1,9 +1,15 @@
 package com.inubot.script.others.septron;
 
+import com.inubot.api.methods.*;
+import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Paintable;
+import com.inubot.api.util.Random;
+import com.inubot.api.util.StopWatch;
+import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
 
 import java.awt.*;
+import java.awt.font.TextLayout;
 
 /**
  * @author Septron
@@ -11,13 +17,71 @@ import java.awt.*;
  */
 public class Woodcutter extends Script implements Paintable {
 
-    @Override
-    public void render(Graphics2D g) {
+    private int price = 0, xp = 0;
 
+    private StopWatch runtime;
+
+    @Override
+    public void render(Graphics2D graphics) {
+        graphics.setFont(new Font("Dialog", Font.BOLD, 12));
+        graphics.setColor(Color.YELLOW);
+        graphics.drawString("PRO Willow Destruction", 10, 40);
+        graphics.drawString("Runtime: " + runtime.toElapsedString(), 10, 55);
+
+        int gain = Skills.getExperience(Skill.WOODCUTTING) - xp;
+        int chopped = (int) (gain / 67.5);
+        graphics.drawString("Chopped " + chopped + " logs", 10, 70);
+        graphics.drawString("XP Gained: " + gain, 10, 85);
+        graphics.drawString("Made: " + (chopped * price) + "gp", 10, 100);
+    }
+
+    @Override
+    public boolean setup() {
+        if (!Game.isLoggedIn()) {
+            return false;
+        }
+        xp = Skills.getExperience(Skill.WOODCUTTING);
+        price = Exchange.price(1519);
+        runtime = new StopWatch(0);
+        return true;
     }
 
     @Override
     public int loop() {
-        return 0;
+        if (!Game.isLoggedIn())
+            return 1000;
+        if (!Inventory.isFull() && Players.getLocal().getAnimation() == -1) {
+            GameObject tree = GameObjects.getNearest(obj -> {
+                if (obj != null) {
+                    if (obj.getName() != null) {
+                        if (obj.getName().equals("Willow")) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            });
+            if (tree != null) {
+                tree.processAction("Chop down");
+            }
+        } else if (Inventory.isFull()) {
+            Widget depo = Interfaces.getWidget(192, 3);
+            if (depo != null && depo.isVisible()) {
+                depo.processAction("Deposit inventory");
+            } else {
+                GameObject box = GameObjects.getNearest(obj -> {
+                    if (obj != null) {
+                        if (obj.getName() != null) {
+                            if (obj.getName().equals("Bank deposit box")) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                });
+                box.processAction("Deposit");
+            }
+        }
+        return Random.nextInt(1500, 2500);
     }
 }

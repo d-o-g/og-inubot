@@ -10,6 +10,7 @@ import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author unsigned

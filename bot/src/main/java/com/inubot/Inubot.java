@@ -25,7 +25,8 @@ import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.motherlode.MotherloadMine;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.HerbCleaner;
-import com.inubot.script.others.Powermine;
+import com.inubot.script.others.septron.Powermine;
+import com.inubot.script.others.septron.Woodcutter;
 import com.inubot.script.others.test.combat.Combot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +72,7 @@ public class Inubot extends JFrame implements Runnable {
             //WineMeker.class,
             //Fletcher.class,
             //ChatTest.class
+            Woodcutter.class,
             HerbCleaner.class
     };
 
