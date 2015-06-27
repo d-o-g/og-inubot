@@ -12,7 +12,7 @@ import com.inubot.api.methods.Login;
 import com.inubot.api.methods.Mouse;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
-import temp.account.AccountManager;
+import com.inubot.bot.AccountManager;
 
 import java.util.ArrayList;
 import java.util.List;

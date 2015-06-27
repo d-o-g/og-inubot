@@ -1,12 +1,4 @@
-package temp.account;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.UUID;
+package com.inubot.bot;
 
 /**
  * Created by luckruns0ut on 30/04/15.

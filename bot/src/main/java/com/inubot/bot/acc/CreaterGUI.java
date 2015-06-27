@@ -2,8 +2,8 @@ package com.inubot.bot.acc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import temp.account.Account;
-import temp.account.AccountManager;
+import com.inubot.bot.Account;
+import com.inubot.bot.AccountManager;
 
 import javax.swing.*;
 import java.awt.*;
