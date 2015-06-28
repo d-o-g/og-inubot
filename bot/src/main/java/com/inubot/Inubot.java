@@ -190,7 +190,7 @@ public class Inubot extends JFrame implements Runnable {
 
         File randomDat = new File(System.getProperty("user.home") + "/random.dat");
         if (randomDat.exists())
-            randomDat.delete();
+            randomDat.setReadOnly();
 
         Injector injector = new Injector(new JarNode(new File(crawler.pack)));
         Collections.addAll(injector.getTransforms(), new EngineTickCallback(),
@@ -216,7 +216,7 @@ public class Inubot extends JFrame implements Runnable {
         setVisible(true);
 
         if (instance == null)
-            instance = this; //why the fuck is this even happening
+            instance = this;
 
         while (Game.getState() < Game.STATE_CREDENTIALS_SCREEN || getClient().asApplet().getComponentCount() == 0)
             Time.sleep(100);

@@ -6,14 +6,14 @@
  */
 package com.inubot.script.bundled.hunter;
 
-import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.util.Paintable;
-import com.inubot.api.util.StopWatch;
-import com.inubot.api.util.Time;
-import com.inubot.script.Script;
-import com.inubot.api.methods.traversal.Movement;
+import com.inubot.Inubot;
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
+import com.inubot.api.oldschool.action.ActionOpcodes;
+import com.inubot.api.util.*;
+import com.inubot.client.natives.RSObjectDefinition;
+import com.inubot.script.Script;
 
 import java.awt.*;
 
@@ -25,10 +25,14 @@ public class RedChinsPRO extends Script implements Paintable {
 
     private static final int EXP_EACH = 265;
     private static final int PRICE_EST = 1500;
+    private static final String[] MEMES = {"Fuck off", "I hope you die", "Get back to your cotton factory nigger",
+            "No room for a nigger like you in this world", "Eat a condom and die", "I fucked your mother",
+            "Go away", "Stop plz", "O M G", "Omg stop", "Lol stop", "Wow really just hop", "Lol"};
 
     private Tile tile;
     private int startExp;
     private StopWatch runtime;
+    private boolean fuckOff = false;
 
     public boolean setup() {
         if (!Game.isLoggedIn()) {
@@ -41,8 +45,27 @@ public class RedChinsPRO extends Script implements Paintable {
         return true;
     }
 
+    private boolean isMakingGarden(Tile t) {
+        GameObject[] objects = GameObjects.getLoadedAt(t.getRegionX(), t.getRegionY(), 0);
+        for (GameObject object : objects) {
+            RSObjectDefinition def = object.getDefinition();
+            if (def != null) {
+                String name = def.getName();
+                if (name != null && (name.equals("Flowers") || name.equals("Fire")))
+                    return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public int loop() {
+        if (fuckOff) {
+            for (char c : Random.nextElement(MEMES).toCharArray())
+                Inubot.getInstance().getCanvas().sendKey(c, 20);
+            Inubot.getInstance().getCanvas().pressEnter();
+            fuckOff = false;
+        }
         Tile next = getNextLocation();
         if (next != null) {
             GroundItem item = GroundItems.getNearest(groundItem -> groundItem.getLocation().equals(next)
@@ -108,6 +131,10 @@ public class RedChinsPRO extends Script implements Paintable {
     public Tile getNextLocation() {
         Tile[] formation = getTrapTactics();
         for (final Tile tile : formation) { //no trap is available
+            if (isMakingGarden(tile)) {
+                fuckOff = true;
+                continue;
+            }
             if (GameObjects.getNearest(o -> o.getLocation().equals(tile)) == null)
                 return tile;
         }
