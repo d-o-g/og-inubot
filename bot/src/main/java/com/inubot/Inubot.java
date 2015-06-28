@@ -96,15 +96,6 @@ public class Inubot extends JFrame implements Runnable {
         this.crawler = new Crawler(Crawler.GameType.OSRS);
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                //DataOutputStream out = new DataOutputStream(new FileOutputStream(new File(Configuration.ACTIONS)));
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }));
-
         irc = new IRCConnection();
         try {
             irc.connect("irc.foonetic.net");
@@ -223,6 +214,9 @@ public class Inubot extends JFrame implements Runnable {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+
+        if (instance == null)
+            instance = this; //why the fuck is this even happening
 
         while (Game.getState() < Game.STATE_CREDENTIALS_SCREEN || getClient().asApplet().getComponentCount() == 0)
             Time.sleep(100);

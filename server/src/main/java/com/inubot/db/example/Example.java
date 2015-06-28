@@ -40,7 +40,7 @@ public class Example {
             return;
         }
 
-        IEntityFactory<User> factory = new SQLFactory<>(connection, User.class);
+        IEntityFactory<User> factory = new SQLFactory<User>(connection, User.class);
 
         User penis = new User("penis", "password");
         if (!factory.put(penis))

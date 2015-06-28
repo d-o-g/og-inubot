@@ -16,7 +16,7 @@ public class IRCConnection extends PircBot {
 
     private static final String NAME_BASE = "BOT-";
 
-    private String[] masters = { "Septron", "Dogerina" };
+    private String[] masters = { "Septron", "Dogerina", "DankMemes" };
 
     private List<IRCCommand> commands = new ArrayList<>();
 
