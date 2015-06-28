@@ -7,6 +7,8 @@
 package com.inubot.live;
 
 import com.inubot.Updater;
+import com.inubot.live.analysis.Client;
+import com.inubot.live.analysis.Widget;
 import com.inubot.util.io.Crawler;
 import com.inubot.visitor.GraphVisitor;
 import org.objectweb.asm.commons.cfg.Block;
@@ -84,8 +86,8 @@ public class RS3Updater extends Updater {
         }
     }
 
-    protected static GraphVisitor[] createVisitors() {
-        return new GraphVisitor[]{};
+    private static GraphVisitor[] createVisitors() {
+        return new GraphVisitor[]{new Widget(), new Client()};
     }
 
     public RS3Updater(File file) throws Exception {
@@ -129,7 +131,7 @@ public class RS3Updater extends Updater {
     }
 
     public static void main(String[] args) throws Exception {
-        run(false, true, new File("packs/rs3/H814.jar"));
+        run(false, true);
     }
 }
 

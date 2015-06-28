@@ -102,17 +102,20 @@ public abstract class GraphVisitor implements Opcodes {
         bv.visitEnd();
     }
 
-    public final void visitAll(BlockVisitor bv) {
+    public final void visitAll(BlockVisitor... bv) {
         for (Map<MethodNode, FlowGraph> map : updater.graphs().values()) {
             for (FlowGraph graph : map.values()) {
                 this.graph = graph;
                 for (Block block : graph) {
-                    if (bv.validate())
-                        bv.visit(block);
+                    for (BlockVisitor b : bv) {
+                        if (b.validate())
+                            b.visit(block);
+                    }
                 }
             }
         }
-        bv.visitEnd();
+        for (BlockVisitor b : bv)
+            b.visitEnd();
     }
 
     public final void visitIf(BlockVisitor bv, Predicate<Block> blockPredicate) {
