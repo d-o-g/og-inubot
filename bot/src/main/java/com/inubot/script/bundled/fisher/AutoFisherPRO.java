@@ -223,7 +223,7 @@ public class AutoFisherPRO extends Script implements Paintable {
 
         @Override
         public boolean validate() {
-            return canWalkToBank() || (spot != null && canWalkToFish());
+            return canWalkToBank() || canWalkToFish();
         }
 
         private boolean canWalkToBank() {
