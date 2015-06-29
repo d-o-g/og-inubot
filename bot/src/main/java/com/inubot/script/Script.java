@@ -10,6 +10,7 @@ import com.inubot.Inubot;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Login;
 import com.inubot.api.methods.Mouse;
+import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
 import com.inubot.bot.AccountManager;
@@ -100,7 +101,7 @@ public abstract class Script extends LoopTask {
 
     }
 
-    public void messageReceived(int type, String sender, String message, String channel) {
+    public void messageReceived(MessageEvent e) {
 
     }
 

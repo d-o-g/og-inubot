@@ -6,6 +6,7 @@
  */
 package com.inubot.script.bundled.agility;
 
+import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
@@ -223,8 +224,8 @@ public class PerfectAgility extends Script implements Paintable {
     }
 
     @Override
-    public void messageReceived(int type, String sender, String message, String channel) {
-        if (message.contains("You can't do that from here"))
+    public void messageReceived(MessageEvent e) {
+        if (e.getText().contains("You can't do that from here"))
             stuck++;
     }
 
