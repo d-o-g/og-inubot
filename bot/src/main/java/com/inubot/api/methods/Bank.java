@@ -219,6 +219,8 @@ public class Bank {
         if (p == null)
             p = Npcs.getNearest(new NameFilter<>("Banker", "Emerald Benedict"));
         if (p == null)
+            p = GameObjects.getNearest(t -> t.containsAction("Bank") && "Bank booth".equals(t.getName()));
+        if (p == null)
             return;
         p.processAction("Bank");
     }

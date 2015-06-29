@@ -18,7 +18,10 @@ import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.RSClient;
 import com.inubot.script.Script;
 import com.inubot.script.ScriptFlux;
+import com.inubot.script.bundled.fisher.AutoFisherPRO;
+import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.money.Potato;
+import com.inubot.script.others.test.combat.Combot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +46,12 @@ public class Inubot extends JFrame implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(Inubot.class);
 
     public static final Class[] SCRIPT_CLASSES = new Class[]{
-            Potato.class
+            Potato.class,
+            AutoFisherPRO.class,
+            Combot.class,
+            RedChinsPRO.class,
+            BirdSnarePRO.class,
+            FalconryPRO.class
     };
 
     private static Inubot instance;
@@ -52,7 +60,7 @@ public class Inubot extends JFrame implements Runnable {
     private final Crawler crawler;
     private final ScriptFlux scriptFlux;
 
-    private static final String IRC_CHANNEL = "#bone-bots";
+    private static final String IRC_CHANNEL = "#rd-bot";
 
     private RSClient client;
 
