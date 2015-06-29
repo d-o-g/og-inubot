@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class AutoFisherPRO extends Script implements Paintable {
             while (!closed) {
                 Time.sleep(700);
             }
-        } catch (final Throwable ignored) {
+        } catch (Throwable ignored) {
         }
         startExp = Skills.getExperience(Skill.FISHING);
         startLvl = Skills.getLevel(Skill.FISHING); //maybe do this in loop? might not start logged in
@@ -126,15 +128,15 @@ public class AutoFisherPRO extends Script implements Paintable {
         private GUI() {
             super("AutoFisherPRO");
             setLayout(new GridLayout(0, 2));
-            final JComboBox<String> options = new JComboBox<>(FISH_NAMES);
-            final JComboBox<Location> cath = new JComboBox<>(Location.values());
-            final JCheckBox power = new JCheckBox("Powerfish");
-            final JButton start = new JButton("start");
+            JComboBox<String> options = new JComboBox<>(FISH_NAMES);
+            JComboBox<Location> loc = new JComboBox<>(Location.values());
+            JCheckBox power = new JCheckBox("Powerfish");
+            JButton start = new JButton("start");
             start.addActionListener(e -> {
                 setVisible(false);
                 closed = true;
                 powerfish = power.isSelected();
-                location = Location.values()[cath.getSelectedIndex()];
+                location = Location.values()[loc.getSelectedIndex()];
                 int index = options.getSelectedIndex();
                 fish = Fish.values()[index];
                 logger.info("You are " + (powerfish ? "power" : "") + "fishing "
@@ -143,8 +145,9 @@ public class AutoFisherPRO extends Script implements Paintable {
                         + fish.action + " and "
                         + fish.otherAction);
             });
+            power.addActionListener(e -> loc.setEnabled(!power.isSelected()));
             add(options);
-            add(cath);
+            add(loc);
             add(power);
             add(start);
             pack();
