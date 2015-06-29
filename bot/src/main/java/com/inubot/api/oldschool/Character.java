@@ -78,6 +78,14 @@ public abstract class Character<T extends RSCharacter> extends Wrapper<T> implem
         return getHealthBarCycle() > Game.getEngineCycle();
     }
 
+    public int getQueueSize() {
+        return raw.getQueueSize();
+    }
+
+    public boolean isMoving() {
+        return getQueueSize() != 0;
+    }
+
     public Character<?> getTarget() {
         int index = getTargetIndex();
         if (index == -1)

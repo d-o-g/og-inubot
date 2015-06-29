@@ -11,7 +11,7 @@ import org.objectweb.asm.commons.cfg.tree.node.*;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
-@VisitorInfo(hooks = {"x", "y", "health", "maxHealth", "interactingIndex", "animation", "healthBarCycle"})
+@VisitorInfo(hooks = {"x", "y", "health", "maxHealth", "interactingIndex", "animation", "healthBarCycle", "queueSize"})
 public class Character extends GraphVisitor {
 
     @Override
@@ -22,11 +22,35 @@ public class Character extends GraphVisitor {
 
     @Override
     public void visit() {
+        visit(new QueueSize());
         visitAll(new PositionHooks());
         visitAll(new HealthHooks());
         visitAll(new InteractingIndex());
         visitAll(new Animation());
         visitAll(new CombatCycle());
+    }
+
+    private class QueueSize extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor(this) {
+                public void visitField(FieldMemberNode fmn) {
+                    if (fmn.opcode() == PUTFIELD && fmn.owner().equals(cn.name) && fmn.desc().equals("I")) {
+                        fmn = (FieldMemberNode) fmn.layer(IADD, GETFIELD);
+                        if (fmn == null || !fmn.owner().equals(cn.name) || !fmn.desc().equals("I") || fmn.first(DUP) == null)
+                            return;
+                        hooks.put("queueSize", new FieldHook("queueSize", fmn.fin()));
+                        lock.set(true);
+                    }
+                }
+            });
+        }
     }
 
     private class CombatCycle extends BlockVisitor {

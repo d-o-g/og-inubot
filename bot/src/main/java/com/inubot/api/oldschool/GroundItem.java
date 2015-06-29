@@ -20,10 +20,6 @@ import com.inubot.api.util.Identifiable;
 
 import java.util.Arrays;
 
-/**
- * @author unsigned
- * @since 22-04-2015
- */
 public class GroundItem extends Wrapper<RSItem> implements Locatable, Identifiable, Processable {
 
     private final int plane;

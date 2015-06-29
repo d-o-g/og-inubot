@@ -12,10 +12,6 @@ public interface RSCharacter extends RSRenderable {
     int getHealth();
     int getMaxHealth();
     int getHealthBarCycle();
+    int getQueueSize();
 
-    @Artificial
-    HealthListener getHealthListener();
-
-    @Artificial
-    void setHealthListener(HealthListener listener);
 }

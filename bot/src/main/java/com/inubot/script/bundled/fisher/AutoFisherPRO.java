@@ -99,7 +99,7 @@ public class AutoFisherPRO extends Script implements Paintable {
     private enum Location {
 
         CATHERBY(new Tile(2809, 3440, 0), new Tile(2852, 3424)),
-        FISHING_GUILD(new Tile(2588, 3419, 0), new Tile(2600, 3422));
+        FISHING_GUILD(new Tile(2586, 3418, 0), new Tile(2600, 3422));
 
         private final Tile bank;
         private final Tile spot;
@@ -250,7 +250,7 @@ public class AutoFisherPRO extends Script implements Paintable {
         @Override
         public boolean validate() {
             GameObject bank = GameObjects.getNearest("Bank booth");
-            return !powerfish && (Bank.isOpen() && Inventory.isFull()
+            return !powerfish && !Players.getLocal().isMoving() && (Bank.isOpen() && Inventory.isFull()
                     || Inventory.isFull() && bank != null && bank.distance() < 5);
         }
     }
