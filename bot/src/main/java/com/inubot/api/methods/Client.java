@@ -22,6 +22,7 @@ public class Client {
     public static final int[] VARPBIT_MASKS = new int[32];
     public static boolean LANDSCAPE_RENDERING_ENABLED = true;
     public static boolean MODEL_RENDERING_ENABLED = true;
+    public static boolean WIDGET_RENDERING_ENABLED = true;
     public static boolean PAINTING = true;
     public static int GAME_TICK_SLEEP = -1;
 
@@ -78,6 +79,10 @@ public class Client {
 
     public static void setLandscapeRendering(boolean value) {
         Client.LANDSCAPE_RENDERING_ENABLED = value;
+    }
+
+    public static void setWidgetRendering(boolean value) {
+        Client.WIDGET_RENDERING_ENABLED = value;
     }
 
     public static void processAction(Action action, String actionText, String targetText, int x, int y) {

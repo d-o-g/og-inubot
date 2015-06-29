@@ -1,9 +1,11 @@
 package com.inubot.bot.modscript.transform;
 
+import com.inubot.api.methods.Client;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.FieldHook;
 import com.inubot.bot.modscript.transform.util.ASMFactory;
+import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.tree.*;
 
 import java.lang.reflect.Modifier;
@@ -35,6 +37,16 @@ public class WidgetPositionHack implements Transform {
                 if (!Modifier.isStatic(mn.access) || !mn.desc.endsWith("V")
                         || !mn.desc.startsWith("([L" + widget.name + ";IIIIII"))
                     continue;
+                InsnList setStack = new InsnList();
+                Label label = new Label();
+                LabelNode ln = new LabelNode(label);
+                mn.visitLabel(label);
+                setStack.add(new InsnNode(ICONST_0));
+                setStack.add(new FieldInsnNode(GETSTATIC, Client.class.getName().replace('.', '/'), "WIDGET_RENDERING_ENABLED", "Z"));
+                setStack.add(new JumpInsnNode(IFNE, ln));
+                setStack.add(new InsnNode(RETURN));
+                setStack.add(ln);
+                mn.instructions.insert(setStack);
                 //Phase 1
                 int obj = -1, ilx = -1, ily = -1;
                 for (AbstractInsnNode ain : mn.instructions.toArray()) {

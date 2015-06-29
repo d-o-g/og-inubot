@@ -18,34 +18,27 @@ import java.awt.*;
  */
 public class Potato extends Script implements Paintable {
 
-    private final Tile BANK = new Tile(3094, 3243);
-    private final Tile POTATO = new Tile(3145, 3293);
+    private static final Tile BANK = new Tile(3094, 3243);
+    private static final Tile POTATO = new Tile(3145, 3293);
 
     @Override
     public int loop() {
         if (Inventory.isFull()) {
             if (BANK.distance() > 7) {
                 Movement.walkTo(BANK);
+            } else if (Bank.isOpen()) {
+                Bank.depositAll();
             } else {
-                if (Bank.isOpen()) {
-                    Bank.depositAll();
-                } else {
-                    Bank.open();
-                    Time.sleep(2000);
-                }
+                Bank.open();
+                Time.sleep(2000);
             }
         } else {
-            final GameObject potato = GameObjects.getNearest(raw -> {
-                return raw.getName().equals("Potato");
-            });
+            final GameObject potato = GameObjects.getNearest("Potato");
             if (potato != null) {
-                final GameObject gate = GameObjects.getNearest(raw -> {
-                    return raw.getName().equals("Gate");
-                });
+                final GameObject gate = GameObjects.getNearest(t -> "Gate".equals(t.getName()) && t.containsAction("Open"));
                 if (gate != null) {
-                    if (gate.containsAction("Open")) {
-                        gate.processAction("Open");
-                    }
+                    gate.processAction("Open");
+                    return 2000;
                 }
                 if (Players.getLocal().getAnimation() == -1) {
                     potato.processAction("Pick");
