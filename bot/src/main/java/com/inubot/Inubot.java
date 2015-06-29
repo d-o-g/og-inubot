@@ -22,6 +22,7 @@ import com.inubot.script.bundled.NMZAfker;
 import com.inubot.script.bundled.agility.PerfectAgility;
 import com.inubot.script.bundled.combat.CombatTrainerPRO;
 import com.inubot.script.bundled.hunter.*;
+import com.inubot.script.bundled.money.Potato;
 import com.inubot.script.bundled.motherlode.MotherloadMine;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.HerbCleaner;
@@ -52,28 +53,7 @@ public class Inubot extends JFrame implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(Inubot.class);
 
     public static final Class[] SCRIPT_CLASSES = new Class[]{
-            PerfectAgility.class,
-            TutorialIsland.class,
-            //AutoWalker.class,
-            //Seagull.class,
-            BirdSnarePRO.class,
-            FalconryPRO.class,
-            //CoolWidgetExplorer.class,
-            //Crafter.class,
-            RedChinsPRO.class,
-            //PrayerFlick.class,
-            CombatTrainerPRO.class,
-            //RangeGuild.class,
-            MotherloadMine.class,
-            Powermine.class,
-            NMZAfker.class,
-            Combot.class,
-            //PestControl.class,
-            //WineMeker.class,
-            //Fletcher.class,
-            //ChatTest.class
-            Woodcutter.class,
-            HerbCleaner.class,
+            Potato.class
     };
 
     private static Inubot instance;
@@ -82,7 +62,7 @@ public class Inubot extends JFrame implements Runnable {
     private final Crawler crawler;
     private final ScriptFlux scriptFlux;
 
-    private static final String IRC_CHANNEL = "#rd-bot";
+    private static final String IRC_CHANNEL = "#bone-bots";
 
     private RSClient client;
 

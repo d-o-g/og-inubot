@@ -16,9 +16,11 @@ public class Walk implements IRCCommand {
 
     @Override
     public void handle(String[] params) {
-        if (params.length == 2) {
+        if (params.length >= 2) {
             if (Game.isLoggedIn()) {
-                final Tile tile = new Tile(Integer.parseInt(params[0]), Integer.parseInt(params[1]));
+                int x = Integer.parseInt(params[1]);
+                int y = Integer.parseInt(params[2]);
+                final Tile tile = new Tile(x, y);
                 while (tile.distance() > 3) {
                     Movement.walkTo(tile);
                 }

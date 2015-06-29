@@ -236,6 +236,15 @@ public class Bank {
         }
     }
 
+    public static void depositAll() {
+        if (!isOpen())
+            throw new BankClosedException();
+        for (WidgetItem item : Inventory.getItems()) {
+            if (item != null && item.getDefinition() != null)
+                item.processAction("Deposit-All");
+        }
+    }
+
     public static WithdrawMode getWithdrawMode() {
         return Varps.getBoolean(WITHDRAW_MODE_VARP) ? WithdrawMode.NOTE : WithdrawMode.ITEM;
     }

@@ -80,6 +80,7 @@ public enum Hotkey {
         @Override
         public void onActivation() {
             logger.debug("Current location: " + Players.getLocal().getLocation());
+            System.out.println("Current location: " + Players.getLocal().getLocation());
         }
     }, WALK_NORTH(KeyEvent.VK_W) {
         @Override

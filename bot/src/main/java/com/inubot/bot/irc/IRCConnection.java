@@ -2,6 +2,7 @@ package com.inubot.bot.irc;
 
 import com.inubot.api.util.Random;
 import com.inubot.bot.irc.commands.Say;
+import com.inubot.bot.irc.commands.Walk;
 import org.jibble.pircbot.PircBot;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class IRCConnection extends PircBot {
 
     {
         commands.add(new Say());
+        commands.add(new Walk());
     }
 
     public IRCConnection() {
@@ -40,8 +42,7 @@ public class IRCConnection extends PircBot {
         if (index != -1) {
             String[] params = message.substring(index).split(" ");
             String command = message.substring(1, index);
-            commands.stream().filter(ic -> ic.name().equals(
-                    command.toLowerCase())).forEach(ic -> ic.handle(params));
+            commands.stream().filter(ic -> ic.name().equals(command.toLowerCase())).forEach(ic -> ic.handle(params));
         }
     }
 
