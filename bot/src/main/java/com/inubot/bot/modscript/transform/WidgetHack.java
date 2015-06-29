@@ -11,7 +11,7 @@ import jdk.internal.org.objectweb.asm.tree.*;
 import java.lang.reflect.Modifier;
 import java.util.Map;
 
-public class WidgetPositionHack implements Transform {
+public class WidgetHack implements Transform {
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
@@ -32,8 +32,8 @@ public class WidgetPositionHack implements Transform {
            var14 = var17;
            //and here
          */
-        for (final ClassNode node : classes.values()) {
-            for (final MethodNode mn : node.methods) {
+        for (ClassNode node : classes.values()) {
+            for (MethodNode mn : node.methods) {
                 if (!Modifier.isStatic(mn.access) || !mn.desc.endsWith("V")
                         || !mn.desc.startsWith("([L" + widget.name + ";IIIIII"))
                     continue;

@@ -25,20 +25,19 @@ public class MessageCallback implements Transform {
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
-        for (final ClassNode cn : classes.values()) {
-            for (final MethodNode mn : cn.methods) {
+        for (ClassNode cn : classes.values()) {
+            for (MethodNode mn : cn.methods) {
                 if (!Modifier.isStatic(mn.access) || !mn.desc.endsWith("V")
-                        || !mn.desc.startsWith("(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;")) {
+                        || !mn.desc.startsWith("(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;"))
                     continue;
-                }
-                final InsnList list = new InsnList();
-                list.add(new VarInsnNode(ILOAD, 0));
-                list.add(new VarInsnNode(ALOAD, 1));
-                list.add(new VarInsnNode(ALOAD, 2));
-                list.add(new VarInsnNode(ALOAD, 3));
-                list.add(new MethodInsnNode(INVOKESTATIC, Callback.class.getName().replace('.', '/'),
+                InsnList stack = new InsnList();
+                stack.add(new VarInsnNode(ILOAD, 0));
+                stack.add(new VarInsnNode(ALOAD, 1));
+                stack.add(new VarInsnNode(ALOAD, 2));
+                stack.add(new VarInsnNode(ALOAD, 3));
+                stack.add(new MethodInsnNode(INVOKESTATIC, Callback.class.getName().replace('.', '/'),
                         "messageReceived", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", false));
-                mn.instructions.insertBefore(mn.instructions.getFirst(), list);
+                mn.instructions.insertBefore(mn.instructions.getFirst(), stack);
                 logger.debug("Injected message @ " + cn.name + "." + mn.name + mn.desc);
             }
         }

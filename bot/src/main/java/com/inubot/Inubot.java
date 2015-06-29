@@ -18,17 +18,7 @@ import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.RSClient;
 import com.inubot.script.Script;
 import com.inubot.script.ScriptFlux;
-import com.inubot.script.bundled.NMZAfker;
-import com.inubot.script.bundled.agility.PerfectAgility;
-import com.inubot.script.bundled.combat.CombatTrainerPRO;
-import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.money.Potato;
-import com.inubot.script.bundled.motherlode.MotherloadMine;
-import com.inubot.script.bundled.tutisland.TutorialIsland;
-import com.inubot.script.others.HerbCleaner;
-import com.inubot.script.others.septron.Powermine;
-import com.inubot.script.others.septron.Woodcutter;
-import com.inubot.script.others.test.combat.Combot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -175,7 +165,7 @@ public class Inubot extends JFrame implements Runnable {
         Injector injector = new Injector(new JarNode(new File(crawler.pack)));
         Collections.addAll(injector.getTransforms(), new EngineTickCallback(),
                 new ProcessActionCallback(), new ProcessActionInvoker(), new InterfaceImpl(),
-                new ModelHack(), new CanvasHack(), new WidgetPositionHack(), new GetterAdder(),
+                new ModelHack(), new CanvasHack(), /*new WidgetHack(),*/ new GetterAdder(),
                 new InvokerTransform(), new IdleTimeSetter(), new HoveredRegionTileSetter(),
                 new GroundItemPosition(), new MessageCallback(), new UserDetailsSetter(),
                 new VarpBitHack(), new LandscapeHack(), new LowMemorySetter(), new CatchBlockSweeper());

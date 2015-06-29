@@ -1,4 +1,4 @@
-package com.inubot.api.oldschool;
+package com.inubot.api.methods;
 
 import com.inubot.api.util.CacheLoader;
 import com.inubot.client.natives.RSItemDefinition;
