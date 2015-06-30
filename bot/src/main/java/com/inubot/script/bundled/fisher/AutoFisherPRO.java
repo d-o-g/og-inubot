@@ -12,7 +12,6 @@ import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
-import com.inubot.api.util.filter.Filter;
 import com.inubot.api.util.filter.IdFilter;
 import com.inubot.script.Script;
 import org.slf4j.Logger;
@@ -20,8 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 
@@ -128,6 +125,7 @@ public class AutoFisherPRO extends Script implements Paintable {
 
     private interface Action {
         boolean validate();
+
         void execute();
     }
 
