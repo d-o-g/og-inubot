@@ -21,6 +21,7 @@ import com.inubot.script.ScriptFlux;
 import com.inubot.script.bundled.fisher.AutoFisherPRO;
 import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.money.Potato;
+import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.test.combat.Combot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +52,8 @@ public class Inubot extends JFrame implements Runnable {
             Combot.class,
             RedChinsPRO.class,
             BirdSnarePRO.class,
-            FalconryPRO.class
+            FalconryPRO.class,
+            TutorialIsland.class
     };
 
     private static Inubot instance;

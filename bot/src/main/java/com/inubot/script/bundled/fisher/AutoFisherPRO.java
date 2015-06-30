@@ -12,6 +12,7 @@ import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
+import com.inubot.api.util.filter.Filter;
 import com.inubot.api.util.filter.IdFilter;
 import com.inubot.script.Script;
 import org.slf4j.Logger;
@@ -37,7 +38,7 @@ public class AutoFisherPRO extends Script implements Paintable {
     private Fish fish;
     private Npc spot;
 
-    private final Action[] actions = {new Dropping(), new Fishing(), new Depositing(), new Walking()};
+    private Action[] actions;
 
     @Override
     public boolean setup() {
@@ -50,11 +51,18 @@ public class AutoFisherPRO extends Script implements Paintable {
         }
         startExp = Skills.getExperience(Skill.FISHING);
         startLvl = Skills.getLevel(Skill.FISHING); //maybe do this in loop? might not start logged in
+        if (!powerfish) {
+            actions = new Action[]{new Dropping(), new Fishing(), new Depositing(), new Walking()};
+        } else {
+            actions = new Action[]{new Dropping(), new Fishing()};
+        }
         return true;
     }
 
     @Override
     public int loop() {
+        if (Interfaces.canContinue())
+            Interfaces.clickContinue();
         for (Action action : actions) {
             if (action.validate())
                 action.execute();
@@ -198,15 +206,10 @@ public class AutoFisherPRO extends Script implements Paintable {
                     }
                 }
             } else {
-                for (Npc spot0 : Npcs.getLoaded()) {
-                    if (spot0 != null && spot0.getDefinition() != null) {
-                        List<String> actions = Arrays.asList(spot0.getDefinition().getActions());
-                        if (actions.contains(fish.action) && actions.contains(fish.otherAction)) {
-                            spot = spot0;
-                            break;
-                        }
-                    }
-                }
+                spot = Npcs.getNearest(spot0 -> {
+                    List<String> actions1 = Arrays.asList(spot0.getDefinition().getActions());
+                    return actions1.contains(fish.action) && actions1.contains(fish.otherAction);
+                });
             }
         }
     }
