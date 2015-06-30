@@ -207,7 +207,7 @@ public class AutoFisherPRO extends Script implements Paintable {
                 }
             } else {
                 spot = Npcs.getNearest(spot0 -> {
-                    List<String> actions1 = Arrays.asList(spot0.getDefinition().getActions());
+                    java.util.List<String> actions1 = Arrays.asList(spot0.getDefinition().getActions());
                     return actions1.contains(fish.action) && actions1.contains(fish.otherAction);
                 });
             }
