@@ -29,11 +29,12 @@ public class AutoFisherPRO extends Script implements Paintable {
     private static final String[] FISH_NAMES = {"Shrimps, Anchovies", "Shark",
             "Bass, Cod, Herring", "Lobster", "Tuna, Swordfish"};
 
+    private static final Tile BAD_TILE = new Tile(3246, 3157, 0); //hacky fix
+
     private boolean closed, powerfish;
     private int startExp, startLvl, caught;
     private Location location;
     private Fish fish;
-    private Npc spot;
     private Tile start;
 
     private Action[] actions;
@@ -188,36 +189,21 @@ public class AutoFisherPRO extends Script implements Paintable {
 
         @Override
         public void execute() {
+            Npc spot = Npcs.getNearest(spot0 -> {
+                if (spot0.getLocation().equals(BAD_TILE))
+                    return false;
+                List<String> list = Arrays.asList(spot0.getDefinition().getActions());
+                return list.contains(fish.action) && list.contains(fish.otherAction);
+            });
             if (spot != null && (Players.getLocal().getAnimation() == -1 || Players.getLocal().getTarget() == null)) {
                 spot.processAction(fish.action);
                 Time.await(() -> Players.getLocal().getAnimation() != -1, 5000);
-            } else {
-                setSpot();
             }
         }
 
         @Override
         public boolean validate() {
-            setSpot();
             return !Inventory.isFull() && Players.getLocal().getAnimation() == -1;
-        }
-
-        private void setSpot() {
-            if (spot != null) {
-                if (Npcs.getNearest(n -> n.getLocation().equals(spot.getLocation())) == null) {
-                    spot = null;
-                } else {
-                    List<String> actions = Arrays.asList(spot.getDefinition().getActions());
-                    if (!actions.contains(fish.action) && !actions.contains(fish.otherAction)) {
-                        spot = null;
-                    }
-                }
-            } else {
-                spot = Npcs.getNearest(spot0 -> {
-                    java.util.List<String> actions1 = Arrays.asList(spot0.getDefinition().getActions());
-                    return actions1.contains(fish.action) && actions1.contains(fish.otherAction);
-                });
-            }
         }
     }
 
@@ -229,8 +215,6 @@ public class AutoFisherPRO extends Script implements Paintable {
                 Movement.walkTo(location.bank);
             } else if (canWalkToFish()) {
                 Movement.walkTo(location.spot);
-            } else if (spot != null) {
-                Movement.walkTo(spot.getLocation());
             }
         }
 
