@@ -34,6 +34,7 @@ public class AutoFisherPRO extends Script implements Paintable {
     private Location location;
     private Fish fish;
     private Npc spot;
+    private Tile start;
 
     private Action[] actions;
 
@@ -58,6 +59,14 @@ public class AutoFisherPRO extends Script implements Paintable {
 
     @Override
     public int loop() {
+        if (powerfish) {
+            if (start == null) {
+                start = Players.getLocal().getLocation();
+            } else if (start.distance() > 20) {
+                Movement.walkTo(start);
+                return 2000;
+            }
+        }
         if (Interfaces.canContinue())
             Interfaces.clickContinue();
         for (Action action : actions) {
