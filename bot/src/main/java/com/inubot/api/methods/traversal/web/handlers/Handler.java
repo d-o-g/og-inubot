@@ -1,4 +1,4 @@
-package com.inubot.api.web.handlers;
+package com.inubot.api.methods.traversal.web.handlers;
 
 import com.inubot.api.oldschool.Tile;
 
@@ -14,5 +14,5 @@ public abstract class Handler {
         this.target = target;
     }
 
-    public abstract double cost();
+    public abstract double getCost();
 }

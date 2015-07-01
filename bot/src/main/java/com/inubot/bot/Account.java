@@ -6,6 +6,7 @@ import com.inubot.Inubot;
  * Created by luckruns0ut on 30/04/15.
  */
 public class Account {
+
     private final String username;
     private final String password;
 

@@ -1,4 +1,4 @@
-package com.inubot.api.web.data;
+package com.inubot.api.methods.traversal.web.data;
 
 /**
  * @author Septron

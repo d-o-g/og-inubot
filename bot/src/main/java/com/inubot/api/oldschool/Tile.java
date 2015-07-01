@@ -83,6 +83,14 @@ public class Tile implements Locatable {
         g.draw(polygon);
     }
 
+    public boolean isInBuilding() {
+        int regionX = getRegionX();
+        int regionY = getRegionY();
+        if (regionX <= 0 || regionX >= 104 || regionY <= 0 || regionY >= 104)
+            return false;
+        return Game.getClient().getRenderRules()[Game.getPlane()][regionX][regionY] >= 4;
+    }
+
     @Override
     public Tile getLocation() {
         return this;
