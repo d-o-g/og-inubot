@@ -1,9 +1,9 @@
-package com.inubot.bot.irc.commands;
+package com.inubot.bot.net.irc.commands;
 
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.Tile;
-import com.inubot.bot.irc.IRCCommand;
+import com.inubot.bot.net.irc.IRCCommand;
 
 /**
  * Created by bytehound on 6/27/2015.

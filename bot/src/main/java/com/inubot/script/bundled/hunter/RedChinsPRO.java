@@ -12,6 +12,7 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.*;
+import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.RSObjectDefinition;
 import com.inubot.script.Script;
 
@@ -24,7 +25,7 @@ import java.awt.*;
 public class RedChinsPRO extends Script implements Paintable {
 
     private static final int EXP_EACH = 265;
-    private static final int PRICE_EST = 1500;
+    private static final int PRICE_EST = Exchange.getPrice("Red chinchompa");
     private static final String[] MEMES = {"Fuck off", "I hope you die", "Get back to your cotton factory nigger",
             "No room for a nigger like you in this world", "Eat a condom and die", "I fucked your mother",
             "Go away", "Stop plz", "O M G", "Omg stop", "Lol stop", "Wow really just hop", "Lol"};
@@ -66,6 +67,20 @@ public class RedChinsPRO extends Script implements Paintable {
             Inubot.getInstance().getCanvas().pressEnter();
             fuckOff = false;
         }
+
+        Npc npc = Npcs.getNearest(cock -> {
+            if (cock.getTarget() != null && cock.getTarget().getRaw() == Players.getLocal().getRaw()) {
+                for (String action : cock.getDefinition().getActions()) {
+                    if (action.equals("Dismiss")) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+        if (npc != null)
+            npc.processAction("Dismiss");
+
         Tile next = getNextLocation();
         if (next != null) {
             GroundItem item = GroundItems.getNearest(groundItem -> groundItem.getLocation().equals(next)
@@ -103,7 +118,7 @@ public class RedChinsPRO extends Script implements Paintable {
                 }
             }
         }
-        return 600;
+        return 800;
     }
 
     private int getMaxTraps() {
@@ -113,15 +128,58 @@ public class RedChinsPRO extends Script implements Paintable {
     private Tile[] getTrapTactics() {
         switch (getMaxTraps()) {
             case 1:
-                return new Tile[]{tile};
+                return new Tile[]{
+                        tile
+                };
             case 2:
-                return new Tile[]{tile.derive(-1, 0), tile.derive(1, 0)};
+                return new Tile[]{
+                        tile.derive(-1, 0), tile.derive(1, 0)};
             case 3:
-                return new Tile[]{tile.derive(-1, 0), tile.derive(0, -1), tile.derive(1, 0)};
+                return new Tile[]{
+                        tile.derive(-1, 0), tile.derive(0, -1), tile.derive(1, 0)
+                };
             case 4:
-                return new Tile[]{tile.derive(-1, 0), tile.derive(0, -1), tile.derive(1, 0), tile.derive(0, 1)};
+                return new Tile[]{
+                        new Tile(2503, 2882), new Tile(2504, 2883),
+                        new Tile(2505, 2884), new Tile(2506, 2885)
+                };
             case 5:
-                return new Tile[]{tile.derive(-1, 1), tile.derive(-1, -1), tile, tile.derive(1, -1), tile.derive(1, 1),};
+                return new Tile[]{
+                        new Tile(2503, 2882), new Tile(2504, 2883),
+                        new Tile(2505, 2884), new Tile(2506, 2885),
+                        new Tile(2505, 2882)
+                };
+            default: {
+                return new Tile[0];
+            }
+        }
+    }
+
+
+    private Tile[] getTrapTacticsAlt() {
+        switch (getMaxTraps()) {
+            case 1:
+                return new Tile[]{
+                        tile
+                };
+            case 2:
+                return new Tile[]{
+                        tile.derive(-1, 0), tile.derive(1, 0)};
+            case 3:
+                return new Tile[]{
+                        tile.derive(-1, 0), tile.derive(0, -1), tile.derive(1, 0)
+                };
+            case 4:
+                return new Tile[]{
+                        new Tile(2502, 2881), new Tile(2504, 2881),
+                        new Tile(2502, 2880), new Tile(2504, 2880)
+                };
+            case 5:
+                return new Tile[]{
+                        new Tile(2502, 2881), new Tile(2504, 2881),
+                        new Tile(2502, 2880), new Tile(2504, 2880),
+                        new Tile(2503, 2880)
+                };
             default: {
                 return new Tile[0];
             }

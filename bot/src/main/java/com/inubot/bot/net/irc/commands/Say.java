@@ -1,7 +1,7 @@
-package com.inubot.bot.irc.commands;
+package com.inubot.bot.net.irc.commands;
 
 import com.inubot.Inubot;
-import com.inubot.bot.irc.IRCCommand;
+import com.inubot.bot.net.irc.IRCCommand;
 
 /**
  * @author Dank Memes

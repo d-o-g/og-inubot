@@ -6,6 +6,7 @@
  */
 package com.inubot.bot.modscript.transform;
 
+import com.inubot.Inubot;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import jdk.internal.org.objectweb.asm.tree.*;
 import com.inubot.client.Callback;
@@ -38,7 +39,7 @@ public class MessageCallback implements Transform {
                 stack.add(new MethodInsnNode(INVOKESTATIC, Callback.class.getName().replace('.', '/'),
                         "messageReceived", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", false));
                 mn.instructions.insertBefore(mn.instructions.getFirst(), stack);
-                logger.debug("Injected message @ " + cn.name + "." + mn.name + mn.desc);
+                Inubot.LOGGER.debug("Injected message @ " + cn.name + "." + mn.name + mn.desc);
             }
         }
     }

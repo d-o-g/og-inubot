@@ -25,5 +25,11 @@
             <artifactId>pircbot</artifactId>
             <version>1.5.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.insubstantial</groupId>
+            <artifactId>substance</artifactId>
+            <version>7.3</version>
+        </dependency>
     </dependencies>
 </project>

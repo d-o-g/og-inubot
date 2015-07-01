@@ -1,5 +1,6 @@
 package com.inubot.bot.modscript.transform;
 
+import com.inubot.Inubot;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import jdk.internal.org.objectweb.asm.Label;
@@ -47,7 +48,7 @@ public class ModelHack implements Transform {
                     setStack.add(new InsnNode(RETURN));
                     setStack.add(ln);
                     mn.instructions.insertBefore(aload, setStack);
-                    logger.debug("Injected conditional disable model rendering @" + mn.name + mn.desc);
+                    Inubot.LOGGER.debug("Injected conditional disable model rendering @" + mn.name + mn.desc);
                     break fgt;
                 }
             }

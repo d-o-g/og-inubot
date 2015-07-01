@@ -6,6 +6,7 @@
  */
 package com.inubot.bot.modscript.transform;
 
+import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
@@ -43,7 +44,7 @@ public class LandscapeHack implements Transform {
             setStack.add(new InsnNode(RETURN));
             setStack.add(ln);
             mn.instructions.insert(setStack);
-            logger.debug("Injected conditional disable landscape rendering @" + mn.name + mn.desc);
+            Inubot.LOGGER.debug("Injected conditional disable landscape rendering @" + mn.name + mn.desc);
         }
     }
 }

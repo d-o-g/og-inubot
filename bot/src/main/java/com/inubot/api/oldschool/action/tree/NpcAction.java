@@ -6,6 +6,7 @@
  */
 package com.inubot.api.oldschool.action.tree;
 
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.client.natives.RSNpc;
@@ -61,7 +62,7 @@ public class NpcAction extends CharacterAction {
         String[] actions = def.getActions();
         if (actions == null)
             return null;
-        logger.debug(Arrays.toString(actions));
+        Inubot.LOGGER.debug(Arrays.toString(actions));
         int actionIndex = getActionIndex();
         return actionIndex >= 0 && actionIndex < actions.length ? actions[actionIndex] : null;
     }

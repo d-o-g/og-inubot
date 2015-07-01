@@ -21,6 +21,8 @@ public class Powermine extends Script implements Paintable {
 
     private StopWatch runtime;
 
+    private GameObject rock;
+
     @Override
     public void render(Graphics2D graphics) {
         graphics.setFont(new Font("Dialog", Font.BOLD, 12));
@@ -32,7 +34,7 @@ public class Powermine extends Script implements Paintable {
         int mined = gain / 35;
         graphics.drawString("Mined " + mined + " ore", 10, 70);
         graphics.drawString("XP Gained: " + gain, 10, 85);
-        graphics.drawString("Made: " + (mined * price) + "gp", 10, 100);
+        graphics.drawString("Lost: " + (mined * price) + "gp", 10, 100);
     }
 
     @Override
@@ -53,9 +55,16 @@ public class Powermine extends Script implements Paintable {
                 Inventory.dropAll(item -> !item.getName().contains("pickaxe"));
             }
 
-            if (Players.getLocal().getAnimation() == -1) {
-                GameObject rock = GameObjects.getNearest(go ->
-                        go.distance(Players.getLocal().getLocation()) <= 2 && SELECTED.accept(go));
+
+
+            if (rock != null) {
+                rock = GameObjects.getNearest(t -> t.getLocation().equals(rock.getLocation()));
+            }
+
+            if (Players.getLocal().getAnimation() == -1 || rock != null && !SELECTED.accept(rock)) {
+                rock = GameObjects.getNearest(go ->
+                        go.distance(Players.getLocal().getLocation()) <= 2 && SELECTED.accept(go)
+                );
                 if (rock != null)
                     rock.processAction("Mine");
                 return 1500;
@@ -64,7 +73,7 @@ public class Powermine extends Script implements Paintable {
         return 600;
     }
 
-    private static enum Rock implements Filter<GameObject> {
+    private enum Rock implements Filter<GameObject> {
 
         CLAY(434, new Color(11898445)),
         COPPER(436, new Color(8145959)),
@@ -81,7 +90,7 @@ public class Powermine extends Script implements Paintable {
         private final int itemId;
         private final Color veinColor;
 
-        private Rock(final int itemId, final Color veinColor) {
+        Rock(final int itemId, final Color veinColor) {
             this.itemId = itemId;
             this.veinColor = veinColor;
         }

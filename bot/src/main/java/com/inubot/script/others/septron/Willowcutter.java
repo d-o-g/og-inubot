@@ -13,7 +13,7 @@ import java.awt.*;
  * @author Septron
  * @since June 27, 2015
  */
-public class Woodcutter extends Script implements Paintable {
+public class Willowcutter extends Script implements Paintable {
 
     private int price = 0, xp = 0;
 

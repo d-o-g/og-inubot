@@ -1,5 +1,6 @@
 package com.inubot.bot.modscript;
 
+import com.inubot.Inubot;
 import com.inubot.bot.modscript.hooks.*;
 import com.inubot.bot.util.RSClassLoader;
 import org.slf4j.Logger;
@@ -79,7 +80,7 @@ public class ModScript {
         try {
             return INVOKE_HOOK_MAP.get(name);
         } catch (Exception e) {
-            logger.error(name + " isn't a valid invoke hook");
+            Inubot.LOGGER.error(name + " isn't a valid invoke hook");
             return null;
         }
     }

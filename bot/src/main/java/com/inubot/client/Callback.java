@@ -21,8 +21,8 @@ public class Callback {
     @ClientInvoked
     public static void processAction(int arg1, int arg2, int op, int arg0, String action, String target, int x, int y) {
         if (!action.equals("Cancel")) {
-            logger.debug("" + Action.valueOf(op, arg0, arg1, arg2));
-            logger.debug(arg1 + "," + arg2 + "," + op + "," + arg0 + "," + action + "," + target);
+            Inubot.LOGGER.debug("" + Action.valueOf(op, arg0, arg1, arg2));
+            Inubot.LOGGER.debug(arg1 + "," + arg2 + "," + op + "," + arg0 + "," + action + "," + target);
         }
     }
 
@@ -34,6 +34,7 @@ public class Callback {
             if (type == 0) {
                 if (message.contains("Congratulations")) {
                     String a = message.replace("Congratulations, you just advanced a ", "").replace(" level.", "");
+                    a = a.replace("Congratulations, you've just advanced a ", "");
                     a = a.replace("Congratulations, you just advanced an ", "");
                     int level = 0;
                     for (Skill skill : Skill.values()) {
@@ -43,8 +44,8 @@ public class Callback {
 
                     Inubot.getInstance().getIRCConnection().sendNotice("I am now level " + level + " in " + a);
                 }
-            } else if (!sender.equals("")) {
-                Inubot.getInstance().getIRCConnection().sendNotice(String.format("%s: %s (%s)", sender, message, type));
+            } else if (message.contains("bot")) {
+                Inubot.getInstance().getIRCConnection().sendNotice("Someone said bot!");
             }
         }
     }

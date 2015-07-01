@@ -1,15 +1,16 @@
 package com.inubot;
 
+import ch.qos.logback.classic.Level;
 import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Game;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Time;
 import com.inubot.bot.Account;
 import com.inubot.bot.AccountManager;
-import com.inubot.bot.irc.IRCConnection;
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.transform.*;
+import com.inubot.bot.net.irc.IRCConnection;
 import com.inubot.bot.ui.BotMenuBar;
 import com.inubot.bot.util.*;
 import com.inubot.bot.util.io.Crawler;
@@ -22,7 +23,7 @@ import com.inubot.script.bundled.fisher.AutoFisherPRO;
 import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.money.Potato;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
-import com.inubot.script.others.test.combat.Combot;
+import com.inubot.script.others.septron.Combot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,16 +45,17 @@ import java.util.Map;
  */
 public class Inubot extends JFrame implements Runnable {
 
-    private static final Logger logger = LoggerFactory.getLogger(Inubot.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(Inubot.class);
 
     public static final Class[] SCRIPT_CLASSES = new Class[]{
             Potato.class,
             AutoFisherPRO.class,
             Combot.class,
+            TutorialIsland.class,
             RedChinsPRO.class,
-            BirdSnarePRO.class,
             FalconryPRO.class,
-            TutorialIsland.class
+            BirdSnarePRO.class,
+            FalconryPRO.class
     };
 
     private static Inubot instance;
@@ -115,7 +117,7 @@ public class Inubot extends JFrame implements Runnable {
                 String user = args[i + 1];
                 String pass = args[i + 2];
                 AccountManager.setCurrentAccount(new Account(user, pass));
-                logger.info("Account is now " + user + " : " + pass);
+                Inubot.LOGGER.info("Account is now " + user + " : " + pass);
             }
             if (arg.equals("-script")) {
                 String name = args[i + 1];
@@ -128,6 +130,11 @@ public class Inubot extends JFrame implements Runnable {
                 Client.GAME_TICK_SLEEP = 100;
                 Client.LANDSCAPE_RENDERING_ENABLED = false;
                 Client.MODEL_RENDERING_ENABLED = false;
+            }
+            if (arg.equals("-debug")) {
+                ((ch.qos.logback.classic.Logger) LOGGER).setLevel(Level.DEBUG);
+            } else{
+                ((ch.qos.logback.classic.Logger) LOGGER).setLevel(Level.INFO);
             }
         }
 

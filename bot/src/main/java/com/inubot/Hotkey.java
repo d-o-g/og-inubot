@@ -17,7 +17,7 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.VarpBit;
 import com.inubot.api.util.Time;
 import com.inubot.api.oldschool.GameObject;
-import com.inubot.bot.acc.CreaterGUI;
+import com.inubot.bot.net.acc.CreaterGUI;
 import com.inubot.bot.ui.WidgetExplorer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,14 +44,14 @@ public enum Hotkey {
                 }
                 cache[bit.getVarpIndex()].add(bit);
             }
-            logger.debug("Cache Built.... Listening");
+            Inubot.LOGGER.debug("Cache Built.... Listening");
             int[] vars = Inubot.getInstance().getClient().getVarps();
             int[] copy = Arrays.copyOf(vars, vars.length);
             new Thread(() -> {
                 while (true) {
                     for (int i = 0; i < 2000; i++) {
                         if (copy[i] != vars[i]) {
-                            logger.debug("Varp Changed(index=" + i + ")[" + copy[i] + " -> " + vars[i] + "]");
+                            Inubot.LOGGER.debug("Varp Changed(index=" + i + ")[" + copy[i] + " -> " + vars[i] + "]");
                             List<VarpBit> varps = cache[i];
                             if (varps == null) {
                                 copy[i] = vars[i];
@@ -61,9 +61,9 @@ public enum Hotkey {
                                 int old = v.getValue(copy[i]);
                                 int now = v.getValue(vars[i]);
                                 if (old != now)
-                                    logger.debug(v.toString());
+                                    Inubot.LOGGER.debug(v.toString());
                             }
-                            logger.debug("--------------------------------------------------------------");
+                            Inubot.LOGGER.debug("--------------------------------------------------------------");
                             copy[i] = vars[i];
                         }
                     }
@@ -79,7 +79,7 @@ public enum Hotkey {
     }, POSITION(KeyEvent.VK_E) {
         @Override
         public void onActivation() {
-            logger.debug("Current location: " + Players.getLocal().getLocation());
+            Inubot.LOGGER.debug("Current location: " + Players.getLocal().getLocation());
             System.out.println("Current location: " + Players.getLocal().getLocation());
         }
     }, WALK_NORTH(KeyEvent.VK_W) {
@@ -150,8 +150,6 @@ public enum Hotkey {
             new WidgetExplorer().setVisible(true);
         }
     };
-
-    private static final Logger logger = LoggerFactory.getLogger(Hotkey.class);
 
     private final int key;
 

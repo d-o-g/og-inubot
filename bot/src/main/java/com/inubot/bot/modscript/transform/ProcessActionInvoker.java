@@ -1,5 +1,6 @@
 package com.inubot.bot.modscript.transform;
 
+import com.inubot.Inubot;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.InvokeHook;
@@ -35,6 +36,6 @@ public class ProcessActionInvoker implements Transform {
         stack.add(new InsnNode(RETURN));
         invoker.instructions = stack;
         classes.get("client").methods.add(invoker);
-        logger.debug("Injected processAction invoker @" + meth.clazz + "." + meth.method + meth.desc + "!");
+        Inubot.LOGGER.debug("Injected processAction invoker @" + meth.clazz + "." + meth.method + meth.desc + "!");
     }
 }

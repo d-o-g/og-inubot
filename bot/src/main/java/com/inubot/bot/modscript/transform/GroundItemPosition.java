@@ -6,6 +6,7 @@
  */
 package com.inubot.bot.modscript.transform;
 
+import com.inubot.Inubot;
 import jdk.internal.org.objectweb.asm.tree.*;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
@@ -93,7 +94,7 @@ public class GroundItemPosition implements Transform {
                             code.add(new InsnNode(IADD));
                             code.add(new FieldInsnNode(PUTFIELD, gi, "strictY", "I"));
                             mn.instructions.insert(match[10], code);
-                            logger.debug("Successfully injected GroundItemPosition");
+                            Inubot.LOGGER.debug("Successfully injected GroundItemPosition");
                             continue out;
                         }
                     }

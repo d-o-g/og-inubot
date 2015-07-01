@@ -6,6 +6,7 @@
  */
 package com.inubot.script.bundled.agility;
 
+import com.inubot.Inubot;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
@@ -118,7 +119,7 @@ public class PerfectAgility extends Script implements Paintable {
                 for(Obstacle obs : cours.getObstacles()) {
                     if(obs.getLocation().contains(Players.getLocal().getLocation())) {
                         this.course = cours;
-                        logger.info("Using course: " + course.toString());
+                        Inubot.LOGGER.info("Using course: " + course.toString());
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.inubot.script.bundled.hunter;
 
+import com.inubot.Inubot;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.AWTUtil;
@@ -57,7 +58,7 @@ public class BirdSnarePRO extends Script implements Paintable {
         if (Game.isLoggedIn()) {
             if (tile == null) {
                 tile = Players.getLocal().getLocation();
-                logger.info("Start tile set to: " + tile.toString());
+                Inubot.LOGGER.info("Start tile set to: " + tile.toString());
             }
         }
         if (Players.getLocal().getAnimation() != -1) {
@@ -86,14 +87,10 @@ public class BirdSnarePRO extends Script implements Paintable {
                 WidgetItem snare = Inventory.getFirst("Bird snare");
                 if (snare != null && Players.getLocal().getLocation().equals(next)) {
                     snare.processAction(ActionOpcodes.ITEM_ACTION_0, "Lay");
-                    Time.sleep(300, 400);
-                    if (Time.await(() -> Players.getLocal().getAnimation() == -1, 1500)) {
-                        Movement.walkTo(next.derive(0, 1));
-                    }
                 }
             }
         }
-        return 500;
+        return 800;
     }
 
     private Tile[] getTrapTactics() {

@@ -6,6 +6,7 @@
  */
 package com.inubot.api.util;
 
+import com.inubot.Inubot;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.hooks.InvokeHook;
 import com.inubot.client.natives.RSClient;
@@ -62,17 +63,17 @@ public class CacheLoader {
         long start = System.nanoTime();
         loadObjectDefinitions(client);
         long end = System.nanoTime();
-        logger.debug(String.format("loaded %s object definitions in %.2f seconds", OBJECT_DEFINITIONS.size(),
+        Inubot.LOGGER.debug(String.format("loaded %s object definitions in %.2f seconds", OBJECT_DEFINITIONS.size(),
                 (end - start) / 1e9));
         start = System.nanoTime();
         loadNpcDefinitions(client);
         end = System.nanoTime();
-        logger.debug(String.format("loaded %s npc definitions in %.2f seconds", NPC_DEFINITIONS.size(),
+        Inubot.LOGGER.debug(String.format("loaded %s npc definitions in %.2f seconds", NPC_DEFINITIONS.size(),
                 (end - start) / 1e9));
         start = System.nanoTime();
         loadItemDefinitions(client);
         end = System.nanoTime();
-        logger.debug(String.format("loaded %s item definitions in %.2f seconds", ITEM_DEFINITIONS.size(),
+        Inubot.LOGGER.debug(String.format("loaded %s item definitions in %.2f seconds", ITEM_DEFINITIONS.size(),
                 (end - start) / 1e9));
     }
 

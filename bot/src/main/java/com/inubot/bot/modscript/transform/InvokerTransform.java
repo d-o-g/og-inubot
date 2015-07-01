@@ -6,6 +6,7 @@
  */
 package com.inubot.bot.modscript.transform;
 
+import com.inubot.Inubot;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.InvokeHook;
@@ -85,7 +86,7 @@ public class InvokerTransform implements Transform {
                         invoker.instructions.add(new MethodInsnNode(INVOKESTATIC, cn.name, mn.name, mn.desc, false));
                         invoker.instructions.add(new InsnNode(RETURN));
                         client.methods.add(invoker);
-                        logger.debug("Injected drawRectangle invoker...");
+                        Inubot.LOGGER.debug("Injected drawRectangle invoker...");
                         break outer;
                     }
                 }

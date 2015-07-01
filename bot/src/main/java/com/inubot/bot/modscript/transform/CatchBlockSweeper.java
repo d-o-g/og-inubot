@@ -6,6 +6,7 @@
  */
 package com.inubot.bot.modscript.transform;
 
+import com.inubot.Inubot;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import jdk.internal.org.objectweb.asm.tree.*;
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ public class CatchBlockSweeper implements Transform {
                 }
             }
         }
-        logger.debug(" # Removed " + catchblockkills + " catch blocks");
+        Inubot.LOGGER.debug(" # Removed " + catchblockkills + " catch blocks");
     }
 
     private int catchblockkills = 0;

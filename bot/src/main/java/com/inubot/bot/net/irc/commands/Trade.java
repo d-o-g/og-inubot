@@ -1,4 +1,4 @@
-package com.inubot.bot.irc.commands;
+package com.inubot.bot.net.irc.commands;
 
 /**
  * @author Dank Memes

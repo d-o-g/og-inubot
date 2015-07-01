@@ -6,6 +6,7 @@
  */
 package com.inubot.bot.modscript.transform;
 
+import com.inubot.Inubot;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.FieldHook;
@@ -117,7 +118,7 @@ public class CharacterCallbacks implements Transform {
                             stack.add(new MethodInsnNode(INVOKEVIRTUAL, HealthListener.class.getName().replace('.', '/'), "onChange", "(II)V", true));
                             stack.add(exitFlow);
                             mn.instructions.insert(ain, stack); //insert before the field is set so we can delegate old value
-                            logger.debug("Injected health listener @" + cs.name + "#" + mn.name + mn.desc);
+                            Inubot.LOGGER.debug("Injected health listener @" + cs.name + "#" + mn.name + mn.desc);
                         }
                     }
                 }

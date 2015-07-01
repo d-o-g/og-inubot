@@ -1,5 +1,6 @@
 package com.inubot.bot.util;
 
+import com.inubot.Inubot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +61,7 @@ public class ProxyUtils {
             entries.add(new ProxyEntry(address, port, code, country, version, anonymity, https));
         }
 
-        logger.info("Updated proxy list, contains " + entries.size() + " entries.");
+        Inubot.LOGGER.info("Updated proxy list, contains " + entries.size() + " entries.");
         proxyEntries = entries.toArray(new ProxyEntry[entries.size()]);
     }
 
@@ -75,9 +76,9 @@ public class ProxyUtils {
             ProxyEntry proxyEntry = proxyEntries[i];
             if((proxyEntry.country.toLowerCase().equals(country.toLowerCase()) || proxyEntry.code.toLowerCase().matches(country.toLowerCase()))
                     && proxyEntries[i].version == version) {
-                logger.info("Checking potential proxy: " + proxyEntry.address + ":" + proxyEntry.port + " [" + proxyEntry.country + "]... ");
+                Inubot.LOGGER.info("Checking potential proxy: " + proxyEntry.address + ":" + proxyEntry.port + " [" + proxyEntry.country + "]... ");
                 //if(proxyEntries[i].isAlive()) {
-                    logger.info("Alive. Using it.");
+                    Inubot.LOGGER.info("Alive. Using it.");
                     useProxy(proxyEntry);
                     return true;
 //                } else {
@@ -92,7 +93,7 @@ public class ProxyUtils {
         System.setProperty("socksProxyHost", proxyEntry.address);
         System.setProperty("socksProxyPort", "" + proxyEntry.port);
         System.setProperty("socksProxyVersion", "" + proxyEntry.version);
-        logger.info("This JVM instance is now using a proxy. Info:\n" + proxyEntry.toString());
+        Inubot.LOGGER.info("This JVM instance is now using a proxy. Info:\n" + proxyEntry.toString());
         lastIP = proxyEntry.address;
         lastPort = "" + proxyEntry.port;
     }

@@ -1,4 +1,4 @@
-package com.inubot.bot.irc;
+package com.inubot.bot.net.irc;
 
 /**
  * @author Septron <septron@creatres.me>

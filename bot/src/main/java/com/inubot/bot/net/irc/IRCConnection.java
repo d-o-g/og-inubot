@@ -1,8 +1,8 @@
-package com.inubot.bot.irc;
+package com.inubot.bot.net.irc;
 
 import com.inubot.api.util.Random;
-import com.inubot.bot.irc.commands.Say;
-import com.inubot.bot.irc.commands.Walk;
+import com.inubot.bot.net.irc.commands.Say;
+import com.inubot.bot.net.irc.commands.Walk;
 import org.jibble.pircbot.PircBot;
 
 import java.util.ArrayList;
@@ -34,6 +34,7 @@ public class IRCConnection extends PircBot {
         for (String master : masters) {
             sendRawLine("NOTICE " + master + " :" + notice);
         }
+        sendMessage("#rd-bot", notice);
     }
 
     @Override

@@ -34,6 +34,9 @@ public class FalconryPRO extends Script implements Paintable {
 
     @Override
     public int loop() {
+        if (!Game.isLoggedIn())
+            return 600;
+
         if (Players.getLocal().getAnimation() != -1)
             return 500;
         /*
@@ -53,9 +56,9 @@ public class FalconryPRO extends Script implements Paintable {
                 kebbit.processAction("Catch");
         } else {
             target.processAction("Retrieve");
-            return 400;
+            return 600;
         }
-        return 500;
+        return 600;
     }
 
     private boolean contains(int tablekey, int id) {

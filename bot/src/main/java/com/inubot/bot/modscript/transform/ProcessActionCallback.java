@@ -1,5 +1,6 @@
 package com.inubot.bot.modscript.transform;
 
+import com.inubot.Inubot;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.client.Callback;
 import com.inubot.bot.modscript.ModScript;
@@ -37,7 +38,7 @@ public class ProcessActionCallback implements Transform {
                 stack.add(new MethodInsnNode(INVOKESTATIC, Callback.class.getName().replace('.', '/'), "processAction",
                         "(IIIILjava/lang/String;Ljava/lang/String;II)V", false));
                 mn.instructions.insertBefore(mn.instructions.getFirst(), stack);
-                logger.debug("...Injected processAction callback @" + cn.name + "." + mn.name + mn.desc + "!");
+                Inubot.LOGGER.debug("...Injected processAction callback @" + cn.name + "." + mn.name + mn.desc + "!");
             }
         }
     }
