@@ -1018,7 +1018,7 @@ public class Map extends MapScheduler {
     int mtx, mty;
     boolean drawHoveredTile = true;
     boolean drawRegionData = true;
-    boolean drawLandmarks = false;
+    boolean drawLandmarks = true;
     boolean drawCollision = true;
     boolean drawingOnMM = true;
 
@@ -1625,7 +1625,7 @@ public class Map extends MapScheduler {
     public int anInt148;
     public int anInt149;
     public int anInt150;
-    public static boolean drawAreas = false;
+    public static boolean drawAreas = true;
     public int num_labels;
     public int labelBuffer;
     public String lableTexts[];
