@@ -27,7 +27,7 @@ public class Potato extends Script implements Paintable {
             if (BANK.distance() > 7) {
                 Movement.walkTo(BANK);
             } else if (Bank.isOpen()) {
-                Bank.depositAll();
+                Bank.depositInventory();
             } else {
                 Bank.open();
                 Time.sleep(2000);
