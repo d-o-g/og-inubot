@@ -29,7 +29,7 @@ import java.util.jar.JarFile;
  */
 public class OSPreviewer extends Updater {
 
-    private final HookPreview hookPreview = new HookPreview("ct.al");
+    private final HookPreview hookPreview = new HookPreview("client.og");
 
     public OSPreviewer(File file, GraphVisitor[] visitors, boolean closeOnOld) throws Exception {
         super(file, visitors, closeOnOld);

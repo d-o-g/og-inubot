@@ -1,10 +1,10 @@
 package com.inubot.oldschool.analysis;
 
-import com.inubot.visitor.GraphVisitor;
-import com.inubot.visitor.VisitorInfo;
 import com.inubot.modscript.hook.FieldHook;
 import com.inubot.modscript.hook.InvokeHook;
 import com.inubot.util.ArrayIterator;
+import com.inubot.visitor.GraphVisitor;
+import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.cfg.Block;
 import org.objectweb.asm.commons.cfg.BlockVisitor;
@@ -79,7 +79,7 @@ public class Client extends GraphVisitor {
         visitAll(new Cycle());
         visitAll(new BufferBaseRead());
         visitAll(new ScreenSizes());
-        visitAll(new ScreenState());
+        visitIfM(new ScreenState(), t -> t.desc.startsWith("([L") && t.desc.contains(";IIIIII"));
         visitAll(new HoveredTile());
         //because the blocks fuck this hook up...
         for (ClassNode cn : updater.classnodes.values()) {
@@ -114,6 +114,94 @@ public class Client extends GraphVisitor {
         }
     }
 
+    private void profileStrings() {
+        for (ClassNode cn : updater.classnodes.values()) {
+            if (cn.fieldCount("Ljava/lang/String;", false) < 200 || cn.name.equals("client"))
+                continue;
+            TreeBuilder.build(cn.getMethod("<clinit>", "()V")).forEach(node -> node.accept(new NodeVisitor() {
+                @Override
+                public void visitField(FieldMemberNode fmn) {
+                    if (fmn.opcode() == PUTSTATIC && fmn.desc().equals("Ljava/lang/String;") && fmn.children() == 1) {
+                        final ConstantNode cn = fmn.firstConstant();
+                        if (cn != null) {
+                            profiledStrings.put(fmn.key(), (String) cn.cst());
+                        }
+                    }
+                }
+            }));
+        }
+    }
+
+    private void visitMouseIdleTime() {
+        for (ClassNode cn : updater.classnodes.values()) {
+            if (!cn.interfaces.contains("java/awt/event/MouseListener"))
+                continue;
+            for (MethodNode meth : cn.methods) {
+                if (!meth.name.equals("mouseExited"))
+                    continue;
+                updater.graphs().get(cn).get(meth).forEach(b -> b.tree().accept(new NodeVisitor() {
+                    @Override
+                    public void visitField(FieldMemberNode fmn) {
+                        if (fmn.opcode() != PUTSTATIC || fmn.children() != 1)
+                            return;
+                        NumberNode iconst_0 = fmn.firstNumber();
+                        if (iconst_0 == null || iconst_0.number() != 0)
+                            return;
+                        addHook(new FieldHook("mouseIdleTime", fmn.fin()));
+                    }
+                }));
+            }
+        }
+    }
+
+    private void visitProcessAction() {
+        for (ClassNode cn : updater.classnodes.values()) {
+            cn.methods.stream().filter(mn -> mn.desc.startsWith("(IIIILjava/lang/String;Ljava/lang/String;") &&
+                    mn.desc.endsWith(")V")).forEach(mn -> addHook(new InvokeHook("processAction", mn)));
+        }
+    }
+
+    private void visitDefLoader(String hook, String visitor, boolean transform) {
+        for (ClassNode cn : updater.classnodes.values()) {
+            cn.methods.stream().filter(mn -> mn.desc.endsWith(")" + desc(visitor))).forEach(mn -> {
+                int access = mn.access & ACC_STATIC;
+                if (transform ? access == 0 : access > 0)
+                    addHook(new InvokeHook(hook, cn.name, mn.name, mn.desc));
+            });
+        }
+    }
+
+    private void visitStaticFields() {
+        add("players", cn.getField(null, "[" + desc("Player"), false));
+        add("npcs", cn.getField(null, "[" + desc("Npc"), false));
+        String playerDesc = desc("Player");
+        String regionDesc = desc("Region");
+        String widgetDesc = desc("Widget");
+        String objectDesc = desc("InteractableEntity");
+        String dequeDesc = desc("NodeDeque");
+        String collisionDesc = desc("CollisionMap");
+        for (ClassNode node : updater.classnodes.values()) {
+            for (FieldNode fn : node.fields) {
+                if ((fn.access & Opcodes.ACC_STATIC) == 0) continue;
+                if (fn.desc.equals("Ljava/awt/Canvas;")) {
+                    add("canvas", fn);
+                } else if (playerDesc != null && fn.desc.equals(playerDesc)) {
+                    add("player", fn);
+                } else if (regionDesc != null && fn.desc.equals(regionDesc)) {
+                    add("region", fn);
+                } else if (widgetDesc != null && fn.desc.equals("[[" + widgetDesc)) {
+                    add("widgets", fn);
+                } else if (objectDesc != null && fn.desc.equals("[" + objectDesc)) {
+                    add("objects", fn);
+                } else if (dequeDesc != null && fn.desc.equals("[[[" + dequeDesc)) {
+                    add("groundItems", fn);
+                } else if (collisionDesc != null && fn.desc.equals("[" + collisionDesc)) {
+                    add("collisionMaps", fn);
+                }
+            }
+        }
+    }
+
     private class ScreenState extends BlockVisitor {
 
         private int added = 0;
@@ -125,7 +213,7 @@ public class Client extends GraphVisitor {
 
         @Override
         public void visit(Block block) {
-            if (block.count(new InsnQuery(ILOAD)) >= 4 && block.count(new InsnQuery(ISTORE)) >= 4) {
+            if (block.count(new InsnQuery(ISTORE)) > 0) {
                 block.tree().accept(new NodeVisitor(this) {
                     public void visitField(FieldMemberNode fmn) {
                         if (fmn.opcode() == GETSTATIC && fmn.desc().equals("I")) {
@@ -258,7 +346,8 @@ public class Client extends GraphVisitor {
                                 added++;
                             } else if (subjectA.key().equals(by.key())) {
                                 updater.visitor("Buffer").addHook(new InvokeHook("writeLEShort", cn.name, mmn.name(), mmn.desc()));
-                                added++;;
+                                added++;
+                                ;
                             }
                         }
                     }
@@ -268,6 +357,8 @@ public class Client extends GraphVisitor {
     }
 
     private class LowMemory extends BlockVisitor {
+
+        private final List<String> keys = new ArrayList<>();
 
         @Override
         public boolean validate() {
@@ -279,105 +370,36 @@ public class Client extends GraphVisitor {
             block.tree().accept(new NodeVisitor() {
                 @Override
                 public void visitField(FieldMemberNode fmn) {
-                    if (fmn.desc().equals("Ljava/lang/String;") && fmn.hasPrevious() && fmn.previous().opcode() == GETSTATIC) {
+                    if (fmn.desc().equals("Ljava/lang/String;") && fmn.hasPrevious()) {
                         MethodMemberNode hostbase = (MethodMemberNode) fmn.layer(INVOKEVIRTUAL, INVOKEVIRTUAL);
                         if (hostbase == null || !hostbase.name().equals("getCodeBase"))
                             return;
-                        FieldMemberNode lowmem = (FieldMemberNode) fmn.previous();
-                        if (lowmem != null && lowmem.desc().equals("Z")) {
-                            addHook(new FieldHook("lowMemory", lowmem.fin()));
+                        for (Block block0 : updater.graphs().get(block.owner.owner).get(block.owner)) {
+                            block0.tree().accept(new NodeVisitor() {
+                                @Override
+                                public void visitField(FieldMemberNode fmn) {
+                                    if (fmn.desc().equals("Z"))
+                                        keys.add(fmn.key());
+                                }
+                            });
                         }
                     }
                 }
             });
         }
-    }
 
-    private void profileStrings() {
-        for (ClassNode cn : updater.classnodes.values()) {
-            if (cn.fieldCount("Ljava/lang/String;", false) < 200 || cn.name.equals("client"))
-                continue;
-            TreeBuilder.build(cn.getMethod("<clinit>", "()V")).forEach(node -> node.accept(new NodeVisitor() {
-                @Override
-                public void visitField(FieldMemberNode fmn) {
-                    if (fmn.opcode() == PUTSTATIC && fmn.desc().equals("Ljava/lang/String;") && fmn.children() == 1) {
-                        final ConstantNode cn = fmn.firstConstant();
-                        if (cn != null) {
-                            profiledStrings.put(fmn.key(), (String) cn.cst());
-                        }
-                    }
-                }
-            }));
-        }
-    }
-
-    private void visitMouseIdleTime() {
-        for (ClassNode cn : updater.classnodes.values()) {
-            if (!cn.interfaces.contains("java/awt/event/MouseListener"))
-                continue;
-            for (MethodNode meth : cn.methods) {
-                if (!meth.name.equals("mouseExited"))
-                    continue;
-                updater.graphs().get(cn).get(meth).forEach(b -> b.tree().accept(new NodeVisitor() {
+        public void visitEnd() {
+            updater.graphs().forEach((cn, mn) -> mn.values().forEach(graph -> graph.forEach(block -> {
+                block.tree().accept(new NodeVisitor() {
                     @Override
                     public void visitField(FieldMemberNode fmn) {
-                        if (fmn.opcode() != PUTSTATIC || fmn.children() != 1)
-                            return;
-                        NumberNode iconst_0 = fmn.firstNumber();
-                        if (iconst_0 == null || iconst_0.number() != 0)
-                            return;
-                        addHook(new FieldHook("mouseIdleTime", fmn.fin()));
+                        for (String key : keys) {
+                            if (fmn.key().equals(key) && fmn.owner().equals("client"))
+                                addHook(new FieldHook("lowMemory", fmn.fin()));
+                        }
                     }
-                }));
-            }
-        }
-    }
-
-    private void visitProcessAction() {
-        for (ClassNode cn : updater.classnodes.values()) {
-            cn.methods.stream().filter(mn -> mn.desc.startsWith("(IIIILjava/lang/String;Ljava/lang/String;") &&
-                    mn.desc.endsWith(")V")).forEach(mn -> addHook(new InvokeHook("processAction", mn)));
-        }
-    }
-
-    private void visitDefLoader(String hook, String visitor, boolean transform) {
-        for (ClassNode cn : updater.classnodes.values()) {
-            cn.methods.stream().filter(mn -> mn.desc.endsWith(")" + desc(visitor))).forEach(mn -> {
-                int access = mn.access & ACC_STATIC;
-                if (transform ? access == 0 : access > 0)
-                    addHook(new InvokeHook(hook, cn.name, mn.name, mn.desc));
-            });
-        }
-    }
-
-    private void visitStaticFields() {
-        add("players", cn.getField(null, "[" + desc("Player"), false));
-        add("npcs", cn.getField(null, "[" + desc("Npc"), false));
-        String playerDesc = desc("Player");
-        String regionDesc = desc("Region");
-        String widgetDesc = desc("Widget");
-        String objectDesc = desc("InteractableEntity");
-        String dequeDesc = desc("NodeDeque");
-        String collisionDesc = desc("CollisionMap");
-        for (ClassNode node : updater.classnodes.values()) {
-            for (FieldNode fn : node.fields) {
-                if ((fn.access & Opcodes.ACC_STATIC) == 0) continue;
-                if (fn.desc.equals("Ljava/awt/Canvas;")) {
-                    add("canvas", fn);
-                } else if (playerDesc != null && fn.desc.equals(playerDesc)) {
-                    add("player", fn);
-                } else if (regionDesc != null && fn.desc.equals(regionDesc)) {
-                    add("region", fn);
-                } else if (widgetDesc != null && fn.desc.equals("[[" + widgetDesc)) {
-                    add("widgets", fn);
-                } else if (objectDesc != null && fn.desc.equals("[" + objectDesc)) {
-                    add("objects", fn);
-                } else if (dequeDesc != null && fn.desc.equals("[[[" + dequeDesc)) {
-                    add("groundItems", fn);
-                } else if (collisionDesc != null && fn.desc.equals("[" + collisionDesc)) {
-                    add("collisionMaps", fn);
-                }
-            }
+                });
+            })));
         }
     }
 
