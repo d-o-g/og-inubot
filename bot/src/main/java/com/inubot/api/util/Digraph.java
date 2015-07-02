@@ -15,38 +15,38 @@ public class Digraph<V, E> extends HashMap<V, Set<E>> implements Iterable<V> {
         return super.keySet().iterator();
     }
 
-    public final boolean containsVertex(final V vertex) {
+    public final boolean containsVertex(V vertex) {
         return super.containsKey(vertex);
     }
 
-    public final boolean containsEdge(final V vertex, final E edge) {
+    public final boolean containsEdge(V vertex, E edge) {
         return super.containsKey(vertex) && super.get(vertex).contains(edge);
     }
 
-    public final boolean addVertex(final V vertex) {
+    public final boolean addVertex(V vertex) {
         if (super.containsKey(vertex))
             return false;
         super.put(vertex, new HashSet<>());
         return true;
     }
 
-    public final void addEdge(final V vertex, final E edge) {
+    public final void addEdge(V vertex, E edge) {
         if (!super.containsKey(vertex))
             return;
         super.get(vertex).add(edge);
     }
 
-    public final void removeEdge(final V vertex, final E edge) {
+    public final void removeEdge(V vertex, E edge) {
         if (!super.containsKey(vertex))
             return;
         super.get(vertex).remove(edge);
     }
 
-    public final Set<E> getEdgesOf(final V vertex) {
+    public final Set<E> getEdgesOf(V vertex) {
         return Collections.unmodifiableSet(super.get(vertex));
     }
 
-    public final void merge(final Digraph<V, E> graph) {
+    public final void merge(Digraph<V, E> graph) {
         super.putAll(graph);
     }
 }

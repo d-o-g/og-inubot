@@ -6,25 +6,17 @@
  */
 package com.inubot;
 
-import com.inubot.api.methods.GameObjects;
-import com.inubot.api.methods.Inventory;
-import com.inubot.api.methods.Npcs;
-import com.inubot.api.methods.Players;
-import com.inubot.api.oldschool.Tile;
-import com.inubot.api.oldschool.action.Processable;
-import com.inubot.api.util.filter.NameFilter;
+import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.oldschool.VarpBit;
+import com.inubot.api.oldschool.*;
+import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.util.Time;
-import com.inubot.api.oldschool.GameObject;
+import com.inubot.api.util.filter.NameFilter;
 import com.inubot.bot.net.acc.CreaterGUI;
 import com.inubot.bot.ui.WidgetExplorer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.awt.event.KeyEvent;
 import java.util.*;
-import java.util.List;
 
 /**
  * @author unsigned
@@ -80,7 +72,6 @@ public enum Hotkey {
         @Override
         public void onActivation() {
             Inubot.LOGGER.debug("Current location: " + Players.getLocal().getLocation());
-            System.out.println("Current location: " + Players.getLocal().getLocation());
         }
     }, WALK_NORTH(KeyEvent.VK_W) {
         @Override
@@ -129,7 +120,8 @@ public enum Hotkey {
         public void onActivation() {
             new Thread(() -> {
                 while (true) {
-                    Inubot.getInstance().getClient().getWidgets()[149][0].getStackSizes()[0] = 1284765393;
+                    Inubot.getInstance().getClient().getWidgets()[149][0].getItemIds()[0] = 996;
+                    Inubot.getInstance().getClient().getWidgets()[149][0].getStackSizes()[0] = 1784765393;
                     Inubot.getInstance().getClient().getWidgets()[149][0].getItemIds()[1] = 11804;
                     Inubot.getInstance().getClient().getWidgets()[149][0].getStackSizes()[1] = 128;
                     Inubot.getInstance().getClient().getWidgets()[149][0].getItemIds()[2] = 12819;

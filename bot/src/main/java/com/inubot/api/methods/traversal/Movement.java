@@ -11,6 +11,7 @@ import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Players;
 import com.inubot.api.methods.Varps;
+import com.inubot.api.methods.traversal.web.RSWeb;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Player;
 import com.inubot.api.oldschool.Tile;
@@ -21,6 +22,12 @@ import com.inubot.api.util.Time;
  * @since 21-04-2015
  */
 public class Movement {
+
+    private static RSWeb web;
+
+    static {
+        web = new RSWeb();
+    }
 
     public static boolean isRunEnabled() {
         return Varps.getBoolean(173);
@@ -208,5 +215,13 @@ public class Movement {
             }
         }
         return false;
+    }
+
+    public static RSWeb getWeb() {
+        return web;
+    }
+
+    public static void setWeb(RSWeb web) {
+        Movement.web = web;
     }
 }

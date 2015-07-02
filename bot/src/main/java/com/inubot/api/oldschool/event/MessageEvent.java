@@ -40,64 +40,30 @@ public final class MessageEvent {
 
     public enum Type {
 
-        /**
-         * A severe game message
-         */
         SEVERE(0),
-        /**
-         * A message sent by a player
-         */
         PLAYER(2),
-        /**
-         * A private message
-         */
         PRIVATE_MESSAGE(3),
-        /**
-         * A trade received message
-         */
         TRADE_RECEIVED(4),
-        /**
-         * ??
-         */
         PRIVATE_INFO(5),
-        /**
-         * A private message sent by you
-         */
         PRIVATE_SENT(6),
-        /**
-         * A clanchat message
-         */
         CLAN_CHAT(9),
-        /**
-         * A server message
-         */
         SERVER(11),
-        /**
-         * A message which is a trade request sent by you
-         */
         TRADE_SENT(12),
-        /**
-         * A message which is returned from examining an Npc
-         */
+        BROADCAST(14),
         EXAMINE_NPC(28),
-        /**
-         * A message which is returned from examining an Object
-         */
         EXAMINE_OBJECT(29),
-        /**
-         * A message returned from any other action
-         */
         ACTION(109);
 
         private final int typeId;
 
-        private Type(final int typeId) {
+        private Type(int typeId) {
             this.typeId = typeId;
         }
 
-        public static Type get(final int type) {
-            for (final Type mt : Type.values()) {
-                if (mt.getId() == type) return mt;
+        public static Type get(int type) {
+            for (Type mt : Type.values()) {
+                if (mt.getId() == type)
+                    return mt;
             }
             return null;
         }

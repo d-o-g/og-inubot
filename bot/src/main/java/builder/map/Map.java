@@ -1,9 +1,7 @@
 package builder.map;
 
 
-import builder.map.cache.ArchiveKeys;
-import builder.map.cache.DataArchive;
-import builder.map.cache.MapDataStore;
+import builder.map.cache.*;
 import builder.map.cache.io.FileReader;
 import builder.map.cache.io.RSInputStream;
 import builder.map.render.RenderModel;
@@ -13,32 +11,185 @@ import builder.map.render.sprites.LandscapeEntity;
 import builder.map.render.sprites.Sprite;
 import builder.map.thread.MapScheduler;
 import builder.map.util.Class3;
+import com.inubot.api.methods.traversal.web.data.ObjectVertex;
+import com.inubot.api.methods.traversal.web.data.WebVertex;
 
 import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.LinkedHashSet;
+import java.util.*;
+import java.util.List;
 
 public class Map extends MapScheduler {
 
-  //  World world;
+    //  World world;
 
-    public LinkedHashSet<MapNode> waypoints = new LinkedHashSet<MapNode>();
-    public LinkedHashSet<RouteNode> routes = new LinkedHashSet<RouteNode>();
+    private static final long serialVersionUID = 0x4ecd9f921bb4ccd5L;
+    public static boolean drawRegions = false;
+    public static int mapBaseX;
 
     //public static final CacheSuccessorMap map = new CacheSuccessorMap();
+    public static int mapBaseY;
+    public static int mapWith;
+    public static int mapHeight;
+    public static boolean drawAreas = false;
+    public static int tileViewX;
+    public static int tileViewY;
+    public LinkedHashSet<MapNode> waypoints = new LinkedHashSet<MapNode>();
+    public LinkedHashSet<RouteNode> routes = new LinkedHashSet<RouteNode>();
+    public int nonSelectedButtonUpperShadowColor;
+    public int nonSelectedButtonBackgroundColor;
+    public int nonSelectedButtonLowerShadowColor;
+    public int selectedButtonUpperShadowColor;
+    public int selectedButtonBackgroundColor;
+    public int selectedButtonLowerShadowColor;
+    public boolean force_repaint;
+    public int renderCycle;
+    public int floorTypeHashes[];
+    public int floorColors[];
+    public int underlayColors[][];
+    public int overlayColors[][];
+    public byte mapRenderRules[][];
+    public byte boundaryData[][];
+    public byte landmarkData[][];
+    public byte entityData[][];
+    public LandscapeEntity landscapeEntities[];
+    public Sprite[] landmarks;
+    public LetterPlotter letterPlotter;
+    public DynamicLetterPlotter font11Plotter;
+    public DynamicLetterPlotter font12Plotter;
+    public DynamicLetterPlotter font14Plotter;
+    public DynamicLetterPlotter font17Plotter;
+    public DynamicLetterPlotter font19Plotter;
+    public DynamicLetterPlotter font22Plotter;
+    public DynamicLetterPlotter font26Plotter;
+    public DynamicLetterPlotter font30Plotter;
+    public int landmarkXRenderPos[];
+    public int landmarkYRenderPos[];
+    public int landmarkTypes[];
+    public int num_ploted_landmarks;
+    public int labelXPositions[];
+    public int labelYPositions[];
+    public int ladmarkIDs[];
+    public int keyButtonBaseX;
+    public int keyButtonBaseY;
+    public int keyButtonWith;
+    public int keyPanelHeight;
+    public int keyIndexBaseFlux;
+    public int DestinationIndexBase;
+    public boolean keyPanelOpen;
+    public int hoverKeyRealIndex;
+    public int anInt138;
+    public int selectedLandmarkID;
+    public int flash_cycle;
+    public int miniMapScale;
+    public int miniMapWith;
+    public int miniMapLocX;
+    public int miniMapLocY;
+    public boolean minimapDisplayed;
+    public Sprite minimap;
+    public int anInt147;
+    public int anInt148;
+    public int anInt149;
+    public int anInt150;
+    public int num_labels;
+    public int labelBuffer;
+    public String lableTexts[];
+    public int lableXPositions[];
+    public int lableYPositions[];
+    public int lableTypes[];
+    public double fluxScale;
+    public double destinationScale;
+    public String landmarkNames[] = {
+            DataArchive.getValue(1), DataArchive.getValue(15), DataArchive.getValue(26), DataArchive.getValue(37), DataArchive.getValue(46), DataArchive.getValue(58), DataArchive.getValue(63), DataArchive.getValue(75), DataArchive.getValue(87), DataArchive.getValue(99),
+            DataArchive.getValue(107), DataArchive.getValue(113), DataArchive.getValue(129), DataArchive.getValue(137), DataArchive.getValue(148), DataArchive.getValue(163), DataArchive.getValue(178), DataArchive.getValue(192), DataArchive.getValue(205), DataArchive.getValue(217),
+            DataArchive.getValue(223), DataArchive.getValue(233), DataArchive.getValue(242), DataArchive.getValue(251), DataArchive.getValue(265), DataArchive.getValue(277), DataArchive.getValue(290), DataArchive.getValue(303), DataArchive.getValue(316), DataArchive.getValue(327),
+            DataArchive.getValue(339), DataArchive.getValue(352), DataArchive.getValue(360), DataArchive.getValue(370), DataArchive.getValue(378), DataArchive.getValue(389), DataArchive.getValue(404), DataArchive.getValue(414), DataArchive.getValue(427), DataArchive.getValue(437),
+            DataArchive.getValue(450), DataArchive.getValue(464), DataArchive.getValue(475), DataArchive.getValue(489), DataArchive.getValue(498), DataArchive.getValue(510), DataArchive.getValue(525), DataArchive.getValue(537), DataArchive.getValue(548), DataArchive.getValue(559),
+            DataArchive.getValue(576), DataArchive.getValue(592), DataArchive.getValue(606), DataArchive.getValue(620), DataArchive.getValue(634), DataArchive.getValue(648), DataArchive.getValue(654), DataArchive.getValue(669), DataArchive.getValue(673), DataArchive.getValue(686),
+            DataArchive.getValue(691)
+    };
+    int mtx, mty;
+    boolean drawHoveredTile = true;
+    boolean drawRegionData = true;
+    boolean drawLandmarks = true;
+    boolean drawCollision = true;
+    boolean drawingOnMM = true;
+
+    private List<WebVertex> vertices = new ArrayList<>();
+
+    public Map() {
+
+        nonSelectedButtonUpperShadowColor = 0x887755;
+        nonSelectedButtonBackgroundColor = 0x776644;
+        nonSelectedButtonLowerShadowColor = 0x665533;
+        selectedButtonUpperShadowColor = 0xaa0000;
+        selectedButtonBackgroundColor = 0x990000;
+        selectedButtonLowerShadowColor = 0x880000;
+        force_repaint = true;
+        landscapeEntities = new LandscapeEntity[100];
+        landmarks = new Sprite[100];
+        landmarkXRenderPos = new int[2000];
+        landmarkYRenderPos = new int[2000];
+        landmarkTypes = new int[2000];
+        labelXPositions = new int[2000];
+        labelYPositions = new int[2000];
+        ladmarkIDs = new int[2000];
+        keyButtonBaseX = 5;
+        keyButtonBaseY = 13;
+        keyButtonWith = 140;
+        keyPanelHeight = 470;
+        keyPanelOpen = false;
+        hoverKeyRealIndex = -1;
+        anInt138 = -1;
+        selectedLandmarkID = -1;
+        minimapDisplayed = false;
+        labelBuffer = 1000;
+        lableTexts = new String[labelBuffer];
+        lableXPositions = new int[labelBuffer];
+        lableYPositions = new int[labelBuffer];
+        lableTypes = new int[labelBuffer];
+        fluxScale = 4D;
+        destinationScale = 4D;
+
+        loadWorld();
+        load(new Mainframe(this, 635, 503), 635, 503);
+
+    }
 
     public final void init() {
         System.out.println("init..");
         loadWorld();
-        start( 635, 503 );
+        start(635, 503);
     }
 
     public void loadWorld() {
-        if(waypoints != null) waypoints.clear();
-        if(routes != null) routes.clear();
-      //  world = new World();
+        if (waypoints != null) waypoints.clear();
+        if (routes != null) routes.clear();
+
+        try {
+            InputStream in = new FileInputStream("./web.txt");
+            Scanner s = new Scanner(in);
+            while (s.hasNextLine()) {
+                String line = s.nextLine();
+                String[] kek = line.split(" ");
+                int index = Integer.parseInt(kek[0]);
+                String type = kek[1];
+                int x = Integer.parseInt(kek[2]), y = Integer.parseInt(kek[3]), z = Integer.parseInt(kek[4]);
+                int[] edges = new int[kek.length - 5];
+                for (int i = 0; i < kek.length - 5; i++)
+                    edges[i] = Integer.parseInt(kek[i + 5]);
+                String name = null, action = null;
+                vertices.add(type.equals("object")
+                        ? new ObjectVertex(index, x, y, z, edges, name, action)
+                        : new WebVertex(index, x, y, z, edges));
+            }
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //  world = new World();
         /*Route[] routes = world.getRoutes();
         System.out.println("Loading " + routes.length + " routes...");
         for( Route route : routes) {
@@ -59,13 +210,26 @@ public class Map extends MapScheduler {
             throw new Error( "Missing waypoint..." );
 
         }*/
+        System.out.println("Loaded graph of size " + vertices.size());
+        for (WebVertex vertex : vertices) {
+            for (WebVertex edge : vertices) {
+                for (int edgeI : vertex.getEdgeIndexes()) {
+                    if (edge.getIndex() == edgeI) {
+                        vertex.getEdges().add(edge);
+                    }
+                }
+            }
+            if (vertex.getEdges().size() != vertex.getEdgeIndexes().length) {
+                System.out.println("Failed to find edges for " + vertex.getIndex());
+            }
+        }
         System.out.println("Routes loaded!");
     }
 
     public final void loadMap() {
 
         MapDataStore map_data = getMapData();
-        renderLoadingBar(100, DataArchive.getValue( ArchiveKeys.LOADING_TEXT ));
+        renderLoadingBar(100, DataArchive.getValue(ArchiveKeys.LOADING_TEXT));
         RSInputStream dataStream = new RSInputStream(map_data.getEntry(DataArchive.getValue(1145), null));  //Size Data
         mapBaseX = dataStream.readShort();
         mapBaseY = dataStream.readShort();
@@ -140,7 +304,7 @@ public class Map extends MapScheduler {
         copyMap(0, 0, mapWith, mapHeight, 0, 0, miniMapWith, miniMapScale); //copy the map to the minimap overlayColors.
         drawingOnMM = false;
         //       copyMap(1500, 1500, mapWith, mapHeight, 0, 0, miniMapWith, miniMapScale);
-        RenderModel.drawRectangle( 0, 0, miniMapWith, miniMapScale, 0 ); //Outer Minimap Border
+        RenderModel.drawRectangle(0, 0, miniMapWith, miniMapScale, 0); //Outer Minimap Border
         RenderModel.drawRectangle(1, 1, miniMapWith - 2, miniMapScale - 2, nonSelectedButtonUpperShadowColor); //Inner Minimap Border
         main_overlay.attach();
 
@@ -967,9 +1131,38 @@ public class Map extends MapScheduler {
 
         }
 
-       
 
+        for (WebVertex v : vertices) {
+            if (v.getPlane() != 0)
+                continue;
+            int x = v.getX();
+            int y = v.getY();
+            x -= mapBaseX;
+            y = (mapBaseY + mapHeight) - y;
+            int minX = destinationTopLeftX + (dest_with * (x - sourceTopLeftX)) / source_with;
+            int minY = destinationTopLeftY + (dest_height * (y - 1 - sourceTopLeftY)) / source_height;
+            int maxX = destinationTopLeftX + (dest_with * ((x + 1) - sourceTopLeftX)) / source_with;
+            int maxY = destinationTopLeftY + (dest_height * (y - sourceTopLeftY)) / source_height;
+            Rectangle r = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+            RenderModel.fillRectangle(minX, minY, maxX - minX, maxY - minY, Color.GREEN.getRGB());
+            for (WebVertex e : v.getEdges()) {
+                int ex = e.getX() - mapBaseX;
+                int ey = (mapBaseY + mapHeight) - e.getY();
+                int eminX = destinationTopLeftX + (dest_with * (ex - sourceTopLeftX)) / source_with;
+                int eminY = destinationTopLeftY + (dest_height * (ey - 1 - sourceTopLeftY)) / source_height;
+                int emaxX = destinationTopLeftX + (dest_with * ((ex + 1) - sourceTopLeftX)) / source_with;
+                int emaxY = destinationTopLeftY + (dest_height * (ey - sourceTopLeftY)) / source_height;
 
+                Rectangle er = new Rectangle(eminX, eminY, emaxX - eminX, emaxY - eminY);
+
+                RenderModel.drawLine(
+                        (int) r.getCenterX(), (int) r.getCenterY(),
+                        (int) er.getCenterX(), (int) er.getCenterY(),
+                        Color.ORANGE.getRGB()
+                );
+            }
+            letterPlotter.drawString(String.valueOf(v.getIndex()), minX, minY, Color.GREEN.getRGB());
+        }
 
 
         for (MapNode node : waypoints) {
@@ -990,14 +1183,13 @@ public class Map extends MapScheduler {
             int maxY = destinationTopLeftY + (dest_height * (y - sourceTopLeftY)) / source_height;
 
 
-
             node.setBounds(minX, minY, maxX - minX, maxY - minY);
 
         }
 
 
-        for(MapNode node : waypoints) {
-            if(node == null) continue;
+        for (MapNode node : waypoints) {
+            if (node == null) continue;
             node.render();
         }
 
@@ -1007,20 +1199,7 @@ public class Map extends MapScheduler {
         }
 
 
-
-
-
-
-
     }
-
-
-    int mtx, mty;
-    boolean drawHoveredTile = true;
-    boolean drawRegionData = true;
-    boolean drawLandmarks = true;
-    boolean drawCollision = true;
-    boolean drawingOnMM = true;
 
     public final void drawCurve(int data[], int data_position,
                                 int underlay, int overlay,
@@ -1411,7 +1590,6 @@ public class Map extends MapScheduler {
         }
     }
 
-
     public final MapDataStore getMapData() {
         String string = null;
         MapDataStore store;
@@ -1419,7 +1597,7 @@ public class Map extends MapScheduler {
         try {
             string = getDataFilePath();
             System.out.println(string);
-            byte is[] = FileReader.readFile( string + DataArchive.getValue( ArchiveKeys.MAP_DATA_FILE_PATH ) );
+            byte is[] = FileReader.readFile(string + DataArchive.getValue(ArchiveKeys.MAP_DATA_FILE_PATH));
 
             store = new MapDataStore(is);
         } catch (Throwable throwable) {
@@ -1442,7 +1620,7 @@ public class Map extends MapScheduler {
             String string = "";
 
             for (int i = 0; i < 10; i++)
-                string = (new StringBuilder()).append(string).append( Class3.anIntArray5[i]).toString();
+                string = (new StringBuilder()).append(string).append(Class3.anIntArray5[i]).toString();
 
             HttpURLConnection conn;
             conn = (HttpURLConnection) new URL("http://inubot.com/worldmap.dat").openConnection();
@@ -1521,129 +1699,5 @@ public class Map extends MapScheduler {
         } catch (Exception exception) {
         }
     }
-
-
-    public Map() {
-       
-        nonSelectedButtonUpperShadowColor = 0x887755;
-        nonSelectedButtonBackgroundColor = 0x776644;
-        nonSelectedButtonLowerShadowColor = 0x665533;
-        selectedButtonUpperShadowColor = 0xaa0000;
-        selectedButtonBackgroundColor = 0x990000;
-        selectedButtonLowerShadowColor = 0x880000;
-        force_repaint = true;
-        landscapeEntities = new LandscapeEntity[100];
-        landmarks = new Sprite[100];
-        landmarkXRenderPos = new int[2000];
-        landmarkYRenderPos = new int[2000];
-        landmarkTypes = new int[2000];
-        labelXPositions = new int[2000];
-        labelYPositions = new int[2000];
-        ladmarkIDs = new int[2000];
-        keyButtonBaseX = 5;
-        keyButtonBaseY = 13;
-        keyButtonWith = 140;
-        keyPanelHeight = 470;
-        keyPanelOpen = false;
-        hoverKeyRealIndex = -1;
-        anInt138 = -1;
-        selectedLandmarkID = -1;
-        minimapDisplayed = false;
-        labelBuffer = 1000;
-        lableTexts = new String[labelBuffer];
-        lableXPositions = new int[labelBuffer];
-        lableYPositions = new int[labelBuffer];
-        lableTypes = new int[labelBuffer];
-        fluxScale = 4D;
-        destinationScale = 4D;
-
-        loadWorld();
-        load(new Mainframe(this, 635, 503), 635, 503);
-
-    }
-
-
-    private static final long serialVersionUID = 0x4ecd9f921bb4ccd5L;
-
-    public static boolean drawRegions = true;
-    public int nonSelectedButtonUpperShadowColor;
-    public int nonSelectedButtonBackgroundColor;
-    public int nonSelectedButtonLowerShadowColor;
-    public int selectedButtonUpperShadowColor;
-    public int selectedButtonBackgroundColor;
-    public int selectedButtonLowerShadowColor;
-    public boolean force_repaint;
-    public int renderCycle;
-    public static int mapBaseX;
-    public static int mapBaseY;
-    public static int mapWith;
-    public static int mapHeight;
-    public int floorTypeHashes[];
-    public int floorColors[];
-    public int underlayColors[][];
-    public int overlayColors[][];
-    public byte mapRenderRules[][];
-    public byte boundaryData[][];
-    public byte landmarkData[][];
-    public byte entityData[][];
-    public LandscapeEntity landscapeEntities[];
-    public Sprite[] landmarks;
-    public LetterPlotter letterPlotter;
-    public DynamicLetterPlotter font11Plotter;
-    public DynamicLetterPlotter font12Plotter;
-    public DynamicLetterPlotter font14Plotter;
-    public DynamicLetterPlotter font17Plotter;
-    public DynamicLetterPlotter font19Plotter;
-    public DynamicLetterPlotter font22Plotter;
-    public DynamicLetterPlotter font26Plotter;
-    public DynamicLetterPlotter font30Plotter;
-    public int landmarkXRenderPos[];
-    public int landmarkYRenderPos[];
-    public int landmarkTypes[];
-    public int num_ploted_landmarks;
-    public int labelXPositions[];
-    public int labelYPositions[];
-    public int ladmarkIDs[];
-    public int keyButtonBaseX;
-    public int keyButtonBaseY;
-    public int keyButtonWith;
-    public int keyPanelHeight;
-    public int keyIndexBaseFlux;
-    public int DestinationIndexBase;
-    public boolean keyPanelOpen;
-    public int hoverKeyRealIndex;
-    public int anInt138;
-    public int selectedLandmarkID;
-    public int flash_cycle;
-    public int miniMapScale;
-    public int miniMapWith;
-    public int miniMapLocX;
-    public int miniMapLocY;
-    public boolean minimapDisplayed;
-    public Sprite minimap;
-    public int anInt147;
-    public int anInt148;
-    public int anInt149;
-    public int anInt150;
-    public static boolean drawAreas = true;
-    public int num_labels;
-    public int labelBuffer;
-    public String lableTexts[];
-    public int lableXPositions[];
-    public int lableYPositions[];
-    public int lableTypes[];
-    public double fluxScale;
-    public double destinationScale;
-    public static int tileViewX;
-    public static int tileViewY;
-    public String landmarkNames[] = {
-            DataArchive.getValue(1), DataArchive.getValue(15), DataArchive.getValue(26), DataArchive.getValue(37), DataArchive.getValue(46), DataArchive.getValue(58), DataArchive.getValue(63), DataArchive.getValue(75), DataArchive.getValue(87), DataArchive.getValue(99),
-            DataArchive.getValue(107), DataArchive.getValue(113), DataArchive.getValue(129), DataArchive.getValue(137), DataArchive.getValue(148), DataArchive.getValue(163), DataArchive.getValue(178), DataArchive.getValue(192), DataArchive.getValue(205), DataArchive.getValue(217),
-            DataArchive.getValue(223), DataArchive.getValue(233), DataArchive.getValue(242), DataArchive.getValue(251), DataArchive.getValue(265), DataArchive.getValue(277), DataArchive.getValue(290), DataArchive.getValue(303), DataArchive.getValue(316), DataArchive.getValue(327),
-            DataArchive.getValue(339), DataArchive.getValue(352), DataArchive.getValue(360), DataArchive.getValue(370), DataArchive.getValue(378), DataArchive.getValue(389), DataArchive.getValue(404), DataArchive.getValue(414), DataArchive.getValue(427), DataArchive.getValue(437),
-            DataArchive.getValue(450), DataArchive.getValue(464), DataArchive.getValue(475), DataArchive.getValue(489), DataArchive.getValue(498), DataArchive.getValue(510), DataArchive.getValue(525), DataArchive.getValue(537), DataArchive.getValue(548), DataArchive.getValue(559),
-            DataArchive.getValue(576), DataArchive.getValue(592), DataArchive.getValue(606), DataArchive.getValue(620), DataArchive.getValue(634), DataArchive.getValue(648), DataArchive.getValue(654), DataArchive.getValue(669), DataArchive.getValue(673), DataArchive.getValue(686),
-            DataArchive.getValue(691)
-    };
 
 }

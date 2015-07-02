@@ -11,6 +11,6 @@ import com.inubot.api.methods.traversal.web.data.WebVertex;
 public class TileHeuristic implements Heuristic<WebVertex> {
     @Override
     public double getWeight(WebVertex src, WebVertex dest) {
-        return src.asTile().distance(dest.asTile());
+        return src.getTile().distance(dest.getTile());
     }
 }

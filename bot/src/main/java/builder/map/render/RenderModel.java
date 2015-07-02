@@ -17,6 +17,12 @@ public class RenderModel extends Class9_Sub1 {
     }
 
     public static void drawLine(int x1, int y1, int x2, int y2, int color) {
+        int maxx = Math.max(x1, x2);
+        int minx = Math.min(x1, x2);
+        int maxy = Math.max(y1, y2);
+        int miny = Math.min(y1, y2);
+        if (minx < map_x || maxx > cluster_with_minus_one || miny < map_y || maxy > cluster_height)
+            return;
         int dx = Math.abs(x2 - x1);
         int dy = Math.abs(y2 - y1);
 
