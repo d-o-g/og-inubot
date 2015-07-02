@@ -279,7 +279,7 @@ public class Client extends GraphVisitor {
             block.tree().accept(new NodeVisitor() {
                 @Override
                 public void visitField(FieldMemberNode fmn) {
-                    if (fmn.desc().equals("Ljava/lang/String;")) {
+                    if (fmn.desc().equals("Ljava/lang/String;") && fmn.hasPrevious() && fmn.previous().opcode() == GETSTATIC) {
                         MethodMemberNode hostbase = (MethodMemberNode) fmn.layer(INVOKEVIRTUAL, INVOKEVIRTUAL);
                         if (hostbase == null || !hostbase.name().equals("getCodeBase"))
                             return;
