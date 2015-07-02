@@ -11,8 +11,8 @@ import builder.map.render.sprites.LandscapeEntity;
 import builder.map.render.sprites.Sprite;
 import builder.map.thread.MapScheduler;
 import builder.map.util.Class3;
-import com.inubot.api.methods.traversal.web.data.ObjectVertex;
-import com.inubot.api.methods.traversal.web.data.WebVertex;
+import com.inubot.api.methods.traversal.graph.data.ObjectVertex;
+import com.inubot.api.methods.traversal.graph.data.WebVertex;
 
 import java.awt.*;
 import java.io.*;

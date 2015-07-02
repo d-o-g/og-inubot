@@ -1,4 +1,4 @@
-package com.inubot.api.methods.traversal.web.data;
+package com.inubot.api.methods.traversal.graph.data;
 
 import com.inubot.api.oldschool.Tile;
 

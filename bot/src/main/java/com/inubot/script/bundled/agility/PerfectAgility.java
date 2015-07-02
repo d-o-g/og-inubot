@@ -7,21 +7,16 @@
 package com.inubot.script.bundled.agility;
 
 import com.inubot.Inubot;
-import com.inubot.api.oldschool.event.MessageEvent;
-import com.inubot.api.util.AWTUtil;
-import com.inubot.api.util.Paintable;
-import com.inubot.api.util.StopWatch;
-import com.inubot.api.util.Time;
-import com.inubot.script.Script;
-import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.methods.traversal.Path;
-import com.inubot.api.oldschool.action.tree.InputButtonAction;
-import com.inubot.api.util.filter.Filter;
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
+import com.inubot.api.oldschool.action.tree.InputButtonAction;
+import com.inubot.api.oldschool.event.MessageEvent;
+import com.inubot.api.util.*;
+import com.inubot.api.util.filter.Filter;
+import com.inubot.script.Script;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.Perf;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -35,40 +30,6 @@ import java.util.List;
 public class PerfectAgility extends Script implements Paintable {
 
     private static final Logger logger = LoggerFactory.getLogger(PerfectAgility.class);
-
-    public static final Tile[] TRAWLER_TO_SEERS = {new Tile(2627, 3169), new Tile(2604, 3259), new Tile(2612, 3340),
-            new Tile(2622, 3387), new Tile(2668, 3451), new Tile(2725, 3484)};
-
-    public static final Path TRAWLER_TO_GNOME = new Path(new Tile[]{
-            new Tile(2627, 3169),
-            new Tile(2604, 3259),
-            new Tile(2586, 3344),
-            new Tile(3460, 3379 /*Open gnome place door*/),
-            new Tile(2474, 3438)
-    });
-
-    public static final Path VARROCK_TO_FALADOR = new Path(new Tile[]{
-            new Tile(3213, 3428),
-            new Tile(3169, 3428),
-            new Tile(3108, 3420),
-            new Tile(3063, 3418),
-            new Tile(3030, 3429),
-            new Tile(3063, 3418),
-            new Tile(3063, 3382),
-            new Tile(3063, 3355)
-    });
-    public static final Path LUMBRIDGE_TO_VARROCK = new Path(new Tile[]{
-            new Tile(3236, 3227),
-            new Tile(3261, 3229),
-            new Tile(3251, 3255),
-            new Tile(3238, 3283),
-            new Tile(3269, 3331),
-            new Tile(3299, 3356),
-            new Tile(3292, 3423),
-            new Tile(3259, 3429),
-            new Tile(3213, 3428)
-    });
-
     private static final Filter<Widget> DIALOGUE_FILTER = w -> w.getText() != null && (w.getText().equals("Click here to continue") || w.getText().equals("Sure, I'll give it a go."));
     private static final Filter<Widget> LOBBY_FILTER = w -> w.getText() != null && w.getText().equals("Play RuneScape");
     private static final Tile ARDY_STUCK = new Tile(2654, 3299, 3);
@@ -77,6 +38,7 @@ public class PerfectAgility extends Script implements Paintable {
     private Course course = null;
     private int startingAgilityExperience;
     private int stuck = 0;
+    private boolean loggedInLast = false;
 
     public void useCourse(Course course) {
         this.course = course;
@@ -102,8 +64,6 @@ public class PerfectAgility extends Script implements Paintable {
         return true;
     }
 
-    private boolean loggedInLast = false;
-
     @Override
     public int loop() {
         if (!Game.isLoggedIn()) {
@@ -111,13 +71,13 @@ public class PerfectAgility extends Script implements Paintable {
             return 100;
         }
 
-        if(Players.getLocal().getAnimation() != -1)
+        if (Players.getLocal().getAnimation() != -1)
             return 100;
 
-        if(!loggedInLast) { // if the bot has just logged in, or has just been ran
-            for(Course cours : Course.values()) {
-                for(Obstacle obs : cours.getObstacles()) {
-                    if(obs.getLocation().contains(Players.getLocal().getLocation())) {
+        if (!loggedInLast) { // if the bot has just logged in, or has just been ran
+            for (Course cours : Course.values()) {
+                for (Obstacle obs : cours.getObstacles()) {
+                    if (obs.getLocation().contains(Players.getLocal().getLocation())) {
                         this.course = cours;
                         Inubot.LOGGER.info("Using course: " + course.toString());
                     }
@@ -127,7 +87,7 @@ public class PerfectAgility extends Script implements Paintable {
 
         loggedInLast = true;
 
-        if(this.course == null) {
+        if (this.course == null) {
             return 100;
         }
 

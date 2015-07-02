@@ -1,9 +1,9 @@
-package com.inubot.api.methods.traversal.web;
+package com.inubot.api.methods.traversal.graph;
 
 import com.inubot.Inubot;
 import com.inubot.api.methods.Players;
-import com.inubot.api.methods.traversal.web.data.ObjectVertex;
-import com.inubot.api.methods.traversal.web.data.WebVertex;
+import com.inubot.api.methods.traversal.graph.data.ObjectVertex;
+import com.inubot.api.methods.traversal.graph.data.WebVertex;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.util.Digraph;
 
@@ -15,9 +15,9 @@ import java.util.Scanner;
  * @author Septron
  * @since July 01, 2015
  */
-public class RSWeb extends Digraph<WebVertex, WebVertex> {
+public class WorldGraph extends Digraph<WebVertex, WebVertex> {
 
-    public RSWeb() {
+    public WorldGraph() {
         try {
             InputStream in = new FileInputStream("./web.txt");
             Scanner s = new Scanner(in);
