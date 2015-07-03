@@ -25,7 +25,7 @@ public class SQLConnection implements Runnable {
     public SQLConnection(Socket connection) {
         this.socket = connection;
         try {
-            this.sqlConnection = DriverManager.getConnection("jdbc:mysql://46.101.172.127:21/" + DATABASE, USERNAME, PASSWORD);
+            this.sqlConnection = DriverManager.getConnection("jdbc:mysql://inubot.com:3306/" + DATABASE, USERNAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
         }
