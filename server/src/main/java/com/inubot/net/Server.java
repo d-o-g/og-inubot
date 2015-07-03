@@ -31,10 +31,11 @@ public class Server implements Runnable {
         } finally {
             while(!ss.isClosed()) {
                 try {
-                    Socket connection = ss.accept();
-                    if (connection != null) {
-                        System.out.println("Accepted new socket from " + connection.getInetAddress());
-                        connections.add(new Connection(connection));
+                    Socket socket = ss.accept();
+                    if (socket != null) {
+                        System.out.println("Accepted new socket from " + socket.getInetAddress());
+                        Connection connection = new Connection(socket);
+                        connections.add(connection);
                         new Thread(connection).start();
                     }
                 } catch (IOException e) {

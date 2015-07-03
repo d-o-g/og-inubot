@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
@@ -34,7 +36,25 @@ public class Application {
 
             @Override
             public void handle(Connection connection) {
+                try {
+                    DataInputStream input
+                            = new DataInputStream(connection.socket.getInputStream());
+                    String username = input.readUTF();
+                    String password = input.readUTF();
 
+                    connection.attributes.put("username", username);
+                    connection.attributes.put("password", password);
+
+                    //TODO: Connect to db and check if pass is correct
+                    boolean correct = true;
+
+
+                    DataOutputStream output
+                            = new DataOutputStream(connection.socket.getOutputStream());
+                    output.writeBoolean(correct);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -46,7 +66,11 @@ public class Application {
 
             @Override
             public void handle(Connection connection) {
+                //TODO: Get id of user...
 
+                //TODO: Get the scripts assigned to the user
+
+                //TODO: Send the scripts after encrypting the byte stream
             }
         });
 

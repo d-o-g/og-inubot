@@ -7,6 +7,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Septron
@@ -15,6 +17,8 @@ import java.net.Socket;
 public class Connection implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Connection.class);
+
+    public Map<String, Object> attributes = new HashMap<>();
 
     private final Connection instance;
 
