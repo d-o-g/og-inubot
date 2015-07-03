@@ -72,6 +72,12 @@ public class Web extends Digraph<WebVertex, WebVertex> {
             case 743:
             case 744:
                 return new String[]{"Underwall tunnel", "Climb-into"};
+            case 41:
+            case 764:
+                return new String[]{"Crumbling wall", "Climb-over"};
+            case 767:
+            case 768:
+                return new String[]{"Gate", "Open"};
             default: {
                 Inubot.LOGGER.info("UNKNOWN OBJECT FOR VERTEX " + vertex);
                 return new String[2];
