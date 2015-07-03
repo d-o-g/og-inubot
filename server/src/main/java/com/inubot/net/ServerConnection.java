@@ -17,7 +17,7 @@ import java.util.Map;
 public class ServerConnection implements Runnable {
 
     private static final String SERVER = "localhost", USERNAME = "root", PASSWORD = "dogsrcool123", DATABASE = "forum";
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServerConnection.class);
+    public final Logger logger = LoggerFactory.getLogger(ServerConnection.class);
     public final Socket socket;
     public final Map<String, Object> attributes = new HashMap<>();
     private Connection sqlConnection;
@@ -43,7 +43,7 @@ public class ServerConnection implements Runnable {
                         if (handler != null)
                             handler.handle(ServerConnection.this);
                         else
-                            LOGGER.error("Unhanded opcode for " + socket.getInetAddress());
+                            logger.error("Unhanded opcode for " + socket.getInetAddress());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -56,7 +56,6 @@ public class ServerConnection implements Runnable {
 
     public ResultSet query(String query) throws SQLException {
         Statement stmt = sqlConnection.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        return rs;
+        return stmt.executeQuery(query);
     }
 }

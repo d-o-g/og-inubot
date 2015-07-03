@@ -11,6 +11,7 @@ import com.inubot.net.ServerConnection;
 import com.inubot.net.Handler;
 
 import java.io.*;
+import java.sql.ResultSet;
 
 /**
  * @author Dogerina
@@ -24,7 +25,7 @@ public class LoginHandler implements Handler {
     }
 
     @Override
-    public void handle(ServerConnection connection) {
+    public void handle(ServerConnection connection) throws Exception {
         try {
             DataInputStream input = new DataInputStream(connection.socket.getInputStream());
             String username = input.readUTF();
@@ -33,16 +34,17 @@ public class LoginHandler implements Handler {
             connection.attributes.put("username", username);
             connection.attributes.put("password", password);
 
-           // connection.
-            //get password and hash from server
-            //hash password md5 it
-            //compare to password for database
-            //if match yeee if not what da fok u dumb stupid ass nigger
+            boolean correct = false;
 
-            //TODO: Connect to db and check if pass is correct
-            boolean correct = true;
-
-
+            ResultSet resultSet = connection.query("SELECT * FROM core_members WHERE name='" + username + "'");
+            while (resultSet.next()) {
+                String salt = "$2a$13$" + resultSet.getString(resultSet.findColumn("members_pass_salt"));
+                String hash = resultSet.getString(resultSet.findColumn("members_pass_hash"));
+                if (true) {//TODO...
+                    correct = true;
+                    connection.logger.info("Logged in as " + username);
+                }
+            }
             DataOutputStream output = new DataOutputStream(connection.socket.getOutputStream());
             output.writeBoolean(correct);
         } catch (IOException e) {

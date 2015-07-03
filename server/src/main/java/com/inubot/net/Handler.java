@@ -8,5 +8,5 @@ public interface Handler {
 
     short opcode();
 
-    void handle(ServerConnection connection);
+    void handle(ServerConnection connection) throws Exception;
 }
