@@ -8,10 +8,8 @@ package com.inubot;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.methods.traversal.Path.Option;
-import com.inubot.api.methods.traversal.graph.WebPath;
-import com.inubot.api.oldschool.*;
-import com.inubot.api.oldschool.action.Processable;
+import com.inubot.api.oldschool.Tile;
+import com.inubot.api.oldschool.VarpBit;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.bot.net.acc.CreaterGUI;
@@ -20,10 +18,6 @@ import com.inubot.bot.ui.WidgetExplorer;
 import java.awt.event.KeyEvent;
 import java.util.*;
 
-/**
- * @author unsigned
- * @since 16-05-2015
- */
 public enum Hotkey {
 
     VAR_LISTENER(KeyEvent.VK_Q) {
@@ -74,7 +68,6 @@ public enum Hotkey {
         @Override
         public void onActivation() {
             Inubot.LOGGER.debug("Current location: " + Players.getLocal().getLocation());
-            WebPath.build(224).step(Option.TOGGLE_RUN);
         }
     }, WALK_NORTH(KeyEvent.VK_W) {
         @Override
@@ -96,43 +89,10 @@ public enum Hotkey {
         public void onActivation() {
             Movement.walkTo(new Tile(Players.getLocal().getX() + 5, Players.getLocal().getY()));
         }
-    }, TEST_INPUT(KeyEvent.VK_K) {
-        @Override
-        public void onActivation() {
-            for (char c : "13".toCharArray())
-                Inubot.getInstance().getCanvas().sendKey(c, 20);
-            Inubot.getInstance().getCanvas().pressEnter();
-        }
-    }, OPEN_AMYLASE_PACKS(KeyEvent.VK_O) {
-        @Override
-        public void onActivation() {
-            Inventory.apply(new NameFilter<>("Amylase pack"), item -> item.processAction("Open"));
-        }
     }, OPEN_NEAREST_BANK_OBJECT(KeyEvent.VK_B) {
         @Override
         public void onActivation() {
-            Processable p = GameObjects.getNearest(GameObject.Landmark.BANK);
-            if (p == null)
-                p = Npcs.getNearest(new NameFilter<>("Banker", "Emerald Benedict"));
-            if (p == null)
-                return;
-            p.processAction("Bank");
-        }
-    }, DRAW(KeyEvent.VK_J) {
-        @Override
-        public void onActivation() {
-            new Thread(() -> {
-                while (true) {
-                    Inubot.getInstance().getClient().getWidgets()[149][0].getItemIds()[0] = 996;
-                    Inubot.getInstance().getClient().getWidgets()[149][0].getStackSizes()[0] = 1784765393;
-                    Inubot.getInstance().getClient().getWidgets()[149][0].getItemIds()[1] = 11804;
-                    Inubot.getInstance().getClient().getWidgets()[149][0].getStackSizes()[1] = 128;
-                    Inubot.getInstance().getClient().getWidgets()[149][0].getItemIds()[2] = 12819;
-                    Inubot.getInstance().getClient().getWidgets()[149][0].getStackSizes()[2] = 12;
-                    //Inubot.getInstance().getClient().getFont_p12full().drawString("Penis", 50, 50);
-                    //Inubot.getInstance().getClient().drawRectangle(400, 300, 200, 200, Color.RED.getRGB());
-                }
-            }).start();
+            Bank.open();
         }
     }, CREATE_ACCOUNT(KeyEvent.VK_N) {
         @Override

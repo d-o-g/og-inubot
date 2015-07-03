@@ -13,10 +13,6 @@ import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.oldschool.action.tree.PlayerAction;
 import com.inubot.client.natives.RSPlayer;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Player extends Character<RSPlayer> {
 
     public Player(RSPlayer raw, int index) {

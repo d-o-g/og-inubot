@@ -17,10 +17,6 @@ import com.inubot.api.oldschool.Player;
 import com.inubot.api.oldschool.Tile;
 import com.inubot.api.util.Time;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Movement {
 
     private static Web web;

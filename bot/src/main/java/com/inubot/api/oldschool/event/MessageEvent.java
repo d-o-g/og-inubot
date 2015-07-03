@@ -6,7 +6,7 @@
  */
 package com.inubot.api.oldschool.event;
 
-public final class MessageEvent {
+public class MessageEvent {
 
     private final String text, channel, source;
     private final int type;

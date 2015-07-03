@@ -6,10 +6,6 @@
  */
 package com.inubot.api.oldschool;
 
-/**
- * @author unsigned
- * @since 22-04-2015
- */
 public enum Skill {
 
     ATTACK,

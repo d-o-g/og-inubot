@@ -18,10 +18,6 @@ import com.inubot.bot.AccountManager;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author unsigned
- * @since 26-04-2015
- */
 public abstract class Script extends LoopTask {
 
     private boolean started = false;
@@ -75,20 +71,20 @@ public abstract class Script extends LoopTask {
         if (!Game.isLoggedIn()) {
             onLogout();
             if (Login.getState() == Login.STATE_MAIN_MENU) {
-                Mouse.hop(Login.EXISTING_USER.x, Login.EXISTING_USER.y);
+                Mouse.move(Login.EXISTING_USER.x, Login.EXISTING_USER.y);
                 Mouse.click(true);
                 Time.sleep(600, 700);
             } else if (Login.getState() == Login.STATE_CREDENTIALS) {
                 Login.setUsername(username);
                 Login.setPassword(password);
-                Mouse.hop(Login.LOGIN.x, Login.LOGIN.y);
+                Mouse.move(Login.LOGIN.x, Login.LOGIN.y);
                 Mouse.click(true);
                 Time.sleep(600, 700);
             }
         }
         // anti-logout, clicking stops it from logging you apparently
         if (forceIdleTimeClick) {
-            Mouse.hop(750, 15);
+            Mouse.move(750, 15);
             Mouse.click(true);
         }
     }

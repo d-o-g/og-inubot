@@ -8,10 +8,6 @@ package com.inubot.api.methods;
 
 import com.inubot.api.oldschool.VarpBit;
 
-/**
- * @author Dogerina
- * @since 04-06-2015
- */
 public class InterfaceOptions {
 
     /** All bits of varp 1055 **/
@@ -25,18 +21,32 @@ public class InterfaceOptions {
         SIDE_PANEL_MODE    = VarpBit.get(4609);
     }
 
+    /**
+     * @return The current {@link com.inubot.api.methods.InterfaceOptions.TabLayout} type
+     */
     public static TabLayout getTabLayout() {
         return TabLayout.values()[STONES_ARRANGEMENT.getValue()];
     }
 
+    /**
+     * @return The current {@link com.inubot.api.methods.InterfaceOptions.ChatboxMode} type
+     */
     public static ChatboxMode getChatboxMode() {
         return ChatboxMode.values()[CHATBOX_MODE.getValue()];
     }
 
+    /**
+     * @return The current {@link com.inubot.api.methods.InterfaceOptions.SidePanelMode} type
+     */
     public static SidePanelMode getSidePanelMode() {
         return SidePanelMode.values()[SIDE_PANEL_MODE.getValue()];
     }
 
+    /**
+     * @return The current {@link com.inubot.api.methods.InterfaceOptions.ViewMode}.
+     * This will be fixed or resizable all the time, unless the player is not logged in,
+     * in which case undetermined will be returned
+     */
     public static ViewMode getViewMode() {
         if (!Game.isLoggedIn())
             return ViewMode.UNDETERMINED;

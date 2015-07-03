@@ -8,10 +8,6 @@ package com.inubot.script;
 
 import com.inubot.api.util.Time;
 
-/**
- * @author unsigned
- * @since 26-04-2015
- */
 public abstract class LoopTask implements Task {
 
     private volatile boolean running = true;

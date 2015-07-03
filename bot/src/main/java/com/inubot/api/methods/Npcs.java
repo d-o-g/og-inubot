@@ -15,10 +15,6 @@ import com.inubot.api.oldschool.collection.NpcPool;
 
 import java.util.*;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Npcs {
 
     private static NpcPool pool;
@@ -59,7 +55,7 @@ public class Npcs {
         return getLoaded(Filter.always());
     }
 
-    public static Npc[] getFirstWithin(int dist, Filter<Npc> filter) {
+    private static Npc[] getFirstWithin(int dist, Filter<Npc> filter) {
         List<Npc> npcs = new ArrayList<>();
         for (Npc npc : getLoaded()) {
             if (npc == null || dist != -1 && npc.distance() > dist || !filter.accept(npc))
@@ -69,7 +65,7 @@ public class Npcs {
         return npcs.toArray(new Npc[npcs.size()]);
     }
 
-    public static Npc[] getFirst(Filter<Npc> filter) {
+    private static Npc[] getFirst(Filter<Npc> filter) {
         return getFirstWithin(-1, filter);
     }
 

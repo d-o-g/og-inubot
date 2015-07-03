@@ -11,10 +11,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
 
-/**
- * @author Septron
- * @since July 01, 2015
- */
 public class Web extends Digraph<WebVertex, WebVertex> {
 
     private static final DijkstraPathfinder PATHFINDER = new DijkstraPathfinder();

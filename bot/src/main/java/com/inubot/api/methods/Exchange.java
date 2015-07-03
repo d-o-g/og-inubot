@@ -30,6 +30,11 @@ public class Exchange {
         return null;
     }
 
+    /**
+     * Looks up an item on the OSBuddy Exchange
+     * @param itemId the id of the item to lookup
+     * @return the price of the item, 0 if not found
+     */
     public static int getPrice(int itemId) {
         try {
             String line = getData(itemId);
@@ -43,10 +48,5 @@ public class Exchange {
             e.printStackTrace();
         }
         return 0;
-    }
-
-    public static int getPrice(String itemName) {
-        int id = CacheLoader.itemIdFor(itemName);
-        return id == -1 ? 0 : getPrice(id);
     }
 }

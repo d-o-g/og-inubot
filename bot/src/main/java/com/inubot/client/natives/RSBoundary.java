@@ -6,10 +6,6 @@
  */
 package com.inubot.client.natives;
 
-/**
- * @author unsigned
- * @since 26-04-2015
- */
 public interface RSBoundary extends RSGameObject {
     int getX();
     int getY();

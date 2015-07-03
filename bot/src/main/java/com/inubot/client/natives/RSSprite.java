@@ -6,10 +6,6 @@
  */
 package com.inubot.client.natives;
 
-/**
- * @author unsigned
- * @since 18-05-2015
- */
 public interface RSSprite {
     int[] getPixels();
     int getWidth();

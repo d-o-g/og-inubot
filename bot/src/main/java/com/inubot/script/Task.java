@@ -6,10 +6,6 @@
  */
 package com.inubot.script;
 
-/**
- * @author unsigned
- * @since 26-04-2015
- */
 public interface Task extends Runnable {
 
     public abstract void execute();

@@ -16,22 +16,33 @@ import com.inubot.client.natives.*;
 
 import java.util.*;
 
-/**
- * @author unsigned
- * @since 23-04-2015
- */
 public class GameObjects {
 
     private static GameObjectPool pool;
 
+    /**
+     * @param cached whether to return the current cached pool or not
+     * @return A {@link com.inubot.api.oldschool.collection.GameObjectPool} which can be used for selection
+     * by chain calls
+     */
     public static GameObjectPool getPool(boolean cached) {
         return cached && pool != null ? pool : (pool = new GameObjectPool(getLoaded()));
     }
 
+    /**
+     * @return A {@link com.inubot.api.oldschool.collection.GameObjectPool} which can be used for selection
+     * by chain calls
+     */
     public static GameObjectPool getPool() {
         return pool;
     }
 
+    /**
+     * @param rx The region x position
+     * @param ry The region y position
+     * @param z The floor level
+     * @return An array of {@link com.inubot.api.oldschool.GameObject}'s at the specified position
+     */
     public static GameObject[] getLoadedAt(int rx, int ry, int z) {
         if (rx > 104 || rx < 0 || ry > 104 || ry < 0 || z < 0 || z > 3)
             return new GameObject[0];
@@ -62,6 +73,11 @@ public class GameObjects {
         return objs.toArray(new GameObject[objs.size()]);
     }
 
+    /**
+     * @param filter The {@link com.inubot.api.util.filter.Filter} which should be used to select elements
+     * @return an array of {@link com.inubot.api.oldschool.GameObject}'s in the loaded region accepted
+     * by the given filter
+     */
     public static GameObject[] getLoaded(Filter<GameObject> filter) {
         List<GameObject> objs = new ArrayList<>();
         int z = Game.getPlane();
@@ -77,11 +93,14 @@ public class GameObjects {
         return objs.toArray(new GameObject[objs.size()]);
     }
 
+    /**
+     * @return An array of {@link com.inubot.api.oldschool.GameObject}'s in the loaded region
+     */
     public static GameObject[] getLoaded() {
         return getLoaded(Filter.always());
     }
 
-    public static GameObject[] getFirstWithin(int dist, Filter<GameObject> filter) {
+    private static GameObject[] getFirstWithin(int dist, Filter<GameObject> filter) {
         List<GameObject> objs = new ArrayList<>();
         for (GameObject obj : getLoaded()) {
             if (obj == null || dist != -1 && obj.distance() > dist || !filter.accept(obj))
@@ -91,7 +110,7 @@ public class GameObjects {
         return objs.toArray(new GameObject[objs.size()]);
     }
 
-    public static GameObject[] getFirst(Filter<GameObject> filter) {
+    private static GameObject[] getFirst(Filter<GameObject> filter) {
         return getFirstWithin(-1, filter);
     }
 

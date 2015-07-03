@@ -16,10 +16,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Projection {
 
     public static final int[] SIN_TABLE = new int[2048];

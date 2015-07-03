@@ -13,10 +13,6 @@ import com.inubot.client.natives.RSPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Players {
 
     public static final int MAX_PLAYERS = 2048;

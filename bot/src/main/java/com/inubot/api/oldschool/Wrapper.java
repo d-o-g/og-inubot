@@ -8,10 +8,6 @@ package com.inubot.api.oldschool;
 
 import com.inubot.client.natives.ClientNative;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public abstract class Wrapper<T extends ClientNative> {
 
     protected final T raw;

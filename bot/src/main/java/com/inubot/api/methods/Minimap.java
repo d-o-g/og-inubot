@@ -9,10 +9,6 @@ package com.inubot.api.methods;
 import com.inubot.Inubot;
 import com.inubot.api.oldschool.Widget;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Minimap {
 
     public static int getScale() {

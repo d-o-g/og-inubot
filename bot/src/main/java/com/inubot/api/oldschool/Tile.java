@@ -13,10 +13,6 @@ import com.inubot.api.methods.Projection;
 import java.awt.*;
 import java.util.Objects;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Tile implements Locatable {
 
     private int x, y, plane;

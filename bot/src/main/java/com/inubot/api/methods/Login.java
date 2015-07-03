@@ -10,10 +10,6 @@ import com.inubot.Inubot;
 
 import java.awt.*;
 
-/**
- * @author unsigned
- * @since 01-05-2015
- */
 public class Login {
 
     public static final Point LOGIN = new Point(370, 325);

@@ -6,34 +6,22 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.api.oldschool.Widget;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.exceptions.BankClosedException;
+import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.oldschool.action.tree.WidgetAction;
 import com.inubot.api.util.Time;
-import com.inubot.api.util.filter.Filter;
-import com.inubot.api.util.filter.IdFilter;
-import com.inubot.api.util.filter.NameFilter;
+import com.inubot.api.util.filter.*;
 import com.inubot.client.natives.RSVarpBit;
 import com.inubot.client.natives.RSWidget;
-import com.inubot.api.oldschool.GameObject;
 
 import java.util.*;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Bank {
 
     public static final int BANK_PARENT = 12;
     public static final int SLOT_CONTAINER = 6;
-    private static final int NUM_TABS = 9;
-    private static final int WITHDRAW_MODE_VARP = 115;
-    private static final int REARRANGE_MODE_VARP = 304;
-
     public static final RSVarpBit BIT_OPEN_TAB_INDEX;
     public static final RSVarpBit BIT_TAB_DISPLAY;
     public static final RSVarpBit BIT_TAB_1;
@@ -45,7 +33,9 @@ public class Bank {
     public static final RSVarpBit BIT_TAB_7;
     public static final RSVarpBit BIT_TAB_8;
     public static final RSVarpBit BIT_TAB_9;
-
+    private static final int NUM_TABS = 9;
+    private static final int WITHDRAW_MODE_VARP = 115;
+    private static final int REARRANGE_MODE_VARP = 304;
     /**
      * The EnumSet of all non-main tabs.
      */
@@ -68,11 +58,19 @@ public class Bank {
         BIT_TAB_9 = RSVarpBit.get(4179); // 1053 [20,29]
     }
 
+    /**
+     * @return <b>true</b> if and only if the bank is open and rendered
+     */
     public static boolean isOpen() {
         Widget component = Interfaces.getWidget(BANK_PARENT, 0);
         return component != null && component.isVisible();
     }
 
+    /**
+     * @param filter The {@link com.inubot.api.util.filter.Filter} which should be used to select the elements
+     * @return An array of {@link com.inubot.api.oldschool.WidgetItem}'s in the bank
+     * that were accepted by the given {@link com.inubot.api.util.filter.Filter}
+     */
     public static WidgetItem[] getItems(Filter<WidgetItem> filter) {
         if (!isOpen())
             return new WidgetItem[0];
@@ -95,19 +93,25 @@ public class Bank {
         return new WidgetItem[0];
     }
 
-    public static TabDisplay getTabDisplay(int v) {
-        return TabDisplay.values()[v];
-    }
-
+    /**
+     * @return The current Bank {@link com.inubot.api.methods.Bank.TabDisplay} type
+     */
     public static TabDisplay getTabDisplay() {
         int v = BIT_TAB_DISPLAY.getValue();
         return TabDisplay.values()[v];
     }
 
+    /**
+     * @return All the {@link com.inubot.api.oldschool.WidgetItem}'s in the bank
+     */
     public static WidgetItem[] getItems() {
         return getItems(Filter.always());
     }
 
+    /**
+     * @param filter the {@link com.inubot.api.util.filter.Filter} to select the elements
+     * @return the first {@link com.inubot.api.oldschool.WidgetItem} selected by the {@link com.inubot.api.util.filter.Filter}
+     */
     public static WidgetItem getFirst(Filter<WidgetItem> filter) {
         for (WidgetItem item : getItems()) {
             if (filter.accept(item))
@@ -116,6 +120,9 @@ public class Bank {
         return null;
     }
 
+    /**
+     * Selects the close button of the bank if it is open
+     */
     public static void close() {
         if (Bank.isOpen()) {
             Widget w = Interfaces.getWidget(12, 3).getChild(c -> c.getIndex() == 11);
@@ -124,7 +131,10 @@ public class Bank {
         }
     }
 
-    private static boolean isMainOpen() {
+    /**
+     * @return <b>true</b> if the current {@link com.inubot.api.methods.Bank.Tab} is the main bank tab
+     */
+    public static boolean isMainTabOpen() {
         return getOpenTab() == Tab.MAIN_TAB;
     }
 
@@ -132,7 +142,7 @@ public class Bank {
      * Determines if the bank is closed. The logic is if the bank is not open,
      * then it is closed {!{@link #isOpen()}}
      *
-     * @return True If and only if the bank is not open.
+     * @return <b>true</b> If and only if the bank is not open.
      */
     public static boolean isClosed() {
         return !isOpen();
@@ -141,7 +151,7 @@ public class Bank {
     /**
      * Determines the bank tab ID that is currently in focus, or will
      * be in focus next time the bank is open.
-     * <p>
+     * <p/>
      * This means is justified by internal client settings. One
      * should note that this value does not reset to any default
      * value when the bank is closed. When the bank is closed the
@@ -207,6 +217,9 @@ public class Bank {
         return null;
     }
 
+    /**
+     * Clicks the deposit inventory button in the bank
+     */
     public static void depositInventory() {
         Widget[] children = Interfaces.widgetsFor(BANK_PARENT);
         Widget button = children[27];
@@ -214,6 +227,17 @@ public class Bank {
             button.processAction("Deposit inventory");
     }
 
+    /**
+     * Attempts to open a bank if there is one available in the current loaded region.
+     *
+     * @see com.inubot.api.methods.traversal.graph.data.WebBank The {@link com.inubot.api.methods.traversal.graph.data.WebBank}
+     * enum provides sufficient data to traverse to a close bank via the web, if there is no bank in the loaded
+     * region then this should be used instead
+     * @see com.inubot.api.methods.traversal.graph.Web Use the methods in {@link com.inubot.api.methods.traversal.graph.Web}
+     * that return a {@link com.inubot.api.methods.traversal.graph.data.WebBank}
+     * @see com.inubot.api.methods.traversal.Movement Use {@link com.inubot.api.methods.traversal.Movement#getWeb}
+     * to access the {@link com.inubot.api.methods.traversal.graph.Web}
+     */
     public static void open() {
         Processable p = GameObjects.getNearest(GameObject.Landmark.BANK);
         if (p == null)
@@ -225,10 +249,22 @@ public class Bank {
         p.processAction("Bank");
     }
 
+    /**
+     * Deposits all items into the bank that are not accepted by the filter
+     *
+     * @param filter The {@link com.inubot.api.util.filter.Filter} which will be used to select the elements
+     */
     public static void depositAllExcept(Filter<WidgetItem> filter) {
         depositAll(Filter.not(filter));
     }
 
+    /**
+     * Deposits all items into the bank that are accepted by the filter
+     *
+     * @param filter The {@link com.inubot.api.util.filter.Filter} which will be used to select the elements
+     * @see #depositInventory - should be used instead of this method if the entire inventory
+     * is needed to be deposited
+     */
     public static void depositAll(Filter<WidgetItem> filter) {
         if (!isOpen())
             throw new BankClosedException();
@@ -238,18 +274,34 @@ public class Bank {
         }
     }
 
+    /**
+     * @return The current bank {@link com.inubot.api.methods.Bank.WithdrawMode} state
+     */
     public static WithdrawMode getWithdrawMode() {
         return Varps.getBoolean(WITHDRAW_MODE_VARP) ? WithdrawMode.NOTE : WithdrawMode.ITEM;
     }
 
+    /**
+     * @return The current bank {@link com.inubot.api.methods.Bank.RearrangeMode} state
+     */
     public static RearrangeMode getRearrangeMode() {
         return Varps.get(REARRANGE_MODE_VARP) == 2000 ? RearrangeMode.SWAP : RearrangeMode.INSERT;
     }
 
+    /**
+     * This method is <b>not</b> the same as Bank.getItems().length in the sense
+     * that it uses the clients item cache to access the local item data.
+     * @return The current number of items in the bank
+     */
     public static int getCount() {
         return ItemTables.getBank().length;
     }
 
+    /**
+     * @see #getCount
+     * @param filter the {@link com.inubot.api.util.filter.Filter} which should be used to select the elements
+     * @return the number of items in the bank accepted by the filter
+     */
     public static int getCount(Filter<ItemTables.Entry> filter) {
         int count = 0;
         for (ItemTables.Entry entry : ItemTables.getBank()) {
@@ -259,6 +311,11 @@ public class Bank {
         return count;
     }
 
+    /**
+     * @see #getCount
+     * @param filter the {@link com.inubot.api.util.filter.Filter} which should be used to select the elements
+     * @return the number of items in the bank that were rejected by the filter
+     */
     public static int getCountExcept(Filter<ItemTables.Entry> filter) {
         return getCount(Filter.not(filter));
     }
@@ -270,8 +327,8 @@ public class Bank {
      * signify a invalid state. One should ensure that the bank
      * is open before evaluating this logic.
      *
-     * @return True if the bank does not occupy at least one item,
-     * False if the bank occupies at least one item.
+     * @return <b>true</b> if the bank does not occupy at least one item,
+     * <b>false</b> if the bank occupies at least one item.
      * @throws BankClosedException If the bank was closed.
      * @see #getCount()
      */
@@ -343,8 +400,8 @@ public class Bank {
      * thrown to signify a invalid state. One should ensure
      * that the bank is open before evaluating this logic.
      *
-     * @return True if the bank is full, and can no longer
-     * store any more-new-items, if the bank is open.
+     * @return <b>true</b> if the bank is full, and can no longer
+     * store any more-new-items, if the bank is open. <b>false</b> otherwise
      * @throws BankClosedException If
      *                             the bank was closed when this method was called.
      */
@@ -384,8 +441,7 @@ public class Bank {
         // Can tell if the main tab panel is not displayed, or the texture of the button
         if (isClosed()) return false;
         Widget settings_panel = Interfaces.getWidget(12, 7);
-        if (settings_panel == null) return false; //Should never happen?
-        return !settings_panel.isHidden();
+        return settings_panel != null && !settings_panel.isHidden();
     }
 
     /**
@@ -477,21 +533,20 @@ public class Bank {
          * requires the bank to be open. If the bank is closed then
          * this function will return false.
          *
-         * @return True if this bank tab is in focus, and the bank is open.
-         * False otherwise.
+         * @return <b>true</b> if this bank tab is in focus, and the bank is open.
+         * <b>false</b> otherwise.
          * @see #getOpenTabIndex()
          */
         public boolean isOpen() {
-            if (Bank.isClosed()) return false;
-            return Bank.getOpenTabIndex() == getIndex();
+            return !Bank.isClosed() && Bank.getOpenTabIndex() == getIndex();
         }
 
         /**
          * Determines if this tab is closed and thus does not have
          * focus. The logic is if this tab is not open, then its closed.
          *
-         * @return True if this bank tab is not open.
-         * @see #isOpen()
+         * @return <b>true</b> if this bank tab is not open.
+         * @see Bank#isOpen
          */
         public boolean isClosed() {
             return !isOpen();
@@ -507,20 +562,19 @@ public class Bank {
          * The MainTab is a special case to this logic, for it
          * can never be collapsed.
          *
-         * @return True if the tab exists, false otherwise
+         * @return <b>true</b> if the tab exists, <b>false</b> otherwise
          */
         public boolean isCollapsed() {
-            if (this == MAIN_TAB) return false;
-            return getCount() == 0;
+            return this != MAIN_TAB && getCount() == 0;
         }
 
         /**
-         * Determines if this tab contains at least one item.
+         * Determines if this tab contains no items.
          * This function performs the same logic as {@link #isCollapsed()}
          * but will include the main tab, since the main tab can also be empty.
          * For clarification one should note
          *
-         * @return
+         * @return <b>true</b> if the tab does not contain any items, <b>false</b> otherwise
          */
         public boolean isEmpty() {
             return getCount() == 0;
@@ -530,15 +584,15 @@ public class Bank {
          * The Bank container index base for this tab.
          * All indexes of items within this tab will
          * range between [ BaseValue, BaseValue + ItemCount ).
-         * <p>
+         * <p/>
          * Example:
          * For Item 5 of Tab 2 is located within the base value
          * of Tab 2 + 5. Where the resulting index is equal to
          * the index within the Banks item container
-         * <p>
+         * <p/>
          * This value is equal to the sum of the precessing
          * tab count. (T1c + T2c + T3c + ... + Tc(I-1))
-         * <p>
+         * <p/>
          * The MainTab is special case for this logic, for
          * it's items are stored at the end of container,
          * despite it being the 0'th tab (internally).
@@ -574,7 +628,7 @@ public class Bank {
          * is still set.
          *
          * @return The dividing widget header of this tab.
-         * @see {@link Bank#getTabDisplay()}
+         * @see #getTabDisplay
          */
         public Widget getTab() {
             return Interfaces.getWidget(12, 8).getChildren()[10 + getIndex()];
@@ -582,7 +636,7 @@ public class Bank {
 
         public Widget getDivider() { // Gets the divider located at the bottom of the tab
             if (Bank.isClosed()) return null;
-            if (!isMainOpen()) return null;
+            if (!isMainTabOpen()) return null;
             if (isCollapsed()) return null;
             //... The divider should now be active
             int base_index = getCapacity() + getIndex();
@@ -608,7 +662,7 @@ public class Bank {
          * is located within the container widget. This index can also define the
          * child index within the container widget where the widget child is
          * indexed.
-         * <p>
+         * <p/>
          * For clarification purposes the provided relative index is
          * forced to be within the item range of the tab,
          * unless the returned value will be that of a different tab.
@@ -620,33 +674,33 @@ public class Bank {
          * value will be the index within the banks item containers
          * which you can lookup the specified item.
          *
-         * @param relative_index The index of the item, within this tab
+         * @param relativeIndex The index of the item, within this tab
          *                       which must be (0 <= 0 < {@link #getCount()})
          * @return The index of the item within the container widget,
          * that the relative item (within this tab) is located.
-         * @see #getContainerBaseIndex()
+         * @see #getContainerBaseIndex
          */
-        public int getItemIndex(int relative_index) {
-            if (relative_index < 0 || relative_index > getCount()) return -1;
-            final int base_index = getContainerBaseIndex();
-            return base_index + relative_index;
+        public int getItemIndex(int relativeIndex) {
+            if (relativeIndex < 0 || relativeIndex > getCount()) return -1;
+            int base = getContainerBaseIndex();
+            return base + relativeIndex;
         }
 
         /**
          * Opens this tab. This function will return true if and
          * only if this tab was successfully opened. This function
          * will interact with the divider of the tab provided by {@link #getTab()}.
-         * <p>
+         * <p/>
          * This methods requires this tab to be interactable. In the cases that
          * this tab can not be interacted upon, or this tab is collapsed,
          * this function will immediately return false. In the case that the
          * tab is already open this function will immediately return true.
          *
-         * @return True if and only if this tab was successful opened, or was already open.
-         * False otherwise.
-         * @see #isOpen()
-         * @see #isCollapsed()
-         * @see #getTab()
+         * @return <b>true</b> if and only if this tab was successful opened, or was already open.
+         * <b>false</b> otherwise.
+         * @see Bank#isOpen
+         * @see Tab#isCollapsed
+         * @see Bank#getTab
          */
         public boolean open() {
             if (isOpen()) return true;
@@ -665,8 +719,8 @@ public class Bank {
             return false;
         }
 
-        public WidgetItem getItem(int relative_index) {
-            final int idx = getItemIndex(relative_index);
+        public WidgetItem getItem(int relativeIndex) {
+            final int idx = getItemIndex(relativeIndex);
             if (idx == -1) return null;
             return new WidgetItem(Interfaces.getWidget(12, 10).getChildren()[idx], idx);
         }

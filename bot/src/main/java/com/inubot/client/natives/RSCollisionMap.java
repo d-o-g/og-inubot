@@ -6,10 +6,6 @@
  */
 package com.inubot.client.natives;
 
-/**
- * @author unsigned
- * @since 22-04-2015
- */
 public interface RSCollisionMap {
     int[][] getFlags();
 }

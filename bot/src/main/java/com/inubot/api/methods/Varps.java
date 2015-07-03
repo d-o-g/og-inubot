@@ -9,10 +9,6 @@ package com.inubot.api.methods;
 import com.inubot.Inubot;
 import com.inubot.client.natives.RSVarpBit;
 
-/**
- * @author unsigned, Cameron
- * @since 21-04-2015
- */
 public class Varps {
 
     public static int[] getAll() {

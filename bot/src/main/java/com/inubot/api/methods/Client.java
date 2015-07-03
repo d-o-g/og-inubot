@@ -13,27 +13,28 @@ import java.util.Iterator;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Client {
 
     public static final int[] VARPBIT_MASKS = new int[32];
+    private static final Queue<Node> queue = new ArrayBlockingQueue<>(2000);
     public static boolean LANDSCAPE_RENDERING_ENABLED = true;
     public static boolean MODEL_RENDERING_ENABLED = true;
     public static boolean WIDGET_RENDERING_ENABLED = true;
     public static boolean PAINTING = true;
     public static int GAME_TICK_SLEEP = -1;
-
-    private static final Queue<Node> queue = new ArrayBlockingQueue<>(2000);
     private static Node last;
     private static long lastProcess;
 
-    public static int queueSize() {
+    /**
+     * @return the size of the action queue
+     */
+    public static int getActionQueueSize() {
         return queue.size();
     }
 
+    /**
+     * <b>FOR INTERNAL USE ONLY</b>
+     */
     public static void processActions() {
         Iterator<Node> iterator = queue.iterator();
         while (iterator.hasNext()) {
@@ -61,26 +62,52 @@ public class Client {
         }
     }
 
+    /**
+     * @return <b>true</b> if the game client is in low memory mode, <b>false</b> otherwise
+     */
     public static boolean isLowMemory() {
         return Inubot.getInstance().getClient().isLowMemory();
     }
 
+    /**
+     * Sets the games lowMemory value to the given lowMemory value
+     *
+     * @param lowMemory the new lowMemory value
+     */
     public static void setLowMemory(boolean lowMemory) {
         Inubot.getInstance().getClient().setLowMemory(lowMemory);
     }
 
+    /**
+     * Sets the game engine tick sleep
+     *
+     * @param value the value to set the tick sleep to
+     */
     public static void setEngineTick(int value) {
         Client.GAME_TICK_SLEEP = value;
     }
 
+    /**
+     * @param value <b>true</b> to render models, <b>false</b> otherwise
+     */
     public static void setModelRendering(boolean value) {
         Client.MODEL_RENDERING_ENABLED = value;
     }
 
+    /**
+     * @param value <b>true</b> to render the sceneery, <b>false</b> otherwise
+     */
     public static void setLandscapeRendering(boolean value) {
         Client.LANDSCAPE_RENDERING_ENABLED = value;
     }
 
+    /**
+     * <b>WARNING: THIS MAY AFFECT SCRIPTS THAT USE WIDGETS, AS Widget#isVisible WILL
+     * ALWAYS RETURN FALSE IF THIS IS SET TO TRUE - ONLY USE THIS IF YOU DO NOT
+     * REQUIRE THE USE OF WIDGETS</b>
+     *
+     * @param value <b>true</b> to render widgets, <b>false</b> otherwise
+     */
     public static void setWidgetRendering(boolean value) {
         Client.WIDGET_RENDERING_ENABLED = value;
     }

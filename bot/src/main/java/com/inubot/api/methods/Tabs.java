@@ -10,10 +10,6 @@ import com.inubot.api.oldschool.Tab;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Tabs {
 
     public static Tab getOpen() {

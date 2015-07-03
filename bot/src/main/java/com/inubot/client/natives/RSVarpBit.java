@@ -12,10 +12,6 @@ import com.inubot.api.methods.Varps;
 import com.inubot.client.Artificial;
 import com.inubot.api.oldschool.VarpBit;
 
-/**
- * @author unsigned
- * @since 29-04-2015
- */
 public interface RSVarpBit extends ClientNative {
 
     int getVarpIndex();  //the index of the 'owner' varp of this bit within the Client#varps array

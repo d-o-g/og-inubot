@@ -10,10 +10,6 @@ import com.inubot.Inubot;
 
 import java.awt.*;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Mouse {
 
     public static int getX() {
@@ -28,7 +24,7 @@ public class Mouse {
         return new Point(getX(), getY());
     }
 
-    public static void hop(int x, int y) {
+    public static void move(int x, int y) {
         Inubot.getInstance().getCanvas().setMouseLocation(x, y);
     }
 

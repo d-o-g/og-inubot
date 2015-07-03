@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Dogerina
- * @since 03-05-2015
  * This class should be used rather than the respective provider class (e.g. Bank, Equipment) in situations where you
  * do not need to interact with the item (counting number of items, getting cached item values etc). There is a huge
  * overhead when working with item tables, as this is a faster lookup and it is more efficient.

@@ -16,10 +16,6 @@ import com.inubot.client.natives.RSWidget;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Interfaces {
 
     /**

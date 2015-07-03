@@ -9,10 +9,6 @@ package com.inubot.api.oldschool;
 import com.inubot.api.methods.Players;
 import com.inubot.api.methods.Projection;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public interface Locatable {
 
     public Tile getLocation();

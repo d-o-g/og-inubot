@@ -8,10 +8,6 @@ package com.inubot.script;
 
 import com.inubot.Inubot;
 
-/**
- * @author unsigned
- * @since 27-04-2015
- */
 public class ScriptFlux {
 
     private Script running = null;

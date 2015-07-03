@@ -11,10 +11,6 @@ import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.tree.*;
 
-/**
- * @author unsigned
- * @since 30-04-2015
- */
 public class Magic {
 
     public static boolean canAutoCast() {

@@ -12,10 +12,6 @@ import com.inubot.api.oldschool.Player;
 import com.inubot.client.natives.RSNpc;
 import com.inubot.client.natives.RSPlayer;
 
-/**
- * @author unsigned
- * @since 16-05-2015
- */
 public class HintArrow {
 
     /**

@@ -8,10 +8,6 @@ package com.inubot.api.oldschool;
 
 import com.inubot.api.methods.Interfaces;
 
-/**
- * @author unsigned
- * @since 30-04-2015
- */
 public interface Spell {
 
     int MODERN = 0x1;

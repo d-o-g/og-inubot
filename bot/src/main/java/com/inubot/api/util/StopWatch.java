@@ -8,10 +8,6 @@ package com.inubot.api.util;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author unsigned
- * @since 06-05-2015
- */
 public class StopWatch {
 
     private final long start;

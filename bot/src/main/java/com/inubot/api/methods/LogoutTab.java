@@ -9,10 +9,6 @@ package com.inubot.api.methods;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.Time;
 
-/**
- * @author unsigned
- * @since 21-05-2015
- */
 public class LogoutTab {
 
     private static final int BASE_WIDGET_HASH = 4521996;

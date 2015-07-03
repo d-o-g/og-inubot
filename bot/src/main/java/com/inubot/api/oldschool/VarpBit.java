@@ -9,10 +9,6 @@ package com.inubot.api.oldschool;
 import com.inubot.Inubot;
 import com.inubot.client.natives.RSVarpBit;
 
-/**
- * @author unsigned
- * @since 04-06-2015
- */
 public class VarpBit extends Wrapper<RSVarpBit> implements RSVarpBit {
 
     private final int id;

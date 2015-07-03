@@ -6,10 +6,6 @@
  */
 package com.inubot.api.oldschool.action;
 
-/**
- * @author unsigned
- * @since 20-04-2015
- */
 public interface Processable {
     void processAction(int opcode, String action);
     void processAction(String action);

@@ -11,10 +11,6 @@ import com.inubot.client.natives.RSNodeDeque;
 
 import java.util.Iterator;
 
-/**
- * @author unsigned
- * @since 23-05-2015
- */
 public class NodeDeque extends Wrapper<RSNodeDeque> implements Iterable<RSNode> {
 
     private RSNode current;

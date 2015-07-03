@@ -6,10 +6,6 @@
  */
 package com.inubot.api.util;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public interface Identifiable {
 
     /**

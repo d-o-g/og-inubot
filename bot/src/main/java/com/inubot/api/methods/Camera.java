@@ -10,36 +10,54 @@ import com.inubot.Inubot;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Tile;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Camera {
 
+    /**
+     * @return The raw x position of the camera
+     */
     public static int getX() {
         return Inubot.getInstance().getClient().getCameraX();
     }
 
+    /**
+     * @return The raw y position of the camera
+     */
     public static int getY() {
         return Inubot.getInstance().getClient().getCameraY();
     }
 
+    /**
+     * @return The raw z position of the camera
+     */
     public static int getZ() {
         return Inubot.getInstance().getClient().getCameraZ();
     }
 
+    /**
+     * @return The current altitude, or pitch of the camera
+     */
     public static int getAltitude() {
         return Inubot.getInstance().getClient().getCameraPitch();
     }
 
+    /**
+     * @return The current yaw of the camera
+     */
     public static int getYaw() {
         return Inubot.getInstance().getClient().getCameraYaw();
     }
 
+    /**
+     * @return The current camera angle
+     */
     public static int getAngle() {
         return (int) ((360D / 2048) * Math.min(2047 - getYaw(), 2048));
     }
 
+    /**
+     * @param l The locatable
+     * @return The camera angle to the given locatable
+     */
     public static int angleTo(Locatable l) {
         Tile l0 = Players.getLocal().getLocation();
         int angle = 90 - ((int) Math.toDegrees(Math.atan2(l.getY() - l0.getY(), l.getX() - l0.getX())));

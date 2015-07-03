@@ -6,11 +6,6 @@
  */
 package com.inubot.api.oldschool;
 
-/**
- * @author unsigned
- * @since 21-05-2015
- */
-
 import com.inubot.api.methods.Skills;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.client.natives.RSItemDefinition;

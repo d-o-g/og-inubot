@@ -17,10 +17,6 @@ import com.inubot.client.natives.RSWidget;
 
 import java.awt.*;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Widget extends Wrapper<RSWidget> implements Processable {
 
     private int index;

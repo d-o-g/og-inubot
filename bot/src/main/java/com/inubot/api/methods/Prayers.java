@@ -12,10 +12,6 @@ import com.inubot.api.util.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author unsigned
- * @since 21-05-2015
- */
 public class Prayers {
 
     public static boolean isActive(final Prayer prayer) {

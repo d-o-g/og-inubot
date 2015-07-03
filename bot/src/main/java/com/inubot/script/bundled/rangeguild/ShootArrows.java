@@ -34,7 +34,7 @@ public class ShootArrows implements Action {
     public void execute() {
         if (Players.getLocal().getLocation().distance(BASE) > 2) {
             if (!Movement.isRunEnabled()) {
-                Mouse.hop(578, 138);
+                Mouse.move(578, 138);
                 Mouse.click(true);
             }
             Movement.walkTo(BASE);

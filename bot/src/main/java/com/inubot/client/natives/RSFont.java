@@ -1,9 +1,5 @@
 package com.inubot.client.natives;
 
-/**
- * @author unsigned
- * @since 09-06-2015
- */
 public interface RSFont {
     /**
      * @param string The String to draw

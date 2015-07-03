@@ -15,10 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Inventory {
 
     public static final int INVENTORY_PARENT = 149;

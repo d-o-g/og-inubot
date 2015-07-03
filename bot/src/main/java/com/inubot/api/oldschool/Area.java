@@ -9,10 +9,6 @@ package com.inubot.api.oldschool;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author unsigned
- * @since 26-04-2015
- */
 public class Area {
 
     private final Tile start;

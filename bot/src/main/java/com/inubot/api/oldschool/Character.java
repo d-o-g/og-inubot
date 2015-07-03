@@ -16,10 +16,6 @@ import com.inubot.client.natives.RSPlayer;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.util.Identifiable;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public abstract class Character<T extends RSCharacter> extends Wrapper<T> implements Locatable, Processable, Identifiable {
 
     protected final int arrayIndex;

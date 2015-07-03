@@ -26,7 +26,7 @@ public class ServerConnection implements Runnable {
         this.socket = connection;
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            this.sqlConnection = DriverManager.getConnection("jdbc:mysql://46.101.172.127:3306/" + DATABASE, USERNAME, PASSWORD);
+            this.sqlConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DATABASE, USERNAME, PASSWORD);
         } catch (Exception e) {
             e.printStackTrace();
         }

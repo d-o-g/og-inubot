@@ -8,10 +8,6 @@ package com.inubot.api.util;
 
 import java.awt.*;
 
-/**
- * @author unsigned
- * @since 22-04-2015
- */
 public interface Paintable {
     void render(Graphics2D g);
 }

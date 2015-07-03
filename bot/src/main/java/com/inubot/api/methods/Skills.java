@@ -9,10 +9,6 @@ package com.inubot.api.methods;
 import com.inubot.Inubot;
 import com.inubot.api.oldschool.Skill;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Skills {
 
     public static final int LEAST_SKILL = 1;

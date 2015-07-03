@@ -16,10 +16,6 @@ import com.inubot.client.natives.RSItemDefinition;
 
 import java.awt.*;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class WidgetItem implements Identifiable, Processable {
 
     //The client sets the bounds of an item as 32x32 [Constant]

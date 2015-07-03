@@ -9,10 +9,6 @@ package com.inubot.api.methods;
 import com.inubot.Inubot;
 import com.inubot.client.natives.RSFont;
 
-/**
- * @author unsigned
- * @since 09-06-2015
- */
 public class JagGraphics {
 
     //TODO hook more string plotting methods, and other drawing shit like drawRectangle, drawLine etc
@@ -25,6 +21,12 @@ public class JagGraphics {
         Inubot.getInstance().getClient().drawRectangle(x, y, w, h, rgb);
     }
 
+    /**
+     * @param string
+     * @param x
+     * @param y
+     * Draws a string using the clients font_p12full
+     */
     public static void drawString(String string, int x, int y) {
         RSFont font = getFont_p12full();
         if (font == null)

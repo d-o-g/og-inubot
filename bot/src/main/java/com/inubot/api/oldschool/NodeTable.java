@@ -11,10 +11,6 @@ import com.inubot.client.natives.RSNodeTable;
 
 import java.util.Iterator;
 
-/**
- * @author unsigned
- * @since 03-05-2015
- */
 public class NodeTable extends Wrapper<RSNodeTable> implements Iterator<RSNode> {
 
     private int index;

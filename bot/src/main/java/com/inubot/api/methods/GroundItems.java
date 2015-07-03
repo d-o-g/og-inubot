@@ -17,10 +17,6 @@ import com.inubot.api.oldschool.NodeDeque;
 
 import java.util.*;
 
-/**
- * @author unsigned
- * @since 22-04-2015
- */
 public class GroundItems {
 
     private static GroundItemPool pool;
@@ -62,7 +58,7 @@ public class GroundItems {
         return getLoaded(Filter.always());
     }
 
-    public static GroundItem[] getWithin(int dist, Filter<GroundItem> filter) {
+    private static GroundItem[] getWithin(int dist, Filter<GroundItem> filter) {
         List<GroundItem> items = new ArrayList<>();
         for (GroundItem npc : getLoaded()) {
             if (npc == null || dist != -1 && npc.distance() > dist || !filter.accept(npc))
@@ -72,7 +68,7 @@ public class GroundItems {
         return items.toArray(new GroundItem[items.size()]);
     }
 
-    public static GroundItem[] getFirst(Filter<GroundItem> filter) {
+    private static GroundItem[] getFirst(Filter<GroundItem> filter) {
         return getWithin(-1, filter);
     }
 

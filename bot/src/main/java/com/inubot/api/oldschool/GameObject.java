@@ -21,10 +21,6 @@ import com.inubot.client.natives.RSObjectDefinition;
 
 import java.util.Arrays;
 
-/**
- * @author unsigned
- * @since 23-04-2015
- */
 public class GameObject extends Wrapper<RSGameObject> implements Locatable, Processable, Identifiable {
 
     private final RSObjectDefinition definition;

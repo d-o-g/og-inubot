@@ -19,10 +19,6 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class CacheLoader {
 
     private static final Logger logger = LoggerFactory.getLogger(CacheLoader.class);

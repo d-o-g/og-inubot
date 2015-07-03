@@ -6,11 +6,6 @@
  */
 package com.inubot.api.oldschool.collection;
 
-/**
- * @author unsigned
- * @since 06-06-2015
- */
-
 import com.inubot.api.util.filter.Filter;
 
 import java.util.*;

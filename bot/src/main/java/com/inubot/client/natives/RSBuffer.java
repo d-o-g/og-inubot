@@ -6,10 +6,6 @@
  */
 package com.inubot.client.natives;
 
-/**
- * @author unsigned
- * @since 06-05-2015
- */
 public interface RSBuffer extends ClientNative {
     byte[] getPayload();
     int getCaret();

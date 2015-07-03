@@ -4,10 +4,6 @@ import com.inubot.api.oldschool.Tile;
 
 import java.util.*;
 
-/**
- * @author Septron
- * @since July 01, 2015
- */
 public class WebVertex implements Comparator<WebVertex> {
 
     private final int index, x, y, plane;

@@ -17,10 +17,6 @@ import com.inubot.client.natives.RSNpcDefinition;
 
 import java.util.Arrays;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public class Npc extends Character<RSNpc> implements Identifiable, Processable {
 
     private final RSNpcDefinition definition;
@@ -33,7 +29,7 @@ public class Npc extends Character<RSNpc> implements Identifiable, Processable {
 
     @Override
     public boolean validate() {
-        return super.validate() && definition != null;
+        return definition != null;
     }
 
     @Override

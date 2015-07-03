@@ -6,10 +6,6 @@
  */
 package com.inubot.api.oldschool;
 
-/**
- * @author unsigned
- * @since 21-04-2015
- */
 public enum EntityType {
     OBJECT, GROUND_ITEM, NPC, PLAYER
 }

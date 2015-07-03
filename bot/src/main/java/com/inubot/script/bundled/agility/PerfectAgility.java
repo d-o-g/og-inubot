@@ -100,7 +100,7 @@ public class PerfectAgility extends Script implements Paintable {
             stuck = 0;
         }
         if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 10) {
-            Mouse.hop(578, 138);
+            Mouse.move(578, 138);
             Mouse.click(true);
         }
         if (Skills.getCurrentLevel(Skill.HITPOINTS) < 10)
