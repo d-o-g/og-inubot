@@ -19,8 +19,6 @@ import java.util.*;
 
 public class WebPath implements Path {
 
-    private static final DijkstraPathfinder PATHFINDER = new DijkstraPathfinder();
-
     private final WebVertex src, dest;
     private final List<WebVertex> vertices;
 
@@ -30,7 +28,7 @@ public class WebPath implements Path {
         if (src == null || dest == null)
             throw new RuntimeException("Failed to find vertices!");
         this.vertices = new ArrayList<>();
-        WebVertex[] path = PATHFINDER.generate(src, dest);
+        WebVertex[] path = Movement.getWeb().getPathfinder().generate(src, dest);
         if (path == null)
             throw new RuntimeException("Failed to find path!");
         Collections.addAll(vertices, path);

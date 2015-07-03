@@ -2,10 +2,11 @@ package com.inubot.api.methods.traversal.graph;
 
 import com.inubot.Inubot;
 import com.inubot.api.methods.Players;
-import com.inubot.api.methods.traversal.graph.data.ObjectVertex;
-import com.inubot.api.methods.traversal.graph.data.WebVertex;
+import com.inubot.api.methods.traversal.Movement;
+import com.inubot.api.methods.traversal.graph.data.*;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.util.Digraph;
+import com.inubot.api.util.filter.Filter;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -16,6 +17,8 @@ import java.util.Scanner;
  * @since July 01, 2015
  */
 public class Web extends Digraph<WebVertex, WebVertex> {
+
+    private static final DijkstraPathfinder PATHFINDER = new DijkstraPathfinder();
 
     public Web() {
         try {
@@ -102,7 +105,31 @@ public class Web extends Digraph<WebVertex, WebVertex> {
         return best;
     }
 
+    public WebPath findPathToBank(WebBank bank) {
+        return WebPath.build(bank.getLocation());
+    }
+
+    public WebPath findPathToNearestBank() {
+        return findPathToBank(getNearestBank());
+    }
+
+    public WebBank getNearestBank() {
+        return WebBank.getNearest();
+    }
+
+    public WebBank getNearestBank(WebBank.Type type) {
+        return WebBank.getNearest(t -> t.getType() == type);
+    }
+
+    public WebBank getNearestBank(Filter<WebBank> filter) {
+        return WebBank.getNearest(filter);
+    }
+
     public WebVertex getNearestVertex() {
         return getNearestVertex(Players.getLocal());
+    }
+
+    public DijkstraPathfinder getPathfinder() {
+        return PATHFINDER;
     }
 }
