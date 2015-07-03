@@ -1,6 +1,6 @@
 package com.inubot;
 
-import com.inubot.net.SQLConnection;
+import com.inubot.net.ServerConnection;
 import com.inubot.net.Handler;
 import com.inubot.net.Manager;
 import com.inubot.net.Server;
@@ -34,7 +34,7 @@ public class Application {
             }
 
             @Override
-            public void handle(SQLConnection connection) {
+            public void handle(ServerConnection connection) {
                 try {
                     DataInputStream input
                             = new DataInputStream(connection.socket.getInputStream());
@@ -63,7 +63,7 @@ public class Application {
             }
 
             @Override
-            public void handle(SQLConnection connection) {
+            public void handle(ServerConnection connection) {
                 //TODO: Get id of user...
 
                 //TODO: Get the scripts assigned to the user

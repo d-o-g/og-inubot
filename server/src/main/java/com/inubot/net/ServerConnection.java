@@ -14,18 +14,21 @@ import java.util.Map;
  * @author Septron
  * @since July 02, 2015
  */
-public class SQLConnection implements Runnable {
+public class ServerConnection implements Runnable {
 
-    private static final String SERVER = "localhost", USERNAME = "root", PASSWORD = "dogsrcool123", DATABASE = "forum";
-    private static final Logger LOGGER = LoggerFactory.getLogger(SQLConnection.class);
+    private static final String SERVER = "localhost",
+            USERNAME = "root",
+            PASSWORD = "dogsrcool123",
+            DATABASE = "forum";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerConnection.class);
     public Map<String, Object> attributes = new HashMap<>();
     public final Socket socket;
     private Connection sqlConnection;
 
-    public SQLConnection(Socket connection) {
+    public ServerConnection(Socket connection) {
         this.socket = connection;
         try {
-            this.sqlConnection = DriverManager.getConnection("jdbc:mysql://46.101.172.127:21/" + DATABASE, USERNAME, PASSWORD);
+            this.sqlConnection = DriverManager.getConnection("jdbc:mysql://46.101.172.127:3306/" + DATABASE, USERNAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,7 +43,7 @@ public class SQLConnection implements Runnable {
                     try {
                         Handler handler = Manager.get(input.readShort());
                         if (handler != null)
-                            handler.handle(SQLConnection.this);
+                            handler.handle(ServerConnection.this);
                         else
                             LOGGER.error("Unhanded opcode for " + socket.getInetAddress());
                     } catch (Exception e) {
@@ -55,7 +58,7 @@ public class SQLConnection implements Runnable {
 
     public ResultSet query(String query) throws SQLException {
         Statement stmt = sqlConnection.createStatement() ;
-        ResultSet rs = stmt.executeQuery(query) ;
+        ResultSet rs = stmt.executeQuery(query);
         return rs;
     }
 }

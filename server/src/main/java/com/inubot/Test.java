@@ -1,7 +1,10 @@
 package com.inubot;
 
-import com.inubot.net.SQLConnection;
+import com.inubot.net.Server;
+import com.inubot.net.ServerConnection;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,10 +13,11 @@ import java.sql.SQLException;
  */
 public class Test {
 
-    public static void main(String... args) {
-        SQLConnection sqlConnection = new SQLConnection(null);
+    public static void main(String... args) throws IOException {
+        ServerConnection serverConnection = new ServerConnection(new ServerSocket(1111, 100).accept());
         try {
-            ResultSet resultSet = sqlConnection.query("SELECT * core_members WHERE name='Bone'");
+            System.out.println("LOL");
+            ResultSet resultSet = serverConnection.query("SELECT * core_members WHERE name='Bone'");
             while (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 System.out.println("Bone #id: " + id);
