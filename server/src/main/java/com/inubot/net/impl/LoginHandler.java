@@ -7,7 +7,7 @@
 package com.inubot.net.impl;
 
 import com.inubot.Application;
-import com.inubot.net.SQLConnection;
+import com.inubot.net.ServerConnection;
 import com.inubot.net.Handler;
 
 import java.io.*;
@@ -24,7 +24,7 @@ public class LoginHandler implements Handler {
     }
 
     @Override
-    public void handle(SQLConnection connection) {
+    public void handle(ServerConnection connection) {
         try {
             DataInputStream input = new DataInputStream(connection.socket.getInputStream());
             String username = input.readUTF();
