@@ -1,6 +1,5 @@
 package com.inubot;
 
-import com.inubot.net.Server;
 import com.inubot.net.ServerConnection;
 
 import java.io.IOException;
@@ -14,9 +13,8 @@ import java.sql.SQLException;
 public class Test {
 
     public static void main(String... args) throws IOException {
-        ServerConnection serverConnection = new ServerConnection(new ServerSocket(1111, 100).accept());
+        ServerConnection serverConnection = new ServerConnection(null);
         try {
-            System.out.println("LOL");
             ResultSet resultSet = serverConnection.query("SELECT * core_members WHERE name='Bone'");
             while (resultSet.next()) {
                 int id = resultSet.getInt(1);

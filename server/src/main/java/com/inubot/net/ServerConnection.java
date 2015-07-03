@@ -18,15 +18,16 @@ public class ServerConnection implements Runnable {
 
     private static final String SERVER = "localhost", USERNAME = "root", PASSWORD = "dogsrcool123", DATABASE = "forum";
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerConnection.class);
-    public Map<String, Object> attributes = new HashMap<>();
     public final Socket socket;
+    public final Map<String, Object> attributes = new HashMap<>();
     private Connection sqlConnection;
 
     public ServerConnection(Socket connection) {
         this.socket = connection;
         try {
-            this.sqlConnection = DriverManager.getConnection("jdbc:mysql://inubot.com:3306/" + DATABASE, USERNAME, PASSWORD);
-        } catch (SQLException e) {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            this.sqlConnection = DriverManager.getConnection("jdbc:mysql://46.101.172.127:3306/" + DATABASE, USERNAME, PASSWORD);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -54,8 +55,8 @@ public class ServerConnection implements Runnable {
     }
 
     public ResultSet query(String query) throws SQLException {
-        Statement stmt = sqlConnection.createStatement() ;
-        ResultSet rs = stmt.executeQuery(query) ;
+        Statement stmt = sqlConnection.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
         return rs;
     }
 }
