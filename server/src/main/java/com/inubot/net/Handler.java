@@ -8,5 +8,5 @@ public interface Handler {
 
     short opcode();
 
-    void handle(Connection connection);
+    void handle(SQLConnection connection);
 }

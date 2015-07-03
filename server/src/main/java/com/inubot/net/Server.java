@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Server implements Runnable {
 
-    private final List<Connection> connections = new ArrayList<>();
+    private final List<SQLConnection> connections = new ArrayList<>();
 
     private final int port;
 
@@ -34,7 +34,7 @@ public class Server implements Runnable {
                     Socket socket = ss.accept();
                     if (socket != null) {
                         System.out.println("Accepted new socket from " + socket.getInetAddress());
-                        Connection connection = new Connection(socket);
+                        SQLConnection connection = new SQLConnection(socket);
                         connections.add(connection);
                         new Thread(connection).start();
                     }

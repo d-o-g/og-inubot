@@ -1,15 +1,12 @@
 package com.inubot;
 
-import com.inubot.net.Connection;
+import com.inubot.net.SQLConnection;
 import com.inubot.net.Handler;
 import com.inubot.net.Manager;
 import com.inubot.net.Server;
-import com.inubot.net.impl.LoginHandler;
-import com.inubot.net.impl.ScriptRequestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -29,8 +26,51 @@ public class Application {
         logger.info("Starting server...");
 
         Server server = new Server(1111);
-        Manager.add(new LoginHandler());
-        Manager.add(new ScriptRequestHandler());
+
+        Manager.add(new Handler() {
+            @Override
+            public short opcode() {
+                return LOGIN_OPCODE;
+            }
+
+            @Override
+            public void handle(SQLConnection connection) {
+                try {
+                    DataInputStream input
+                            = new DataInputStream(connection.socket.getInputStream());
+                    String username = input.readUTF();
+                    String password = input.readUTF();
+
+                    connection.attributes.put("username", username);
+                    connection.attributes.put("password", password);
+
+                    //TODO: Connect to db and check if pass is correct
+                    boolean correct = true;
+
+
+                    DataOutputStream output = new DataOutputStream(connection.socket.getOutputStream());
+                    output.writeBoolean(correct);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Manager.add(new Handler() {
+            @Override
+            public short opcode() {
+                return REQUEST_SCRIPTS;
+            }
+
+            @Override
+            public void handle(SQLConnection connection) {
+                //TODO: Get id of user...
+
+                //TODO: Get the scripts assigned to the user
+
+                //TODO: Send the scripts after encrypting the byte stream
+            }
+        });
 
         new Thread(server).start();
     }

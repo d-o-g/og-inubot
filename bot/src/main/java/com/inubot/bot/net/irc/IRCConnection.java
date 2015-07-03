@@ -17,7 +17,7 @@ public class IRCConnection extends PircBot {
 
     private static final String NAME_BASE = "BOT-";
 
-    private String[] masters = { "Septron", "Dogerina", "DankMemes" };
+    private String[] masters = { "Septron", "Dogerina", "BoneCode" };
 
     private List<IRCCommand> commands = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class IRCConnection extends PircBot {
         for (String master : masters) {
             sendRawLine("NOTICE " + master + " :" + notice);
         }
-        sendMessage("#rd-bot", notice);
+        sendMessage("#bonecode-bot", notice);
     }
 
     @Override

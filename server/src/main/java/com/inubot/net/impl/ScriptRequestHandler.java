@@ -7,7 +7,7 @@
 package com.inubot.net.impl;
 
 import com.inubot.Application;
-import com.inubot.net.Connection;
+import com.inubot.net.SQLConnection;
 import com.inubot.net.Handler;
 
 /**
@@ -22,7 +22,7 @@ public class ScriptRequestHandler implements Handler {
     }
 
     @Override
-    public void handle(Connection connection) {
+    public void handle(SQLConnection connection) {
         //TODO: Get id of user...
 
         //TODO: Get the scripts assigned to the user

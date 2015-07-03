@@ -4,9 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,14 +14,21 @@ import java.util.Map;
  * @author Septron
  * @since July 02, 2015
  */
-public class Connection implements Runnable {
+public class SQLConnection implements Runnable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Connection.class);
+    private static final String SERVER = "localhost", USERNAME = "root", PASSWORD = "dogsrcool123", DATABASE = "forum";
+    private static final Logger LOGGER = LoggerFactory.getLogger(SQLConnection.class);
     public Map<String, Object> attributes = new HashMap<>();
     public final Socket socket;
+    private Connection sqlConnection;
 
-    public Connection(Socket connection) {
+    public SQLConnection(Socket connection) {
         this.socket = connection;
+        try {
+            this.sqlConnection = DriverManager.getConnection("jdbc:mysql://46.101.172.127:21/" + DATABASE, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -33,7 +40,7 @@ public class Connection implements Runnable {
                     try {
                         Handler handler = Manager.get(input.readShort());
                         if (handler != null)
-                            handler.handle(Connection.this);
+                            handler.handle(SQLConnection.this);
                         else
                             LOGGER.error("Unhanded opcode for " + socket.getInetAddress());
                     } catch (Exception e) {
@@ -44,5 +51,11 @@ public class Connection implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ResultSet query(String query) throws SQLException {
+        Statement stmt = sqlConnection.createStatement() ;
+        ResultSet rs = stmt.executeQuery(query) ;
+        return rs;
     }
 }

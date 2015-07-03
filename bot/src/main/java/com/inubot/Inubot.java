@@ -64,7 +64,7 @@ public class Inubot extends JFrame implements Runnable {
     private final Crawler crawler;
     private final ScriptFlux scriptFlux;
 
-    private static final String IRC_CHANNEL = "#rd-bot";
+    private static final String IRC_CHANNEL = "#bonecode-bot";
 
     private RSClient client;
 
