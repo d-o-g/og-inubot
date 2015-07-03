@@ -11,7 +11,7 @@ import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Players;
 import com.inubot.api.methods.Varps;
-import com.inubot.api.methods.traversal.graph.WorldGraph;
+import com.inubot.api.methods.traversal.graph.Web;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Player;
 import com.inubot.api.oldschool.Tile;
@@ -23,10 +23,10 @@ import com.inubot.api.util.Time;
  */
 public class Movement {
 
-    private static WorldGraph worldGraph;
+    private static Web web;
 
     static {
-        worldGraph = new WorldGraph();
+        web = new Web();
     }
 
     public static boolean isRunEnabled() {
@@ -217,11 +217,11 @@ public class Movement {
         return false;
     }
 
-    public static WorldGraph getWorldGraph() {
-        return worldGraph;
+    public static Web getWeb() {
+        return web;
     }
 
-    public static void setWorldGraph(WorldGraph worldGraph) {
-        Movement.worldGraph = worldGraph;
+    public static void setWeb(Web web) {
+        Movement.web = web;
     }
 }

@@ -8,6 +8,8 @@ package com.inubot;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
+import com.inubot.api.methods.traversal.Path.Option;
+import com.inubot.api.methods.traversal.graph.WebPath;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.util.Time;
@@ -72,6 +74,7 @@ public enum Hotkey {
         @Override
         public void onActivation() {
             Inubot.LOGGER.debug("Current location: " + Players.getLocal().getLocation());
+            WebPath.build(224).step(Option.TOGGLE_RUN);
         }
     }, WALK_NORTH(KeyEvent.VK_W) {
         @Override

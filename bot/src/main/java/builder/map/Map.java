@@ -13,7 +13,7 @@ import builder.map.thread.MapScheduler;
 import builder.map.util.Class3;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.methods.traversal.graph.DijkstraPathfinder;
-import com.inubot.api.methods.traversal.graph.WorldGraph;
+import com.inubot.api.methods.traversal.graph.Web;
 import com.inubot.api.methods.traversal.graph.data.ObjectVertex;
 import com.inubot.api.methods.traversal.graph.data.WebVertex;
 
@@ -1171,7 +1171,7 @@ public class Map extends MapScheduler {
         }
 
         DijkstraPathfinder pathfinder = new DijkstraPathfinder();
-        WorldGraph graph = Movement.getWorldGraph();
+        Web graph = Movement.getWeb();
         WebVertex[] path = pathfinder.generate(graph.getVertex(0), graph.getVertex(737));
         for (int i = 0; i < path.length; i++) {
             WebVertex v = path[i];

@@ -15,9 +15,9 @@ import java.util.Scanner;
  * @author Septron
  * @since July 01, 2015
  */
-public class WorldGraph extends Digraph<WebVertex, WebVertex> {
+public class Web extends Digraph<WebVertex, WebVertex> {
 
-    public WorldGraph() {
+    public Web() {
         try {
             InputStream in = new FileInputStream("./web.txt");
             Scanner s = new Scanner(in);

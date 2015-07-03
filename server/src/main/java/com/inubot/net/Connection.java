@@ -17,16 +17,11 @@ import java.util.Map;
 public class Connection implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Connection.class);
-
     public Map<String, Object> attributes = new HashMap<>();
-
-    private final Connection instance;
-
     public final Socket socket;
 
     public Connection(Socket connection) {
         this.socket = connection;
-        this.instance = this;
     }
 
     @Override
@@ -38,7 +33,7 @@ public class Connection implements Runnable {
                     try {
                         Handler handler = Manager.get(input.readShort());
                         if (handler != null)
-                            handler.handle(instance);
+                            handler.handle(Connection.this);
                         else
                             LOGGER.error("Unhanded opcode for " + socket.getInetAddress());
                     } catch (Exception e) {

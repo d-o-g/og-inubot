@@ -25,6 +25,8 @@ public class DijkstraPathfinder implements Pathfinder<WebVertex> {
 
     @Override
     public WebVertex[] generate(WebVertex src, WebVertex dest) {
+        if (src.getIndex() == dest.getIndex())
+            return new WebVertex[0];
         long time = System.currentTimeMillis();
         settled.clear();
         unsettled.clear();

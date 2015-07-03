@@ -30,7 +30,7 @@ public class Time {
         while (System.nanoTime() / 1000000 - start < timeout) {
             if (condition.getAsBoolean())
                 return true;
-            Time.sleep(5, 10);
+            Time.sleep(10, 20);
         }
         return false;
     }
