@@ -30,10 +30,11 @@ public class WorldGraph extends Digraph<WebVertex, WebVertex> {
                 int[] edges = new int[kek.length - 5];
                 for (int i = 0; i < kek.length - 5; i++)
                     edges[i] = Integer.parseInt(kek[i + 5]);
-                String[] data = interactDataFor(index);
-                super.addVertex(type.equals("object")
-                        ? new ObjectVertex(index, x, y, z, edges, data[0], data[1])
-                        : new WebVertex(index, x, y, z, edges));
+                if (type.equals("object")) {
+                    String[] data = interactDataFor(index);
+                    super.addVertex(new ObjectVertex(index, x, y, z, edges, data[0], data[1]));
+                }
+                super.addVertex(new WebVertex(index, x, y, z, edges));
             }
             in.close();
             for (WebVertex vertex : this) {

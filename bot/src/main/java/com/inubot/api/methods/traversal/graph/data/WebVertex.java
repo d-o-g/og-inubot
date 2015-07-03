@@ -105,4 +105,9 @@ public class WebVertex implements Comparator<WebVertex> {
     public int compare(WebVertex o1, WebVertex o2) {
         return Integer.compare(o1.getShortestDistance(), o2.getShortestDistance());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof WebVertex && ((WebVertex) o).getIndex() == index;
+    }
 }

@@ -11,6 +11,9 @@ import builder.map.render.sprites.LandscapeEntity;
 import builder.map.render.sprites.Sprite;
 import builder.map.thread.MapScheduler;
 import builder.map.util.Class3;
+import com.inubot.api.methods.traversal.Movement;
+import com.inubot.api.methods.traversal.graph.DijkstraPathfinder;
+import com.inubot.api.methods.traversal.graph.WorldGraph;
 import com.inubot.api.methods.traversal.graph.data.ObjectVertex;
 import com.inubot.api.methods.traversal.graph.data.WebVertex;
 
@@ -24,6 +27,9 @@ import java.util.List;
 public class Map extends MapScheduler {
 
     //  World world;
+
+    public static final int WIDTH = 950;
+    public static final int HEIGHT = 680;
 
     private static final long serialVersionUID = 0x4ecd9f921bb4ccd5L;
     public static boolean drawRegions = false;
@@ -154,14 +160,14 @@ public class Map extends MapScheduler {
         destinationScale = 4D;
 
         loadWorld();
-        load(new Mainframe(this, 635, 503), 635, 503);
+        load(new Mainframe(this, WIDTH, HEIGHT), WIDTH, HEIGHT);
 
     }
 
     public final void init() {
         System.out.println("init..");
         loadWorld();
-        start(635, 503);
+        start(WIDTH, HEIGHT);
     }
 
     public void loadWorld() {
@@ -239,8 +245,8 @@ public class Map extends MapScheduler {
         tileViewY = (mapBaseY + mapHeight) - 3200;
         miniMapScale = 180;
         miniMapWith = (mapWith * miniMapScale) / mapHeight;
-        miniMapLocX = 635 - miniMapWith - 65;
-        miniMapLocY = 503 - miniMapScale - 20;
+        miniMapLocX = WIDTH - miniMapWith - 65;
+        miniMapLocY = HEIGHT - miniMapScale - 20;
 
         dataStream = new RSInputStream(map_data.getEntry(DataArchive.getValue(1154), null)); //Labels
 
@@ -706,18 +712,18 @@ public class Map extends MapScheduler {
             force_repaint = true;
             flash_cycle--;
         }
-        i = tileViewX - (int) (635D / fluxScale);
-        int i_75_ = tileViewY - (int) (503D / fluxScale);
-        int i_76_ = tileViewX + (int) (635D / fluxScale);
-        int i_77_ = tileViewY + (int) (503D / fluxScale);
+        i = tileViewX - (int) (WIDTH / fluxScale);
+        int i_75_ = tileViewY - (int) (HEIGHT / fluxScale);
+        int i_76_ = tileViewX + (int) (WIDTH / fluxScale);
+        int i_77_ = tileViewY + (int) (HEIGHT / fluxScale);
         if (i < 48)
-            tileViewX = 48 + (int) (635D / fluxScale);
+            tileViewX = 48 + (int) (WIDTH / fluxScale);
         if (i_75_ < 48)
-            tileViewY = 48 + (int) (503D / fluxScale);
+            tileViewY = 48 + (int) (HEIGHT / fluxScale);
         if (i_76_ > mapWith - 48)
-            tileViewX = mapWith - 48 - (int) (635D / fluxScale);
+            tileViewX = mapWith - 48 - (int) (WIDTH / fluxScale);
         if (i_77_ > mapHeight - 48)
-            tileViewY = mapHeight - 48 - (int) (503D / fluxScale);
+            tileViewY = mapHeight - 48 - (int) (HEIGHT / fluxScale);
     }
 
     public final void paint() {
@@ -726,12 +732,12 @@ public class Map extends MapScheduler {
             force_repaint = false;
             renderCycle = 0;
             RenderModel.clear();
-            int startX = tileViewX - (int) (635D / fluxScale);
-            int startY = tileViewY - (int) (503D / fluxScale);
-            int endX = tileViewX + (int) (635D / fluxScale);
-            int endY = tileViewY + (int) (503D / fluxScale);
+            int startX = tileViewX - (int) (WIDTH / fluxScale);
+            int startY = tileViewY - (int) (HEIGHT / fluxScale);
+            int endX = tileViewX + (int) (WIDTH / fluxScale);
+            int endY = tileViewY + (int) (HEIGHT / fluxScale);
             //    System.out.println(startX + "," + startY + "," + endX + "," + i_80_);
-            copyMap(startX, startY, endX, endY, 0, 0, 635, 503);
+            copyMap(startX, startY, endX, endY, 0, 0, WIDTH, HEIGHT);
             if (minimapDisplayed) {
                 minimap.render0(miniMapLocX, miniMapLocY);
 
@@ -1131,7 +1137,6 @@ public class Map extends MapScheduler {
 
         }
 
-
         for (WebVertex v : vertices) {
             if (v.getPlane() != 0)
                 continue;
@@ -1145,6 +1150,7 @@ public class Map extends MapScheduler {
             int maxY = destinationTopLeftY + (dest_height * (y - sourceTopLeftY)) / source_height;
             Rectangle r = new Rectangle(minX, minY, maxX - minX, maxY - minY);
             RenderModel.fillRectangle(minX, minY, maxX - minX, maxY - minY, Color.GREEN.getRGB());
+
             for (WebVertex e : v.getEdges()) {
                 int ex = e.getX() - mapBaseX;
                 int ey = (mapBaseY + mapHeight) - e.getY();
@@ -1164,6 +1170,41 @@ public class Map extends MapScheduler {
             letterPlotter.drawString(String.valueOf(v.getIndex()), minX, minY, Color.GREEN.getRGB());
         }
 
+        DijkstraPathfinder pathfinder = new DijkstraPathfinder();
+        WorldGraph graph = Movement.getWorldGraph();
+        WebVertex[] path = pathfinder.generate(graph.getVertex(0), graph.getVertex(737));
+        for (int i = 0; i < path.length; i++) {
+            WebVertex v = path[i];
+            if (v.getPlane() != 0)
+                continue;
+            int x = v.getX();
+            int y = v.getY();
+            x -= mapBaseX;
+            y = (mapBaseY + mapHeight) - y;
+            int minX = destinationTopLeftX + (dest_with * (x - sourceTopLeftX)) / source_with;
+            int minY = destinationTopLeftY + (dest_height * (y - 1 - sourceTopLeftY)) / source_height;
+            int maxX = destinationTopLeftX + (dest_with * ((x + 1) - sourceTopLeftX)) / source_with;
+            int maxY = destinationTopLeftY + (dest_height * (y - sourceTopLeftY)) / source_height;
+            Rectangle r = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+            RenderModel.fillRectangle(minX, minY, maxX - minX, maxY - minY, Color.PINK.getRGB());
+            try {
+                WebVertex e = path[i + 1];
+                int ex = e.getX() - mapBaseX;
+                int ey = (mapBaseY + mapHeight) - e.getY();
+                int eminX = destinationTopLeftX + (dest_with * (ex - sourceTopLeftX)) / source_with;
+                int eminY = destinationTopLeftY + (dest_height * (ey - 1 - sourceTopLeftY)) / source_height;
+                int emaxX = destinationTopLeftX + (dest_with * ((ex + 1) - sourceTopLeftX)) / source_with;
+                int emaxY = destinationTopLeftY + (dest_height * (ey - sourceTopLeftY)) / source_height;
+
+                Rectangle er = new Rectangle(eminX, eminY, emaxX - eminX, emaxY - eminY);
+
+                RenderModel.drawLine(
+                        (int) r.getCenterX(), (int) r.getCenterY(),
+                        (int) er.getCenterX(), (int) er.getCenterY(),
+                        Color.BLUE.getRGB()
+                );
+            } catch (Exception ignore) {}
+        }
 
         for (MapNode node : waypoints) {
             if (node.z != 0) { //TODO this is for controling what plane to view, though u wont get a sexy map, but you'll see...
