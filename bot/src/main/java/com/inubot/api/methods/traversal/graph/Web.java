@@ -2,7 +2,6 @@ package com.inubot.api.methods.traversal.graph;
 
 import com.inubot.Inubot;
 import com.inubot.api.methods.Players;
-import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.methods.traversal.graph.data.*;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.util.Digraph;
