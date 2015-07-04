@@ -41,8 +41,7 @@ public class LoginHandler implements Handler {
             while (resultSet.next()) {
                 String salt = resultSet.getString(resultSet.findColumn("members_pass_salt"));
                 String hash = resultSet.getString(resultSet.findColumn("members_pass_hash"));
-                String gen = BCrypt.hashpw(password, salt);
-                if (hash.equals(gen)) {//TODO...
+                if (BCrypt.checkpw(password, hash)) {//TODO...
                     correct = true;
                     connection.logger.info("Logged in as " + username);
                 }

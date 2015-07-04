@@ -6,6 +6,7 @@
  */
 package com.inubot.net.impl;
 
+import ch.qos.logback.classic.Logger;
 import com.inubot.Application;
 import com.inubot.net.ServerConnection;
 import com.inubot.net.Handler;
