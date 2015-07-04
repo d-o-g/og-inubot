@@ -223,6 +223,8 @@ public class Inubot extends JFrame implements Runnable {
                 }
             }
         });
+        if (instance == null)
+            instance = this;
     }
 
     public IRCConnection getIRCConnection() {

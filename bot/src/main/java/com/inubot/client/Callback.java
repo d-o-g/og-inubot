@@ -48,6 +48,8 @@ public class Callback {
         Client.processActions();
         if (Client.GAME_TICK_SLEEP != -1)
             Time.sleep(Client.GAME_TICK_SLEEP);
+        if (Inubot.getInstance() == null)
+            return;
         Script script = Inubot.getInstance().getScriptFlux().getRunning();
         if (script == null || script.isPaused())
             return;
