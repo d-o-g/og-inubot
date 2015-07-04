@@ -52,10 +52,7 @@ public class ServerConnection implements Runnable {
                     byte opcode = input.readByte();
                     output.writeByte(opcode);
                     switch (opcode) {
-                        case Packet.KILL_BOT: {
-                            System.exit(0);
-                            break;
-                        }
+
                     }
                 }
             } catch (IOException e) {
