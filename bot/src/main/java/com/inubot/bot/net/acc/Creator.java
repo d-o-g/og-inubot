@@ -17,7 +17,7 @@ import java.net.URLConnection;
  */
 public class Creator {
 
-    private static final String PAGE = "https://secure.runescape.com/m=account-creation/g=oldscape/create_account_funnel.ws";
+    private static final String PAGE = "https://secure.runescape.com/m=account-creation/g=oldscape/";
 
     private static final Logger logger = LoggerFactory.getLogger(Creator.class);
 
