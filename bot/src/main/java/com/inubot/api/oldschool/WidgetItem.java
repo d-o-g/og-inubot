@@ -69,9 +69,9 @@ public class WidgetItem implements Identifiable, Processable {
         } else {
             int index = Action.indexOf(owner.getActions(), action) + 1;
             if (index > 4) {
-                Client.processAction(new WidgetAction(true, index, this.index, owner.getId()), action, itemName);
+                Client.processAction(new WidgetAction(true, index, this.index, owner.getId()), action, action);
             } else {
-                Client.processAction(new WidgetAction(opcode, index, this.index, owner.getId()), action, itemName);
+                Client.processAction(new WidgetAction(opcode, index, this.index, owner.getId()), action, action);
             }
         }
     }
@@ -88,7 +88,7 @@ public class WidgetItem implements Identifiable, Processable {
             processAction(ActionOpcodes.ITEM_ACTION_0 + Action.indexOf(def.getActions(), action), action);
         } else {
             int index = Action.indexOf(owner.getActions(), action) + 1;
-            Client.processAction(new WidgetAction(index > 4, index, this.index, owner.getId()), action, getName());
+            Client.processAction(new WidgetAction(index > 4, index, this.index, owner.getId()), action, action);
         }
     }
 

@@ -6,14 +6,10 @@ import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.InvokeHook;
 import jdk.internal.org.objectweb.asm.Type;
 import jdk.internal.org.objectweb.asm.tree.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 public class ProcessActionInvoker implements Transform {
-
-    private static final Logger logger = LoggerFactory.getLogger(ProcessActionCallback.class);
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
@@ -36,6 +32,5 @@ public class ProcessActionInvoker implements Transform {
         stack.add(new InsnNode(RETURN));
         invoker.instructions = stack;
         classes.get("client").methods.add(invoker);
-        Inubot.LOGGER.debug("Injected processAction invoker @" + meth.clazz + "." + meth.method + meth.desc + "!");
     }
 }

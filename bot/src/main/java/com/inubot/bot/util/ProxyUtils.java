@@ -1,9 +1,5 @@
 package com.inubot.bot.util;
 
-import com.inubot.Inubot;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
@@ -11,13 +7,10 @@ import java.util.Scanner;
 
 /**
  * Created by luckruns0ut on 27/04/15.
- *
+ * <p>
  * lets u use proxies easy
- *
  */
 public class ProxyUtils {
-
-    private static final Logger logger = LoggerFactory.getLogger(ProxyUtils.class);
 
     private static ProxyEntry[] proxyEntries = null;
     private static String lastIP = "127.0.0.1";
@@ -31,7 +24,7 @@ public class ProxyUtils {
         try (Scanner scanner = new Scanner(page.openStream())) {
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
-                if(line.contains("<tbody>")) {
+                if (line.contains("<tbody>")) {
                     line = line.replace("<tbody>", "");
                     tableEntries.add(line);
                     while ((line = scanner.nextLine()).startsWith("<tr>")) {
@@ -43,7 +36,7 @@ public class ProxyUtils {
 
         // parse table and create entries
         ArrayList<ProxyEntry> entries = new ArrayList<>();
-        for(int i = 0; i < tableEntries.size(); i++) {
+        for (int i = 0; i < tableEntries.size(); i++) {
             String line = tableEntries.get(i);
             line = line.replaceFirst("<tr><td>", "")
                     .replaceAll("</td><td>", "@")
@@ -61,7 +54,7 @@ public class ProxyUtils {
             entries.add(new ProxyEntry(address, port, code, country, version, anonymity, https));
         }
 
-        Inubot.LOGGER.info("Updated proxy list, contains " + entries.size() + " entries.");
+        System.out.println("Updated proxy list, contains " + entries.size() + " entries.");
         proxyEntries = entries.toArray(new ProxyEntry[entries.size()]);
     }
 
@@ -72,15 +65,14 @@ public class ProxyUtils {
             ex.printStackTrace();
         }
 
-        for(int i = 0; i < proxyEntries.length; i++) {
-            ProxyEntry proxyEntry = proxyEntries[i];
-            if((proxyEntry.country.toLowerCase().equals(country.toLowerCase()) || proxyEntry.code.toLowerCase().matches(country.toLowerCase()))
-                    && proxyEntries[i].version == version) {
-                Inubot.LOGGER.info("Checking potential proxy: " + proxyEntry.address + ":" + proxyEntry.port + " [" + proxyEntry.country + "]... ");
+        for (ProxyEntry proxyEntry : proxyEntries) {
+            if ((proxyEntry.country.toLowerCase().equals(country.toLowerCase()) || proxyEntry.code.toLowerCase().matches(country.toLowerCase()))
+                    && proxyEntry.version == version) {
+                System.out.println("Checking potential proxy: " + proxyEntry.address + ":" + proxyEntry.port + " [" + proxyEntry.country + "]... ");
                 //if(proxyEntries[i].isAlive()) {
-                    Inubot.LOGGER.info("Alive. Using it.");
-                    useProxy(proxyEntry);
-                    return true;
+                System.out.println("Alive. Using it.");
+                useProxy(proxyEntry);
+                return true;
 //                } else {
 //                    System.out.println("Dead, not using it.");
 //                }
@@ -93,7 +85,7 @@ public class ProxyUtils {
         System.setProperty("socksProxyHost", proxyEntry.address);
         System.setProperty("socksProxyPort", "" + proxyEntry.port);
         System.setProperty("socksProxyVersion", "" + proxyEntry.version);
-        Inubot.LOGGER.info("This JVM instance is now using a proxy. Info:\n" + proxyEntry.toString());
+        System.out.println("This JVM instance is now using a proxy. Info:\n" + proxyEntry.toString());
         lastIP = proxyEntry.address;
         lastPort = "" + proxyEntry.port;
     }

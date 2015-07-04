@@ -15,8 +15,6 @@ import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -29,7 +27,6 @@ import java.util.List;
  */
 public class PerfectAgility extends Script implements Paintable {
 
-    private static final Logger logger = LoggerFactory.getLogger(PerfectAgility.class);
     private static final Filter<Widget> DIALOGUE_FILTER = w -> w.getText() != null && (w.getText().equals("Click here to continue") || w.getText().equals("Sure, I'll give it a go."));
     private static final Filter<Widget> LOBBY_FILTER = w -> w.getText() != null && w.getText().equals("Play RuneScape");
     private static final Tile ARDY_STUCK = new Tile(2654, 3299, 3);
@@ -79,7 +76,7 @@ public class PerfectAgility extends Script implements Paintable {
                 for (Obstacle obs : cours.getObstacles()) {
                     if (obs.getLocation().contains(Players.getLocal().getLocation())) {
                         this.course = cours;
-                        Inubot.LOGGER.info("Using course: " + course.toString());
+                        System.out.println("Using course: " + course.toString());
                     }
                 }
             }

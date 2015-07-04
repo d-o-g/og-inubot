@@ -79,7 +79,7 @@ public class Web extends Digraph<WebVertex, WebVertex> {
             case 768:
                 return new String[]{"Gate", "Open"};
             default: {
-                Inubot.LOGGER.info("UNKNOWN OBJECT FOR VERTEX " + vertex);
+                System.out.println("UNKNOWN OBJECT FOR VERTEX " + vertex);
                 return new String[2];
             }
         }

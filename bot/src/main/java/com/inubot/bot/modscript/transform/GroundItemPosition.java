@@ -13,8 +13,6 @@ import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.FieldHook;
 import com.inubot.bot.modscript.transform.util.ASMFactory;
 import com.inubot.bot.modscript.transform.util.RIS;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -23,8 +21,6 @@ import java.util.*;
  * @since 26-04-2015
  */
 public class GroundItemPosition implements Transform {
-
-    public static final Logger logger = LoggerFactory.getLogger(GroundItemPosition.class);
 
     private static final int[][] PATTERNS = {
             {
@@ -94,7 +90,6 @@ public class GroundItemPosition implements Transform {
                             code.add(new InsnNode(IADD));
                             code.add(new FieldInsnNode(PUTFIELD, gi, "strictY", "I"));
                             mn.instructions.insert(match[10], code);
-                            Inubot.LOGGER.debug("Successfully injected GroundItemPosition");
                             continue out;
                         }
                     }

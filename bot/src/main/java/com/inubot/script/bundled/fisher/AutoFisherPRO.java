@@ -14,8 +14,6 @@ import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.IdFilter;
 import com.inubot.script.Script;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +22,6 @@ import java.util.List;
 
 public class AutoFisherPRO extends Script implements Paintable {
 
-    private static final Logger logger = LoggerFactory.getLogger(AutoFisherPRO.class);
     private static final int[] EQUIPMENT_IDS = {305, 303, 301, 307, 309, 311};
     private static final String[] FISH_NAMES = {"Shrimps, Anchovies", "Shark",
             "Bass, Cod, Herring", "Lobster", "Tuna, Swordfish"};
@@ -155,9 +152,9 @@ public class AutoFisherPRO extends Script implements Paintable {
                 location = Location.values()[loc.getSelectedIndex()];
                 int index = options.getSelectedIndex();
                 fish = Fish.values()[index];
-                logger.info("You are " + (powerfish ? "power" : "") + "fishing "
+                System.out.println("You are " + (powerfish ? "power" : "") + "fishing "
                         + FISH_NAMES[index]);
-                logger.info(FISH_NAMES[index] + " spot has actions "
+                System.out.println(FISH_NAMES[index] + " spot has actions "
                         + fish.action + " and "
                         + fish.otherAction);
             });

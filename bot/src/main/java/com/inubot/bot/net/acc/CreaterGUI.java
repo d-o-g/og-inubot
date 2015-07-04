@@ -1,8 +1,6 @@
 package com.inubot.bot.net.acc;
 
 import com.inubot.Inubot;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.inubot.bot.Account;
 import com.inubot.bot.AccountManager;
 
@@ -15,12 +13,8 @@ import java.awt.*;
  */
 public class CreaterGUI extends JFrame {
 
-    private Logger logger = LoggerFactory.getLogger(CreaterGUI.class);
-
     private JPasswordField password = new JPasswordField(30);
-
     private JTextField username = new JTextField(30);
-
     private JButton submit = new JButton("Submit");
 
     private JLabel a = new JLabel("Username:");
@@ -62,7 +56,7 @@ public class CreaterGUI extends JFrame {
 
             if (Creator.create(email, name, pass)) {
                 AccountManager.setCurrentAccount(new Account(email, pass));
-                Inubot.LOGGER.info("Set account - " + email + ":" + pass);
+                System.out.println("Set account - " + email + ":" + pass);
             }
 
         }).start());

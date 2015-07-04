@@ -12,8 +12,6 @@ import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.tree.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Modifier;
 import java.util.Map;
@@ -23,8 +21,6 @@ import java.util.Map;
  * @since 02-05-2015
  */
 public class LandscapeHack implements Transform {
-
-    private static final Logger logger = LoggerFactory.getLogger(LandscapeHack.class);
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
@@ -44,7 +40,6 @@ public class LandscapeHack implements Transform {
             setStack.add(new InsnNode(RETURN));
             setStack.add(ln);
             mn.instructions.insert(setStack);
-            Inubot.LOGGER.debug("Injected conditional disable landscape rendering @" + mn.name + mn.desc);
         }
     }
 }

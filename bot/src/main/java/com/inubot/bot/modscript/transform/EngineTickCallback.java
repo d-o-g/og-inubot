@@ -10,8 +10,6 @@ import com.inubot.Inubot;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.client.Callback;
 import jdk.internal.org.objectweb.asm.tree.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -21,8 +19,6 @@ import java.util.Map;
  */
 public class EngineTickCallback implements Transform {
 
-    private static final Logger logger = LoggerFactory.getLogger(EngineTickCallback.class);
-
     @Override
     public void inject(Map<String, ClassStructure> classes) {
         ClassStructure engine = classes.get(classes.get("client").superName);
@@ -31,7 +27,6 @@ public class EngineTickCallback implements Transform {
                 continue;
             for (AbstractInsnNode ain : run.instructions.toArray()) {
                 if (ain.getOpcode() == PUTSTATIC && backtrack(ain, INVOKEVIRTUAL)) {
-                    Inubot.LOGGER.debug("OK THIS NIGGER IS A PERSON TOO, LEAVE HIM ALOEN");
                     run.instructions.insert(ain, new MethodInsnNode(INVOKESTATIC, Callback.class.getName().replace('.', '/'),
                             "onEngineTick", "()V", false));
                 }

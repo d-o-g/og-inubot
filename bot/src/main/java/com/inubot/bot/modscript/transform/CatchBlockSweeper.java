@@ -9,8 +9,6 @@ package com.inubot.bot.modscript.transform;
 import com.inubot.Inubot;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import jdk.internal.org.objectweb.asm.tree.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,8 +18,6 @@ import java.util.stream.Collectors;
  * @since 27-06-2015
  */
 public class CatchBlockSweeper implements Transform {
-
-    private static final Logger logger = LoggerFactory.getLogger(CatchBlockSweeper.class);
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
@@ -55,7 +51,7 @@ public class CatchBlockSweeper implements Transform {
                 }
             }
         }
-        Inubot.LOGGER.debug(" # Removed " + catchblockkills + " catch blocks");
+        System.out.println(" # Removed " + catchblockkills + " catch blocks");
     }
 
     private int catchblockkills = 0;

@@ -6,21 +6,15 @@
  */
 package com.inubot.api.oldschool.action.tree;
 
-import com.inubot.Inubot;
+import com.inubot.api.methods.Npcs;
 import com.inubot.api.oldschool.Npc;
+import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.client.natives.RSNpc;
-import com.inubot.api.methods.Npcs;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.client.natives.RSNpcDefinition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
 
 public class NpcAction extends CharacterAction {
 
-    private static final Logger logger = LoggerFactory.getLogger(NpcAction.class);
 
     public NpcAction(int opcode, int npcIndex) {
         super(opcode, npcIndex);
@@ -62,7 +56,6 @@ public class NpcAction extends CharacterAction {
         String[] actions = def.getActions();
         if (actions == null)
             return null;
-        Inubot.LOGGER.debug(Arrays.toString(actions));
         int actionIndex = getActionIndex();
         return actionIndex >= 0 && actionIndex < actions.length ? actions[actionIndex] : null;
     }

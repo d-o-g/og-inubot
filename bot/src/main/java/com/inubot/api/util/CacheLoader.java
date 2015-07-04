@@ -6,22 +6,14 @@
  */
 package com.inubot.api.util;
 
-import com.inubot.Inubot;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.hooks.InvokeHook;
-import com.inubot.client.natives.RSClient;
-import com.inubot.client.natives.RSItemDefinition;
-import com.inubot.client.natives.RSNpcDefinition;
-import com.inubot.client.natives.RSObjectDefinition;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.inubot.client.natives.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CacheLoader {
-
-    private static final Logger logger = LoggerFactory.getLogger(CacheLoader.class);
 
     private static final String NULL = "null";
 
@@ -56,21 +48,9 @@ public class CacheLoader {
      * @param client the {@link RSClient} native instance
      */
     public static void load(RSClient client) {
-        long start = System.nanoTime();
         loadObjectDefinitions(client);
-        long end = System.nanoTime();
-        Inubot.LOGGER.debug(String.format("loaded %s object definitions in %.2f seconds", OBJECT_DEFINITIONS.size(),
-                (end - start) / 1e9));
-        start = System.nanoTime();
         loadNpcDefinitions(client);
-        end = System.nanoTime();
-        Inubot.LOGGER.debug(String.format("loaded %s npc definitions in %.2f seconds", NPC_DEFINITIONS.size(),
-                (end - start) / 1e9));
-        start = System.nanoTime();
         loadItemDefinitions(client);
-        end = System.nanoTime();
-        Inubot.LOGGER.debug(String.format("loaded %s item definitions in %.2f seconds", ITEM_DEFINITIONS.size(),
-                (end - start) / 1e9));
     }
 
     private static boolean loadObjectDefinitions(RSClient client) {

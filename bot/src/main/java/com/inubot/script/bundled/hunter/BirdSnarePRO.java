@@ -1,17 +1,11 @@
 package com.inubot.script.bundled.hunter;
 
-import com.inubot.Inubot;
 import com.inubot.api.methods.*;
-import com.inubot.api.oldschool.*;
-import com.inubot.api.util.AWTUtil;
-import com.inubot.api.util.Paintable;
-import com.inubot.api.util.Time;
 import com.inubot.api.methods.traversal.Movement;
+import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.util.filter.NameFilter;
+import com.inubot.api.util.*;
 import com.inubot.script.Script;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -33,8 +27,6 @@ import java.text.DecimalFormat;
  */
 public class BirdSnarePRO extends Script implements Paintable {
 
-    private static final Logger logger = LoggerFactory.getLogger(BirdSnarePRO.class);
-
     private Tile tile = null;
     private int startExp = 0;
     private long startTime;
@@ -55,11 +47,9 @@ public class BirdSnarePRO extends Script implements Paintable {
 
     @Override
     public int loop() {
-        if (Game.isLoggedIn()) {
-            if (tile == null) {
-                tile = Players.getLocal().getLocation();
-                Inubot.LOGGER.info("Start tile set to: " + tile.toString());
-            }
+        if (Game.isLoggedIn() && tile == null) {
+            tile = Players.getLocal().getLocation();
+            System.out.println("Start tile set to: " + tile.toString());
         }
         if (Players.getLocal().getAnimation() != -1) {
             return 400;

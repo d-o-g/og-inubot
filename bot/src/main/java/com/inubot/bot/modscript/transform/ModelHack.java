@@ -6,15 +6,11 @@ import com.inubot.bot.modscript.asm.ClassStructure;
 import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.tree.*;
 import com.inubot.api.methods.Client;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class ModelHack implements Transform {
-
-    private static final Logger logger = LoggerFactory.getLogger(ModelHack.class);
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
@@ -31,7 +27,6 @@ public class ModelHack implements Transform {
         for (MethodNode mn : model.methods) {
             if (badKeys.contains(mn.name + mn.desc) || mn.desc.contains("[B") || Modifier.isStatic(mn.access))
                 continue;
-            fgt:
             for (AbstractInsnNode ain : mn.instructions.toArray()) {
                 if (ain.getOpcode() != IFNONNULL || !matchPrevs(ain, GETFIELD, ALOAD))
                     continue;
@@ -48,8 +43,6 @@ public class ModelHack implements Transform {
                     setStack.add(new InsnNode(RETURN));
                     setStack.add(ln);
                     mn.instructions.insertBefore(aload, setStack);
-                    Inubot.LOGGER.debug("Injected conditional disable model rendering @" + mn.name + mn.desc);
-                    break fgt;
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.inubot.script.bundled.tutisland.tasks;
 
 import com.inubot.api.methods.traversal.Movement;
+import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.Time;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.*;
@@ -32,15 +33,15 @@ public class CombatInstructor extends TutorialIslandTask {
             } else if (Varps.get(281) == 405) {
                 final WidgetItem dagger = Inventory.getFirst("Bronze dagger");
                 if (dagger != null) {
-                    dagger.processAction("Wield");
+                    dagger.processAction(ActionOpcodes.ITEM_ACTION_1, "Wield");
                 }
             } else if (Varps.get(281) == 420) {
                 System.out.println("Varp 420 activated smoke that marija!");
                 final WidgetItem sword = Inventory.getFirst("Bronze sword");
                 final WidgetItem shield = Inventory.getFirst("Wooden shield");
                 if (sword != null && shield != null) {
-                    sword.processAction("Wield");
-                    shield.processAction("Wield");
+                    sword.processAction(ActionOpcodes.ITEM_ACTION_1, "Wield");
+                    shield.processAction(ActionOpcodes.ITEM_ACTION_1, "Wield");
                 }
             } else if (Varps.get(281) == 430) {
                 Tabs.open(Tab.COMBAT);
@@ -73,8 +74,8 @@ public class CombatInstructor extends TutorialIslandTask {
                 final WidgetItem shortbow = Inventory.getFirst("Shortbow");
                 final WidgetItem arrow = Inventory.getFirst("Bronze arrow");
                 if (shortbow != null && arrow != null) {
-                    shortbow.processAction("Wield");
-                    arrow.processAction("Wield");
+                    shortbow.processAction(ActionOpcodes.ITEM_ACTION_1, "Wield");
+                    arrow.processAction(ActionOpcodes.ITEM_ACTION_1, "Wield");
                 }
                 final Npc rat = Npcs.getNearest(npc -> npc.getName().equals("Giant rat") && npc.getTargetIndex() == -1);
                 if (rat != null) {

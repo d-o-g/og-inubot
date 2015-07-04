@@ -9,20 +9,13 @@ import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Time;
 import com.inubot.script.Script;
 import com.inubot.script.Task;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 public class Callback {
-
-    private static final Logger logger = LoggerFactory.getLogger(Callback.class);
 
     @ClientInvoked
     public static void processAction(int arg1, int arg2, int op, int arg0, String action, String target, int x, int y) {
         if (!action.equals("Cancel")) {
-            Inubot.LOGGER.debug("" + Action.valueOf(op, arg0, arg1, arg2));
-            Inubot.LOGGER.debug(arg1 + "," + arg2 + "," + op + "," + arg0 + "," + action + "," + target);
+            System.out.println("" + Action.valueOf(op, arg0, arg1, arg2));
         }
     }
 

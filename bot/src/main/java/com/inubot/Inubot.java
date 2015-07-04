@@ -1,6 +1,5 @@
 package com.inubot;
 
-import ch.qos.logback.classic.Level;
 import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Game;
 import com.inubot.api.util.CacheLoader;
@@ -12,6 +11,7 @@ import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.transform.*;
 import com.inubot.bot.net.irc.IRCConnection;
 import com.inubot.bot.ui.BotMenuBar;
+import com.inubot.bot.ui.LogPane;
 import com.inubot.bot.util.*;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.JarNode;
@@ -25,8 +25,6 @@ import com.inubot.script.bundled.money.Potato;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.septron.Aircrafter;
 import com.inubot.script.others.septron.Combot;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,8 +44,6 @@ import java.util.Map;
  */
 public class Inubot extends JFrame implements Runnable {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(Inubot.class);
-
     public static final Class[] SCRIPT_CLASSES = new Class[]{
             Potato.class,
             AutoFisherPRO.class,
@@ -59,18 +55,14 @@ public class Inubot extends JFrame implements Runnable {
             FalconryPRO.class,
             Aircrafter.class
     };
-
+    private static final String IRC_CHANNEL = "#bonecode-bot";
     private static Inubot instance;
     private static boolean useProxy = false;
     private static String autoStartScript = null;
     private final Crawler crawler;
     private final ScriptFlux scriptFlux;
-
-    private static final String IRC_CHANNEL = "#bonecode-bot";
-
-    private RSClient client;
-
     private final IRCConnection irc;
+    private RSClient client;
 
     public Inubot() {
         super(Configuration.APPLICATION_NAME);
@@ -119,7 +111,7 @@ public class Inubot extends JFrame implements Runnable {
                 String user = args[i + 1];
                 String pass = args[i + 2];
                 AccountManager.setCurrentAccount(new Account(user, pass));
-                Inubot.LOGGER.info("Account is now " + user + " : " + pass);
+                System.out.println("Account is noew " + user + " : " + pass);
             }
             if (arg.equals("-script")) {
                 String name = args[i + 1];
@@ -132,11 +124,6 @@ public class Inubot extends JFrame implements Runnable {
                 Client.GAME_TICK_SLEEP = 100;
                 Client.LANDSCAPE_RENDERING_ENABLED = false;
                 Client.MODEL_RENDERING_ENABLED = false;
-            }
-            if (arg.equals("-debug")) {
-                ((ch.qos.logback.classic.Logger) LOGGER).setLevel(Level.DEBUG);
-            } else{
-                ((ch.qos.logback.classic.Logger) LOGGER).setLevel(Level.INFO);
             }
         }
 
@@ -197,9 +184,12 @@ public class Inubot extends JFrame implements Runnable {
             setTitle(Configuration.APPLICATION_NAME + " - Proxy [" + ProxyUtils.getLastIP() + ":" + ProxyUtils.getLastPort() + "]");
 
         Container container = getContentPane();
+        container.setLayout(new BorderLayout());
         container.setBackground(Color.BLACK);
         this.client = (RSClient) crawler.start(classloader);
-        container.add(client.asApplet());
+        container.add(client.asApplet(), BorderLayout.CENTER);
+        LogPane pane = new LogPane();
+        container.add(pane.getScrollPane(), BorderLayout.SOUTH);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);

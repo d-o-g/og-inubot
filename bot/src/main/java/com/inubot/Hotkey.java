@@ -32,14 +32,14 @@ public enum Hotkey {
                 }
                 cache[bit.getVarpIndex()].add(bit);
             }
-            Inubot.LOGGER.debug("Cache Built.... Listening");
+            System.out.println("Cache Built.... Listening");
             int[] vars = Inubot.getInstance().getClient().getVarps();
             int[] copy = Arrays.copyOf(vars, vars.length);
             new Thread(() -> {
                 while (true) {
                     for (int i = 0; i < 2000; i++) {
                         if (copy[i] != vars[i]) {
-                            Inubot.LOGGER.debug("Varp Changed(index=" + i + ")[" + copy[i] + " -> " + vars[i] + "]");
+                            System.out.println("Varp Changed(index=" + i + ")[" + copy[i] + " -> " + vars[i] + "]");
                             List<VarpBit> varps = cache[i];
                             if (varps == null) {
                                 copy[i] = vars[i];
@@ -49,9 +49,9 @@ public enum Hotkey {
                                 int old = v.getValue(copy[i]);
                                 int now = v.getValue(vars[i]);
                                 if (old != now)
-                                    Inubot.LOGGER.debug(v.toString());
+                                    System.out.println(v.toString());
                             }
-                            Inubot.LOGGER.debug("--------------------------------------------------------------");
+                            System.out.println("--------------------------------------------------------------");
                             copy[i] = vars[i];
                         }
                     }
@@ -67,7 +67,7 @@ public enum Hotkey {
     }, POSITION(KeyEvent.VK_E) {
         @Override
         public void onActivation() {
-            Inubot.LOGGER.debug("Current location: " + Players.getLocal().getLocation());
+            System.out.println("Current location: " + Players.getLocal().getLocation());
         }
     }, WALK_NORTH(KeyEvent.VK_W) {
         @Override
