@@ -29,7 +29,7 @@ public class VarpBitHack implements Transform {
         InvokeHook vb = ModScript.getInvokeHook("Client#getVarpBit");
         InsnList modded = null;
         if (!vb.desc.endsWith("L" + ModScript.getClass("VarpBit") + ";")) { //the hook didn't return the varpbit
-            for (final MethodNode mn : classes.get(vb.clazz).methods) {
+            for (MethodNode mn : classes.get(vb.clazz).methods) {
                 if (!mn.name.equals(vb.method) || !mn.desc.equals(vb.desc))
                     continue;
                 MethodNode clone = new MethodNode();
@@ -51,7 +51,7 @@ public class VarpBitHack implements Transform {
                 + ";", null, null);
         varp0.instructions = modded;
 
-        for (final MethodNode mn : classes.get("client").methods) {
+        for (MethodNode mn : classes.get("client").methods) {
             if (!mn.name.equals("getVarpBit")) {
                 continue;
             }
@@ -69,7 +69,7 @@ public class VarpBitHack implements Transform {
         classes.get("client").methods.add(varp0);
     }
 
-    private InsnList mod(final InsnList instructions, FieldHook varpIndex) { //TODO remove bitwise calc after the return?
+    private InsnList mod(InsnList instructions, FieldHook varpIndex) { //TODO remove bitwise calc after the return?
         InsnList dumystack = new InsnList();
         dumystack.add(new LdcInsnNode(ModScript.getInvokeHook("Client#getVarpBit").predicate)); //dummy
         dumystack.add(new VarInsnNode(Opcodes.ISTORE, 2));

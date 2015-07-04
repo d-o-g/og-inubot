@@ -29,7 +29,7 @@ public class Inventory {
         if (inventory == null)
             return new WidgetItem[0];
         List<WidgetItem> items = new ArrayList<>();
-//        if (!Bank.isOpen()) {
+        if (!Bank.isOpen()) {
             int[] itemIds = inventory.getItemIds();
             int[] itemQtys = inventory.getItemQuantities();
             if (itemIds != null) {
@@ -43,21 +43,21 @@ public class Inventory {
                     items.add(item);
                 }
             }
-//        } else {
-//            Widget parent = Interfaces.getWidget(15, 3);
-//            if (parent != null) {
-//                int i = 0;
-//                for (Widget child : parent.getChildren()) {
-//                    i++;
-//                    if (child == null || child.getItemId() == -1)
-//                        continue;
-//                    WidgetItem item = new WidgetItem(child, i);
-//                    if (!filter.accept(item))
-//                        continue;
-//                    items.add(item);
-//                }
-//            }
-//        }
+        } else {
+            Widget parent = Interfaces.getWidget(15, 3);
+            if (parent != null) {
+                int i = 0;
+                for (Widget child : parent.getChildren()) {
+                    i++;
+                    if (child == null || child.getItemId() == -1)
+                        continue;
+                    WidgetItem item = new WidgetItem(child, i);
+                    if (!filter.accept(item))
+                        continue;
+                    items.add(item);
+                }
+            }
+        }
         return items.toArray(new WidgetItem[items.size()]);
     }
 

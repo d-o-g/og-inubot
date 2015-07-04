@@ -14,6 +14,8 @@ import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
 import com.inubot.bot.AccountManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public abstract class Script extends LoopTask {
     private String username = null, password = null;
     private boolean forceIdleTimeClick = true;
     private final List<Task> tickTasks = new ArrayList<>();
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public boolean setup() {
         return true;
@@ -32,6 +35,14 @@ public abstract class Script extends LoopTask {
 
     public void onFinish() {
 
+    }
+
+    public final Logger getLogger() {
+        return logger;
+    }
+
+    public final void log(String msg) {
+        logger.info(msg);
     }
 
     public final void run() {

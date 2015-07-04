@@ -94,7 +94,7 @@ public class Bank {
     }
 
     /**
-     * @return The current Bank {@link com.inubot.api.methods.Bank.TabDisplay} type
+     * @return The current Bank {@link Bank.TabDisplay} type
      */
     public static TabDisplay getTabDisplay() {
         int v = BIT_TAB_DISPLAY.getValue();
@@ -132,7 +132,7 @@ public class Bank {
     }
 
     /**
-     * @return <b>true</b> if the current {@link com.inubot.api.methods.Bank.Tab} is the main bank tab
+     * @return <b>true</b> if the current {@link Bank.Tab} is the main bank tab
      */
     public static boolean isMainTabOpen() {
         return getOpenTab() == Tab.MAIN_TAB;
@@ -275,14 +275,14 @@ public class Bank {
     }
 
     /**
-     * @return The current bank {@link com.inubot.api.methods.Bank.WithdrawMode} state
+     * @return The current bank {@link Bank.WithdrawMode} state
      */
     public static WithdrawMode getWithdrawMode() {
         return Varps.getBoolean(WITHDRAW_MODE_VARP) ? WithdrawMode.NOTE : WithdrawMode.ITEM;
     }
 
     /**
-     * @return The current bank {@link com.inubot.api.methods.Bank.RearrangeMode} state
+     * @return The current bank {@link Bank.RearrangeMode} state
      */
     public static RearrangeMode getRearrangeMode() {
         return Varps.get(REARRANGE_MODE_VARP) == 2000 ? RearrangeMode.SWAP : RearrangeMode.INSERT;
@@ -700,7 +700,7 @@ public class Bank {
          * <b>false</b> otherwise.
          * @see Bank#isOpen
          * @see Tab#isCollapsed
-         * @see Bank#getTab
+         * @see Tab#getTab
          */
         public boolean open() {
             if (isOpen()) return true;
