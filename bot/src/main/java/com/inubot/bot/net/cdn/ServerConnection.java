@@ -45,14 +45,16 @@ public class ServerConnection implements Runnable {
                 }
                 if (!authenticated) {
                     output.writeByte(Packet.LOGIN);
-                    send(new LoginPacket("Dogerina", "hackerino"));
-                    authenticated = true;
+                    send(new LoginPacket("testing", "penis123"));
+                    System.out.println(authenticated = input.readBoolean());
                 }
                 if (input.available() > 0) {
-                    byte opcode = input.readByte();
-                    output.writeByte(opcode);
+                    short opcode = input.readShort();
                     switch (opcode) {
-
+                        case Packet.LOGIN: {
+                            authenticated = input.readBoolean();
+                            break;
+                        }
                     }
                 }
             } catch (IOException e) {
