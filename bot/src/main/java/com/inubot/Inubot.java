@@ -188,7 +188,7 @@ public class Inubot extends JFrame implements Runnable {
                 new InvokerTransform(), new IdleTimeSetter(), new HoveredRegionTileSetter(),
                 new GroundItemPosition(), new MessageCallback(), new UserDetailsSetter(),
                 new VarpBitHack(), new LandscapeHack(), new LowMemorySetter(), new CatchBlockSweeper());
-        Map<String, byte[]> classes = injector.inject();
+        Map<String, byte[]> classes = injector.inject(true);
 
         RSClassLoader classloader = new RSClassLoader(classes);
         ModScript.setClassLoader(classloader);

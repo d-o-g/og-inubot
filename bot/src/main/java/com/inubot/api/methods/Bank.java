@@ -21,18 +21,18 @@ import java.util.*;
 public class Bank {
 
     public static final int BANK_PARENT = 12;
-    public static final int SLOT_CONTAINER = 6;
-    public static final RSVarpBit BIT_OPEN_TAB_INDEX;
-    public static final RSVarpBit BIT_TAB_DISPLAY;
-    public static final RSVarpBit BIT_TAB_1;
-    public static final RSVarpBit BIT_TAB_2;
-    public static final RSVarpBit BIT_TAB_3;
-    public static final RSVarpBit BIT_TAB_4;
-    public static final RSVarpBit BIT_TAB_5;
-    public static final RSVarpBit BIT_TAB_6;
-    public static final RSVarpBit BIT_TAB_7;
-    public static final RSVarpBit BIT_TAB_8;
-    public static final RSVarpBit BIT_TAB_9;
+    public static final int SLOT_CONTAINER = 12;
+    public static final VarpBit BIT_OPEN_TAB_INDEX;
+    public static final VarpBit BIT_TAB_DISPLAY;
+    public static final VarpBit BIT_TAB_1;
+    public static final VarpBit BIT_TAB_2;
+    public static final VarpBit BIT_TAB_3;
+    public static final VarpBit BIT_TAB_4;
+    public static final VarpBit BIT_TAB_5;
+    public static final VarpBit BIT_TAB_6;
+    public static final VarpBit BIT_TAB_7;
+    public static final VarpBit BIT_TAB_8;
+    public static final VarpBit BIT_TAB_9;
     private static final int NUM_TABS = 9;
     private static final int WITHDRAW_MODE_VARP = 115;
     private static final int REARRANGE_MODE_VARP = 304;
@@ -43,19 +43,19 @@ public class Bank {
             = EnumSet.range(Tab.TAB_1, Tab.TAB_9);
 
     static {
-        BIT_OPEN_TAB_INDEX = RSVarpBit.get(4150); // 115 [2,5]
-        BIT_TAB_DISPLAY = RSVarpBit.get(4170); // 867 [30,31]
-        BIT_TAB_1 = RSVarpBit.get(4171); // 867 [0,9]
-        BIT_TAB_2 = RSVarpBit.get(4172); // 867 [10,19]
-        BIT_TAB_3 = RSVarpBit.get(4173); // 867 [20,29]
+        BIT_OPEN_TAB_INDEX = VarpBit.get(4150); // 115 [2,5]
+        BIT_TAB_DISPLAY = VarpBit.get(4170); // 867 [30,31]
+        BIT_TAB_1 = VarpBit.get(4171); // 867 [0,9]
+        BIT_TAB_2 = VarpBit.get(4172); // 867 [10,19]
+        BIT_TAB_3 = VarpBit.get(4173); // 867 [20,29]
         //-----------------------------------------------
-        BIT_TAB_4 = RSVarpBit.get(4174); // 1052 [0,9]
-        BIT_TAB_5 = RSVarpBit.get(4175); // 1052 [10,19]
-        BIT_TAB_6 = RSVarpBit.get(4176); // 1052 [20,29]
+        BIT_TAB_4 = VarpBit.get(4174); // 1052 [0,9]
+        BIT_TAB_5 = VarpBit.get(4175); // 1052 [10,19]
+        BIT_TAB_6 = VarpBit.get(4176); // 1052 [20,29]
         //-----------------------------------------------
-        BIT_TAB_7 = RSVarpBit.get(4177); // 1053 [0,9]
-        BIT_TAB_8 = RSVarpBit.get(4178); // 1053 [10,19]
-        BIT_TAB_9 = RSVarpBit.get(4179); // 1053 [20,29]
+        BIT_TAB_7 = VarpBit.get(4177); // 1053 [0,9]
+        BIT_TAB_8 = VarpBit.get(4178); // 1053 [10,19]
+        BIT_TAB_9 = VarpBit.get(4179); // 1053 [20,29]
     }
 
     /**
@@ -151,7 +151,7 @@ public class Bank {
     /**
      * Determines the bank tab ID that is currently in focus, or will
      * be in focus next time the bank is open.
-     * <p/>
+     * <p>
      * This means is justified by internal client settings. One
      * should note that this value does not reset to any default
      * value when the bank is closed. When the bank is closed the
@@ -212,7 +212,8 @@ public class Bank {
      */
     public static Tab getNextCollapsedTab() {
         for (Tab tab : MINOR_TABS) {
-            if (tab.isCollapsed()) return tab;
+            if (tab.isCollapsed())
+                return tab;
         }
         return null;
     }
@@ -291,6 +292,7 @@ public class Bank {
     /**
      * This method is <b>not</b> the same as Bank.getItems().length in the sense
      * that it uses the clients item cache to access the local item data.
+     *
      * @return The current number of items in the bank
      */
     public static int getCount() {
@@ -298,9 +300,9 @@ public class Bank {
     }
 
     /**
-     * @see #getCount
      * @param filter the {@link com.inubot.api.util.filter.Filter} which should be used to select the elements
      * @return the number of items in the bank accepted by the filter
+     * @see #getCount
      */
     public static int getCount(Filter<ItemTables.Entry> filter) {
         int count = 0;
@@ -312,9 +314,9 @@ public class Bank {
     }
 
     /**
-     * @see #getCount
      * @param filter the {@link com.inubot.api.util.filter.Filter} which should be used to select the elements
      * @return the number of items in the bank that were rejected by the filter
+     * @see #getCount
      */
     public static int getCountExcept(Filter<ItemTables.Entry> filter) {
         return getCount(Filter.not(filter));
@@ -343,10 +345,6 @@ public class Bank {
             throw new BankClosedException();
         WidgetItem item = getFirst(w -> w.getId() == id && w.getQuantity() >= amount);
         if (item != null) {
-            if (getWithdrawMode() == WithdrawMode.ITEM && amount >= 28 - Inventory.getCount()) {
-                item.processAction("Withdraw-All"); //TODO hook stackable
-                return true;
-            }
             int withdrawn = 0;
             while (withdrawn != amount && getFirst(new IdFilter<>(item.getId())) != null) {
                 int remaining = amount - withdrawn;
@@ -379,17 +377,19 @@ public class Bank {
      * number of free spaces that can be used to store a new item
      * is equal to the capacity minus the total number of items
      * within the bank (capacity - item_count).
+     * <br>
+     * <b>NOTE: This value can not be assumed constant</b>
      *
      * @return The maximum number of items that can be stored within the bank
      * @see #getCount()
      * @see #isEmpty()
      * @see #isFull()
      */
-    //NOTE: This value can not be assumed constant
     public static int getCapacity() { //TODO Any better way?
-        if (!isOpen()) return -1;
-        Widget count_text = Interfaces.getWidget(12, 5);
-        return Integer.valueOf(count_text.getText());
+        if (!isOpen())
+            return -1;
+        Widget textWidget = Interfaces.getWidget(12, 5);
+        return Integer.valueOf(textWidget.getText());
     }
 
     /**
@@ -402,8 +402,7 @@ public class Bank {
      *
      * @return <b>true</b> if the bank is full, and can no longer
      * store any more-new-items, if the bank is open. <b>false</b> otherwise
-     * @throws BankClosedException If
-     *                             the bank was closed when this method was called.
+     * @throws BankClosedException If the bank was closed when this method was called.
      */
     public static boolean isFull() {
         if (isClosed())
@@ -472,9 +471,10 @@ public class Bank {
         SWAP, INSERT
     }
 
-    public static enum Tab { // Pointers for the possible bank tabs
-
-        // Order is with respect to the index varp value, do not change
+    /**
+     * Pointers for the possible bank tabs. Order is with respect to the index varp value, do not change
+     */
+    public static enum Tab {
 
         MAIN_TAB(null), // TAB_0
         TAB_1(BIT_TAB_1),
@@ -512,18 +512,14 @@ public class Bank {
          * @return The total number of items within this tab.
          */
         public int getCount() { //TODO requires the bank to be open
-
             if (this != MAIN_TAB) // Natural count
                 return varpBit.getValue();
-
             // Main Tab is special case and is equal to
             // the total items of the bank minus the sum
             // of the other 9 tabs.
             int sum = 0;
-            for (final Tab tab : MINOR_TABS) {
+            for (Tab tab : MINOR_TABS)
                 sum += tab.getCount();
-            }
-
             return Bank.getItems().length - sum;
 
         }
@@ -584,34 +580,31 @@ public class Bank {
          * The Bank container index base for this tab.
          * All indexes of items within this tab will
          * range between [ BaseValue, BaseValue + ItemCount ).
-         * <p/>
-         * Example:
-         * For Item 5 of Tab 2 is located within the base value
+         * <p>
+         * Example: Item 5 of Tab 2 is located within the base value
          * of Tab 2 + 5. Where the resulting index is equal to
          * the index within the Banks item container
-         * <p/>
+         * <p>
          * This value is equal to the sum of the precessing
          * tab count. (T1c + T2c + T3c + ... + Tc(I-1))
-         * <p/>
+         * <p>
          * The MainTab is special case for this logic, for
          * it's items are stored at the end of container,
          * despite it being the 0'th tab (internally).
          */
         public int getContainerBaseIndex() {
-
             // MainTab is located at the end of the container,
             // though its index is the 0'th...
             if (this == MAIN_TAB) { //Special case
                 return Bank.getCount() - this.getCount();
             }
-
             // Summation
             int count = 0;
             for (Tab tab : MINOR_TABS) { // Ensure 1 -> 9 Order
-                if (this == tab) break;
+                if (this == tab)
+                    break;
                 count += tab.getCount();
             }
-
             return count;
 
         }
@@ -644,15 +637,19 @@ public class Bank {
         }
 
         public Widget getRemote() { // When searching the widget to open the respected tab
-            if (Bank.isClosed()) return null;
-            int base_index = getCapacity() + NUM_TABS + getIndex() - 1;
-            return Interfaces.getWidget(12, 10).getChildren()[base_index];
+            if (Bank.isClosed())
+                return null;
+            int baseIdx = getCapacity() + NUM_TABS + getIndex() - 1;
+            return Interfaces.getWidget(12, 10).getChildren()[baseIdx];
         }
 
-        public Widget getDropRegion() { // The empty region at the end of each tab where you can drop an item to add to the tab.
-            // This region is only updated if their is a gap/space of items at the end of the tab (lower,right).
-            int base_index = getCapacity() + NUM_TABS * 2 + getIndex() - 1;
-            return Interfaces.getWidget(12, 10).getChildren()[base_index]; //TODO return null if there is no gap
+        /**
+         * @return The empty region at the end of each tab where you can drop an item to add to the tab.
+         * This region is only updated if their is a gap/space of items at the end of the tab (lower,right).
+         */
+        public Widget getDropRegion() {
+            int baseIdx = getCapacity() + NUM_TABS * 2 + getIndex() - 1;
+            return Interfaces.getWidget(12, 10).getChildren()[baseIdx]; //TODO return null if there is no gap
         }
 
         /**
@@ -662,7 +659,7 @@ public class Bank {
          * is located within the container widget. This index can also define the
          * child index within the container widget where the widget child is
          * indexed.
-         * <p/>
+         * <p>
          * For clarification purposes the provided relative index is
          * forced to be within the item range of the tab,
          * unless the returned value will be that of a different tab.
@@ -675,7 +672,7 @@ public class Bank {
          * which you can lookup the specified item.
          *
          * @param relativeIndex The index of the item, within this tab
-         *                       which must be (0 <= 0 < {@link #getCount()})
+         *                      which must be (0 <= 0 < {@link #getCount()})
          * @return The index of the item within the container widget,
          * that the relative item (within this tab) is located.
          * @see #getContainerBaseIndex
@@ -690,7 +687,7 @@ public class Bank {
          * Opens this tab. This function will return true if and
          * only if this tab was successfully opened. This function
          * will interact with the divider of the tab provided by {@link #getTab()}.
-         * <p/>
+         * <p>
          * This methods requires this tab to be interactable. In the cases that
          * this tab can not be interacted upon, or this tab is collapsed,
          * this function will immediately return false. In the case that the
@@ -721,7 +718,8 @@ public class Bank {
 
         public WidgetItem getItem(int relativeIndex) {
             final int idx = getItemIndex(relativeIndex);
-            if (idx == -1) return null;
+            if (idx == -1)
+                return null;
             return new WidgetItem(Interfaces.getWidget(12, 10).getChildren()[idx], idx);
         }
 
