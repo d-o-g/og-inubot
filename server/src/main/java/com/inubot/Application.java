@@ -16,9 +16,9 @@ import java.sql.ResultSet;
 public class Application {
 
     public static final short LOGIN_OPCODE = 0;
-    public static final short REQUEST_SCRIPTS = 1;
-    public static final short BOT_ADDED = 2;
-    public static final short BOT_REMOVED = 3;
+    public static final short REQUEST_SCRIPTS_OPCODE = 1;
+    public static final short BOT_ADDED_OPCODE = 2;
+    public static final short BOT_REMOVED_OPCODE = 3;
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 

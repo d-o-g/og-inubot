@@ -39,8 +39,10 @@ public class ServerConnection implements Runnable {
     public void run() {
         while (true) {
             try {
-                if (!connection.isConnected())
+                if (!connection.isConnected()) {
                     connection.connect(new InetSocketAddress(host, port));
+                    continue;
+                }
                 if (!authenticated) {
                     output.writeByte(Packet.LOGIN);
                     send(new LoginPacket("Dogerina", "hackerino"));

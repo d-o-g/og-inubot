@@ -25,7 +25,7 @@ public class ScriptRequestHandler implements Handler {
 
     @Override
     public short opcode() {
-        return Application.REQUEST_SCRIPTS;
+        return Application.REQUEST_SCRIPTS_OPCODE;
     }
 
     //write opcode [header]
