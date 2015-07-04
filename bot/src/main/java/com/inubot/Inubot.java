@@ -23,6 +23,7 @@ import com.inubot.script.bundled.fisher.AutoFisherPRO;
 import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.money.Potato;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
+import com.inubot.script.others.septron.Aircrafter;
 import com.inubot.script.others.septron.Combot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +56,8 @@ public class Inubot extends JFrame implements Runnable {
             RedChinsPRO.class,
             FalconryPRO.class,
             BirdSnarePRO.class,
-            FalconryPRO.class
+            FalconryPRO.class,
+            Aircrafter.class
     };
 
     private static Inubot instance;

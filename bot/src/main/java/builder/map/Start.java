@@ -18,12 +18,7 @@ public class Start {
         JFrame frame = new JFrame("memekit");
         frame.setLayout(new FlowLayout());
         JButton addReg = new JButton("Add regular");
-        addReg.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(index++ + " " + map.mtx + " " + map.mty + " 0 0 regular");
-            }
-        });
+        addReg.addActionListener(e -> System.out.println(index++ + " " + map.mtx + " " + map.mty + " 0 0 regular"));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.pack();
