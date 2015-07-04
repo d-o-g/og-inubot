@@ -19,7 +19,8 @@ public interface Task extends Runnable {
         (thread = new Thread(this)).start();
         try {
             thread.join();
-        } catch (final InterruptedException ignored) {}
+        } catch (final InterruptedException ignored) {
+        }
     }
 
     @Override

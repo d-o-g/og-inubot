@@ -1,7 +1,6 @@
 package builder.map.cache;
 
 import java.io.DataInputStream;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 

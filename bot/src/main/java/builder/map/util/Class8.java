@@ -41,7 +41,7 @@ public class Class8 {
             else
                 algorithmData.aBool28 = false;
             if (algorithmData.aBool28)
-                System.out.println( DataArchive.getValue( 1266 ));
+                System.out.println(DataArchive.getValue(1266));
             algorithmData.anInt33 = 0;
             int i_3_ = method6(algorithmData);
             algorithmData.anInt33 = algorithmData.anInt33 << 8 | i_3_ & 0xff;

@@ -4,11 +4,9 @@ package builder.map.util;// Decompiled by DJ v3.12.12.96 Copyright 2011 Atanas N
 // Source File Name:   Class9.java
 
 
-public class Class9
-{
+public class Class9 {
 
-    public Class9()
-    {
+    public Class9() {
     }
 
     public Class9 aClass9_58;

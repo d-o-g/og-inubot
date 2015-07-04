@@ -7,8 +7,8 @@
 package com.inubot.api.methods;
 
 import com.inubot.api.oldschool.Character;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.*;
+import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.tree.*;
 
 public class Magic {
@@ -42,7 +42,7 @@ public class Magic {
 
     public static void cast(Spell spell, com.inubot.api.oldschool.Character character, String action) {
         Client.processAction(character instanceof Npc ? new SpellOnNpc(ActionOpcodes.SPELL_ON_NPC, character.getArrayIndex())
-                : new SpellOnPlayer(ActionOpcodes.SPELL_ON_PLAYER, character.getArrayIndex()),
+                        : new SpellOnPlayer(ActionOpcodes.SPELL_ON_PLAYER, character.getArrayIndex()),
                 action, spell.toString());
     }
 

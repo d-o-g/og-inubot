@@ -11,7 +11,7 @@ public class Mainframe extends Frame {
 
     public Mainframe(MapScheduler applet_sub1, int with, int height) {
         applet = applet_sub1;
-        setTitle( DataArchive.getValue( ArchiveKeys.TITTLE_NAME ));
+        setTitle(DataArchive.getValue(ArchiveKeys.TITTLE_NAME));
         setResizable(false);
         show();
         toFront();

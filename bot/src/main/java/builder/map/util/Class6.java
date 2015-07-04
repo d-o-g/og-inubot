@@ -4,11 +4,9 @@ package builder.map.util;// Decompiled by DJ v3.12.12.96 Copyright 2011 Atanas N
 // Source File Name:   Class6.java
 
 
-public class Class6
-{
+public class Class6 {
 
-    public Class6()
-    {
+    public Class6() {
         aClass9_56 = new Class9();
         aClass9_56.aClass9_58 = aClass9_56;
         aClass9_56.aClass9_59 = aClass9_56;

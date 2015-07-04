@@ -37,6 +37,7 @@ public class HintArrow {
     /**
      * If the current hint arrow is pointed to a tile and not a character, then the methods you
      * would like to use are #getX and #getY.
+     *
      * @return the target character of the current HintArrow
      */
     public static com.inubot.api.oldschool.Character<?> getTarget() {

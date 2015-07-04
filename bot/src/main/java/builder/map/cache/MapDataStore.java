@@ -53,7 +53,7 @@ public class MapDataStore {
             if (entryNameHashes[i] == hash) {
                 if (dest == null) dest = new byte[entrySizes[i]];
                 if (!protocol) {
-                    Class8.method11( dest, entrySizes[ i ], data, anIntArray2[ i ], bytePositions[ i ] );
+                    Class8.method11(dest, entrySizes[i], data, anIntArray2[i], bytePositions[i]);
                 } else {
                     System.arraycopy(data, bytePositions[i], dest, 0, entrySizes[i]);
                 }
