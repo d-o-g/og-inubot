@@ -9,6 +9,7 @@ package com.inubot.net.impl;
 import com.inubot.Application;
 import com.inubot.net.ServerConnection;
 import com.inubot.net.Handler;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.*;
 import java.sql.ResultSet;
@@ -38,9 +39,10 @@ public class LoginHandler implements Handler {
 
             ResultSet resultSet = connection.query("SELECT * FROM core_members WHERE name='" + username + "'");
             while (resultSet.next()) {
-                String salt = "$2a$13$" + resultSet.getString(resultSet.findColumn("members_pass_salt"));
+                String salt = resultSet.getString(resultSet.findColumn("members_pass_salt"));
                 String hash = resultSet.getString(resultSet.findColumn("members_pass_hash"));
-                if (true) {//TODO...
+                String gen = BCrypt.hashpw(password, salt);
+                if (hash.equals(gen)) {//TODO...
                     correct = true;
                     connection.logger.info("Logged in as " + username);
                 }
