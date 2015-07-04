@@ -62,12 +62,23 @@ public class BotMenuBar extends JMenuBar {
             Client.GAME_TICK_SLEEP = Client.LANDSCAPE_RENDERING_ENABLED ? -1 : 125;
             Client.setLowMemory(!Client.isLowMemory());
         });
+        NexusToggleableButton log = new NexusToggleableButton("Console", () -> Inubot.getInstance().getLogPane().isToggled());
+        log.addActionListener(e -> {
+            if (!Inubot.getInstance().getLogPane().isToggled()) {
+                Inubot.getInstance().add(Inubot.getInstance().getLogPane(), BorderLayout.SOUTH);
+            } else {
+                Inubot.getInstance().remove(Inubot.getInstance().getLogPane());
+            }
+            Inubot.getInstance().pack();
+            Inubot.getInstance().getLogPane().setToggled(!Inubot.getInstance().getLogPane().isToggled());
+        });
 
         add(start);
         add(pause);
         add(stop);
 
         add(Box.createHorizontalGlue());
+        add(log);
         add(farm);
     }
 

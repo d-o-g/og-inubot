@@ -11,7 +11,7 @@ public class RenderingEngine
         implements ImageProducer, ImageObserver {
 
     public final void attach() {
-        RenderModel.setData( pixelCluster, with, height );
+        RenderModel.setData(pixelCluster, with, height);
     }
 
     public RenderingEngine(int with, int height, Component component) {
@@ -35,7 +35,7 @@ public class RenderingEngine
     }
 
     public final void requestTopDownLeftRightResend(ImageConsumer imageconsumer) {
-        System.out.println( DataArchive.getValue( 699 ));
+        System.out.println(DataArchive.getValue(699));
     }
 
     public final synchronized boolean isConsumer(ImageConsumer imageconsumer) {

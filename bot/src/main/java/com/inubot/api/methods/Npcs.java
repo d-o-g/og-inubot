@@ -9,9 +9,9 @@ package com.inubot.api.methods;
 import com.inubot.Inubot;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Npc;
+import com.inubot.api.oldschool.collection.NpcPool;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.RSNpc;
-import com.inubot.api.oldschool.collection.NpcPool;
 
 import java.util.*;
 

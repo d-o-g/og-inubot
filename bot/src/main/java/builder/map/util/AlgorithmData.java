@@ -1,11 +1,9 @@
 package builder.map.util;
 
 
-public class AlgorithmData
-{
+public class AlgorithmData {
 
-    public AlgorithmData()
-    {
+    public AlgorithmData() {
         anInt6 = 4096;
         anInt7 = 16;
         anInt8 = 258;

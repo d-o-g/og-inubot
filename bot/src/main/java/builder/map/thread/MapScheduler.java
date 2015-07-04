@@ -12,7 +12,7 @@ import java.awt.event.*;
 
 public class MapScheduler extends Applet
         implements Runnable, MouseListener, MouseMotionListener, KeyListener, FocusListener, WindowListener,
-MouseWheelListener {
+        MouseWheelListener {
 
     Frame parent;
 
@@ -65,7 +65,7 @@ MouseWheelListener {
             }
         }
 
-        Font font = new Font(DataArchive.getValue( ArchiveKeys.FONT_TYPE_NAME), 0, 13);
+        Font font = new Font(DataArchive.getValue(ArchiveKeys.FONT_TYPE_NAME), 0, 13);
         FontMetrics fontmetrics = getDisplayedComponent().getFontMetrics(font);
         if (exit) {
             graphics.setColor(Color.black);
@@ -350,7 +350,7 @@ MouseWheelListener {
         getDisplayedComponent().addMouseWheelListener(this);
         if (mainFrame != null)
             mainFrame.addWindowListener(this);
-        renderLoadingBar(0, DataArchive.getValue( 730 ));
+        renderLoadingBar(0, DataArchive.getValue(730));
         System.out.println("Loading map...");
         loadMap();
         System.out.println("Map loaded!");
@@ -424,7 +424,6 @@ MouseWheelListener {
             paint();
 
 
-
             if (printInfo) {
                 System.out.println((new StringBuilder()).append(DataArchive.getValue(741)).append(frame_time).toString());
                 for (int i_17_ = 0; i_17_ < 10; i_17_++) {
@@ -454,12 +453,12 @@ MouseWheelListener {
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        if(e.getWheelRotation() == -1) {   //up
+        if (e.getWheelRotation() == -1) {   //up
             Map map = (Map) this;
-            if(map.destinationScale < 24) map.destinationScale++;
-        } else if(e.getWheelRotation() == 1) {  //Down
+            if (map.destinationScale < 24) map.destinationScale++;
+        } else if (e.getWheelRotation() == 1) {  //Down
             Map map = (Map) this;
-            if(map.destinationScale > 2) map.destinationScale--;
+            if (map.destinationScale > 2) map.destinationScale--;
         }
     }
 

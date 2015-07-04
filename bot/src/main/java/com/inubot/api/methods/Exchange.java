@@ -1,11 +1,6 @@
 package com.inubot.api.methods;
 
-import com.inubot.api.util.CacheLoader;
-import com.inubot.client.natives.RSItemDefinition;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.regex.Matcher;
@@ -32,6 +27,7 @@ public class Exchange {
 
     /**
      * Looks up an item on the OSBuddy Exchange
+     *
      * @param itemId the id of the item to lookup
      * @return the price of the item, 0 if not found
      */

@@ -16,6 +16,7 @@ public interface Identifiable {
     /**
      * Throws an {@link java.lang.UnsupportedOperationException} if this {@link Identifiable}
      * has no name
+     *
      * @return The name assigned to this {@link Identifiable}
      */
     public default String getName() {

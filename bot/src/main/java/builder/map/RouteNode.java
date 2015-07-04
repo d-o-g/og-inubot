@@ -16,13 +16,13 @@ public class RouteNode {
     }
 
     public void render() {
-        if(!A.render || !B.render) return;
+        if (!A.render || !B.render) return;
 
-       RenderModel.drawLine(
-               A.getCenterX(), A.getCenterY(),
-               B.getCenterX(), B.getCenterY(),
-               Color.ORANGE.getRGB()
-       );
+        RenderModel.drawLine(
+                A.getCenterX(), A.getCenterY(),
+                B.getCenterX(), B.getCenterY(),
+                Color.ORANGE.getRGB()
+        );
 
     }
 

@@ -32,13 +32,11 @@ public class RenderModel extends Class9_Sub1 {
         int err = dx - dy;
 
 
-
         while (true) {
             int data_pos = x1 + y1 * map_with;
 
-            if(data_pos >= 0 && data_pos < cluster.length)
+            if (data_pos >= 0 && data_pos < cluster.length)
                 cluster[data_pos] = color;
-
 
 
             if (x1 == x2 && y1 == y2) {

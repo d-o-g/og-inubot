@@ -1,9 +1,7 @@
 package com.inubot.client;
 
 import com.inubot.api.methods.Client;
-import com.inubot.api.util.Paintable;
-import com.inubot.api.util.Random;
-import com.inubot.api.util.Time;
+import com.inubot.api.util.*;
 
 import java.awt.*;
 import java.awt.event.*;

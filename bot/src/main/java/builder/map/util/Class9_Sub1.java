@@ -4,10 +4,8 @@ package builder.map.util;// Decompiled by DJ v3.12.12.96 Copyright 2011 Atanas N
 // Source File Name:   Class9_Sub1.java
 
 
-public class Class9_Sub1 extends Class9
-{
+public class Class9_Sub1 extends Class9 {
 
-    public Class9_Sub1()
-    {
+    public Class9_Sub1() {
     }
 }

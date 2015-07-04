@@ -62,6 +62,7 @@ public class Inubot extends JFrame implements Runnable {
     private final Crawler crawler;
     private final ScriptFlux scriptFlux;
     private final IRCConnection irc;
+    private final LogPane logPane;
     private RSClient client;
 
     public Inubot() {
@@ -70,6 +71,7 @@ public class Inubot extends JFrame implements Runnable {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.scriptFlux = new ScriptFlux();
         this.crawler = new Crawler(Crawler.GameType.OSRS);
+        this.logPane = new LogPane();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
         irc = new IRCConnection();
@@ -188,8 +190,7 @@ public class Inubot extends JFrame implements Runnable {
         container.setBackground(Color.BLACK);
         this.client = (RSClient) crawler.start(classloader);
         container.add(client.asApplet(), BorderLayout.CENTER);
-        LogPane pane = new LogPane();
-        container.add(pane.getScrollPane(), BorderLayout.SOUTH);
+        container.add(logPane.getScrollPane(), BorderLayout.SOUTH);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -233,5 +234,9 @@ public class Inubot extends JFrame implements Runnable {
 
     public ScriptFlux getScriptFlux() {
         return scriptFlux;
+    }
+
+    public LogPane getLogPane() {
+        return logPane;
     }
 }

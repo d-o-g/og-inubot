@@ -4,16 +4,14 @@ package builder.map.util;// Decompiled by DJ v3.12.12.96 Copyright 2011 Atanas N
 // Source File Name:   Class3.java
 
 
-public class Class3
-{
+public class Class3 {
 
-    public Class3()
-    {
+    public Class3() {
     }
 
     public static int anIntArray5[] = {
-        118, -62, 7, 24, 121, -123, -10, -8, 116, 6, 
-        -106, 28, -36, 86, 109, 112, -115, -116, -37, -35
+            118, -62, 7, 24, 121, -123, -10, -8, 116, 6,
+            -106, 28, -36, 86, 109, 112, -115, -116, -37, -35
     };
 
 }

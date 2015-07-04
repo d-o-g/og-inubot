@@ -54,9 +54,15 @@ public abstract class LoopTask implements Task {
         running = false;
     }
 
-    public void onExit() {}
-    public void onPause() {}
-    public void onResume() {}
+    public void onExit() {
+    }
+
+    public void onPause() {
+    }
+
+    public void onResume() {
+    }
+
     public abstract void handleEvents();
 
     public final int getCycles() {

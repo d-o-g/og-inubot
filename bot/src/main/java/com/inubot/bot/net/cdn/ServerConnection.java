@@ -32,7 +32,7 @@ public class ServerConnection implements Runnable {
     }
 
     public static void main(String... args) throws IOException {
-        new Thread(new ServerConnection("127.0.0.1", 1337)).start();
+        new Thread(new ServerConnection("46.101.172.127", 1111)).start();
     }
 
     @Override

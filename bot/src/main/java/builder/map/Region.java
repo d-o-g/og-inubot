@@ -1,12 +1,10 @@
 package builder.map;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
-public class Region implements Comparable<Region>{
+public class Region implements Comparable<Region> {
 
     public final int regionId;
     public int setCollision = 0;
@@ -85,7 +83,7 @@ public class Region implements Comparable<Region>{
     public int settle(int index, int flag) throws IOException {
         int position = getBytePosition(index);
         int exciting = buff.getInt(position);
-        if(exciting == UNSETTLED_VALUE)
+        if (exciting == UNSETTLED_VALUE)
             buff.putInt(4, setCollision++);
         buff.putInt(position, flag);
 
@@ -94,9 +92,9 @@ public class Region implements Comparable<Region>{
 
     public int[][] toMatrix(int plane) throws IOException {
         int[][] ret = new int[REGION_LENGTH][REGION_LENGTH];
-        for(int y = 0; y < REGION_LENGTH; y++) {
-            for(int x = 0; x < REGION_LENGTH; x++) {
-                ret[x][y] = getValue(x,y, plane);
+        for (int y = 0; y < REGION_LENGTH; y++) {
+            for (int x = 0; x < REGION_LENGTH; x++) {
+                ret[x][y] = getValue(x, y, plane);
             }
         }
         return ret;
@@ -113,6 +111,6 @@ public class Region implements Comparable<Region>{
 
     @Override
     public int compareTo(Region o) {
-        return Integer.compare(regionId,o.regionId);
+        return Integer.compare(regionId, o.regionId);
     }
 }

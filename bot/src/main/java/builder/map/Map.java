@@ -1203,7 +1203,8 @@ public class Map extends MapScheduler {
                         (int) er.getCenterX(), (int) er.getCenterY(),
                         Color.BLUE.getRGB()
                 );
-            } catch (Exception ignore) {}
+            } catch (Exception ignore) {
+            }
         }
 
         for (MapNode node : waypoints) {
