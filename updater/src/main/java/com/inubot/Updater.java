@@ -252,12 +252,12 @@ public abstract class Updater extends Thread implements Runnable {
             }
             for (String hook : info.hooks()) {
                 if (!gv.hooks.containsKey(hook)) {
-                    appendLine(" @ BROKEN: " + gv.id() + "#" + hook);
+                    appendLine(" ! BROKEN: " + gv.id() + "#" + hook);
                     //gv.hooks.put(hook, new BrokenHook(hook));
                 }
             }
             gv.hooks.keySet().stream().filter(hook -> !Arrays.asList(info.hooks()).contains(hook)).forEach(hook ->
-                            System.out.println("not in @info --> " + hook)
+                            System.out.println("not in VisitorInfo annotation --> " + hook)
             );
         }
         this.classes = classes + "/" + totalClasses;
