@@ -8,7 +8,9 @@ package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
-// Item actions only occur on tables
+/**
+ * Item actions only occur on widget tables
+ */
 public class TableItemAction extends AbstractTableAction {
 
     public TableItemAction(int opcode, int itemId, int itemIndex, int containerUid) {
@@ -25,7 +27,7 @@ public class TableItemAction extends AbstractTableAction {
                 && op <= ActionOpcodes.ITEM_ACTION_4;
     }
 
-    public int actionIndex() {
+    public int getActionIndex() {
         return opcode - ActionOpcodes.ITEM_ACTION_0;
     }
 
@@ -48,6 +50,6 @@ public class TableItemAction extends AbstractTableAction {
         final int index = getItemIndex();
         final int address = getTableUid();
         return "ItemAction:[TableAddress(" + address + "," + index + ")=<" + parent + "#" + child + "#" + index +
-                "> | ItemId=" + getItemId() + " | ItemIndex=" + getItemIndex() + " | ActionIndex=" + actionIndex() + "]";
+                "> | ItemId=" + getItemId() + " | ItemIndex=" + getItemIndex() + " | ActionIndex=" + getActionIndex() + "]";
     }
 }

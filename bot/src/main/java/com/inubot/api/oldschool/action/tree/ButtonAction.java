@@ -15,7 +15,6 @@ public abstract class ButtonAction extends Action {
         super(opcode, 0, 0, widgetUid);
     }
 
-    // widgetUid is known to be the arg2
     public static ButtonAction valueOf(int opcode, int buttonIndex, int widgetUid) {
         switch (opcode) {
             case ActionOpcodes.BUTTON_INPUT: {

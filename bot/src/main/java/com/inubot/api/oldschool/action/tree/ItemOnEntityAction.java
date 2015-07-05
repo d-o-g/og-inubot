@@ -6,13 +6,14 @@
  */
 package com.inubot.api.oldschool.action.tree;
 
-// Though would be more explicit if it extends its
-// type entity (eg. SpellOnNpc extends NpcAction extends ItemOnEntity),
-// we can not extend multiple classes
-
 import com.inubot.api.oldschool.EntityType;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
+/**
+ * Though would be more explicit if it extends its
+ * type entity (eg. SpellOnNpc extends NpcAction extends ItemOnEntity),
+ * we can not extend multiple classes
+ */
 public class ItemOnEntityAction extends EntityAction {
 
     public ItemOnEntityAction(int opcode, int entityId, int localX, int localY) {

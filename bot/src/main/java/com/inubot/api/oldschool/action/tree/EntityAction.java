@@ -10,7 +10,9 @@ import com.inubot.api.methods.Game;
 import com.inubot.api.oldschool.EntityType;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
-// For all entity types
+/**
+ * For all entity types
+ */
 public abstract class EntityAction extends Action {
 
     protected final EntityType type;
@@ -74,12 +76,16 @@ public abstract class EntityAction extends Action {
         return SIG_ALL;
     }
 
-    // The type of entity this action is targeting
+    /**
+     * @return The type of entity this action is targeting
+     */
     public final EntityType entityType() {
         return type;
     }
 
-    // Not all -general- types have multiple actions, like spellOnEntity, or ItemOnEntity
+    /**
+     * @return Not all -general- types have multiple actions, like spellOnEntity, or ItemOnEntity
+     */
     public int getActionIndex() {
         return -1;
     }
@@ -88,11 +94,16 @@ public abstract class EntityAction extends Action {
         return arg0;
     }
 
-    // The regional position of the entity when this action was created, can not be guaranteed to be real time
+    /**
+     * @return The regional X position of the entity when this action was created, can not be guaranteed to be real time
+     */
     public int getRegionX() {
         return arg1;
     }
 
+    /**
+     * @return The regional Y position of the entity when this action was created, can not be guaranteed to be real time
+     */
     public int getRegionY() {
         return arg2;
     }

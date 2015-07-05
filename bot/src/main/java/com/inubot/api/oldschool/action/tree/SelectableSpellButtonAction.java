@@ -8,7 +8,9 @@ package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
-// Selects a spell
+/**
+ * Selects a spell button
+ */
 public class SelectableSpellButtonAction extends ButtonAction {
 
     public SelectableSpellButtonAction(int widgetUid) {

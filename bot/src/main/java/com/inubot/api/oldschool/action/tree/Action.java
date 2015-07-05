@@ -13,11 +13,6 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 /**
- * @author Brainfree
- * @created 7/9/2014
- */
-
-/**
  * An Action is an implicit modular object in which identifies
  * and/or notifies nearly all interaction that occur within the client.
  * <p>
@@ -41,13 +36,11 @@ import java.util.*;
  * Actions Filter are blind to unused abutments
  * <p>
  * Most actions store information about what the action
- * // interacted with, but not all.
+ * interacted with, but not all. An action has the ability to identify itself
  */
-//
-//
-public abstract class Action implements ActionFilter { // An action has the ability to identify itself
+public abstract class Action implements ActionFilter {
 
-    public static final Map<Integer, String> OP2NAME;
+    public static final Map<Integer, String> OPCODE_NAME_MAPPINGS;
 
     static {
 
@@ -63,7 +56,7 @@ public abstract class Action implements ActionFilter { // An action has the abil
             } catch (IllegalAccessException ignored) {
             }
         }
-        OP2NAME = Collections.unmodifiableMap(map0);
+        OPCODE_NAME_MAPPINGS = Collections.unmodifiableMap(map0);
 
     }
 
@@ -87,7 +80,9 @@ public abstract class Action implements ActionFilter { // An action has the abil
         this(src.opcode, src.arg0, src.arg1, src.arg2);
     }
 
-    //Not all actions require pruning
+    /**
+     * Not all actions require pruning, only those which have an opcode greater than or equal to 2000
+     */
     public static int pruneOpcode(int op) {
         return op >= 2000 ? op - 2000 : op;
     }
@@ -100,7 +95,7 @@ public abstract class Action implements ActionFilter { // An action has the abil
 
     /**
      * Returns the defined name of an opcode. This function looks up
-     * the paired name from the hashmap {@link Action#OP2NAME}.
+     * the paired name from the hashmap {@link Action#OPCODE_NAME_MAPPINGS}.
      * If the returned value is null, then the action is unknown
      * or not defined.
      *
@@ -109,7 +104,7 @@ public abstract class Action implements ActionFilter { // An action has the abil
      * the opcode is unknown or undefined.
      */
     public static String nameOf(int opcode) {
-        return OP2NAME.get(pruneOpcode(opcode));
+        return OPCODE_NAME_MAPPINGS.get(pruneOpcode(opcode));
     }
 
     public static Action valueOf(int opcode, int arg0, int arg1, int arg2) {
@@ -222,13 +217,11 @@ public abstract class Action implements ActionFilter { // An action has the abil
         return "Action<" + nameOf(opcode) + ">(id=" + opcode + ",args=[ " + arg0 + " | " + arg1 + " | " + arg2 + " ])";
     }
 
-    // Determines the used argument spaces.
-    // Helpful in determining the structure of an action.
-    public abstract int getSignificantArgs();
-
     /**
-     * Common No-Arg actions *
+     * Helpful in determining the structure of an action.
+     * @return the used argument spaces.
      */
+    public abstract int getSignificantArgs();
 
     public boolean isCancel() {
         return opcode == ActionOpcodes.CANCEL;

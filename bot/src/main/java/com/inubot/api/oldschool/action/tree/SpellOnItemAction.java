@@ -8,7 +8,9 @@ package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
-// We can extend out respected action type since we are not a entity, and allow for more simplicity
+/**
+ * We can extend out respected action type since we are not a entity, and allow for more simplicity
+ */
 public class SpellOnItemAction extends AbstractTableAction {
 
     public SpellOnItemAction(int itemId, int itemIndex, int tableId) {

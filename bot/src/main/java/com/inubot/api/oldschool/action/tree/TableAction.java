@@ -23,7 +23,7 @@ public class TableAction extends AbstractTableAction {
         return opcode >= ActionOpcodes.TABLE_ACTION_0 && opcode <= ActionOpcodes.TABLE_ACTION_4;
     }
 
-    public int actionIndex() {
+    public int getActionIndex() {
         return opcode - ActionOpcodes.TABLE_ACTION_0;
     }
 }

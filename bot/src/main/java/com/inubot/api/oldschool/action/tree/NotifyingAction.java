@@ -8,8 +8,10 @@ package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
-//Any action that holds no information about what its interaction with,
-// or in other words, it has no useful augments.
+/**
+ * Any action that holds no information about what its interaction with,
+ * or in other words, it has no significant arguments.
+ */
 public abstract class NotifyingAction extends Action {
 
     public NotifyingAction(int opcode) {

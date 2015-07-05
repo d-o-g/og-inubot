@@ -15,7 +15,6 @@ import com.inubot.client.natives.RSNpcDefinition;
 
 public class NpcAction extends CharacterAction {
 
-
     public NpcAction(int opcode, int npcIndex) {
         super(opcode, npcIndex);
     }

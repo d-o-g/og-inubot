@@ -9,8 +9,10 @@ package com.inubot.api.oldschool.action.tree;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.Widget;
 
-// Named abstract since TableAction can not be named
-// The rest follow for simplicity through commonality
+/**
+ * Named abstract since TableAction can not be named
+ * The rest follow for simplicity through commonality
+ */
 public abstract class AbstractTableAction extends Action {
 
     public AbstractTableAction(int opcode, int item_id, int item_index, int table_uid) {
@@ -42,11 +44,11 @@ public abstract class AbstractTableAction extends Action {
         return getTableUid() & 0xffff;
     }
 
-    public int actionIndex() {
+    public int getActionIndex() {
         return -1;
     }
 
-    public Widget table() {
+    public Widget getTable() {
         final int parent = getParent();
         final int child = getChild();
         return Interfaces.getWidget(parent, child);
