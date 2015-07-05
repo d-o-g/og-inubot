@@ -44,7 +44,6 @@ public class Web extends Digraph<WebVertex, WebVertex> {
                         }
                     }
                 }
-                vertex.calculateDistances();
                 if (vertex.getEdges().size() != vertex.getEdgeIndexes().length) {
                     System.out.println("Something is fucked up with edges of vertex " + vertex.getIndex());
                 }
