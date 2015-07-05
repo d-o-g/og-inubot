@@ -7,8 +7,8 @@
 package com.inubot.live;
 
 import com.inubot.Updater;
-import com.inubot.live.analysis.Client;
-import com.inubot.live.analysis.Widget;
+import com.inubot.live.analysis.*;
+import com.inubot.util.Configuration;
 import com.inubot.util.io.Crawler;
 import com.inubot.visitor.GraphVisitor;
 import org.objectweb.asm.commons.cfg.Block;
@@ -26,6 +26,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.jar.JarFile;
 
 public class RS3Updater extends Updater {
+
+    private static final boolean server =  new File("/usr/share/nginx/html/data/").exists();
 
     @Override
     public String getType() {
@@ -74,7 +76,7 @@ public class RS3Updater extends Updater {
 
     @Override
     public String getModscriptLocation() {
-        return "live.dat";
+        return server ? "/usr/share/nginx/html/data/oldschool.dat" : Configuration.CACHE + "/live.dat";
     }
 
     @Override
@@ -87,7 +89,8 @@ public class RS3Updater extends Updater {
     }
 
     private static GraphVisitor[] createVisitors() {
-        return new GraphVisitor[]{new Widget(), new Client()};
+        return new GraphVisitor[]{new Widget(), new SceneGraphTile(), new SceneGraph(), new Scene(),
+                new SceneOffset(), new SceneSettings(), new SceneGraphLevel(), new Client()};
     }
 
     public RS3Updater(File file) throws Exception {

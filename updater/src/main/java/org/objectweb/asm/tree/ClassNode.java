@@ -29,7 +29,16 @@
  */
 package org.objectweb.asm.tree;
 
+import jdk.internal.org.objectweb.asm.*;
 import org.objectweb.asm.*;
+import org.objectweb.asm.AnnotationVisitor;
+import org.objectweb.asm.Attribute;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.FieldVisitor;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
+import org.objectweb.asm.TypePath;
 
 import java.util.*;
 
@@ -437,6 +446,11 @@ public class ClassNode extends ClassVisitor {
 
     public int methodCount(String desc) {
         return methodCount(desc, true);
+    }
+
+
+    public int fieldCount(Class<?> klass) {
+        return fieldCount(Type.getDescriptor(klass));
     }
 
     public int fieldCount(String desc, boolean ignoreStatic) {
