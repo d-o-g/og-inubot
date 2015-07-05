@@ -93,8 +93,6 @@ public class WebPath implements Path {
                     String[] actions = object.getActions();
                     if (actions != null && actions.length > 0) {
                         object.processAction(actions[0]);
-                    } else {
-                        throw new IllegalStateException("Failed to find action for ObjectVertex!");
                     }
                 }
 
