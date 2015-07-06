@@ -533,25 +533,34 @@ public class Client extends GraphVisitor {
                 return;
             VariableNode yLoad = (VariableNode) block.tree().layer(INVOKEVIRTUAL, IADD, ILOAD);
             if (yLoad != null) {
-                block.tree().accept(new NodeVisitor(this) {
-                    public void visitVariable(VariableNode vn) {
-                        if (vn.opcode() == ISTORE) {
-                            FieldMemberNode fmn = vn.firstField();
-                            if (fmn == null)
-                                return;
-                            String name;
-                            if (vn.var() == yLoad.var()) {
-                                name = "hoveredRegionTileY";
-                            } else {
-                                name = "hoveredRegionTileX";
+                if (block.count(ISTORE) >= 2) {
+                    block.tree().accept(new NodeVisitor(this) {
+                        @Override
+                        public void visitField(FieldMemberNode fmn) {
+                            if (fmn.hasParent() && fmn.parent().opcode() == ISTORE) {
+                                String name = hooks.containsKey("hoveredRegionTileX") ? "hoveredRegionTileY" : "hoveredRegionTileX";
+                                addHook(new FieldHook(name, fmn.fin()));
+                                added++;
                             }
-                            if (hooks.containsKey(name))
-                                return;
-                            addHook(new FieldHook(name, fmn.fin()));
-                            added++;
                         }
-                    }
-                });
+                    });
+                } else {
+                    block.tree().accept(new NodeVisitor(this) {
+                        public void visitVariable(VariableNode vn) {
+                            if (vn.opcode() == ISTORE) {
+                                FieldMemberNode fmn = vn.firstField();
+                                if (fmn == null)
+                                    return;
+                                String name;
+                                name = vn.var() == yLoad.var() ? "hoveredRegionTileY" : "hoveredRegionTileX";
+                                if (hooks.containsKey(name))
+                                    return;
+                                addHook(new FieldHook(name, fmn.fin()));
+                                added++;
+                            }
+                        }
+                    });
+                }
             }
         }
     }

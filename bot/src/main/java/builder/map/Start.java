@@ -14,12 +14,5 @@ public class Start {
     //index x y z edgecount edges[] name action object
     public static void main(String... args) {
         Map map = new Map();
-        JFrame frame = new JFrame("memekit");
-        frame.setLayout(new FlowLayout());
-        JButton addReg = new JButton("Add regular");
-        addReg.addActionListener(e -> System.out.println(index++ + " " + map.mtx + " " + map.mty + " 0 0 regular"));
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.pack();
     }
 }

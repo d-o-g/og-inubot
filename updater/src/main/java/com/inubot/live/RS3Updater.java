@@ -89,8 +89,9 @@ public class RS3Updater extends Updater {
     }
 
     private static GraphVisitor[] createVisitors() {
-        return new GraphVisitor[]{new Widget(), new SceneGraphTile(), new SceneGraph(), new Scene(),
-                new SceneOffset(), new SceneSettings(), new SceneGraphLevel(), new Client()};
+        return new GraphVisitor[]{new CoordinateSpace(), new Vector3f(), new Widget(),
+                new SceneGraphTile(), new SceneGraph(), new Scene(), new SceneOffset(),
+                new SceneSettings(), new SceneGraphLevel(), new Client()};
     }
 
     public RS3Updater(File file) throws Exception {

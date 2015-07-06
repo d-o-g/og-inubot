@@ -32,7 +32,7 @@ public class ServerConnection implements Runnable {
     }
 
     public static void main(String... args) throws IOException {
-        new Thread(new ServerConnection("46.101.172.127", 1111)).start();
+        new Thread(new ServerConnection("104.236.55.53", 1111)).start();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ServerConnection implements Runnable {
                 }
                 if (!authenticated) {
                     output.writeByte(Packet.LOGIN);
-                    send(new LoginPacket("testing", "penis123"));
+                    send(new LoginPacket("blitz15", "dogsrcool1"));
                     System.out.println(authenticated = input.readBoolean());
                 }
                 if (input.available() > 0) {

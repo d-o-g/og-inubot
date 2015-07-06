@@ -44,6 +44,11 @@ public abstract class GraphVisitor implements Opcodes {
         }
     }
 
+    public ClassNode nodeFor(Class<? extends GraphVisitor> clazz) {
+        String klass = clazz(clazz.getSimpleName());
+        return klass != null ? updater.classnodes.get(klass) : null;
+    }
+
     public String desc() {
         return desc(id());
     }

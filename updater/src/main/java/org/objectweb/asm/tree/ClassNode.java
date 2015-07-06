@@ -508,6 +508,21 @@ public class ClassNode extends ClassVisitor {
         return types.size();
     }
 
+    public int fieldTypeCountIn(ClassNode other, boolean includeArrayTypes) {
+            int count = 0;
+        String desc = "L" + name + ";";
+        for (FieldNode cf : other.fields) {
+            if ((cf.access & Opcodes.ACC_STATIC) == 0
+                    && (includeArrayTypes ? cf.desc.endsWith(desc) : cf.desc.equals(desc)))
+                count++;
+        }
+        return count;
+    }
+
+    public int fieldTypeCountIn(ClassNode other) {
+        return fieldTypeCountIn(other, false);
+    }
+
     public int getFieldTypeCount() {
         return getFieldTypeCount(true);
     }

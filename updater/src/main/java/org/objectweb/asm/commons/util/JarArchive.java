@@ -73,6 +73,7 @@ public class JarArchive {
                         resources.put(name, inputToBytes(jar.getInputStream(entry)));
                 }
             }
+            jar.close();
         } catch (IOException e) {
             throw new RuntimeException("Error building classes (" + file.getName() + "): ", e.getCause());
         }
