@@ -28,7 +28,8 @@ public class RedChinsPRO extends Script implements Paintable {
     private static final int PRICE_EST = 1300;
     private static final String[] MEMES = {"Fuck off", "I hope you die", "Get back to your cotton factory nigger",
             "No room for a nigger like you in this world", "Eat a condom and die", "I fucked your mother",
-            "Go away", "Stop plz", "O M G", "Omg stop", "Lol stop", "Wow really just hop", "Lol"};
+            "Go away", "Stop plz", "O M G", "Omg stop", "Lol stop", "Wow really just hop", "Lol",
+    "cock lusting fuck boy"};
 
     private Tile tile;
     private int startExp;

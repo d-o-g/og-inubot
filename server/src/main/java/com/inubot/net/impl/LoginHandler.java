@@ -39,11 +39,12 @@ public class LoginHandler implements Handler {
 
             ResultSet resultSet = connection.query("SELECT * FROM core_members WHERE name='" + username + "'");
             while (resultSet.next()) {
-                String salt = resultSet.getString(resultSet.findColumn("members_pass_salt"));
                 String hash = resultSet.getString(resultSet.findColumn("members_pass_hash"));
                 if (BCrypt.checkpw(password, hash)) {//TODO...
                     correct = true;
-                    connection.logger.info("Logged in as " + username);
+                    connection.logger.info("Logged in as " + username + " Hash: " + hash);
+                } else {
+                    connection.logger.error("Fail: " + username + " Hash: " + hash);
                 }
             }
             DataOutputStream output = new DataOutputStream(connection.socket.getOutputStream());
