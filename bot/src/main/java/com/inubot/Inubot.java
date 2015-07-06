@@ -190,7 +190,6 @@ public class Inubot extends JFrame implements Runnable {
         container.setBackground(Color.BLACK);
         this.client = (RSClient) crawler.start(classloader);
         container.add(client.asApplet(), BorderLayout.CENTER);
-        container.add(logPane.getScrollPane(), BorderLayout.SOUTH);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);

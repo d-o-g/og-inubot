@@ -19,7 +19,7 @@ public class LogPane extends JTextPane {
 
     private static final DateFormat FORMAT = new SimpleDateFormat("HH:mm");
     private final JScrollPane scrollPane;
-    private boolean toggled = true;
+    private boolean toggled;
 
     public LogPane() {
         System.setOut(new PrintStream(new PipedOutputStream()) {
