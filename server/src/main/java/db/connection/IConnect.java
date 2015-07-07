@@ -1,4 +1,4 @@
-package com.inubot.db.connection;
+package db.connection;
 
 /**
  * @author Septron

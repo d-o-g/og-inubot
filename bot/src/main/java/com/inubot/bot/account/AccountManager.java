@@ -1,4 +1,4 @@
-package com.inubot.bot;
+package com.inubot.bot.account;
 
 /**
  * Created by luckruns0ut on 30/04/15.

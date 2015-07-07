@@ -7,10 +7,13 @@
 package com.inubot.net.impl;
 
 import com.inubot.Application;
+import com.inubot.model.Account;
 import com.inubot.net.ServerConnection;
 import com.inubot.net.Handler;
+import org.hibernate.Session;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.applet.Applet;
 import java.io.*;
 import java.sql.ResultSet;
 
@@ -32,23 +35,34 @@ public class LoginHandler implements Handler {
             String username = input.readUTF();
             String password = input.readUTF();
 
-            connection.attributes.put("username", username);
-            connection.attributes.put("password", password);
+            Session session = Application.getFactory().openSession();
+            Account account = session.get(Account.class, username);
 
-            boolean correct = false;
-
-            ResultSet resultSet = connection.query("SELECT * FROM core_members WHERE name='" + username + "'");
-            while (resultSet.next()) {
-                String hash = resultSet.getString(resultSet.findColumn("members_pass_hash"));
-                if (BCrypt.checkpw(password, hash)) {//TODO...
-                    correct = true;
-                    connection.logger.info("Logged in as " + username + " Hash: " + hash);
-                } else {
-                    connection.logger.error("Fail: " + username + " Hash: " + hash);
-                }
+            if (BCrypt.checkpw(password, account.getPassword())) {
+                connection.logger.info("Winning");
+            } else {
+                connection.logger.error("Fail");
             }
-            DataOutputStream output = new DataOutputStream(connection.socket.getOutputStream());
-            output.writeBoolean(correct);
+
+
+//
+//            connection.attributes.put("username", username);
+//            connection.attributes.put("password", password);
+//
+//            boolean correct = false;
+//
+//            ResultSet resultSet = connection.query("SELECT * FROM core_members WHERE name='" + username + "'");
+//            while (resultSet.next()) {
+//                String hash = resultSet.getString(resultSet.findColumn("members_pass_hash"));
+//                if (BCrypt.checkpw(password, hash)) {//TODO...
+//                    correct = true;
+//                    connection.logger.info("Logged in as " + username + " Hash: " + hash);
+//                } else {
+//                    connection.logger.error("Fail: " + username + " Hash: " + hash);
+//                }
+//            }
+//            DataOutputStream output = new DataOutputStream(connection.socket.getOutputStream());
+//            output.writeBoolean(correct);
         } catch (IOException e) {
             e.printStackTrace();
         }

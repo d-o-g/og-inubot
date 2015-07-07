@@ -1,11 +1,11 @@
-package com.inubot.db.example;
+package db.example;
 
-import com.inubot.db.Column;
-import com.inubot.db.Table;
-import com.inubot.db.connection.impl.SQLConnection;
-import com.inubot.db.entity.IEntity;
-import com.inubot.db.entity.IEntityFactory;
-import com.inubot.db.entity.impl.SQLFactory;
+import db.Column;
+import db.Table;
+import db.connection.impl.SQLConnection;
+import db.entity.IEntity;
+import db.entity.IEntityFactory;
+import db.entity.impl.SQLFactory;
 
 public class Example {
 

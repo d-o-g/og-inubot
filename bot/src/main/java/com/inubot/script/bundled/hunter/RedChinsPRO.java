@@ -141,14 +141,14 @@ public class RedChinsPRO extends Script implements Paintable {
                 };
             case 4:
                 return new Tile[]{
-                        new Tile(2503, 2882), new Tile(2504, 2883),
-                        new Tile(2505, 2884), new Tile(2506, 2885)
+                        new Tile(2502, 2881), new Tile(2503, 2882),
+                        new Tile(2504, 2881), new Tile(2504, 2883),
                 };
             case 5:
                 return new Tile[]{
-                        new Tile(2503, 2882), new Tile(2504, 2883),
-                        new Tile(2505, 2884), new Tile(2506, 2885),
-                        new Tile(2505, 2882)
+                        new Tile(2502, 2881), new Tile(2503, 2882),
+                        new Tile(2504, 2881), new Tile(2504, 2883),
+                        new Tile(2505, 2884)
                 };
             default: {
                 return new Tile[0];

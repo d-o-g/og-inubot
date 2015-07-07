@@ -1,10 +1,10 @@
-package com.inubot.db.entity.impl;
+package db.entity.impl;
 
-import com.inubot.db.Column;
-import com.inubot.db.Table;
-import com.inubot.db.connection.impl.SQLConnection;
-import com.inubot.db.entity.IEntityFactory;
-import com.inubot.db.connection.IConnect;
+import db.Column;
+import db.Table;
+import db.connection.impl.SQLConnection;
+import db.entity.IEntityFactory;
+import db.connection.IConnect;
 
 import java.lang.reflect.Field;
 import java.sql.SQLException;

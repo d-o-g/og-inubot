@@ -155,7 +155,7 @@ public class PestControl extends Script implements Paintable {
             }
         } else if (Skills.getLevel(Skill.STRENGTH) - Skills.getLevel(Skill.DEFENCE) >= 1) {
             if (Combat.getStyle() == 1) {
-                Combat.setStyle(3); //2 if 4 style weapon
+                Combat.setStyle(2); //2 if 4 style weapon
             }
         } else if (Skills.getLevel(Skill.DEFENCE) - Skills.getLevel(Skill.ATTACK) >= 1) {
             if (Combat.getStyle() == 3) { //2 if 4 style weapon

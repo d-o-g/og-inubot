@@ -3,6 +3,9 @@ package com.inubot;
 import com.inubot.net.*;
 import com.inubot.net.impl.LoginHandler;
 import com.inubot.net.impl.ScriptRequestHandler;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +25,17 @@ public class Application {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
+    private static SessionFactory factory;
+
     public static void main(String... args) {
         logger.info("Starting server...");
+
+        try{
+            factory = new Configuration().configure().buildSessionFactory();
+        }catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
 
         Server server = new Server(1111);
 
@@ -31,5 +43,9 @@ public class Application {
         Manager.add(new ScriptRequestHandler());
 
         new Thread(server).start();
+    }
+
+    public static SessionFactory getFactory() {
+        return factory;
     }
 }

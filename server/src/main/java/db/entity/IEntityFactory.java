@@ -1,6 +1,6 @@
-package com.inubot.db.entity;
+package db.entity;
 
-import com.inubot.db.connection.IConnect;
+import db.connection.IConnect;
 
 /**
  * Created by Septron.

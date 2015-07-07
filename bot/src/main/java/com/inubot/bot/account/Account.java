@@ -1,4 +1,4 @@
-package com.inubot.bot;
+package com.inubot.bot.account;
 
 import com.inubot.Inubot;
 

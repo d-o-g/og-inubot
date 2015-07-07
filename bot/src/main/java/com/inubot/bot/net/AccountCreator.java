@@ -1,4 +1,4 @@
-package com.inubot.bot.net.acc;
+package com.inubot.bot.net;
 
 import com.inubot.Inubot;
 
@@ -13,7 +13,7 @@ import java.net.URLConnection;
  * @author Septron
  * @since June 22, 2015
  */
-public class Creator {
+public class AccountCreator {
 
     private static final String PAGE = "https://secure.runescape.com/m=account-creation/g=oldscape/";
 

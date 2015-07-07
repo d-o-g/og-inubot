@@ -19,7 +19,7 @@ import java.awt.*;
 public class BotMenuBar extends JMenuBar {
 
     private final JMenuItem widget = new JMenuItem("Widget Explorer");
-    private final JMenuItem acc = new JMenuItem("Account Creator");
+    private final JMenuItem acc = new JMenuItem("Account AccountCreator");
 
     private final JButton pause = new JButton("Pause");
     private final JButton start = new JButton("Start");

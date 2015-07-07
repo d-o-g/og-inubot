@@ -12,7 +12,7 @@ import com.inubot.api.oldschool.Tile;
 import com.inubot.api.oldschool.VarpBit;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
-import com.inubot.bot.net.acc.CreaterGUI;
+import com.inubot.bot.ui.CreaterGUI;
 import com.inubot.bot.ui.WidgetExplorer;
 
 import java.awt.event.KeyEvent;

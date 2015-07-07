@@ -11,7 +11,7 @@ import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
-import com.inubot.bot.AccountManager;
+import com.inubot.bot.account.AccountManager;
 
 import java.util.ArrayList;
 import java.util.List;

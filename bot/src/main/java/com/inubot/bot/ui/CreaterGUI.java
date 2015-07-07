@@ -1,8 +1,8 @@
-package com.inubot.bot.net.acc;
+package com.inubot.bot.ui;
 
-import com.inubot.Inubot;
-import com.inubot.bot.Account;
-import com.inubot.bot.AccountManager;
+import com.inubot.bot.account.Account;
+import com.inubot.bot.account.AccountManager;
+import com.inubot.bot.net.AccountCreator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,7 @@ public class CreaterGUI extends JFrame {
     private JLabel b = new JLabel("Password:");
 
     public CreaterGUI() {
-        setTitle("Account Creator");
+        setTitle("Account AccountCreator");
         init();
         pack();
     }
@@ -54,7 +54,7 @@ public class CreaterGUI extends JFrame {
             String pass = String.valueOf(password.getPassword());
             String email = name.replace(" ", ".").toLowerCase() + "@live.com";
 
-            if (Creator.create(email, name, pass)) {
+            if (AccountCreator.create(email, name, pass)) {
                 AccountManager.setCurrentAccount(new Account(email, pass));
                 System.out.println("Set account - " + email + ":" + pass);
             }

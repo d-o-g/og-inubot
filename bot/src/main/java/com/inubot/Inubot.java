@@ -4,8 +4,8 @@ import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Game;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Time;
-import com.inubot.bot.Account;
-import com.inubot.bot.AccountManager;
+import com.inubot.bot.account.Account;
+import com.inubot.bot.account.AccountManager;
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.transform.*;
@@ -19,10 +19,12 @@ import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.RSClient;
 import com.inubot.script.Script;
 import com.inubot.script.ScriptFlux;
+import com.inubot.script.bundled.agility.PerfectAgility;
 import com.inubot.script.bundled.fisher.AutoFisherPRO;
 import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.money.Potato;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
+import com.inubot.script.others.PestControl;
 import com.inubot.script.others.septron.Aircrafter;
 import com.inubot.script.others.septron.Combot;
 
@@ -53,7 +55,9 @@ public class Inubot extends JFrame implements Runnable {
             FalconryPRO.class,
             BirdSnarePRO.class,
             FalconryPRO.class,
-            Aircrafter.class
+            Aircrafter.class,
+            PerfectAgility.class,
+            PestControl.class
     };
     private static final String IRC_CHANNEL = "#bonecode-bot";
     private static Inubot instance;
@@ -171,12 +175,27 @@ public class Inubot extends JFrame implements Runnable {
             randomDat.setReadOnly();
 
         Injector injector = new Injector(new JarNode(new File(crawler.pack)));
-        Collections.addAll(injector.getTransforms(), new EngineTickCallback(),
-                new ProcessActionCallback(), new ProcessActionInvoker(), new InterfaceImpl(),
-                new ModelHack(), new CanvasHack(), /*new WidgetHack(),*/ new GetterAdder(),
-                new InvokerTransform(), new IdleTimeSetter(), new HoveredRegionTileSetter(),
-                new GroundItemPosition(), new MessageCallback(), new UserDetailsSetter(),
-                new VarpBitHack(), new LandscapeHack(), new LowMemorySetter(), new CatchBlockSweeper());
+        Collections.addAll(injector.getTransforms(),
+                new EngineTickCallback(),
+                new ProcessActionCallback(),
+                new ProcessActionInvoker(),
+                new InterfaceImpl(),
+                new ModelHack(),
+                new CanvasHack(),
+                /*new WidgetHack(),*/
+                new GetterAdder(),
+                new InvokerTransform(),
+                new IdleTimeSetter(),
+                new HoveredRegionTileSetter(),
+                new GroundItemPosition(),
+                new MessageCallback(),
+                new UserDetailsSetter(),
+                new VarpBitHack(),
+                new LandscapeHack(),
+                new LowMemorySetter(),
+                new CatchBlockSweeper()
+        );
+
         Map<String, byte[]> classes = injector.inject(false);
 
         RSClassLoader classloader = new RSClassLoader(classes);

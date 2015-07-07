@@ -1,6 +1,6 @@
-package com.inubot.db.connection.impl;
+package db.connection.impl;
 
-import com.inubot.db.connection.IConnect;
+import db.connection.IConnect;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package com.inubot.db;
+package db;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
