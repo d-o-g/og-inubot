@@ -50,10 +50,15 @@ public class InterfaceOptions {
     public static ViewMode getViewMode() {
         if (!Game.isLoggedIn())
             return ViewMode.UNDETERMINED;
-        int screenState = Game.getClient().getScreenState();
-        for (ViewMode viewMode : ViewMode.values()) {
-            if (viewMode.getState() == screenState)
-                return viewMode;
+        int screenState = 0;
+        try {
+            screenState = Game.getClient().getScreenState();
+            for (ViewMode viewMode : ViewMode.values()) {
+                if (viewMode.getState() == screenState)
+                    return viewMode;
+            }
+        } catch (AbstractMethodError e) {
+            return ViewMode.FIXED_MODE;
         }
         throw new IllegalStateException("Unknown state..? " + screenState);
     }
