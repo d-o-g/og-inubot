@@ -33,7 +33,7 @@ public class Aircrafter extends Script implements Paintable {
                         return false;
                     if (go.getName() == null)
                         return false;
-                    return go.getName().contains("Alter");
+                    return go.getName().contains("Altar");
                 });
                 if (alter != null)
                     alter.processAction("Craft-rune");
@@ -76,7 +76,7 @@ public class Aircrafter extends Script implements Paintable {
     public void render(Graphics2D g) {
         g.setColor(new Color(255, 0, 0, 60));
         g.drawRoundRect(0, 0, 100, 20, 5, 5);
-        g.setColor(new Color(0, 0, 0, 20));
+        g.setColor(new Color(0, 0, 0, 120));
         g.fillRoundRect(0, 0, 99, 19, 5, 5);
     }
 }
