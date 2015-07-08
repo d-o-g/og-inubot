@@ -7,6 +7,9 @@
         </encoder>
     </appender>
 
+    <logger name="org.hibernate" level="error" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
     <logger name="com.inubot" level="debug" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>

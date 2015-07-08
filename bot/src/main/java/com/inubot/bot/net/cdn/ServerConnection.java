@@ -24,15 +24,22 @@ public class ServerConnection implements Runnable {
     private final int port;
 
     public ServerConnection(String host, int port) throws IOException {
-        this.connection = new Socket();
-        this.connection.connect(new InetSocketAddress(this.host = host, this.port = port));
+        this.connection = new Socket(this.host = host, this.port = port);
+        //this.connection.connect(new InetSocketAddress(this.host = host, this.port = port));
         this.input = new DataInputStream(connection.getInputStream());
         this.output = new DataOutputStream(connection.getOutputStream());
         new Thread(this).start();
+
+        if (!authenticated) {
+            output.writeByte(Packet.LOGIN);
+            send(new LoginPacket("testing", "penis123"));
+            System.out.println(authenticated = input.readBoolean());
+        }
     }
 
     public static void main(String... args) throws IOException {
-        new Thread(new ServerConnection("104.236.55.53", 1111)).start();
+        new Thread(new ServerConnection("127.0.0.1", 1111)).start();
+
     }
 
     @Override
@@ -42,11 +49,6 @@ public class ServerConnection implements Runnable {
                 if (!connection.isConnected()) {
                     connection.connect(new InetSocketAddress(host, port));
                     continue;
-                }
-                if (!authenticated) {
-                    output.writeByte(Packet.LOGIN);
-                    send(new LoginPacket("blitz15", "dogsrcool1"));
-                    System.out.println(authenticated = input.readBoolean());
                 }
                 if (input.available() > 0) {
                     short opcode = input.readShort();

@@ -25,7 +25,11 @@ public class LoginPacket implements Packet {
 
     @Override
     public void encode(DataOutputStream out) throws IOException {
-        out.writeUTF(username);
-        out.writeUTF(password);
+        out.writeInt(username.length());
+        for (int i = 0; i < username.length(); i++)
+            out.writeChar(username.charAt(i));
+        out.writeInt(password.length());
+        for (int i = 0; i < password.length(); i++)
+            out.writeChar(password.charAt(i));
     }
 }
