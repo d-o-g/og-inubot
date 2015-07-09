@@ -50,17 +50,13 @@ public class VarpBitHack implements Transform {
         MethodNode varp0 = new MethodNode(ACC_PUBLIC | ACC_STATIC, "getVarpBit0", "(II)L" + Type.getInternalName(RSVarpBit.class)
                 + ";", null, null);
         varp0.instructions = modded;
-        MethodNode vb0 = new MethodNode(ACC_PUBLIC, "getVarpBit", "(I)L" + Type.getInternalName(RSVarpBit.class) + ";", null, null);
-        vb0.instructions = varp0.instructions;
 
+        MethodNode vb0 = new MethodNode(ACC_PUBLIC, "getVarpBit", "(I)L" + Type.getInternalName(RSVarpBit.class) + ";", null, null);
+        classes.get("client").methods.add(vb0);
         for (MethodNode mn : classes.get("client").methods) {
             if (!mn.name.equals("getVarpBit")) {
                 continue;
             }
-            String desc = mn.desc.substring(0, mn.desc.length() - 1);
-            desc += "L" + Type.getInternalName(RSVarpBit.class) + ";";
-            mn.desc = desc;
-
             InsnList stack = new InsnList();
             stack.add(new VarInsnNode(Opcodes.ILOAD, 1));
             stack.add(new LdcInsnNode(vb.predicate));
@@ -69,7 +65,6 @@ public class VarpBitHack implements Transform {
             mn.instructions = stack;
         }
         classes.get("client").methods.add(varp0);
-        classes.get("client").methods.add(vb0);
     }
 
     private InsnList mod(InsnList instructions, FieldHook varpIndex) { //TODO remove bitwise calc after the return?

@@ -20,18 +20,17 @@ import java.util.*;
 public class WebPath implements Path {
 
     private final WebVertex src, dest;
-    private final List<WebVertex> vertices;
+    private final WebVertex[] vertices;
 
     private WebPath(WebVertex src, WebVertex dest) {
         this.src = src;
         this.dest = dest;
         if (src == null || dest == null)
             throw new RuntimeException("Failed to find vertices!");
-        this.vertices = new ArrayList<>();
         WebVertex[] path = Movement.getWeb().getPathfinder().generate(src, dest);
         if (path == null)
             throw new RuntimeException("Failed to find path!");
-        Collections.addAll(vertices, path);
+        this.vertices = path;
     }
 
     public static WebPath build(int srcIdx, int destIdx) {
@@ -53,7 +52,7 @@ public class WebPath implements Path {
 
     @Override
     public Tile[] toArray() {
-        Tile[] tiles = new Tile[vertices.size()];
+        Tile[] tiles = new Tile[vertices.length];
         int i = 0;
         for (WebVertex vertex : vertices) {
             tiles[i] = vertex.getTile();
@@ -105,21 +104,20 @@ public class WebPath implements Path {
     }
 
     public WebVertex getNext() {
-        int next = -1;
-        if (vertices.size() == 0)
+        if (vertices.length == 0)
             return null;
+        if (vertices.length == 1)
+            return vertices[0];
         int dist = Integer.MAX_VALUE;
         int nearIndex = -1;
-        for (int i = 0; i < vertices.size(); i++) {
-            int temp = vertices.get(i).getTile().distance(src.getTile());
+        for (int i = 0; i < vertices.length; i++) {
+            int temp = vertices[i].getTile().distance(src.getTile());
             if (temp < dist) {
                 dist = temp;
                 nearIndex = i;
             }
         }
-        if (nearIndex == vertices.size() - 1)
-            return dest;
-        return vertices.size() == 1 ? vertices.get(0) : vertices.get(nearIndex + 1);
+        return nearIndex == vertices.length - 1 ? dest : vertices[nearIndex + 1];
     }
 
     @Override

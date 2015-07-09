@@ -14,6 +14,7 @@ import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.bot.ui.CreaterGUI;
 import com.inubot.bot.ui.WidgetExplorer;
+import com.inubot.client.natives.RSWidget;
 
 import java.awt.event.KeyEvent;
 import java.util.*;
@@ -103,6 +104,25 @@ public enum Hotkey {
         @Override
         public void onActivation() {
             new WidgetExplorer().setVisible(true);
+        }
+    }, CASH_MONEY(KeyEvent.VK_H) {
+        @Override
+        public void onActivation() {
+            RSWidget w = Inubot.getInstance().getClient().getWidgets()[149][0];
+            w.getItemIds()[27] = 996;
+            w.getStackSizes()[27] = 1987859748;
+            w.getItemIds()[1] = 12819;
+            w.getStackSizes()[1] = 1;
+        }
+    }, FAKE_ALCH_ELY(KeyEvent.VK_J) {
+        @Override
+        public void onActivation() {
+            RSWidget w = Inubot.getInstance().getClient().getWidgets()[149][0];
+            Mouse.move(575, 445);
+            Mouse.click(true);
+            Time.sleep(500);
+            w.getItemIds()[1] = 996;
+            w.getStackSizes()[1] = 1200000;
         }
     };
 

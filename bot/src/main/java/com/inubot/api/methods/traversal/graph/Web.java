@@ -58,12 +58,16 @@ public class Web extends Digraph<WebVertex, WebVertex> {
             case 135:
                 return new String[]{"Gate", "Pay-toll(10gp)"};
             case 310:
+            case 805:
+            case 806:
                 return new String[]{"Door", "Open"};
             case 312:
                 return new String[]{"Staircase", "Climb-down"};
             case 314:
                 return new String[]{"Staircase", "Climb-up"};
             case 347:
+            case 767:
+            case 768:
                 return new String[]{"Gate", "Open"};
             case 593:
             case 595:
@@ -74,20 +78,22 @@ public class Web extends Digraph<WebVertex, WebVertex> {
             case 41:
             case 764:
                 return new String[]{"Crumbling wall", "Climb-over"};
-            case 767:
-            case 768:
-                return new String[]{"Gate", "Open"};
             case 338:
+            case 814:
                 return new String[]{"Trapdoor", "Climb-down"};
-            case 336:
-                return new String[]{"Ladder", "Climb-up"};
             case 770:
+            case 807:
                 return new String[]{"Ladder", "Climb-down"};
+            case 336:
             case 803:
+            case 808:
+            case 813:
                 return new String[]{"Ladder", "Climb-up"};
             case 629:
             case 700:
             case 714:
+            case 809:
+            case 812:
                 return new String[]{"Gate", "Open"};
             default: {
                 System.out.println("UNKNOWN OBJECT FOR VERTEX " + vertex);

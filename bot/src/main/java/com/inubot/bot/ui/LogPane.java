@@ -22,10 +22,13 @@ public class LogPane extends JTextPane {
     private boolean toggled;
 
     public LogPane() {
+        PrintStream k = System.out;
         System.setOut(new PrintStream(new PipedOutputStream()) {
             @Override
             public void println(String msg) {
-                LogPane.this.write(msg);
+                if (toggled)
+                    LogPane.this.write(msg);
+                k.println(msg);
             }
         });
         StyledDocument document = new DefaultStyledDocument();
