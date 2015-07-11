@@ -1,6 +1,7 @@
 package builder.map.cache;
 
 import java.io.DataInputStream;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -12,9 +13,7 @@ public class DataArchive {
 
     static {
         try {
-            HttpURLConnection conn;
-            conn = (HttpURLConnection) new URL("http://inubot.com/keyData.dat").openConnection();
-            DataInputStream inputstream = new DataInputStream(conn.getInputStream());
+            InputStream inputstream = (new DataArchive()).getClass().getResourceAsStream("keyData.dat");
             int num_bytes = inputstream.read() << 16 | inputstream.read() << 8 | inputstream.read();
             data = new byte[num_bytes];
             int index = 0;

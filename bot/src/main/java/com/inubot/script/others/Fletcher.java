@@ -29,7 +29,7 @@ public class Fletcher extends Script implements Paintable {
 
     @Override
     public boolean setup() {
-        super.getTickTasks().add(Interfaces::clickContinue);
+        super.getTickTasks().add(Interfaces::processContinue);
         exp = Skills.getExperience(Skill.FLETCHING);
         return true;
     }

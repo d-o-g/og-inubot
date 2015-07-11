@@ -1665,7 +1665,7 @@ public class Map extends MapScheduler {
                 string = (new StringBuilder()).append(string).append(Class3.anIntArray5[i]).toString();
 
             HttpURLConnection conn;
-            conn = (HttpURLConnection) new URL("http://inubot.com/worldmap.dat").openConnection();
+            conn = (HttpURLConnection) new URL("https://dl.dropboxusercontent.com/s/ivn6ayadzhz3yrk/worldmap.dat?dl=1&token_hash=AAEq2XqZgu-iuN2j6RoVXY4FrMU2a1_EfEP21KRTt6riDQ").openConnection();
             DataInputStream datainputstream = new DataInputStream(conn.getInputStream());
 
             int num_bytes = conn.getContentLength();

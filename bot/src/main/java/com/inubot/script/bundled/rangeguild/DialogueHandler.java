@@ -1,9 +1,12 @@
 package com.inubot.script.bundled.rangeguild;
 
+import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
+
+import java.awt.event.KeyEvent;
 
 /**
  * Created by Cameron on 2015-04-24.
@@ -21,7 +24,8 @@ public class DialogueHandler implements Action {
             if (widget.getText() == null)
                 continue;
             if (widget.getText().contains("Click here to continue")) {
-                Client.processAction(DialogButtonAction.clickHereToContinue(widget.getId()), "Continue", "");
+                Inubot.getInstance().getCanvas().pressKey(KeyEvent.VK_SPACE, 200);
+                Inubot.getInstance().getCanvas().releaseKey(KeyEvent.VK_SPACE);
             } else {
                 Client.processAction(new DialogButtonAction(widget.getId(), 1), "Continue", "");
             }

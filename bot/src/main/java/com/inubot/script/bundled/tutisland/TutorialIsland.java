@@ -40,7 +40,7 @@ public class TutorialIsland extends Script implements Paintable {
     public int loop() {
         if(Game.isLoggedIn()) {
             if (Interfaces.canContinue()) {
-                Interfaces.clickContinue();
+                Interfaces.processContinue();
                 return 600;
             }
             for (TutorialIslandTask task : tasks) {

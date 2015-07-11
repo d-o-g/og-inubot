@@ -27,6 +27,7 @@ public class Interfaces {
     public static final int BUTTON_VAR_FLIP = 4;
     public static final int BUTTON_VAR_SET = 5;
     public static final int BUTTON_DIALOG = 6;
+    private static int continueDialogIndex = -1;
 
     public static RSInterface[] raw() {
         return Inubot.getInstance().getClient().getInterfaces();
@@ -164,16 +165,31 @@ public class Interfaces {
     }
 
     public static boolean canContinue() {
-        return getWidgets(w -> w.getText().contains("Click here to continue") && w.isVisible() && !w.isHidden()).length > 0;
+        int[] idces = {229, 231, 217};
+        for (int idx : idces) {
+            if (Interfaces.widgetsFor(idx).length > 0) {
+                continueDialogIndex = idx;
+                return true;
+            }
+        }
+        return false;
     }
 
-    public static boolean clickContinue() {
-        for (Widget widget : getWidgets(t -> t.getText().toLowerCase().contains("continue")
-                && t.isVisible() && !t.isHidden())) {
-            Client.processAction(DialogButtonAction.clickHereToContinue(widget.getId()), "Continue", "");
+    public static boolean processContinue() {
+        if (canContinue()) {
+            Client.processAction(new DialogButtonAction(continueDialogIndex, -1), "", "");
             return true;
         }
         return false;
     }
 
+    public static boolean isViewingOptionDialog() {
+        return Interfaces.widgetsFor(219).length > 0;
+    }
+
+    public static void processDialogOption(int optionIndex) {
+        if (isViewingOptionDialog()) {
+            Client.processAction(new DialogButtonAction(14352384, optionIndex + 1), "", "");
+        }
+    }
 }

@@ -1,19 +1,13 @@
 package com.inubot.script.bundled.rangeguild;
 
-import com.inubot.Inubot;
-import com.inubot.api.methods.Game;
-import com.inubot.api.methods.Skills;
-import com.inubot.api.methods.Varps;
+import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.Widget;
-import com.inubot.api.util.AWTUtil;
-import com.inubot.api.util.Paintable;
-import com.inubot.api.util.Time;
+import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 
 /**
@@ -21,20 +15,11 @@ import java.text.DecimalFormat;
  */
 public class RangeGuild extends Script implements Paintable {
 
-    public static final Filter<Widget> DIALOGUE_FILTER = w -> w.getText() != null && (w.getText().equals("Click here to continue") || w.getText().equals("Sure, I'll give it a go."));
-    public static final Filter<Widget> LOBBY_FILTER = w -> w.getText() != null && w.getText().equals("Play RuneScape");
-
-    private final Action[] tasks = {new LobbyHandler(), new DialogueHandler(), new EquipArrows(), new TalkToJudge(),
-            new ShootArrows()};
+    static final Filter<Widget> DIALOGUE_FILTER = w -> w.getText() != null && (w.getText().equals("Click here to continue") || w.getText().equals("Sure, I'll give it a go."));
+    private final Action[] tasks = {new EquipArrows(), new DialogueHandler(), new TalkToJudge(), new ShootArrows()};
 
     private int startingRangeExperience;
     private long startingTime;
-
-    public boolean setup() {
-        startingRangeExperience = Skills.getExperience(Skill.RANGED);
-        startingTime = System.currentTimeMillis();
-        return true;
-    }
 
     public static int getShotsFired() {
         int var = Varps.get(156);
@@ -54,12 +39,16 @@ public class RangeGuild extends Script implements Paintable {
         return getShotsFired() != -1;
     }
 
+    public boolean setup() {
+        startingRangeExperience = Skills.getExperience(Skill.RANGED);
+        startingTime = System.currentTimeMillis();
+        return true;
+    }
+
     @Override
     public int loop() {
         if (!Game.isLoggedIn())
             return 300;
-        Inubot.getInstance().getCanvas().pressKey(KeyEvent.VK_RIGHT, 200);
-        Inubot.getInstance().getCanvas().releaseKey(KeyEvent.VK_RIGHT);
         for (Action task : tasks) {
             if (task.validate()) {
                 task.execute();

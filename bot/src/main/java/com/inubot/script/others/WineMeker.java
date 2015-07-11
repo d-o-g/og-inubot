@@ -30,7 +30,7 @@ public class WineMeker extends Script implements Paintable {
 
     @Override
     public boolean setup() {
-        super.getTickTasks().add(Interfaces::clickContinue);
+        super.getTickTasks().add(Interfaces::processContinue);
         this.xp = Skills.getExperience(Skill.COOKING);
         return true;
     }

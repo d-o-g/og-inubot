@@ -23,6 +23,7 @@ import com.inubot.script.bundled.agility.PerfectAgility;
 import com.inubot.script.bundled.fisher.AutoFisherPRO;
 import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.money.Potato;
+import com.inubot.script.bundled.rangeguild.RangeGuild;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.PestControl;
 import com.inubot.script.others.septron.Aircrafter;
@@ -48,20 +49,18 @@ import java.util.Map;
 public class Inubot extends JFrame implements Runnable {
 
     public static final Class[] SCRIPT_CLASSES = new Class[]{
-            Potato.class,
             AutoFisherPRO.class,
             Combot.class,
-            TutorialIsland.class,
             RedChinsPRO.class,
             FalconryPRO.class,
             BirdSnarePRO.class,
             FalconryPRO.class,
-            Aircrafter.class,
+            RangeGuild.class,
             PerfectAgility.class,
             PestControl.class,
             Fletching.class
     };
-    private static final String IRC_CHANNEL = "#bonecode-bot";
+    private static final String IRC_CHANNEL = "#inubot";
     private static Inubot instance;
     private static boolean useProxy = false;
     private static String autoStartScript = null;

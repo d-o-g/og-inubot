@@ -66,7 +66,7 @@ public class AutoFisherPRO extends Script implements Paintable {
             }
         }
         if (Interfaces.canContinue())
-            Interfaces.clickContinue();
+            Interfaces.processContinue();
         for (Action action : actions) {
             if (action.validate())
                 action.execute();

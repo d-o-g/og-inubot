@@ -31,7 +31,7 @@ public class PerfectTutorialIsland extends Script {
     @Override
     public int loop() {
         if (Interfaces.canContinue())
-            Interfaces.clickContinue();
+            Interfaces.processContinue();
         Stage stage = Stage.get();
         if (stage == null)
             throw new InternalError("Unrecognized stage: " + Varps.get(STAGE_VARP));

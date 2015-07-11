@@ -3,7 +3,6 @@ package com.inubot.script.others.septron;
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
-import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Script;
 
 /**
@@ -94,7 +93,7 @@ public class Combot extends Script {
             return 1500;
 
         if (Interfaces.canContinue())
-            Interfaces.clickContinue();
+            Interfaces.processContinue();
         switchStyles();
 
         if (Players.getLocal().getTarget() != null) {
