@@ -19,6 +19,7 @@ import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.RSClient;
 import com.inubot.script.Script;
 import com.inubot.script.ScriptFlux;
+import com.inubot.script.bundled.BlueDragonKiller;
 import com.inubot.script.bundled.agility.PerfectAgility;
 import com.inubot.script.bundled.fisher.AutoFisherPRO;
 import com.inubot.script.bundled.hunter.*;
@@ -58,7 +59,8 @@ public class Inubot extends JFrame implements Runnable {
             RangeGuild.class,
             PerfectAgility.class,
             PestControl.class,
-            Fletching.class
+            Fletching.class,
+            BlueDragonKiller.class
     };
     private static final String IRC_CHANNEL = "#inubot";
     private static Inubot instance;
