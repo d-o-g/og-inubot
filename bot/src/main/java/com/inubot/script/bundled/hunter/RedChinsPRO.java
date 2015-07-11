@@ -12,7 +12,6 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.*;
-import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.RSObjectDefinition;
 import com.inubot.script.Script;
 
@@ -29,7 +28,7 @@ public class RedChinsPRO extends Script implements Paintable {
     private static final String[] MEMES = {"Fuck off", "I hope you die", "Get back to your cotton factory nigger",
             "No room for a nigger like you in this world", "Eat a condom and die", "I fucked your mother",
             "Go away", "Stop plz", "O M G", "Omg stop", "Lol stop", "Wow really just hop", "Lol",
-    "cock lusting fuck boy"};
+            "cock lusting fuck boy"};
 
     private Tile tile;
     private int startExp;
@@ -129,27 +128,15 @@ public class RedChinsPRO extends Script implements Paintable {
     private Tile[] getTrapTactics() {
         switch (getMaxTraps()) {
             case 1:
-                return new Tile[]{
-                        tile
-                };
+                return new Tile[]{tile};
             case 2:
-                return new Tile[]{
-                        tile.derive(-1, 0), tile.derive(1, 0)};
+                return new Tile[]{tile.derive(-1, 0), tile.derive(1, 0)};
             case 3:
-                return new Tile[]{
-                        tile.derive(-1, 0), tile.derive(0, -1), tile.derive(1, 0)
-                };
+                return new Tile[]{tile.derive(-1, 0), tile.derive(0, -1), tile.derive(1, 0)};
             case 4:
-                return new Tile[]{
-                        new Tile(2502, 2881), new Tile(2503, 2882),
-                        new Tile(2504, 2881), new Tile(2504, 2883),
-                };
+                return new Tile[]{tile.derive(-1, 0), tile.derive(0, -1), tile.derive(1, 0), tile.derive(0, 1)};
             case 5:
-                return new Tile[]{
-                        new Tile(2502, 2881), new Tile(2503, 2882),
-                        new Tile(2504, 2881), new Tile(2504, 2883),
-                        new Tile(2505, 2884)
-                };
+                return new Tile[]{tile.derive(-1, 1), tile.derive(-1, -1), tile, tile.derive(1, -1), tile.derive(1, 1)};
             default: {
                 return new Tile[0];
             }

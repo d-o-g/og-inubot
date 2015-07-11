@@ -112,9 +112,7 @@ public class OSUpdater extends Updater {
 
     public static void main(String[] args) throws Exception {
         Updater updater = new OSUpdater(null, false);
-//        Updater updater = new OSUpdater(new File("C:\\Users\\Inspiron\\Dropbox\\DankWise\\jars\\74.jar"), false);
         updater.print = true;
         updater.run();
-        //updater.archive.write(new File("out.jar"));
     }
 }

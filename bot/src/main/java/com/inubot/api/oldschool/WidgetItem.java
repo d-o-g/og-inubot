@@ -65,7 +65,7 @@ public class WidgetItem implements Identifiable, Processable {
         if (itemName == null)
             return;
         if (isInTable()) {
-            Client.processAction(new TableItemAction(opcode, getId(), getIndex(), getOwner().getRaw().getId()), action, itemName);
+            Client.processAction(new TableItemAction(opcode, getId(), getIndex(), getOwner().getRaw().getId()), action, action);
         } else {
             int index = Action.indexOf(owner.getActions(), action) + 1;
             if (index > 4) {
