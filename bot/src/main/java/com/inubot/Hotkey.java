@@ -8,13 +8,12 @@ package com.inubot;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.oldschool.Tile;
-import com.inubot.api.oldschool.VarpBit;
+import com.inubot.api.oldschool.*;
+import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.bot.ui.CreaterGUI;
 import com.inubot.bot.ui.WidgetExplorer;
-import com.inubot.client.natives.RSWidget;
 
 import java.awt.event.KeyEvent;
 import java.util.*;
@@ -60,7 +59,7 @@ public enum Hotkey {
                 }
             }).start();
         }
-    }, DROP_INV(KeyEvent.VK_X) {
+    }, DROP_INV(KeyEvent.VK_V) {
         @Override
         public void onActivation() {
             Inventory.dropAllExcept(new NameFilter<>("Coins"));
@@ -105,25 +104,52 @@ public enum Hotkey {
         public void onActivation() {
             new WidgetExplorer().setVisible(true);
         }
-    }, CASH_MONEY(KeyEvent.VK_H) {
+    }, MELEE_SWITCH(KeyEvent.VK_C) {
         @Override
         public void onActivation() {
-            RSWidget w = Inubot.getInstance().getClient().getWidgets()[149][0];
-            w.getItemIds()[27] = 996;
-            w.getStackSizes()[27] = 1987859748;
-            w.getItemIds()[1] = 12819;
-            w.getStackSizes()[1] = 1;
+            for (String e : MELEE_EQUIPMENT) {
+                WidgetItem item = Inventory.getFirst(t -> t.getName().startsWith(e));
+                if (item != null) {
+                    item.processAction(ActionOpcodes.ITEM_ACTION_1, "Wear");
+                    item = Inventory.getFirst(e);
+                    if (item != null)
+                        item.processAction(ActionOpcodes.ITEM_ACTION_1, "Wield");
+                }
+            }
         }
-    }, FAKE_ALCH_ELY(KeyEvent.VK_J) {
+    }, MAGE_SWITCH(KeyEvent.VK_X) {
         @Override
         public void onActivation() {
-            RSWidget w = Inubot.getInstance().getClient().getWidgets()[149][0];
-            Mouse.move(575, 445);
-            Mouse.click(true);
-            Time.sleep(500);
-            w.getItemIds()[1] = 996;
-            w.getStackSizes()[1] = 1200000;
+            for (int i = 0; i != 4; i++) {
+                WidgetItem item = Inventory.getItems()[i];
+                if (item.getIndex() == i)
+                    item.processAction(ActionOpcodes.ITEM_ACTION_1, "Wear");
+            }
+            for (String e : MAGIC_EQUIPMENT) {
+                WidgetItem item = Inventory.getFirst(e);
+                if (item != null) {
+                    item.processAction(ActionOpcodes.ITEM_ACTION_1, "Wear");
+                    item = Inventory.getFirst(e);
+                    if (item != null)
+                        item.processAction(ActionOpcodes.ITEM_ACTION_1, "Wield");
+                }
+            }
         }
+    }, SELECT_ICE_BARRAGE(KeyEvent.VK_Z) {
+        @Override
+        public void onActivation() {
+            Client.processAction(0, -1, 14286917, 25, "Cast", "Ice Barrage", 50, 50);
+        }
+    };
+
+    private static final String[] MELEE_EQUIPMENT = {
+            "Bandos chestplate", "Bandos tassets", "Amulet of fury", "Serpentine helm", "Bandos boots",
+            "Berserker ring (i)", "Dragonfire shield", "Abyssal tentacle", "Barrows gloves", "Fire cape"
+    };
+
+    private static final String[] MAGIC_EQUIPMENT = {
+            "Ahrim's hood", "Ahrim's robetop", "Ahrim's robeskirt", "Seers ring (i)", "Infinity boots",
+            "Barrows gloves", "Arcane spirit shield", "Toxic staff of the dead", "Occult necklace", "Zamorak cape"
     };
 
     private final int key;
