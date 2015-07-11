@@ -27,6 +27,7 @@ import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.PestControl;
 import com.inubot.script.others.septron.Aircrafter;
 import com.inubot.script.others.septron.Combot;
+import com.inubot.script.others.septron.Fletching;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,7 +58,8 @@ public class Inubot extends JFrame implements Runnable {
             FalconryPRO.class,
             Aircrafter.class,
             PerfectAgility.class,
-            PestControl.class
+            PestControl.class,
+            Fletching.class
     };
     private static final String IRC_CHANNEL = "#bonecode-bot";
     private static Inubot instance;

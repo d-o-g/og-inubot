@@ -28,6 +28,8 @@ public class BotMenuBar extends JMenuBar {
     private final JMenu debug = new JMenu("Debug");
     private final JMenu tools = new JMenu("Tools");
 
+    private JScrollPane scroller;
+
     public BotMenuBar() {
 //        widget.addActionListener(e -> new WidgetExplorer().setVisible(true));
 //        acc.addActionListener(e -> {
@@ -36,6 +38,9 @@ public class BotMenuBar extends JMenuBar {
 //                a.enterCredentials();
 //            }
 //        });
+
+        scroller = new JScrollPane();
+        scroller.setPreferredSize(new Dimension(0, 100));
 
         start.setEnabled(true);
         start.addActionListener(e -> new ScriptSelector().setVisible(true));
@@ -65,9 +70,11 @@ public class BotMenuBar extends JMenuBar {
         NexusToggleableButton log = new NexusToggleableButton("Console", () -> Inubot.getInstance().getLogPane().isToggled());
         log.addActionListener(e -> {
             if (!Inubot.getInstance().getLogPane().isToggled()) {
-                Inubot.getInstance().add(Inubot.getInstance().getLogPane(), BorderLayout.SOUTH);
+                scroller.add(Inubot.getInstance().getLogPane());
+                Inubot.getInstance().add(scroller, BorderLayout.SOUTH);
             } else {
-                Inubot.getInstance().remove(Inubot.getInstance().getLogPane());
+                scroller.remove(Inubot.getInstance().getLogPane());
+                Inubot.getInstance().remove(scroller);
             }
             Inubot.getInstance().pack();
             Inubot.getInstance().getLogPane().setToggled(!Inubot.getInstance().getLogPane().isToggled());

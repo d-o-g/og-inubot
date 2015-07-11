@@ -62,12 +62,12 @@ public class RedChinsPRO extends Script implements Paintable {
 
     @Override
     public int loop() {
-        if (fuckOff) {
-            for (char c : Random.nextElement(MEMES).toCharArray())
-                Inubot.getInstance().getCanvas().sendKey(c, 20);
-            Inubot.getInstance().getCanvas().pressEnter();
-            fuckOff = false;
-        }
+//        if (fuckOff) {
+//            for (char c : Random.nextElement(MEMES).toCharArray())
+//                Inubot.getInstance().getCanvas().sendKey(c, 20);
+//            Inubot.getInstance().getCanvas().pressEnter();
+//            fuckOff = false;
+//        }
 
         Npc npc = Npcs.getNearest(cock -> {
             if (cock.getTarget() != null && cock.getTarget().getRaw() == Players.getLocal().getRaw()) {
@@ -141,14 +141,14 @@ public class RedChinsPRO extends Script implements Paintable {
                 };
             case 4:
                 return new Tile[]{
-                        new Tile(2502, 2881), new Tile(2503, 2882),
-                        new Tile(2504, 2881), new Tile(2504, 2883),
+                        new Tile(2503, 2882, 0), new Tile(2502, 2881, 0),
+                        new Tile(2503, 2880, 0), new Tile(2504, 2881, 0),
                 };
             case 5:
                 return new Tile[]{
-                        new Tile(2502, 2881), new Tile(2503, 2882),
-                        new Tile(2504, 2881), new Tile(2504, 2883),
-                        new Tile(2505, 2884)
+                        new Tile(2502, 2880, 0), new Tile(2502, 2881, 0),
+                        new Tile(2503, 2882, 0), new Tile(2504, 2881, 0),
+                        new Tile(2504, 2880, 0)
                 };
             default: {
                 return new Tile[0];
