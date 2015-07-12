@@ -5,12 +5,14 @@ import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Septron
  * @since June 21, 2015
  */
 public class Application {
-
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
@@ -26,9 +28,16 @@ public class Application {
     }
 
     public static void main(String... args) {
-        logger.info("Starting server...");
-
-        new Server().open();
+        logger.info("Caching scripts...");
+        try {
+            Loader.singleton.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            logger.info("... Done");
+            logger.info("Starting server...");
+            new Server().open();
+        }
     }
 
     public static SessionFactory factory(){

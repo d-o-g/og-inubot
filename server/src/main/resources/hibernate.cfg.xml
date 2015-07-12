@@ -8,5 +8,7 @@
         <property name="hibernate.connection.username">forum</property>
         <property name="hibernate.connection.password">dogsrcool123</property>
         <mapping resource="com/inubot/model/Account.hbm.xml"/>
+        <mapping resource="com/inubot/model/Script.hbm.xml"/>
+        <mapping resource="com/inubot/model/Owned.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
