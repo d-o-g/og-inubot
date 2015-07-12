@@ -69,7 +69,8 @@ public class BlueDragonKiller extends Script {
                     Movement.walkTo(NORTH_SAFE);
                     return 1800;
                 } else {
-                    Npc npc = Npcs.getNearest(n -> "Blue dragon".equals(n.getName()) && canFire(n.getLocation())
+                    Npc npc = Npcs.getNearest(n -> "Blue dragon".equals(n.getName()) && n.distance() < 10
+                            && canFire(n.getLocation())
                             && !n.isHealthBarVisible() && !n.isDying());
                     if (npc != null) {
                         npc.processAction("Attack");
