@@ -1,6 +1,8 @@
 package com.inubot;
 
 import com.inubot.model.Account;
+import com.inubot.model.Owned;
+import com.inubot.model.Script;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 /**
  * @author Septron
@@ -68,6 +71,18 @@ public class Handler extends ChannelHandlerAdapter {
 
                 if (hash.equals(account.getPassword())) {
                     logger.info("Successfully logged " + username + " into account!");
+
+                    List owneds = session.createQuery("from Owned where uid=:uid")
+                            .setParameter("uid", account.getId()).list();
+                    for (Object asd : owneds) {
+                        Script script = (Script) session.createQuery("from Script where id=:id")
+                                .setParameter("id", ((Owned) asd).getId()).uniqueResult();
+                        byte[] data = Loader.scripts.get(script.getName());
+                        ctx.write(data);
+                        logger.info("Sent: "  + script.getName());
+                    }
+
+
                 } else {
                     logger.info("Failed to log " + username + " into account!");
                 }
