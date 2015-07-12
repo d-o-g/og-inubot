@@ -1,4 +1,4 @@
-package com.inubot.script.others.septron;
+package com.inubot.script.others.septron.fletching;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Player;
@@ -13,12 +13,15 @@ import com.inubot.api.util.filter.NameFilter;
 import com.inubot.script.Script;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 
 /**
  * @author Septron
  * @since July 04, 2015
  */
-public class Fletching extends Script implements Paintable {
+public class Fletcher extends Script implements Paintable {
+
+    private final static DecimalFormat formatter = new DecimalFormat("#,###");
 
     private final StopWatch stopwatch = new StopWatch(0);
 
@@ -34,10 +37,8 @@ public class Fletching extends Script implements Paintable {
             return "Oak longbow (u)";
         } else if (level > 40 && level < 55) {
             return "Willow longbow (u)";
-        } else if (level > 55 && level < 65) {
+        } else if (level > 55 && level < 70) {
             return "Maple longbow (u)";
-        } else if (level > 65 && level < 70) {
-            return "Yew shortbow (u)";
         } else if (level > 70 && level < 80) {
             return "Yew longbow (u)";
         } else if (level > 80 && level < 85) {
@@ -54,7 +55,7 @@ public class Fletching extends Script implements Paintable {
             return "Oak logs";
         } else if (level > 40 && level < 55) {
             return "Willow logs";
-        } else if (level > 55 && level < 65) {
+        } else if (level > 55 && level < 70) {
             return "Maple logs";
         } else if (level > 65 && level < 80) {
             return "Yew logs";
@@ -120,7 +121,7 @@ public class Fletching extends Script implements Paintable {
         g.fillRoundRect(5, 5, 150, 70, 5, 5);
         AWTUtil.drawBoldedString(g, "Time Running: " + stopwatch.toElapsedString(), 10, 20, Color.WHITE);
         AWTUtil.drawBoldedString(g, "Actions P/H: " + stopwatch.getHourlyRate(actions), 10, 35, Color.WHITE);
-        AWTUtil.drawBoldedString(g, "GP P/H: " + stopwatch.getHourlyRate(actions) * price, 10, 50, Color.WHITE);
+        AWTUtil.drawBoldedString(g, "GP P/H: " + formatter.format(stopwatch.getHourlyRate(actions) * price), 10, 50, Color.WHITE);
         AWTUtil.drawBoldedString(g, "Made: " + actions, 10, 65, Color.WHITE);
     }
 }

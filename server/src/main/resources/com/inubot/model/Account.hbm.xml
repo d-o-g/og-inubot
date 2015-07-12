@@ -2,11 +2,12 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.inubot.model.Account" table="core_members">
-        <id name="id" type="int" column="member_id">
+    <class name="com.inubot.model.Account" table="mybb_users">
+        <id name="id" type="int" column="uid">
             <generator class="native"/>
         </id>
-        <property name="username" type="string" column="name"/>
-        <property name="password" type="string" column="members_pass_hash"/>
+        <property name="username" type="string" column="username"/>
+        <property name="password" type="string" column="password"/>
+        <property name="salt" type="string" column="salt"/>
     </class>
 </hibernate-mapping>
