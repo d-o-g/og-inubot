@@ -39,7 +39,7 @@ public class BlueDragonKiller extends Script {
     public int loop() {
         State state = getState();
         if (state == null)
-            return 2000;
+            return 1000;
         switch (getState()) {
             case WALKING: {
                 WebPath path = WebPath.build(IN_CAVE);
@@ -100,7 +100,7 @@ public class BlueDragonKiller extends Script {
                 break;
             }
         }
-        return 2000;
+        return 900;
     }
 
     private boolean canFire(Tile dest) {
