@@ -23,13 +23,9 @@ import com.inubot.script.bundled.BlueDragonKiller;
 import com.inubot.script.bundled.agility.PerfectAgility;
 import com.inubot.script.bundled.fisher.AutoFisherPRO;
 import com.inubot.script.bundled.hunter.*;
-import com.inubot.script.bundled.money.Potato;
 import com.inubot.script.bundled.rangeguild.RangeGuild;
-import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.PestControl;
-import com.inubot.script.others.septron.Aircrafter;
 import com.inubot.script.others.septron.Combot;
-import com.inubot.script.others.septron.fletching.Fletcher;
 import com.inubot.script.others.septron.fletching.Stringer;
 
 import javax.swing.*;
@@ -60,7 +56,6 @@ public class Inubot extends JFrame implements Runnable {
             RangeGuild.class,
             PerfectAgility.class,
             PestControl.class,
-            Fletching.class,
             BlueDragonKiller.class,
             Stringer.class
     };
