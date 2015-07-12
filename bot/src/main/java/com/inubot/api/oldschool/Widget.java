@@ -13,7 +13,7 @@ import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.oldschool.action.tree.WidgetAction;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.client.natives.RSWidget;
+import com.inubot.client.natives.oldschool.RSWidget;
 
 import java.awt.*;
 

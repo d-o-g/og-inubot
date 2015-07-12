@@ -33,7 +33,7 @@ public class InvokeHook extends Hook {
 
     private Method findMethod(Class<?>[] parameterTypes) {
         try {
-            Method[] methods = ModScript.classes().loadClass(clazz).getDeclaredMethods();
+            Method[] methods = ModScript.getclassloader().loadClass(clazz).getDeclaredMethods();
             main:
             for (Method m : methods) {
                 if (m.getName().equals(method)) {

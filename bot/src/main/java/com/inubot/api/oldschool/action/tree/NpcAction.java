@@ -10,8 +10,8 @@ import com.inubot.api.methods.Npcs;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.CacheLoader;
-import com.inubot.client.natives.RSNpc;
-import com.inubot.client.natives.RSNpcDefinition;
+import com.inubot.client.natives.oldschool.RSNpc;
+import com.inubot.client.natives.oldschool.RSNpcDefinition;
 
 public class NpcAction extends CharacterAction {
 

@@ -31,6 +31,11 @@ public class LocalScriptLoader extends ScriptLoader<File> {
         Stack<File> files = new Stack<>();
         URLClassLoader loader = URLClassLoader.newInstance(new URL[]{root.toURI().toURL()});
         files.push(root);
+        if (root.isDirectory()) {
+            for (File file : root.listFiles()) {
+                files.push(file);
+            }
+        }
         while (!files.isEmpty()) {
             File file = files.pop();
             if (file.isDirectory()) {

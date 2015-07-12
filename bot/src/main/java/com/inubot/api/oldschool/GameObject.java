@@ -16,8 +16,8 @@ import com.inubot.api.oldschool.action.UID;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Identifiable;
-import com.inubot.client.natives.RSGameObject;
-import com.inubot.client.natives.RSObjectDefinition;
+import com.inubot.client.natives.oldschool.RSGameObject;
+import com.inubot.client.natives.oldschool.RSObjectDefinition;
 
 import java.util.Arrays;
 

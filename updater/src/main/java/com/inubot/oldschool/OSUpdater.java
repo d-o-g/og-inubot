@@ -41,7 +41,7 @@ public class OSUpdater extends Updater {
 
     @Override
     public String getType() {
-        return "Oldschool RuneScape";
+        return "oldschool";
     }
 
     @Override

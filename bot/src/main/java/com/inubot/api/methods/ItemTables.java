@@ -9,11 +9,11 @@ package com.inubot.api.methods;
 import com.inubot.Inubot;
 import com.inubot.api.oldschool.NodeTable;
 import com.inubot.api.util.CacheLoader;
-import com.inubot.client.natives.RSItemDefinition;
-import com.inubot.client.natives.RSItemTable;
-import com.inubot.client.natives.RSNode;
+import com.inubot.client.natives.oldschool.RSItemDefinition;
+import com.inubot.client.natives.oldschool.RSItemTable;
+import com.inubot.client.natives.oldschool.RSNode;
 import com.inubot.api.util.Identifiable;
-import com.inubot.client.natives.RSNodeTable;
+import com.inubot.client.natives.oldschool.RSNodeTable;
 
 import java.util.ArrayList;
 import java.util.List;

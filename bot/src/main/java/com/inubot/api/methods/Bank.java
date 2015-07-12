@@ -13,8 +13,8 @@ import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.oldschool.action.tree.WidgetAction;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.*;
-import com.inubot.client.natives.RSVarpBit;
-import com.inubot.client.natives.RSWidget;
+import com.inubot.client.natives.oldschool.RSVarpBit;
+import com.inubot.client.natives.oldschool.RSWidget;
 
 import java.util.*;
 

@@ -90,7 +90,9 @@ public abstract class Updater extends Thread implements Runnable {
 
     public GraphVisitor visitor(String visitor) {
         for (GraphVisitor gv : visitors) {
-            if (gv.id().equals(visitor)) return gv;
+            if (gv.id().equals(visitor)) {
+                return gv;
+            }
         }
         return null;
     }
@@ -277,7 +279,7 @@ public abstract class Updater extends Thread implements Runnable {
             System.out.println(builder);
             String loc = getModscriptLocation();
             if (loc != null)
-                ModScript.write(loc, hash, graphVisitors);
+                ModScript.write(loc, hash, getType(), graphVisitors);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -13,7 +13,7 @@ import com.inubot.api.methods.traversal.graph.WebPath;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
-import com.inubot.client.natives.RSInteractableEntity;
+import com.inubot.client.natives.oldschool.RSInteractableEntity;
 import com.inubot.script.Script;
 
 import java.util.ArrayList;

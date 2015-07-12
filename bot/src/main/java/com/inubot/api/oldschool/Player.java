@@ -11,7 +11,7 @@ import com.inubot.api.methods.Client;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.oldschool.action.tree.PlayerAction;
-import com.inubot.client.natives.RSPlayer;
+import com.inubot.client.natives.oldschool.RSPlayer;
 
 public class Player extends Character<RSPlayer> {
 

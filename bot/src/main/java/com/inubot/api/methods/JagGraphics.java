@@ -7,7 +7,7 @@
 package com.inubot.api.methods;
 
 import com.inubot.Inubot;
-import com.inubot.client.natives.RSFont;
+import com.inubot.client.natives.oldschool.RSFont;
 
 public class JagGraphics {
 

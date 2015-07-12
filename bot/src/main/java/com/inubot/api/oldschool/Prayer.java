@@ -8,7 +8,7 @@ package com.inubot.api.oldschool;
 
 import com.inubot.api.methods.Skills;
 import com.inubot.api.util.CacheLoader;
-import com.inubot.client.natives.RSItemDefinition;
+import com.inubot.client.natives.oldschool.RSItemDefinition;
 
 public enum Prayer {
     THICK_SKIN(1, 0x1),

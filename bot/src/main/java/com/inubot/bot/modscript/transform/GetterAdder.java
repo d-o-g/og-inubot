@@ -24,7 +24,7 @@ public class GetterAdder implements Transform {
                     }
                 }
                 retDesc = retDesc.replace("L", "");
-                retDesc = prebuild + "Lcom/inubot/client/natives/RS" + ModScript.getDefinedName(retDesc) + ";";
+                retDesc = prebuild + "Lcom/inubot/client/natives/" + ModScript.getType() + "/RS" + ModScript.getDefinedName(retDesc) + ";";
                 if (retDesc.contains("null"))
                     retDesc = hook.fieldDesc;
             } else {

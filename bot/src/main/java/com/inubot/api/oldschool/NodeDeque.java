@@ -6,8 +6,8 @@
  */
 package com.inubot.api.oldschool;
 
-import com.inubot.client.natives.RSNode;
-import com.inubot.client.natives.RSNodeDeque;
+import com.inubot.client.natives.oldschool.RSNode;
+import com.inubot.client.natives.oldschool.RSNodeDeque;
 
 import java.util.Iterator;
 

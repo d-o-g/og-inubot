@@ -10,7 +10,7 @@ import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.FieldHook;
 import com.inubot.bot.modscript.hooks.InvokeHook;
-import com.inubot.client.natives.RSVarpBit;
+import com.inubot.client.natives.oldschool.RSVarpBit;
 import jdk.internal.org.objectweb.asm.Opcodes;
 import jdk.internal.org.objectweb.asm.Type;
 import jdk.internal.org.objectweb.asm.tree.*;

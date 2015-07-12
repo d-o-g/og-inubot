@@ -16,7 +16,7 @@ import com.inubot.bot.util.*;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.JarNode;
 import com.inubot.client.GameCanvas;
-import com.inubot.client.natives.RSClient;
+import com.inubot.client.natives.oldschool.RSClient;
 import com.inubot.script.Script;
 import com.inubot.script.ScriptFlux;
 import com.inubot.script.bundled.BlueDragonKiller;

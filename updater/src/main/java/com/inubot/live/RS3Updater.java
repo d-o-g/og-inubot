@@ -31,7 +31,7 @@ public class RS3Updater extends Updater {
 
     @Override
     public String getType() {
-        return "RuneScape";
+        return "modern";
     }
 
     @Override

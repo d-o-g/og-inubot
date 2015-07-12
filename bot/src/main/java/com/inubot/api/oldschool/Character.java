@@ -10,9 +10,9 @@ import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Npcs;
 import com.inubot.api.methods.Players;
 import com.inubot.api.methods.Projection;
-import com.inubot.client.natives.RSCharacter;
-import com.inubot.client.natives.RSNpc;
-import com.inubot.client.natives.RSPlayer;
+import com.inubot.client.natives.oldschool.RSCharacter;
+import com.inubot.client.natives.oldschool.RSNpc;
+import com.inubot.client.natives.oldschool.RSPlayer;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.util.Identifiable;
 

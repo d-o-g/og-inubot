@@ -12,7 +12,7 @@ public class InterfaceImpl implements Transform {
         for (ClassNode cn : classes.values()) {
             String def = ModScript.getDefinedName(cn.name);
             if (def != null)
-                cn.interfaces.add("com/inubot/client/natives/RS" + def);
+                cn.interfaces.add("com/inubot/client/natives/" + ModScript.getType() + "/RS" + def);
         }
     }
 }

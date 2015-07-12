@@ -10,8 +10,8 @@ import com.inubot.Inubot;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.client.natives.RSInterface;
-import com.inubot.client.natives.RSWidget;
+import com.inubot.client.natives.oldschool.RSInterface;
+import com.inubot.client.natives.oldschool.RSWidget;
 
 import java.util.ArrayList;
 import java.util.List;

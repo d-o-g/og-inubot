@@ -12,7 +12,7 @@ import com.inubot.api.oldschool.GameObject.Landmark;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.collection.GameObjectPool;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.client.natives.*;
+import com.inubot.client.natives.oldschool.*;
 
 import java.util.*;
 

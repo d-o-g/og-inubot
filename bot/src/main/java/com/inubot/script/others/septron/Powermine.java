@@ -4,7 +4,7 @@ import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.client.natives.RSObjectDefinition;
+import com.inubot.client.natives.oldschool.RSObjectDefinition;
 import com.inubot.script.Script;
 
 import java.awt.*;

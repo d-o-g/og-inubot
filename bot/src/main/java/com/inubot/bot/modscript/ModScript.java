@@ -18,6 +18,7 @@ public class ModScript {
     private static final int MAGIC = 0xFADFAD;
 
     private static RSClassLoader classloader;
+    private static String type;
 
     public static void setClassLoader(RSClassLoader classloader) {
         ModScript.classloader = classloader;
@@ -45,7 +46,11 @@ public class ModScript {
         return null;
     }
 
-    public static ClassLoader classes() {
+    public static String getType() {
+        return type;
+    }
+
+    public static ClassLoader getclassloader() {
         return classloader;
     }
 
@@ -90,6 +95,7 @@ public class ModScript {
             int magic = in.readInt();
             if (magic != MAGIC)
                 throw new IOException("Invalid modscript format");
+            ModScript.type = in.readUTF();
             String innerHash = in.readUTF();
             if (!innerHash.equals(hash))
                 throw new IOException("Modscript is out-of-date");

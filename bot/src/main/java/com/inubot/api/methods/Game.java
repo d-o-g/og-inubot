@@ -7,7 +7,7 @@
 package com.inubot.api.methods;
 
 import com.inubot.Inubot;
-import com.inubot.client.natives.RSClient;
+import com.inubot.client.natives.oldschool.RSClient;
 
 public class Game {
 
@@ -58,7 +58,7 @@ public class Game {
     }
 
     /**
-     * @return The {@link com.inubot.client.natives.RSClient} internal instance
+     * @return The {@link com.inubot.client.natives.oldschool.RSClient} internal instance
      */
     public static RSClient getClient() {
         return Inubot.getInstance().getClient();

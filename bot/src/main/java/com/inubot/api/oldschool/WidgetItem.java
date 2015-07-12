@@ -12,7 +12,7 @@ import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.oldschool.action.tree.*;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Identifiable;
-import com.inubot.client.natives.RSItemDefinition;
+import com.inubot.client.natives.oldschool.RSItemDefinition;
 
 import java.awt.*;
 

@@ -10,9 +10,9 @@ import com.inubot.Inubot;
 import com.inubot.api.oldschool.GroundItem;
 import com.inubot.api.oldschool.collection.GroundItemPool;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.client.natives.RSItem;
-import com.inubot.client.natives.RSNode;
-import com.inubot.client.natives.RSNodeDeque;
+import com.inubot.client.natives.oldschool.RSItem;
+import com.inubot.client.natives.oldschool.RSNode;
+import com.inubot.client.natives.oldschool.RSNodeDeque;
 import com.inubot.api.oldschool.NodeDeque;
 
 import java.util.*;

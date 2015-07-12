@@ -12,7 +12,7 @@ public class Configuration {
     public static final String DATA = CACHE + "data" + File.separator;
     public static final String SCRIPTS = HOME + "scripts" + File.separator;
     public static final String[] DIRECTORIES = {CACHE, DATA, SCRIPTS};
-    public static int WORLD = 59;
+    public static int WORLD = 18;
 
     public static boolean isLocal() {
         return !Inubot.class.getResource(Inubot.class.getSimpleName() + ".class").toString().contains("jar:");

@@ -15,11 +15,11 @@ import java.util.Map;
 public class ModScript {
 
     private static final int MAGIC = 0xFADFAD;
-    private static final String ENCRYPTION_KEY = "Valid hook data";
 
-    public static void write(String file, String hash, Collection<GraphVisitor> visitors) throws Exception {
+    public static void write(String file, String hash, String type, Collection<GraphVisitor> visitors) throws Exception {
         try (DataOutputStream out = new DataOutputStream(new FileOutputStream(file))) {
             out.writeInt(MAGIC);
+            out.writeUTF(type);
             out.writeUTF(hash);
             out.writeInt(visitors.size());
             for (GraphVisitor gv : visitors) {

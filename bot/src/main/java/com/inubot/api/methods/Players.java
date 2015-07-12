@@ -8,7 +8,7 @@ package com.inubot.api.methods;
 
 import com.inubot.Inubot;
 import com.inubot.api.oldschool.Player;
-import com.inubot.client.natives.RSPlayer;
+import com.inubot.client.natives.oldschool.RSPlayer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,7 +8,7 @@ package com.inubot.api.util;
 
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.hooks.InvokeHook;
-import com.inubot.client.natives.*;
+import com.inubot.client.natives.oldschool.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class CacheLoader {
     /**
      * This method may cause the game to crash, so it is safe to only call this while logged out.
      *
-     * @param client the {@link RSClient} native instance
+     * @param client the {@link com.inubot.client.natives.oldschool.RSClient} native instance
      */
     public static void load(RSClient client) {
         loadObjectDefinitions(client);

@@ -9,8 +9,8 @@ package com.inubot.api.methods;
 import com.inubot.Inubot;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Player;
-import com.inubot.client.natives.RSNpc;
-import com.inubot.client.natives.RSPlayer;
+import com.inubot.client.natives.oldschool.RSNpc;
+import com.inubot.client.natives.oldschool.RSPlayer;
 
 public class HintArrow {
 

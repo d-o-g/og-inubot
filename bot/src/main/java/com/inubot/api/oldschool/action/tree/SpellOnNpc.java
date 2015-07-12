@@ -6,7 +6,7 @@
  */
 package com.inubot.api.oldschool.action.tree;
 
-import com.inubot.client.natives.RSNpc;
+import com.inubot.client.natives.oldschool.RSNpc;
 import com.inubot.api.methods.Npcs;
 import com.inubot.api.oldschool.Npc;
 
