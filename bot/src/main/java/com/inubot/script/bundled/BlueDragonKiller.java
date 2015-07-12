@@ -26,8 +26,8 @@ import java.util.List;
 public class BlueDragonKiller extends Script {
 
     //wat else
-    private static final String[] LOOT = {"Blue dragonhide", "Dragon bones", "Grimy avantoe", "Grimy ranarr",
-            "Draconic visage", "Clue scroll (hard)", "Grimy cadantine"};
+    private static final String[] LOOT = {"Draconic visage", "Clue scroll (hard)", "Dragon bones",
+            "Grimy dwarf weed", "Grimy avantoe", "Grimy ranarr", "Blue dragonhide", "Grimy cadantine"};
     private static final String[] FOOD = {"Lobster"};
     private static final Tile NORTH_SAFE = new Tile(2900, 9809);
     private static final Tile SOUTH_SAFE = new Tile(-1, -1);
@@ -60,15 +60,14 @@ public class BlueDragonKiller extends Script {
                 break;
             }
             case FIGHTING: {
-                if (!Players.getLocal().isMoving() && !Players.getLocal().getLocation().equals(NORTH_SAFE)) {
-                    Movement.walkTo(NORTH_SAFE);
-                    return 1800;
-                }
                 if (CAVE_START.contains(Players.getLocal())) {
                     GameObject obs = GameObjects.getNearest("Obstacle pipe");
                     if (obs != null) {
                         obs.processAction("Squeeze-through");
                     }
+                } else if (!Players.getLocal().isMoving() && !Players.getLocal().getLocation().equals(NORTH_SAFE)) {
+                    Movement.walkTo(NORTH_SAFE);
+                    return 1800;
                 } else {
                     Npc npc = Npcs.getNearest(n -> "Blue dragon".equals(n.getName()) && canFire(n.getLocation())
                             && !n.isHealthBarVisible() && !n.isDying());
