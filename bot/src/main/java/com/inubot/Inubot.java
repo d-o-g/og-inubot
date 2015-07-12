@@ -29,7 +29,8 @@ import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.PestControl;
 import com.inubot.script.others.septron.Aircrafter;
 import com.inubot.script.others.septron.Combot;
-import com.inubot.script.others.septron.Fletching;
+import com.inubot.script.others.septron.fletching.Fletcher;
+import com.inubot.script.others.septron.fletching.Stringer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,7 +61,8 @@ public class Inubot extends JFrame implements Runnable {
             PerfectAgility.class,
             PestControl.class,
             Fletching.class,
-            BlueDragonKiller.class
+            BlueDragonKiller.class,
+            Stringer.class
     };
     private static final String IRC_CHANNEL = "#inubot";
     private static Inubot instance;

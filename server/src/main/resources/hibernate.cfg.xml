@@ -4,8 +4,8 @@
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/forum</property>
-        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.url">jdbc:mysql://192.99.166.91:3306/forums</property>
+        <property name="hibernate.connection.username">forum</property>
         <property name="hibernate.connection.password">dogsrcool123</property>
         <mapping resource="com/inubot/model/Account.hbm.xml"/>
     </session-factory>

@@ -5,9 +5,13 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.hibernate.Session;
-import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author Septron
@@ -22,8 +26,17 @@ public class Handler extends ChannelHandlerAdapter {
 
     }
 
+    private static String getMD5(String message)
+            throws NoSuchAlgorithmException {
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        md5.reset();
+        md5.update(message.getBytes());
+        byte[] digest = md5.digest();
+        return String.format("%0" + (digest.length << 1) + "x", new BigInteger(1, digest));
+    }
+
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         ByteBuf buffer = (ByteBuf) msg;
 
         int opcode = buffer.readByte();
@@ -46,8 +59,14 @@ public class Handler extends ChannelHandlerAdapter {
                 Session session = Application.factory().openSession();
                 Account account = (Account) session.createQuery("from Account where username=:username")
                         .setParameter("username", username).uniqueResult();
+                if (account == null) {
+                    logger.info("Account doesn't exist!");
+                    return;
+                }
 
-                if (BCrypt.checkpw(password, account.getPassword())) {
+                String hash = getMD5(getMD5(account.getSalt()) + getMD5(password));
+
+                if (hash.equals(account.getPassword())) {
                     logger.info("Successfully logged " + username + " into account!");
                 } else {
                     logger.info("Failed to log " + username + " into account!");
