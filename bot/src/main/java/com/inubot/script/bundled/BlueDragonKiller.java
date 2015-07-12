@@ -27,7 +27,7 @@ public class BlueDragonKiller extends Script {
 
     //wat else
     private static final String[] LOOT = {"Blue dragonhide", "Dragon bones", "Grimy avantoe", "Grimy ranarr",
-            "Draconic visage", "Clue scroll (hard)"};
+            "Draconic visage", "Clue scroll (hard)", "Grimy cadantine"};
     private static final String[] FOOD = {"Lobster"};
     private static final Tile NORTH_SAFE = new Tile(2900, 9809);
     private static final Tile SOUTH_SAFE = new Tile(-1, -1);
@@ -39,11 +39,7 @@ public class BlueDragonKiller extends Script {
     public int loop() {
         State state = getState();
         if (state == null)
-            return 1000;
-        if (!Players.getLocal().getLocation().equals(NORTH_SAFE)) { //TODO make it choose a random safe spot?
-            Movement.walkTo(NORTH_SAFE);
-            return 1800;
-        }
+            return 1000;                     //TODO make it choose a random safe spot every trip?
         switch (getState()) {
             case WALKING: {
                 WebPath path = WebPath.build(IN_CAVE);
@@ -64,6 +60,10 @@ public class BlueDragonKiller extends Script {
                 break;
             }
             case FIGHTING: {
+                if (!Players.getLocal().isMoving() && !Players.getLocal().getLocation().equals(NORTH_SAFE)) {
+                    Movement.walkTo(NORTH_SAFE);
+                    return 1800;
+                }
                 if (CAVE_START.contains(Players.getLocal())) {
                     GameObject obs = GameObjects.getNearest("Obstacle pipe");
                     if (obs != null) {
