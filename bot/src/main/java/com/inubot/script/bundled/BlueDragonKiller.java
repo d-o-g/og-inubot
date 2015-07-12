@@ -50,7 +50,9 @@ public class BlueDragonKiller extends Script {
                 if (IN_CAVE.distance() < 30) {
                     WidgetItem item = Inventory.getFirst("Falador teleport");
                     if (item != null) {
+                        Tile last = Players.getLocal().getLocation();
                         item.processFirst();
+                        Time.await(() -> !Players.getLocal().getLocation().equals(last), 3000);
                     }
                 } else if (!Bank.isOpen()) {
                     Bank.open();
