@@ -40,6 +40,10 @@ public class BlueDragonKiller extends Script {
         State state = getState();
         if (state == null)
             return 1000;
+        if (!Players.getLocal().getLocation().equals(NORTH_SAFE)) { //TODO make it choose a random safe spot?
+            Movement.walkTo(NORTH_SAFE);
+            return 1800;
+        }
         switch (getState()) {
             case WALKING: {
                 WebPath path = WebPath.build(IN_CAVE);
@@ -66,10 +70,6 @@ public class BlueDragonKiller extends Script {
                         obs.processAction("Squeeze-through");
                     }
                 } else {
-                    if (!Players.getLocal().getLocation().equals(NORTH_SAFE)) { //TODO make it choose a random safe spot?
-                        Movement.walkTo(NORTH_SAFE);
-                        return 1800;
-                    }
                     Npc npc = Npcs.getNearest(n -> "Blue dragon".equals(n.getName()) && canFire(n.getLocation())
                             && !n.isHealthBarVisible() && !n.isDying());
                     if (npc != null) {
