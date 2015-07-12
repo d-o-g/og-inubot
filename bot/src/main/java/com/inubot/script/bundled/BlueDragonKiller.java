@@ -6,17 +6,18 @@
  */
 package com.inubot.script.bundled;
 
-import com.inubot.Inubot;
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.methods.traversal.Path.Option;
 import com.inubot.api.methods.traversal.graph.WebPath;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Time;
-import com.inubot.api.util.filter.Filter;
 import com.inubot.api.util.filter.NameFilter;
-import com.inubot.client.natives.RSCollisionMap;
+import com.inubot.client.natives.RSInteractableEntity;
 import com.inubot.script.Script;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Dogerina
@@ -26,7 +27,7 @@ public class BlueDragonKiller extends Script {
 
     //wat else
     private static final String[] LOOT = {"Blue dragonhide", "Dragon bones", "Grimy avantoe", "Grimy ranarr",
-            "Draconic visage"};
+            "Draconic visage", "Clue scroll (hard)"};
     private static final String[] FOOD = {"Lobster"};
     private static final Tile NORTH_SAFE = new Tile(2900, 9809);
     private static final Tile SOUTH_SAFE = new Tile(-1, -1);
@@ -49,7 +50,7 @@ public class BlueDragonKiller extends Script {
                 if (IN_CAVE.distance() < 30) {
                     WidgetItem item = Inventory.getFirst("Falador teleport");
                     if (item != null) {
-                        item.processAction("Break");
+                        item.processFirst();
                     }
                 } else if (!Bank.isOpen()) {
                     Bank.open();
@@ -68,8 +69,8 @@ public class BlueDragonKiller extends Script {
                     if (!Players.getLocal().getLocation().equals(NORTH_SAFE)) { //TODO make it choose a random safe spot?
                         Movement.walkTo(NORTH_SAFE);
                         return 1800;
-                    }                           //TODO
-                    Npc npc = Npcs.getNearest(n -> Movement.isEntityReachable(n)
+                    }
+                    Npc npc = Npcs.getNearest(n -> "Blue dragon".equals(n.getName()) && canFire(n.getLocation())
                             && !n.isHealthBarVisible() && !n.isDying());
                     if (npc != null) {
                         npc.processAction("Attack");
@@ -100,6 +101,42 @@ public class BlueDragonKiller extends Script {
             }
         }
         return 2000;
+    }
+
+    private boolean canFire(Tile dest) {
+        Tile[] bresenham = bresenham(Players.getLocal().getLocation(), dest);
+        for (Tile tile : bresenham) {
+            if (GameObjects.getNearest(t -> t.getRaw() instanceof RSInteractableEntity
+                    && t.getLocation().equals(tile)) != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Tile[] bresenham(Tile start, Tile dest) {
+        List<Tile> line = new ArrayList<>();
+        int dx = Math.abs(dest.getX() - start.getX()), dy = Math.abs(dest.getY() - start.getY());
+        int sx = start.getX() < dest.getX() ? 1 : -1, sy = start.getY() < dest.getY() ? 1 : -1;
+        int err = dx - dy;
+        int e2;
+        int currentX = start.getX(), currentY = start.getY();
+        while (true) {
+            line.add(new Tile(currentX, currentY));
+            if (currentX == dest.getX() && currentY == dest.getY()) {
+                break;
+            }
+            e2 = 2 * err;
+            if (e2 > -1 * dy) {
+                err = err - dy;
+                currentX = currentX + sx;
+            }
+            if (e2 < dx) {
+                err = err + dx;
+                currentY = currentY + sy;
+            }
+        }
+        return line.toArray(new Tile[line.size()]);
     }
 
     private void withdrawSetup() {
