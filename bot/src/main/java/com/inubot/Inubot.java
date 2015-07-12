@@ -52,7 +52,6 @@ public class Inubot extends JFrame implements Runnable {
             RedChinsPRO.class,
             FalconryPRO.class,
             BirdSnarePRO.class,
-            FalconryPRO.class,
             RangeGuild.class,
             PerfectAgility.class,
             PestControl.class,
