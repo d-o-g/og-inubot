@@ -80,6 +80,27 @@ public class WidgetItem implements Identifiable, Processable {
         return CacheLoader.findItemDefinition(id);
     }
 
+    public void processFirst() {
+        if (isInTable()) {
+            RSItemDefinition def = getDefinition();
+            if (def == null)
+                return;
+            for (String action : def.getActions()) {
+                if (action != null && !action.equals("null")) {
+                    processAction(action);
+                    return;
+                }
+            }
+        } else {
+            for (String action : owner.getActions()) {
+                if (action != null && !action.equals("null")) {
+                    processAction(action);
+                    return;
+                }
+            }
+        }
+    }
+
     public void processAction(String action) {
         if (isInTable()) {
             RSItemDefinition def = getDefinition();

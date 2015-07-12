@@ -34,16 +34,15 @@ public class ShootArrows implements Action {
     public void execute() {
         if (Players.getLocal().getLocation().distance(BASE) > 2) {
             if (!Movement.isRunEnabled()) {
-                Mouse.move(578, 138);
-                Mouse.click(true);
+                Movement.toggleRun(true);
             }
             Movement.walkTo(BASE);
             Time.sleep(1500, 2000);
         } else {
-            GameObject obj = GameObjects.getNearest(g -> g.getName() != null && g.getName().equals("Target")
-                    && Arrays.asList(g.getDefinition().getActions()).contains("Fire-at"));
+            GameObject obj = GameObjects.getNearest(g -> "Target".equals(g.getName()) && g.containsAction("Fire-at"));
             if (obj != null) {
                 obj.processAction("Fire-at");
+                Time.sleep(200);
             }
         }
     }

@@ -52,11 +52,10 @@ public class RangeGuild extends Script implements Paintable {
         for (Action task : tasks) {
             if (task.validate()) {
                 task.execute();
-                Time.sleep(300, 600);
                 break;
             }
         }
-        return 200;
+        return 1000;
     }
 
     @Override

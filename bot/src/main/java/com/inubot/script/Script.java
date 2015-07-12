@@ -80,6 +80,7 @@ public abstract class Script extends LoopTask {
                 Time.sleep(600, 700);
             }
         }
+        Inubot.getInstance().getClient().resetMouseIdleTime();
         // anti-logout, clicking stops it from logging you apparently
         if (forceIdleTimeClick) {
             Mouse.move(750, 15);
