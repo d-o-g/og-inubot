@@ -6,6 +6,7 @@
  */
 package com.inubot.script.bundled;
 
+import com.inubot.Inubot;
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.methods.traversal.Path.Option;
@@ -14,6 +15,7 @@ import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.api.util.filter.NameFilter;
+import com.inubot.client.natives.RSCollisionMap;
 import com.inubot.script.Script;
 
 /**
@@ -34,6 +36,9 @@ public class BlueDragonKiller extends Script {
 
     @Override
     public int loop() {
+        State state = getState();
+        if (state == null)
+            return 2000;
         switch (getState()) {
             case WALKING: {
                 WebPath path = WebPath.build(IN_CAVE);
@@ -41,7 +46,7 @@ public class BlueDragonKiller extends Script {
                 break;
             }
             case BANKING: {
-                if (IN_CAVE.distance() < 20) {
+                if (IN_CAVE.distance() < 30) {
                     WidgetItem item = Inventory.getFirst("Falador teleport");
                     if (item != null) {
                         item.processAction("Break");
@@ -63,14 +68,9 @@ public class BlueDragonKiller extends Script {
                     if (!Players.getLocal().getLocation().equals(NORTH_SAFE)) { //TODO make it choose a random safe spot?
                         Movement.walkTo(NORTH_SAFE);
                         return 1800;
-                    }
-                    Npc npc = Npcs.getNearest(new Filter<Npc>() {
-                        @Override
-                        public boolean accept(Npc npc) {
-                            //TODO: check if can fire projectile from current location to target location
-                            return npc.getTarget() == null && !npc.isHealthBarVisible() && !npc.isDying();
-                        }
-                    });
+                    }                           //TODO
+                    Npc npc = Npcs.getNearest(n -> Movement.isEntityReachable(n)
+                            && !n.isHealthBarVisible() && !n.isDying());
                     if (npc != null) {
                         npc.processAction("Attack");
                     }
@@ -80,6 +80,12 @@ public class BlueDragonKiller extends Script {
             case LOOTING: {
                 GroundItem loot = GroundItems.getNearest(new NameFilter<>(LOOT));
                 if (loot != null) {
+                    if (Inventory.isFull()) {
+                        WidgetItem lob = Inventory.getFirst(new NameFilter<>(FOOD));
+                        if (lob != null) {
+                            lob.processAction("Eat");
+                        }
+                    }
                     loot.processAction("Take");
                     Time.await(() -> !Players.getLocal().isMoving(), 3000);
                 }
@@ -102,22 +108,23 @@ public class BlueDragonKiller extends Script {
         WidgetItem tabs = Bank.getFirst(new NameFilter<>("Falador teleport"));
         if (food != null && tabs != null) {
             tabs.processAction("Withdraw-10");
-            food.processAction("Withdraw-1");
-            food.processAction("Withdraw-1");
-            food.processAction("Withdraw-1"); //haha
+            food.processAction("Withdraw-5");
         }
     }
 
     private State getState() {
-        if (Inventory.isFull() && !Inventory.contains("Lobster"))
+        if (Inventory.isFull() && !Inventory.contains("Lobster")) {
             return State.BANKING;
-        if (!Inventory.isFull() && Inventory.contains("Lobster") && IN_CAVE.distance() > 30)
+        } else if (!Inventory.isFull() && Inventory.contains("Lobster") && IN_CAVE.distance() > 30) {
             return State.WALKING;
-        if (GroundItems.getNearest(new NameFilter<>(LOOT)) != null)
+        } else if (GroundItems.getNearest(new NameFilter<>(LOOT)) != null) {
             return State.LOOTING;
-        if (Skills.getCurrentLevel(Skill.HITPOINTS) < 25)
+        } else if (Skills.getCurrentLevel(Skill.HITPOINTS) < 25) {
             return State.EATING;
-        return State.FIGHTING;
+        } else if (!Players.getLocal().isMoving() && Players.getLocal().getTarget() == null) {
+            return State.FIGHTING;
+        }
+        return null;
     }
 
     private enum State {
