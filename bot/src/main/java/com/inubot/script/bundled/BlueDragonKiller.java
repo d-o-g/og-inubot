@@ -67,8 +67,8 @@ public class BlueDragonKiller extends Script {
                     if (obs != null) {
                         obs.processAction("Squeeze-through");
                     }
-                } else if (!Players.getLocal().isMoving() && !Players.getLocal().getLocation().equals(SOUTH_SAFE)) {
-                    Movement.walkTo(SOUTH_SAFE);
+                } else if (!Players.getLocal().isMoving() && !Players.getLocal().getLocation().equals(NORTH_SAFE)) {
+                    Movement.walkTo(NORTH_SAFE);
                     return 1800;
                 } else {
                     Npc npc = Npcs.getNearest(n -> "Blue dragon".equals(n.getName()) && n.distance() < 10
