@@ -177,7 +177,7 @@ public class Interfaces {
 
     public static boolean processContinue() {
         if (canContinue()) {
-            Client.processAction(new DialogButtonAction(continueDialogIndex, -1), "", "");
+            Client.processAction(new DialogButtonAction(continueDialogIndex, -1), "Continue", "");
             return true;
         }
         return false;

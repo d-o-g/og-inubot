@@ -76,7 +76,7 @@ public class RS3Updater extends Updater {
 
     @Override
     public String getModscriptLocation() {
-        return server ? "/usr/share/nginx/html/data/oldschool.dat" : Configuration.CACHE + "/live.dat";
+        return server ? "/usr/share/nginx/html/data/oldschool.dat" : Configuration.CACHE + "/modern.dat";
     }
 
     @Override

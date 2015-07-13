@@ -21,13 +21,14 @@ public class DialogueHandler implements Action {
     @Override
     public void execute() {
         for (Widget widget : Interfaces.getWidgets(RangeGuild.DIALOGUE_FILTER)) {
-            if (widget.getText() == null)
-                continue;
-            if (widget.getText().contains("Click here to continue")) {
-                Inubot.getInstance().getCanvas().pressKey(KeyEvent.VK_SPACE, 200);
-                Inubot.getInstance().getCanvas().releaseKey(KeyEvent.VK_SPACE);
-            } else {
-                Client.processAction(new DialogButtonAction(widget.getId(), 1), "Continue", "");
+            if (widget.getText() != null && widget.isVisible()) {
+                if (widget.getText().contains("Click here to continue")) {
+                    Inubot.getInstance().getCanvas().pressKey(KeyEvent.VK_SPACE, 200);
+                    Inubot.getInstance().getCanvas().releaseKey(KeyEvent.VK_SPACE);
+                } else {
+                    Client.processAction(new DialogButtonAction(widget.getId(), 1), "Continue", "");
+                    break;
+                }
             }
         }
     }

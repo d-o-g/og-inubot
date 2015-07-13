@@ -6,6 +6,7 @@
  */
 package com.inubot.bot.ui;
 
+import com.inubot.Bot;
 import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 
@@ -67,7 +68,7 @@ public class BotMenuBar extends JMenuBar {
             Client.GAME_TICK_SLEEP = Client.LANDSCAPE_RENDERING_ENABLED ? -1 : 125;
             Client.setLowMemory(!Client.isLowMemory());
         });
-        NexusToggleableButton log = new NexusToggleableButton("Console", () -> Inubot.getInstance().getLogPane().isToggled());
+        NexusToggleableButton log = new NexusToggleableButton("Console", () -> Bot.getInstance().getLogPane().isToggled());
         log.addActionListener(e -> {
             if (!Inubot.getInstance().getLogPane().isToggled()) {
                 scroller.add(Inubot.getInstance().getLogPane());

@@ -1,5 +1,7 @@
 package com.inubot.client.natives.modern;
 
-public interface RSSceneGraphLevel {
+import com.inubot.client.natives.ClientNative;
+
+public interface RSSceneGraphLevel extends ClientNative {
     int[][] getTileHeights();
 }

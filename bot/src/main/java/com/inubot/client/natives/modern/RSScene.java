@@ -1,5 +1,7 @@
 package com.inubot.client.natives.modern;
 
-public interface RSScene {
+import com.inubot.client.natives.ClientNative;
+
+public interface RSScene extends ClientNative {
     RSSceneSettings getSettings();
 }

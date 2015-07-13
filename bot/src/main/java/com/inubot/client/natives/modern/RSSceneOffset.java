@@ -6,5 +6,7 @@
  */
 package com.inubot.client.natives.modern;
 
-public interface RSSceneOffset {
+import com.inubot.client.natives.ClientNative;
+
+public interface RSSceneOffset extends ClientNative {
 }

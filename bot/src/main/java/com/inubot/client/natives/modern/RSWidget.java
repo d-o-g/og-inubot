@@ -1,4 +1,6 @@
 package com.inubot.client.natives.modern;
 
-public interface RSWidget {
+import com.inubot.client.natives.ClientNative;
+
+public interface RSWidget extends ClientNative {
 }

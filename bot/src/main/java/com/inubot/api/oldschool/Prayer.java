@@ -11,6 +11,7 @@ import com.inubot.api.util.CacheLoader;
 import com.inubot.client.natives.oldschool.RSItemDefinition;
 
 public enum Prayer {
+
     THICK_SKIN(1, 0x1),
     BURST_OF_STRENGTH(4, 0x2),
     CLARITY_OF_THOUGHT(7, 0x4),
@@ -41,7 +42,7 @@ public enum Prayer {
     private final int level;
     private final int bits;
 
-    private Prayer(final int level, final int bits) {
+    private Prayer(int level, int bits) {
         this.level = level;
         this.bits = bits;
     }
@@ -64,7 +65,7 @@ public enum Prayer {
 
     @Override
     public String toString() {
-        final String name = super.name();
+        String name = super.name();
         return name.charAt(0) + name.substring(1).toLowerCase().replace("_", " ");
     }
 
@@ -83,14 +84,14 @@ public enum Prayer {
         private final boolean membersOnly;
         private final double experienceGain;
 
-        private Bone(final int id, final boolean membersOnly, final double experienceGain) {
+        private Bone(int id, boolean membersOnly, double experienceGain) {
             this.id = id;
             this.membersOnly = membersOnly;
             this.experienceGain = experienceGain;
         }
 
-        public static Bone get(final int id) {
-            for (final Bone bone : Bone.values()) {
+        public static Bone get(int id) {
+            for (Bone bone : Bone.values()) {
                 if (bone.id == id) {
                     return bone;
                 }
@@ -98,7 +99,7 @@ public enum Prayer {
             return null;
         }
 
-        public static int getBonesToExperience(final int currentExp, final int destXp, final Bone bone, final BurialType burialType) {
+        public static int getBonesToExperience(int currentExp, int destXp, Bone bone, BurialType burialType) {
             int bones = 0;
             int curr = currentExp;
             while (curr < destXp) {
@@ -108,11 +109,11 @@ public enum Prayer {
             return bones;
         }
 
-        public static int getBonesToLevel(final int currentExp, final int destLevel, final Bone bone, final BurialType burialType) {
+        public static int getBonesToLevel(int currentExp, int destLevel, Bone bone, BurialType burialType) {
             return getBonesToExperience(currentExp, Skills.getExperienceAt(destLevel), bone, burialType);
         }
 
-        public static int getBonesToLevelUp(final Bone bone, final BurialType burialType) {
+        public static int getBonesToLevelUp(Bone bone, BurialType burialType) {
             return getBonesToExperience(Skills.getExperience(Skill.PRAYER), Skills.getExperienceAt(Skills.getLevel(Skill.PRAYER) + 1),
                     bone, burialType);
         }
@@ -129,7 +130,7 @@ public enum Prayer {
             return getExperienceGain(BurialType.BURY);
         }
 
-        public double getExperienceGain(final BurialType type) {
+        public double getExperienceGain(BurialType type) {
             switch (type) {
                 case GUILDED_ALTAR_NONE_LIT:
                     return experienceGain * 2.5;

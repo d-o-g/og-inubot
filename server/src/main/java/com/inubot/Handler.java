@@ -71,7 +71,6 @@ public class Handler extends ChannelHandlerAdapter {
 
                 if (hash.equals(account.getPassword())) {
                     logger.info("Successfully logged " + username + " into account!");
-
                     List owneds = session.createQuery("from Owned where uid=:uid")
                             .setParameter("uid", account.getId()).list();
                     for (Object asd : owneds) {
@@ -81,8 +80,6 @@ public class Handler extends ChannelHandlerAdapter {
                         ctx.write(data);
                         logger.info("Sent: "  + script.getName());
                     }
-
-
                 } else {
                     logger.info("Failed to log " + username + " into account!");
                 }

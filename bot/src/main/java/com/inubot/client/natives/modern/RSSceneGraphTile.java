@@ -1,4 +1,6 @@
 package com.inubot.client.natives.modern;
 
-public interface RSSceneGraphTile {
+import com.inubot.client.natives.ClientNative;
+
+public interface RSSceneGraphTile extends ClientNative {
 }
