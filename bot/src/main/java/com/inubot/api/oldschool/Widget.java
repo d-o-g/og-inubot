@@ -240,4 +240,15 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
     public int getArea() {
         return getWidth() * getHeight();
     }
+
+    public boolean containsAction(String action) {
+        String[] actions = getActions();
+        if (actions == null)
+            return false;
+        for (String action0 : actions) {
+            if (action0.equals(action))
+                return true;
+        }
+        return false;
+    }
 }

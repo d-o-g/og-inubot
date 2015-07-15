@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 /**
  * Created by luckruns0ut on 03/05/15.
@@ -304,6 +305,11 @@ public class WidgetExplorer extends JFrame implements Paintable {
                             + "<b> Width: </b>" + c.getWidth() + "<br>"
                             + "<b> Height: </b>" + c.getHeight() + "<br>"
                             + "<b> Texture Id: </b>" + c.getTextureId() + "<br>"
+                            + "<b> Item Id: </b>" + c.getItemId() + "<br>"
+                            + "<b> Item quantity: </b>" + c.getItemQuantity() + "<br>"
+                            + "<b> Item Ids: </b>" + Arrays.toString(c.getItemIds()) + "<br>"
+                            + "<b> Item quantities: </b>" + Arrays.toString(c.getItemQuantities()) + "<br>"
+                            + "<b> Actions: </b>" + Arrays.toString(c.getActions()) + "<br>"
                             + "<b> Visible: </b>" + c.isVisible() + "<br>"
                             + "<b> Text: </b>" + c.getText() + "<br>"
                             + "<b> Id: </b>" + c.getId() + "<br>"
