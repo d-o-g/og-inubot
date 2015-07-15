@@ -83,15 +83,21 @@ public class WebPath implements Path {
                 }
 
                 if (object == null) {
-                    throw new IllegalStateException("Bad ObjectVertex (" + vertex.getIndex() + ") on web?");
+                    if (vertex.getName() != null) {
+                        Movement.walkTo(vertex.getTile());
+                    } else {
+                        throw new IllegalStateException("Bad ObjectVertex (" + vertex.getIndex() + ") on web?");
+                    }
                 }
 
-                if (vertex.getAction() == null) {
-                    object.processAction(vertex.getAction());
-                } else {
-                    String[] actions = object.getActions();
-                    if (actions != null && actions.length > 0) {
-                        object.processAction(actions[0]);
+                if (object != null) {
+                    if (vertex.getAction() == null) {
+                        object.processAction(vertex.getAction());
+                    } else {
+                        String[] actions = object.getActions();
+                        if (actions != null && actions.length > 0) {
+                            object.processAction(actions[0]);
+                        }
                     }
                 }
 

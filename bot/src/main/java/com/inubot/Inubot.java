@@ -12,7 +12,7 @@ import com.inubot.bot.modscript.transform.*;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.Crawler.GameType;
 import com.inubot.client.natives.oldschool.RSClient;
-import com.inubot.script.bundled.BlueDragonKiller;
+import com.inubot.script.bundled.*;
 import com.inubot.script.bundled.agility.PerfectAgility;
 import com.inubot.script.bundled.fisher.AutoFisherPRO;
 import com.inubot.script.bundled.hunter.*;
@@ -36,7 +36,9 @@ public class Inubot extends Bot<RSClient> {
             PerfectAgility.class,
             PestControl.class,
             BlueDragonKiller.class,
-            Stringer.class
+            Stringer.class,
+            Chinner.class,
+            ZooFighter.class
     };
 
     @Override

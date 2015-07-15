@@ -6,9 +6,7 @@
  */
 package com.inubot;
 
-import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Game;
-import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Time;
 import com.inubot.bot.account.Account;
 import com.inubot.bot.account.AccountManager;
@@ -63,6 +61,10 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static <T extends ClientNative> Bot<T> getInstance() {
+        return instance;
     }
 
     @Override
@@ -194,9 +196,5 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
                 com.inubot.api.methods.Client.MODEL_RENDERING_ENABLED = false;
             }
         }
-    }
-
-    public static <T extends ClientNative> Bot<T> getInstance() {
-        return instance;
     }
 }

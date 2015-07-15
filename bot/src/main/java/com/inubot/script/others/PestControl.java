@@ -19,7 +19,7 @@ import java.util.Locale;
  */
 public class PestControl extends Script implements Paintable {
 
-    private static final Area BOAT = new Area(new Tile(2660, 2639, 0), new Tile(2663, 2643, 0));
+    private static final Area BOAT = new Area(new Tile(2638, 2642, 0), new Tile(2641, 2647, 0));
     private static final Filter<Npc> ATTACKABLE = npc -> npc.getName() != null && !npc.isDying()
             && (npc.getName().equals("Brawler") || npc.getName().equals("Defiler")
             || npc.getName().equals("Ravager") || npc.getName().equals("Shifter")
@@ -41,7 +41,7 @@ public class PestControl extends Script implements Paintable {
 
     public static ScriptStage getStage() {
         Player me = Players.getLocal();
-        if (me.getLocation().getX() == 2657) {
+        if (me.getLocation().getX() == 2644) {
             return ScriptStage.JOINING;
         } else if (BOAT.contains(me)) {
             return ScriptStage.WAITING;
