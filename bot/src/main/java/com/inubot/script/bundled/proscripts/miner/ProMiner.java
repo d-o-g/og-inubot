@@ -60,26 +60,22 @@ public class ProMiner extends ProScript implements MinerConstants {
     @Override
     public int loop() {
         if (Game.isLoggedIn()) {
-
             if (controller.getModel().getStartExperience() == -1) { //loop because user might not start logged in
                 controller.getModel().setStartExperience(Skills.getExperience(Skill.MINING));
             }
-
             if (Inventory.isFull()) {
                 if (!controller.getModel().isBanking()) {
                     Inventory.dropAll(item -> !item.getName().contains("pickaxe"));
-                } else {
-                    if (!Bank.isOpen()) {
-                        Tile bank = Movement.getWeb().getNearestBank().getLocation();
-                        if (bank.distance() > 10) {
-                            WebPath path = Movement.getWeb().findPathToNearestBank();
-                            path.step(Path.Option.TOGGLE_RUN);
-                        } else {
-                            Bank.open(); //TODO make this support deposit boxes
-                        }
+                } else if (!Bank.isOpen()) {
+                    Tile bank = Movement.getWeb().getNearestBank().getLocation();
+                    if (bank.distance() > 10) {
+                        WebPath path = Movement.getWeb().findPathToNearestBank();
+                        path.step(Path.Option.TOGGLE_RUN);
                     } else {
-                        Bank.depositAllExcept(item -> item.getName().contains("pickaxe"));
+                        Bank.open(); //TODO make this support deposit boxes
                     }
+                } else {
+                    Bank.depositAllExcept(item -> item.getName().contains("pickaxe"));
                 }
             }
 
