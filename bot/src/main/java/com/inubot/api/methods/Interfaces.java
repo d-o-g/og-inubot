@@ -27,7 +27,7 @@ public class Interfaces {
     public static final int BUTTON_VAR_FLIP = 4;
     public static final int BUTTON_VAR_SET = 5;
     public static final int BUTTON_DIALOG = 6;
-    private static int continueDialogIndex = -1;
+    private static int continueDialogId = -1;
 
     public static RSInterface[] raw() {
         return Inubot.getInstance().getClient().getInterfaces();
@@ -165,19 +165,20 @@ public class Interfaces {
     }
 
     public static boolean canContinue() {
-        int[] idces = {229, 231, 217};
-        for (int idx : idces) {
-            if (Interfaces.widgetsFor(idx).length > 0) {
-                continueDialogIndex = idx;
+        //int[] idces = {229, 231, 217};
+        //for (int idx : idces) {
+        Widget w = Interfaces.getWidgetByText("Click here to continue");
+            if (w != null) {
+                continueDialogId = w.getId();
                 return true;
             }
-        }
+        //}
         return false;
     }
 
     public static boolean processContinue() {
         if (canContinue()) {
-            Client.processAction(new DialogButtonAction(continueDialogIndex, -1), "Continue", "");
+            Client.processAction(new DialogButtonAction(continueDialogId, -1), "Continue", "");
             return true;
         }
         return false;

@@ -63,7 +63,7 @@ public class WebPath implements Path {
 
     @Override
     public boolean step(Option... options) {
-        if (dest.getTile().distance(src.getTile()) <= 3)
+        if (dest.getTile().distance(src.getTile()) <= 3 || dest.getTile().distance() <= 3)
             return true;
         for (Option option : options)
             option.handle();
@@ -104,7 +104,8 @@ public class WebPath implements Path {
             } else {
                 Movement.walkTo(next.getTile());
             }
-            return Time.await(() -> !Players.getLocal().isMoving() && Players.getLocal().getAnimation() == -1, 5000);
+            //TODO this timeout of 15 secs maybe too small? since 1 step can traverse an entire region with our bot..
+            return Time.await(() -> !Players.getLocal().isMoving() && Players.getLocal().getAnimation() == -1, 15000);
         }
         return false;
     }

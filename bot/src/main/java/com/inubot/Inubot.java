@@ -16,6 +16,7 @@ import com.inubot.script.bundled.*;
 import com.inubot.script.bundled.agility.PerfectAgility;
 import com.inubot.script.bundled.fisher.AutoFisherPRO;
 import com.inubot.script.bundled.hunter.*;
+import com.inubot.script.bundled.proscripts.alcher.ProAlcher;
 import com.inubot.script.bundled.proscripts.miner.ProMiner;
 import com.inubot.script.bundled.rangeguild.RangeGuild;
 import com.inubot.script.others.PestControl;
@@ -40,7 +41,8 @@ public class Inubot extends Bot<RSClient> {
             Stringer.class,
             Chinner.class,
             ZooFighter.class,
-            ProMiner.class
+            ProMiner.class,
+            ProAlcher.class
     };
 
     @Override

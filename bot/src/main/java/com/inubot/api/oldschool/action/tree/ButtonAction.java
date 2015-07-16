@@ -12,7 +12,7 @@ import com.inubot.api.oldschool.action.ActionOpcodes;
 public abstract class ButtonAction extends Action {
 
     public ButtonAction(int opcode, int widgetUid) {
-        super(opcode, 0, 0, widgetUid);
+        super(opcode, 0, -1, widgetUid);
     }
 
     public static ButtonAction valueOf(int opcode, int buttonIndex, int widgetUid) {

@@ -148,9 +148,13 @@ public class BlueDragonKiller extends Script {
         Bank.depositInventory();
         WidgetItem food = Bank.getFirst(new NameFilter<>(FOOD));
         WidgetItem tabs = Bank.getFirst(new NameFilter<>("Falador teleport"));
-        if (food != null && tabs != null) {
+        WidgetItem air = Bank.getFirst(new NameFilter<>("Air rune"));
+        WidgetItem death = Bank.getFirst(new NameFilter<>("Death rune"));
+        if (food != null && tabs != null && air != null && death != null) {
             tabs.processAction("Withdraw-10");
-            food.processAction("Withdraw-5");
+            food.processAction("Withdraw-1");
+            air.processAction("Withdraw-All");
+            death.processAction("Withdraw-All");
         }
     }
 
