@@ -51,8 +51,9 @@ public abstract class ProScript extends Script implements Paintable {
         graphics.fillRect(11, 11, widest + BASE_PAINT - 1, BASE_PAINT + (HEIGHT * dataLen) - 1);
         graphics.setColor(Color.WHITE);
         graphics.drawString(getTitle(), 13, BASE_PAINT + HEIGHT);
+        graphics.setColor(Color.GREEN);
+        graphics.drawLine(12, 13 + HEIGHT, widest + BASE_PAINT + 8, 13 + HEIGHT);
         graphics.setColor(Color.WHITE.darker());
-        graphics.drawLine(12, 13 + HEIGHT, widest + BASE_PAINT + 5, 13 + HEIGHT);
         int index = 2;
         for (Map.Entry<String, Object> entry : paintData.entrySet()) {
             String data = entry.getKey() + ": " + entry.getValue().toString();

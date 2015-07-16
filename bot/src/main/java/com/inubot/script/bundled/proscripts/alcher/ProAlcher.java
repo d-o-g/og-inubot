@@ -43,13 +43,22 @@ public class ProAlcher extends ProScript implements AlcherConstants {
         data.put(RUNTIME_KEY, stopWatch.toElapsedString());
         int expGained = Skills.getExperience(Skill.MAGIC) - startExp;
         data.put(EXP_KEY, expGained);
-        data.put(EXP_PH_KEY, stopWatch.getHourlyRate(expGained));
-        data.put(ALCHS_KEY, expGained / 65);
-        data.put(ALCHS_PH_KEY, stopWatch.getHourlyRate(expGained / 65));
+        int hourlyExp = stopWatch.getHourlyRate(expGained);
+        data.put(EXP_PH_KEY, hourlyExp);
+        int expToLvl = Skills.getExperienceAt(Skills.getLevel(Skill.MAGIC) + 1) - Skills.getExperience(Skill.MAGIC);
+        data.put(EXP_TL_KEY, expToLvl);
+        data.put(TTL_KEY, Skills.getLevel(Skill.MAGIC) == 99 ? "Maxed!"
+                : hourlyExp > 0 ? StopWatch.format(expToLvl * 360 / hourlyExp * 10000) : "00:00:00");
+        data.put(ALCHS_KEY, expGained / (Skills.getLevel(Skill.MAGIC) < 55 ? 31 : 65));
+        data.put(ALCHS_PH_KEY, stopWatch.getHourlyRate(expGained / (Skills.getLevel(Skill.MAGIC) < 55 ? 31 : 65)));
+        data.put(ALCHS_TL, expToLvl / (Skills.getLevel(Skill.MAGIC) < 55 ? 31 : 65));
     }
 
     @Override
     public int loop() {
+        if (!Game.isLoggedIn()) {
+            return 1200;
+        }
         if (startExp == -1) {
             startExp = Skills.getExperience(Skill.MAGIC);
         }

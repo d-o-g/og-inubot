@@ -90,8 +90,8 @@ public class StopWatch {
         return format(unit.convert(getRemaining(), TimeUnit.MILLISECONDS));
     }
 
-    public int getHourlyRate(final long j) {
-        return (int) (j * 3600000.0D / getElapsed());
+    public int getHourlyRate(final long value) {
+        return (int) (value * 3600000.0D / getElapsed());
     }
 
     public long getStart() {

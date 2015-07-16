@@ -1,10 +1,10 @@
-package com.inubot.script.bundled.proscripts.superheater;
+package com.inubot.script.bundled.proscripts.enchanter;
 
 /**
  * @author Dogerina
  * @since 16-07-2015
  */
-public interface SuperheaterConstants {
+public interface EnchanterConstants {
     //paint
     String EXP_KEY = "Experience";
     String EXP_PH_KEY = "Experience/hr";

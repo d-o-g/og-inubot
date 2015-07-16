@@ -16,5 +16,8 @@ public interface AlcherConstants {
     String EXP_PH_KEY = "Experience/hr";
     String ALCHS_KEY = "Alchs";
     String ALCHS_PH_KEY = "Alchs/hr";
+    String ALCHS_TL = "Alchs to level";
+    String EXP_TL_KEY = "Experience to level";
+    String TTL_KEY = "Time to level";
     String RUNTIME_KEY = "Runtime";
 }
