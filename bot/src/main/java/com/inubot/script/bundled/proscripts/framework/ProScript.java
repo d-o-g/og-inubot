@@ -28,32 +28,35 @@ public abstract class ProScript extends Script implements Paintable {
         this.paintData = new LinkedHashMap<>();
     }
 
+    public abstract String getTitle();
     public abstract void getPaintData(Map<String, Object> data);
 
     @Override
     public final void render(Graphics2D graphics) {
         getPaintData(paintData);
-        Graphics2D g = (Graphics2D) graphics;
         int widest = 0;
         for (Map.Entry<String, Object> entry : paintData.entrySet()) {
             String data = entry.getKey() + ": " + entry.getValue().toString();
-            int width = g.getFontMetrics().stringWidth(data);
+            int width = graphics.getFontMetrics().stringWidth(data);
             if (width > widest) {
                 widest = width;
             }
         }
-        int dataLen = paintData.size();
-        g.setColor(Color.GREEN);
-        g.setStroke(new BasicStroke(3.0f));
-        g.drawRect(10, 10, widest + BASE_PAINT, BASE_PAINT + (HEIGHT * dataLen));
-        g.setColor(Color.BLACK);
-        g.setComposite(AlphaComposite.SrcOver.derive(0.7f));
-        g.fillRect(11, 11, widest + BASE_PAINT - 1, BASE_PAINT + (HEIGHT * dataLen) - 1);
-        g.setColor(Color.WHITE.darker());
-        int index = 1;
+        int dataLen = paintData.size() + 1;
+        graphics.setColor(Color.GREEN);
+        graphics.setStroke(new BasicStroke(3.0f));
+        graphics.drawRect(10, 10, widest + BASE_PAINT, BASE_PAINT + (HEIGHT * dataLen));
+        graphics.setColor(Color.BLACK);
+        graphics.setComposite(AlphaComposite.SrcOver.derive(0.7f));
+        graphics.fillRect(11, 11, widest + BASE_PAINT - 1, BASE_PAINT + (HEIGHT * dataLen) - 1);
+        graphics.setColor(Color.WHITE);
+        graphics.drawString(getTitle(), 13, BASE_PAINT + HEIGHT);
+        graphics.setColor(Color.WHITE.darker());
+        graphics.drawLine(10, 13 + HEIGHT, widest + BASE_PAINT + 2, 13 + HEIGHT);
+        int index = 2;
         for (Map.Entry<String, Object> entry : paintData.entrySet()) {
             String data = entry.getKey() + ": " + entry.getValue().toString();
-            g.drawString(data, 13, BASE_PAINT + (HEIGHT * index));
+            graphics.drawString(data, 13, BASE_PAINT + (HEIGHT * index));
             index++;
         }
     }

@@ -9,8 +9,10 @@ package com.inubot.script.bundled.proscripts.miner;
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.methods.traversal.Path;
+import com.inubot.api.methods.traversal.Path.Option;
 import com.inubot.api.methods.traversal.graph.WebPath;
 import com.inubot.api.oldschool.*;
+import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
@@ -32,6 +34,11 @@ public class ProMiner extends ProScript implements MinerConstants {
     public ProMiner() {
         this.controller = new MinerController(new MinerView(), new MinerModel());
         this.stopWatch = new StopWatch(0);
+    }
+
+    @Override
+    public String getTitle() {
+        return "ProMiner v1.00";
     }
 
     @Override
@@ -77,17 +84,19 @@ public class ProMiner extends ProScript implements MinerConstants {
                 } else {
                     Bank.depositAllExcept(item -> item.getName().contains("pickaxe"));
                 }
-            }
-
-            if (rock != null) {
-                rock = GameObjects.getNearest(t -> t.getLocation().equals(rock.getLocation()));
-            }
-
-            if (Players.getLocal().getAnimation() == -1 || rock != null && !isGoodRock(rock)) {
-                rock = GameObjects.getNearest(go -> go.distance() <= 2 && isGoodRock(go));
-                if (rock != null)
-                    rock.processAction("Mine");
-                return 1500;
+            } else {
+                if (controller.getModel().getSelectedLocation().location.distance() > 10) {
+                    WebPath path = WebPath.build(controller.getModel().getSelectedLocation().location);
+                    path.step(Option.TOGGLE_RUN);
+                } else if (rock != null) {
+                    rock = GameObjects.getNearest(t -> t.getLocation().equals(rock.getLocation()));
+                }
+                if (Players.getLocal().getAnimation() == -1 || (rock != null && !isGoodRock(rock))) {
+                    rock = GameObjects.getNearest(this::isGoodRock);
+                    if (rock != null)
+                        rock.processAction("Mine");
+                    return 1500;
+                }
             }
         }
         return 1000;
@@ -99,6 +108,13 @@ public class ProMiner extends ProScript implements MinerConstants {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void messageReceived(MessageEvent e) {
+        if (e.getText().contains("manage to mine")) {
+            controller.getModel().incrementOreMined();
+        }
     }
 
     enum Location {
