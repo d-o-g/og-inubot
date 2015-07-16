@@ -52,7 +52,7 @@ public abstract class ProScript extends Script implements Paintable {
         graphics.setColor(Color.WHITE);
         graphics.drawString(getTitle(), 13, BASE_PAINT + HEIGHT);
         graphics.setColor(Color.WHITE.darker());
-        graphics.drawLine(12, 13 + HEIGHT, widest + BASE_PAINT + 2, 13 + HEIGHT);
+        graphics.drawLine(12, 13 + HEIGHT, widest + BASE_PAINT + 5, 13 + HEIGHT);
         int index = 2;
         for (Map.Entry<String, Object> entry : paintData.entrySet()) {
             String data = entry.getKey() + ": " + entry.getValue().toString();
