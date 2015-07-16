@@ -27,7 +27,10 @@ public class BlueDragonKiller extends Script {
 
     //wat else
     private static final String[] LOOT = {"Draconic visage", "Clue scroll (hard)", "Dragon bones",
-            "Grimy dwarf weed", "Grimy avantoe", "Grimy ranarr", "Blue dragonhide", "Grimy cadantine"};
+            "Grimy dwarf weed", "Grimy avantoe", "Grimy ranarr", "Blue dragonhide", "Grimy cadantine",
+            "Dragon med helm", "Rune kiteshield", "Dragon spear", "Shield left half", "Rune dagger",
+            "Dragonstone", "Rune sq shield", "Rune 2h sword", "Rune battleaxe", "Runite bar",
+            "Loop half of key", "Tooth half of key"};
     private static final String[] FOOD = {"Lobster"};
     private static final Tile NORTH_SAFE = new Tile(2900, 9809);
     private static final Tile SOUTH_SAFE = new Tile(-1, -1);
