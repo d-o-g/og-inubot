@@ -19,8 +19,10 @@ import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.proscripts.alcher.ProAlcher;
 import com.inubot.script.bundled.proscripts.miner.ProMiner;
 import com.inubot.script.bundled.rangeguild.RangeGuild;
+import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.PestControl;
 import com.inubot.script.others.septron.Combot;
+import com.inubot.script.others.septron.fletching.Fletcher;
 import com.inubot.script.others.septron.fletching.Stringer;
 
 import javax.swing.*;
@@ -38,7 +40,9 @@ public class Inubot extends Bot<RSClient> {
             PerfectAgility.class,
             PestControl.class,
             BlueDragonKiller.class,
+            Fletcher.class,
             Stringer.class,
+            TutorialIsland.class,
             Chinner.class,
             ZooFighter.class,
             ProMiner.class,

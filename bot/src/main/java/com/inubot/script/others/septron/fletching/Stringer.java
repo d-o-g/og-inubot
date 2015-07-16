@@ -1,36 +1,25 @@
 package com.inubot.script.others.septron.fletching;
 
 import com.inubot.api.methods.*;
-import com.inubot.api.oldschool.Player;
 import com.inubot.api.oldschool.Skill;
-import com.inubot.api.oldschool.Tab;
 import com.inubot.api.oldschool.WidgetItem;
-import com.inubot.api.util.AWTUtil;
-import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
-import com.inubot.script.Script;
+import com.inubot.script.bundled.proscripts.framework.ProScript;
 
-import java.awt.*;
 import java.text.DecimalFormat;
+import java.util.Map;
 
 /**
  * @author Septron
  * @since July 04, 2015
  */
-public class Stringer extends Script implements Paintable {
+public class Stringer extends ProScript {
 
     private final StopWatch stopwatch = new StopWatch(0);
 
-    private boolean animating() {
-        for (int i = 0; i < 15; i++) {
-            if (Players.getLocal().getAnimation() != -1)
-                return true;
-            Time.sleep(100);
-        }
-        return false;
-    }
+    private long animated;
 
     private int price, cost, xp;
 
@@ -42,10 +31,8 @@ public class Stringer extends Script implements Paintable {
             return "Willow longbow (u)";
         } else if (level >= 55 && level < 70) {
             return "Maple longbow (u)";
-        } else if (level >= 70 && level < 80) {
+        } else if (level >= 70 && level < 85) {
             return "Yew longbow (u)";
-        } else if (level >= 80 && level < 85) {
-            return "Magic shortbow (u)";
         } else if (level >= 85 && level < 99) {
             return "Magic longbow (u)";
         }
@@ -56,8 +43,10 @@ public class Stringer extends Script implements Paintable {
     public int loop() {
         if (!Game.isLoggedIn())
             return 600;
-        if (animating())
-            return 1000;
+        if (Players.getLocal().getAnimation() != -1)
+            animated = System.currentTimeMillis();
+        if (System.currentTimeMillis() - animated < 1200)
+            return 600;
         if (Inventory.getCount(bow().replace(" (u)", "")) == 14 || Inventory.getCount() == 0) {
             if (!Bank.isOpen()) {
                 Bank.open();
@@ -92,30 +81,26 @@ public class Stringer extends Script implements Paintable {
     @Override
     public boolean setup() {
         xp = Skills.getExperience(Skill.FLETCHING);
-        cost = Exchange.getPrice(66) + Exchange.getPrice(1777);
-        price = Exchange.getPrice(855);
+        cost = Exchange.getPrice(70) + Exchange.getPrice(1777);
+        price = Exchange.getPrice(859);
         return true;
     }
 
     private final static DecimalFormat formatter = new DecimalFormat("#,###");
 
     @Override
-    public void render(Graphics2D g) {
+    public String getTitle() {
+        return "Pro Stringer";
+    }
 
+    @Override
+    public void getPaintData(Map<String, Object> data) {
         int gain = Skills.getExperience(Skill.FLETCHING) - xp;
-        int actions = (int) (gain / 58.25);
+        int actions = (int) (gain / 92 );
 
-        int a = stopwatch.getHourlyRate(actions) * price;
-        int b = stopwatch.getHourlyRate(actions) * cost;
-        int c = a - b;
-
-        g.setColor(Color.BLACK);
-        g.drawRoundRect(5, 5, 150, 70, 5, 5);
-        g.setColor(new Color(0, 255, 255, 60));
-        g.fillRoundRect(5, 5, 150, 70, 5, 5);
-        AWTUtil.drawBoldedString(g, "Time Running: " + stopwatch.toElapsedString(), 10, 20, Color.WHITE);
-        AWTUtil.drawBoldedString(g, "Actions P/H: " + stopwatch.getHourlyRate(actions), 10, 35, Color.WHITE);
-        AWTUtil.drawBoldedString(g, "GP P/H: " + formatter.format(c), 10, 50, Color.WHITE);
-        AWTUtil.drawBoldedString(g, "Made: " + actions, 10, 65, Color.WHITE);
+        data.put("Time Running", stopwatch.toElapsedString());
+        data.put("Actions P/H", stopwatch.getHourlyRate(actions));
+        data.put("GP P/H", formatter.format(stopwatch.getHourlyRate(actions) * (price - cost)));
+        data.put("Made", actions);
     }
 }

@@ -21,7 +21,7 @@ public class CreaterGUI extends JFrame {
     private JLabel b = new JLabel("Password:");
 
     public CreaterGUI() {
-        setTitle("Account AccountCreator");
+        setTitle("Account Creator");
         init();
         pack();
     }
