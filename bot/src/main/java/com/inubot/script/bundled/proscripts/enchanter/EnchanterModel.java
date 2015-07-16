@@ -15,15 +15,10 @@ import com.inubot.script.bundled.proscripts.framework.ProModel;
  */
 public class EnchanterModel extends ProModel {
 
-    private final StopWatch stopWatch;
     private int startExperience;
 
     EnchanterModel() {
-        this.stopWatch = new StopWatch(0);
-    }
 
-    public StopWatch getStopWatch() {
-        return stopWatch;
     }
 
     public int getStartExperience() {

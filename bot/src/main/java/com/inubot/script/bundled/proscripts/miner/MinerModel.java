@@ -6,7 +6,6 @@
  */
 package com.inubot.script.bundled.proscripts.miner;
 
-import com.inubot.api.util.StopWatch;
 import com.inubot.script.bundled.proscripts.framework.ProModel;
 
 /**
@@ -21,10 +20,8 @@ public class MinerModel extends ProModel implements MinerConstants {
     private int oreMined;
     private int startExperience = -1;
 
-    private final StopWatch stopWatch;
-
     MinerModel() {
-        this.stopWatch = new StopWatch(0);
+
     }
 
     public ProMiner.Rock[] getSelectedRocks() {
@@ -72,9 +69,5 @@ public class MinerModel extends ProModel implements MinerConstants {
 
     public void setStartExperience(int startExperience) {
         this.startExperience = startExperience;
-    }
-
-    public StopWatch getStopWatch() {
-        return stopWatch;
     }
 }

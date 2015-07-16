@@ -26,12 +26,7 @@ public class ProAlcher extends ProScript implements AlcherConstants {
 
     private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));
     private static final Filter<WidgetItem> OTHER_FILTER = (i -> !NATURE_FILTER.accept(i));
-    private final StopWatch stopWatch;
     private int startExp = -1;
-
-    public ProAlcher() {
-        this.stopWatch = new StopWatch(0);
-    }
 
     @Override
     public String getTitle() {
@@ -40,17 +35,16 @@ public class ProAlcher extends ProScript implements AlcherConstants {
 
     @Override
     public void getPaintData(Map<String, Object> data) {
-        data.put(RUNTIME_KEY, stopWatch.toElapsedString());
         int expGained = Skills.getExperience(Skill.MAGIC) - startExp;
         data.put(EXP_KEY, expGained);
-        int hourlyExp = stopWatch.getHourlyRate(expGained);
+        int hourlyExp = getStopWatch().getHourlyRate(expGained);
         data.put(EXP_PH_KEY, hourlyExp);
         int expToLvl = Skills.getExperienceAt(Skills.getLevel(Skill.MAGIC) + 1) - Skills.getExperience(Skill.MAGIC);
         data.put(EXP_TL_KEY, expToLvl);
         data.put(TTL_KEY, Skills.getLevel(Skill.MAGIC) == 99 ? "Maxed!"
                 : hourlyExp > 0 ? StopWatch.format(expToLvl * 360 / hourlyExp * 10000) : "00:00:00");
         data.put(ALCHS_KEY, expGained / (Skills.getLevel(Skill.MAGIC) < 55 ? 31 : 65));
-        data.put(ALCHS_PH_KEY, stopWatch.getHourlyRate(expGained / (Skills.getLevel(Skill.MAGIC) < 55 ? 31 : 65)));
+        data.put(ALCHS_PH_KEY, getStopWatch().getHourlyRate(expGained / (Skills.getLevel(Skill.MAGIC) < 55 ? 31 : 65)));
         data.put(ALCHS_TL, expToLvl / (Skills.getLevel(Skill.MAGIC) < 55 ? 31 : 65));
     }
 

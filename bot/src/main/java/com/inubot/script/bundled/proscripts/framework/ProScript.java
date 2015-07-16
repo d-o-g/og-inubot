@@ -7,6 +7,7 @@
 package com.inubot.script.bundled.proscripts.framework;
 
 import com.inubot.api.util.Paintable;
+import com.inubot.api.util.StopWatch;
 import com.inubot.script.Script;
 
 import java.awt.*;
@@ -23,9 +24,11 @@ public abstract class ProScript extends Script implements Paintable {
     private static final int HEIGHT = 20;
 
     private final Map<String, Object> paintData;
+    private final StopWatch stopWatch;
 
     public ProScript() {
         this.paintData = new LinkedHashMap<>();
+        this.stopWatch = new StopWatch(0);
     }
 
     public abstract String getTitle();
@@ -34,6 +37,7 @@ public abstract class ProScript extends Script implements Paintable {
 
     @Override
     public final void render(Graphics2D graphics) {
+        paintData.put("Runtime", stopWatch.toElapsedString());
         getPaintData(paintData);
         int widest = 0;
         for (Map.Entry<String, Object> entry : paintData.entrySet()) {
@@ -62,4 +66,10 @@ public abstract class ProScript extends Script implements Paintable {
             index++;
         }
     }
+
+    public StopWatch getStopWatch() {
+        return stopWatch;
+    }
+
+    //TODO maybe override onPause and onResume to stop/resume StopWatch?
 }

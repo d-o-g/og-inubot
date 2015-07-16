@@ -18,8 +18,6 @@ public class Fletcher extends ProScript {
 
     private final static DecimalFormat formatter = new DecimalFormat("#,###");
 
-    private final StopWatch stopwatch = new StopWatch(0);
-
     private long animated;
 
     private int price, xp;
@@ -110,10 +108,8 @@ public class Fletcher extends ProScript {
     public void getPaintData(Map<String, Object> data) {
         int gain = Skills.getExperience(Skill.FLETCHING) - xp;
         int actions = (int) (gain / 58.25);
-
-        data.put("Time Running", stopwatch.toElapsedString());
-        data.put("Actions P/H", stopwatch.getHourlyRate(actions));
-        data.put("GP P/H", formatter.format(stopwatch.getHourlyRate(actions) * price));
+        data.put("Actions P/H", getStopWatch().getHourlyRate(actions));
+        data.put("GP P/H", formatter.format(getStopWatch().getHourlyRate(actions) * price));
         data.put("Made", actions);
     }
 }

@@ -17,6 +17,5 @@ public interface MinerConstants {
     String EXP_PH_KEY = "Experience/hr";
     String MINED_KEY = "Ore mined";
     String MINED_PH_KEY = "Ore mined/hr";
-    String RUNTIME_KEY = "Runtime";
 
 }
