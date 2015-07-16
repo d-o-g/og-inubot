@@ -7,6 +7,7 @@
 package com.inubot.api.methods;
 
 import com.inubot.Inubot;
+import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.oldschool.RSClient;
 
 public class Game {
@@ -62,5 +63,9 @@ public class Game {
      */
     public static RSClient getClient() {
         return Inubot.getInstance().getClient();
+    }
+
+    public static GameCanvas getCanvas() {
+        return Inubot.getInstance().getCanvas();
     }
 }

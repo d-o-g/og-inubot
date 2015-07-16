@@ -19,16 +19,17 @@ import java.util.Map;
  */
 public abstract class ProScript extends Script implements Paintable {
 
-    private final Map<String, Object> paintData;
-
     private static final int BASE_PAINT = 6;
     private static final int HEIGHT = 20;
+
+    private final Map<String, Object> paintData;
 
     public ProScript() {
         this.paintData = new LinkedHashMap<>();
     }
 
     public abstract String getTitle();
+
     public abstract void getPaintData(Map<String, Object> data);
 
     @Override
@@ -45,7 +46,7 @@ public abstract class ProScript extends Script implements Paintable {
         int dataLen = paintData.size() + 1;
         graphics.setColor(Color.GREEN);
         graphics.setStroke(new BasicStroke(3.0f));
-        graphics.drawRect(10, 10, widest + BASE_PAINT, BASE_PAINT + (HEIGHT * dataLen));
+        graphics.drawRect(10, 10, widest + BASE_PAINT, BASE_PAINT + HEIGHT * dataLen);
         graphics.setColor(Color.BLACK);
         graphics.setComposite(AlphaComposite.SrcOver.derive(0.7f));
         graphics.fillRect(11, 11, widest + BASE_PAINT - 1, BASE_PAINT + (HEIGHT * dataLen) - 1);
