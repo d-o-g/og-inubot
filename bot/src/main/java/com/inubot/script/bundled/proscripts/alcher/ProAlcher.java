@@ -35,7 +35,7 @@ public class ProAlcher extends ProScript implements AlcherConstants {
 
     @Override
     public String getTitle() {
-        return "ProAlcher";
+        return "ProAlcher v1.00";
     }
 
     @Override

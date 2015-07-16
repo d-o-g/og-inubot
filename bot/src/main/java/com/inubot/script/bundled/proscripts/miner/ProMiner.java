@@ -28,12 +28,10 @@ import java.util.Map;
 public class ProMiner extends ProScript implements MinerConstants {
 
     private final MinerController controller;
-    private final StopWatch stopWatch;
     private GameObject rock;
 
     public ProMiner() {
         this.controller = new MinerController(new MinerView(), new MinerModel());
-        this.stopWatch = new StopWatch(0);
     }
 
     @Override
@@ -56,12 +54,12 @@ public class ProMiner extends ProScript implements MinerConstants {
 
     @Override
     public void getPaintData(Map<String, Object> data) {
-        data.put(RUNTIME_KEY, stopWatch.toElapsedString());
+        data.put(RUNTIME_KEY, controller.getModel().getStopWatch().toElapsedString());
         int exp = Skills.getExperience(Skill.MINING) - controller.getModel().getStartExperience();
         data.put(EXP_KEY, exp);
-        data.put(EXP_PH_KEY, stopWatch.getHourlyRate(exp));
+        data.put(EXP_PH_KEY, controller.getModel().getStopWatch().getHourlyRate(exp));
         data.put(MINED_KEY, controller.getModel().getOreMined());
-        data.put(MINED_PH_KEY, stopWatch.getHourlyRate(controller.getModel().getOreMined()));
+        data.put(MINED_PH_KEY, controller.getModel().getStopWatch().getHourlyRate(controller.getModel().getOreMined()));
     }
 
     @Override
