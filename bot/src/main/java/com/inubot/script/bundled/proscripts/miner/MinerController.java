@@ -7,15 +7,15 @@
 package com.inubot.script.bundled.proscripts.miner;
 
 import com.inubot.script.bundled.proscripts.framework.ProModel.Event;
-import com.inubot.script.bundled.proscripts.framework.ProPresenter;
+import com.inubot.script.bundled.proscripts.framework.ProController;
 
 /**
  * @author Dogerina
  * @since 15-07-2015
  */
-public class MinerPresenter extends ProPresenter<MinerView, MinerModel> implements MinerConstants {
+public class MinerController extends ProController<MinerView, MinerModel> implements MinerConstants {
 
-    MinerPresenter(MinerView view, MinerModel model) {
+    MinerController(MinerView view, MinerModel model) {
         super(view, model);
     }
 

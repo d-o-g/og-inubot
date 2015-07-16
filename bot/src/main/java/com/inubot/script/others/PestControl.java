@@ -1,6 +1,7 @@
 package com.inubot.script.others;
 
 import com.inubot.api.methods.*;
+import com.inubot.api.oldschool.Character;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.Time;
@@ -68,9 +69,9 @@ public class PestControl extends Script implements Paintable {
 
     @Override
     public int loop() {
-        switchStyle();
+       // switchStyle();
         if (Players.getLocal().getTargetIndex() != -1) {
-            com.inubot.api.oldschool.Character<?> target = Players.getLocal().getTarget();
+            Character target = Players.getLocal().getTarget();
             if (target.isDying() && "Splatter".equals(target.getName())) {
                 Movement.walkTo(safeTileFor(Players.getLocal().getLocation(), target.getLocation()));
             }
@@ -148,7 +149,7 @@ public class PestControl extends Script implements Paintable {
         g.drawString("Hitpoints: " + Skills.getCurrentLevel(Skill.HITPOINTS) + "/" + Skills.getLevel(Skill.HITPOINTS) + " | XP: " + format(getExperienceGained(Skill.HITPOINTS)) + " | Hourly XP: " + format(perHour(getExperienceGained(Skill.HITPOINTS))) + " | TTL: " + getTNL(Skill.HITPOINTS, perHour(getExperienceGained(Skill.HITPOINTS))) + " | Percent: " + getPercentToNextLevel(Skill.HITPOINTS) + "%", 19, 424);
     }
 
-    public void switchStyle() {
+   /* private void switchStyle() {
         if (Skills.getLevel(Skill.ATTACK) - Skills.getLevel(Skill.STRENGTH) >= 1) {
             if (Combat.getStyle() == 0) {
                 Combat.setStyle(1);
@@ -162,7 +163,7 @@ public class PestControl extends Script implements Paintable {
                 Combat.setStyle(0);
             }
         }
-    }
+    }*/
 
     public String format(int i) {
         return NumberFormat.getNumberInstance(Locale.US).format(i);
@@ -200,14 +201,14 @@ public class PestControl extends Script implements Paintable {
     }
 
     public int getExperienceGained(Skill skill) {
-        switch (skill.name()) {
-            case "ATTACK":
+        switch (skill) {
+            case ATTACK:
                 return Skills.getExperience(skill) - startingAttackExperience;
-            case "STRENGTH":
+            case STRENGTH:
                 return Skills.getExperience(skill) - startingStrengthExperience;
-            case "DEFENCE":
+            case DEFENCE:
                 return Skills.getExperience(skill) - startingDefenceExperience;
-            case "HITPOINTS":
+            case HITPOINTS:
                 return Skills.getExperience(skill) - startingHitpointsExperience;
             default:
                 return -1;

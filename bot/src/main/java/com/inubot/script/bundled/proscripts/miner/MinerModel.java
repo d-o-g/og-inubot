@@ -17,6 +17,8 @@ public class MinerModel extends ProModel implements MinerConstants {
     private ProMiner.Rock[] selectedRocks;
     private ProMiner.Location selectedLocation;
     private boolean banking;
+    private int oreMined;
+    private int startExperience = -1;
 
     MinerModel() {
 
@@ -47,5 +49,25 @@ public class MinerModel extends ProModel implements MinerConstants {
     public void setBanking(boolean banking) {
         this.banking = banking;
         fireLater(BANKING_PROP);
+    }
+
+    public int getOreMined() {
+        return oreMined;
+    }
+
+    public void setOreMined(int oreMined) {
+        this.oreMined = oreMined;
+    }
+
+    public void incrementOreMined() {
+        oreMined++;
+    }
+
+    public int getStartExperience() {
+        return startExperience;
+    }
+
+    public void setStartExperience(int startExperience) {
+        this.startExperience = startExperience;
     }
 }

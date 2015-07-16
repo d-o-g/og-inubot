@@ -12,14 +12,14 @@ import com.inubot.script.bundled.proscripts.framework.ProModel.Listener;
  * @author Dogerina
  * @since 15-07-2015
  */
-public abstract class ProPresenter<T extends ProView, K extends ProModel> implements Listener {
+public abstract class ProController<T extends ProView, K extends ProModel> implements Listener {
 
     private final T view;
     private final K model;
 
-    public ProPresenter(T view, K model) {
+    public ProController(T view, K model) {
         this.view = view;
-        this.view.setPresenter(this);
+        this.view.setController(this);
         this.model = model;
         this.model.addLater(this);
     }

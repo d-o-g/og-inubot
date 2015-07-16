@@ -6,30 +6,103 @@
  */
 package com.inubot.script.bundled.proscripts.miner;
 
-import com.inubot.api.oldschool.GameObject;
-import com.inubot.api.oldschool.Tile;
-import com.inubot.api.util.CacheLoader;
+import com.inubot.api.methods.*;
+import com.inubot.api.methods.traversal.Movement;
+import com.inubot.api.methods.traversal.Path;
+import com.inubot.api.methods.traversal.graph.WebPath;
+import com.inubot.api.oldschool.*;
+import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
-import com.inubot.script.Script;
+import com.inubot.script.bundled.proscripts.framework.ProScript;
 
 import java.awt.*;
+import java.util.Map;
 
 /**
  * @author Dogerina
  * @since 15-07-2015
  */
-public class ProMiner extends Script {
+public class ProMiner extends ProScript implements MinerConstants {
 
-    private final MinerPresenter presenter;
+    private final MinerController controller;
+    private final StopWatch stopWatch;
+    private GameObject rock;
 
     public ProMiner() {
-        this.presenter = new MinerPresenter(new MinerView(), new MinerModel());
+        this.controller = new MinerController(new MinerView(), new MinerModel());
+        this.stopWatch = new StopWatch(0);
+    }
+
+    @Override
+    public boolean setup() {
+        controller.getView().display();
+        while (true) {
+            Time.sleep(800);
+            if (controller.getView().isDisposable()) {
+                break;
+            }
+        }
+        controller.getView().dispose(); //maybe just hide instead of dispose? might want to change while running script..
+        return true;
+    }
+
+    @Override
+    public void getPaintData(Map<String, Object> data) {
+        data.put(RUNTIME_KEY, stopWatch.toElapsedString());
+        int exp = Skills.getExperience(Skill.MINING) - controller.getModel().getStartExperience();
+        data.put(EXP_KEY, exp);
+        data.put(EXP_PH_KEY, stopWatch.getHourlyRate(exp));
+        data.put(MINED_KEY, controller.getModel().getOreMined());
+        data.put(MINED_PH_KEY, stopWatch.getHourlyRate(controller.getModel().getOreMined()));
     }
 
     @Override
     public int loop() {
+        if (Game.isLoggedIn()) {
+
+            if (controller.getModel().getStartExperience() == -1) { //loop because user might not start logged in
+                controller.getModel().setStartExperience(Skills.getExperience(Skill.MINING));
+            }
+
+            if (Inventory.isFull()) {
+                if (!controller.getModel().isBanking()) {
+                    Inventory.dropAll(item -> !item.getName().contains("pickaxe"));
+                } else {
+                    if (!Bank.isOpen()) {
+                        Tile bank = Movement.getWeb().getNearestBank().getLocation();
+                        if (bank.distance() > 10) {
+                            WebPath path = Movement.getWeb().findPathToNearestBank();
+                            path.step(Path.Option.TOGGLE_RUN);
+                        } else {
+                            Bank.open(); //TODO make this support deposit boxes
+                        }
+                    } else {
+                        Bank.depositAllExcept(item -> item.getName().contains("pickaxe"));
+                    }
+                }
+            }
+
+            if (rock != null) {
+                rock = GameObjects.getNearest(t -> t.getLocation().equals(rock.getLocation()));
+            }
+
+            if (Players.getLocal().getAnimation() == -1 || rock != null && !isGoodRock(rock)) {
+                rock = GameObjects.getNearest(go -> go.distance() <= 2 && isGoodRock(go));
+                if (rock != null)
+                    rock.processAction("Mine");
+                return 1500;
+            }
+        }
         return 1000;
+    }
+
+    private boolean isGoodRock(GameObject obj) {
+        for (Rock rock : controller.getModel().getSelectedRocks()) {
+            if (rock.accept(obj))
+                return true;
+        }
+        return false;
     }
 
     enum Location {

@@ -10,16 +10,16 @@ package com.inubot.script.bundled.proscripts.framework;
  * @author Dogerina
  * @since 15-07-2015
  */
-public abstract class ProView<T extends ProPresenter> {
+public abstract class ProView<T extends ProController> {
 
-    private T presenter;
+    private T controller;
 
-    final void setPresenter(T presenter) {
-        this.presenter = presenter;
+    final void setController(T controller) {
+        this.controller = controller;
     }
 
-    public final T getPresenter() {
-        return presenter;
+    public final T getController() {
+        return controller;
     }
 
     public abstract void display();

@@ -16,12 +16,13 @@ import java.awt.*;
  * @author Dogerina
  * @since 15-07-2015
  */
-public class MinerView extends ProView<MinerPresenter> implements MinerConstants {
+public class MinerView extends ProView<MinerController> implements MinerConstants {
 
     private final JFrame frame;
     private final JList<ProMiner.Location> locationList;
     private final JList<ProMiner.Rock> rockList;
     private final JCheckBox powermining;
+    private boolean disposable;
 
     MinerView() {
         this.locationList = new JList<>(ProMiner.Location.values());
@@ -48,7 +49,10 @@ public class MinerView extends ProView<MinerPresenter> implements MinerConstants
         btnContainer.setLayout(new BoxLayout(btnContainer, BoxLayout.Y_AXIS));
         btnContainer.add(powermining);
         JButton start = new JButton("Start");
-        start.addActionListener(e -> getPresenter().encounter(new Event<>(this, INITIATE_PROP)));
+        start.addActionListener(e -> {
+            getController().encounter(new Event<>(this, INITIATE_PROP));
+            setDisposable(true);
+        });
         btnContainer.add(start);
 
         JScrollPane locationPane = new JScrollPane(locationContainer, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -81,5 +85,13 @@ public class MinerView extends ProView<MinerPresenter> implements MinerConstants
 
     final ProMiner.Location getSelectedLocation() {
         return locationList.getSelectedValue();
+    }
+
+    public boolean isDisposable() {
+        return disposable;
+    }
+
+    private void setDisposable(boolean disposable) {
+        this.disposable = disposable;
     }
 }
