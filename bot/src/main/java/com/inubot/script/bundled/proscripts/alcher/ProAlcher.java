@@ -56,9 +56,12 @@ public class ProAlcher extends ProScript implements AlcherConstants {
         WidgetItem runes = Inventory.getFirst(NATURE_FILTER);
         WidgetItem other = Inventory.getFirst(OTHER_FILTER);
         if (runes != null && other != null) {
-            Client.processAction(new SelectableSpellButtonAction(14286883), "Cast", "<col=00ff00>High Level Alchemy");
-            Client.processAction(new TableAction(ActionOpcodes.SPELL_ON_ITEM, other.getId(), other.getIndex(), 9764864),
-                    "Cast", "<col=00ff00>High Level Alchemy<col=ffffff> -> <col=ff9040>" + other.getName());
+            if (Skills.getCurrentLevel(Skill.MAGIC) < 55) {
+                Client.processAction(new SelectableSpellButtonAction(14286862), "", "");
+            } else {
+                Client.processAction(new SelectableSpellButtonAction(14286883), "", "");
+            }
+            Client.processAction(new TableAction(ActionOpcodes.SPELL_ON_ITEM, other.getId(), other.getIndex(), 9764864), "", "");
         }
         return 600;
     }
