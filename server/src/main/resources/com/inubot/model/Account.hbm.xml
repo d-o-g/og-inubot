@@ -9,5 +9,6 @@
         <property name="username" type="string" column="username"/>
         <property name="password" type="string" column="password"/>
         <property name="salt" type="string" column="salt"/>
+        <property name="group" type="int" column="usergroup"/>
     </class>
 </hibernate-mapping>

@@ -15,7 +15,7 @@ import java.net.*;
 
 public class ServerConnection implements Runnable {
 
-    private final Socket connection; //this is the connection from this client to the server. This module will be used inside the bot
+    private final Socket connection;
     private final DataInputStream input;
     private final DataOutputStream output;
     private volatile boolean authenticated;
@@ -28,18 +28,14 @@ public class ServerConnection implements Runnable {
         //this.connection.connect(new InetSocketAddress(this.host = host, this.port = port));
         this.input = new DataInputStream(connection.getInputStream());
         this.output = new DataOutputStream(connection.getOutputStream());
-        new Thread(this).start();
-
-        if (!authenticated) {
-            output.writeByte(Packet.LOGIN);
-            send(new LoginPacket("testing", "penis123"));
-            System.out.println(authenticated = input.readBoolean());
-        }
     }
 
-    public static void main(String... args) throws IOException {
-        new Thread(new ServerConnection("127.0.0.1", 1111)).start();
-
+    public static void main(String... args) {
+        try {
+            new Thread(new ServerConnection("127.0.0.1", 1111)).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -50,11 +46,17 @@ public class ServerConnection implements Runnable {
                     connection.connect(new InetSocketAddress(host, port));
                     continue;
                 }
-                if (input.available() > 0) {
-                    short opcode = input.readShort();
+                if (!authenticated) {
+                    output.writeByte(Packet.LOGIN);
+                    send(new LoginPacket("testing", "penis123"));
+                }
+                if (input.available() > 0) { // y is never reached ??
+                    byte opcode = input.readByte();
+
+                    System.out.println(opcode);
                     switch (opcode) {
                         case Packet.LOGIN: {
-                            authenticated = input.readBoolean();
+                            authenticated = true;
                             break;
                         }
                     }
@@ -68,6 +70,7 @@ public class ServerConnection implements Runnable {
     public void send(Packet packet) throws IOException {
         if (packet == null)
             throw new IllegalArgumentException("bad_packet");
+        output.writeByte(packet.getOpcode());
         packet.encode(output);
     }
 }

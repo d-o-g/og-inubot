@@ -19,9 +19,9 @@ public class Application {
     private static final SessionFactory factory;
 
     static {
-        try{
+        try {
             factory = new Configuration().configure().buildSessionFactory();
-        }catch (Throwable ex) {
+        } catch (Throwable ex) {
             System.err.println("Failed to create factory object." + ex);
             throw new ExceptionInInitializerError(ex);
         }
@@ -40,7 +40,7 @@ public class Application {
         }
     }
 
-    public static SessionFactory factory(){
+    public static SessionFactory factory() {
         return factory;
     }
 }

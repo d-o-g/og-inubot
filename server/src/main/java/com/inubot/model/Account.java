@@ -10,6 +10,7 @@ public class Account {
     private String password;
     private String salt;
     private int id;
+    private int group;
 
     public Account(String username, String password, String salt) {
         this.username = username;
@@ -50,5 +51,51 @@ public class Account {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public int getGroup() {
+        return group;
+    }
+
+    public void setGroup(int group) {
+        this.group = group;
+    }
+
+    public UserGroup getUserGroup() {
+        try {
+            return UserGroup.values()[getGroup()];
+        } catch (Exception e) {
+            return UserGroup.BANNED;
+        }
+    }
+
+    public enum UserGroup {
+
+        GUEST(false), REGISTERED(false), SUPER_MOD(true, 25), ADMIN(true, 1337), AWAITING_ACTIVATION(false),
+        MOD(true, 10), BANNED(false), MEMBER(true, 2), VIP(true, 5), SPONSOR(true, 50);
+
+        private final boolean canBot;
+        private final int maximumInstances;
+
+        UserGroup(boolean canBot, int maximumInstances) {
+            this.canBot = canBot;
+            this.maximumInstances = maximumInstances;
+        }
+
+        UserGroup(boolean canBot) {
+            this(canBot, 0);
+        }
+
+        public int getId() {
+            return super.ordinal() + 1;
+        }
+
+        public boolean canBot() {
+            return canBot;
+        }
+
+        public int getMaximumInstances() {
+            return maximumInstances;
+        }
     }
 }

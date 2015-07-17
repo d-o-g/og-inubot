@@ -5,11 +5,11 @@ import java.io.IOException;
 
 public interface Packet {
 
-    short LOGIN = 0;
-    short REQUEST_SCRIPTS = 1;
-    short OPENED_BOT = 2; //keep track of number of instances open
-    short CLOSED_BOT = 3;
+    byte LOGIN = 0;
+    byte REQUEST_SCRIPTS = 1;
+    byte OPENED_BOT = 2; //keep track of number of instances open
+    byte CLOSED_BOT = 3;
 
-    short getOpcode();
+    byte getOpcode();
     void encode(DataOutputStream out) throws IOException;
 }
