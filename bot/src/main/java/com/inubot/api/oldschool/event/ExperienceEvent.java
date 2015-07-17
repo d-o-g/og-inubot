@@ -51,4 +51,8 @@ public class ExperienceEvent extends EventObject {
     public int getOld() {
         return old;
     }
+
+    public int getGain() {
+        return getNew() - getOld();
+    }
 }
