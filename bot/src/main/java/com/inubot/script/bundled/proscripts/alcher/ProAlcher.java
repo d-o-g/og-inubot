@@ -25,7 +25,7 @@ import java.util.Map;
 public class ProAlcher extends ProScript implements AlcherConstants {
 
     private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));
-    private static final Filter<WidgetItem> OTHER_FILTER = (i -> !NATURE_FILTER.accept(i));
+    private static final Filter<WidgetItem> OTHER_FILTER = (i -> !NATURE_FILTER.accept(i) && !i.getName().contains("Coins"));
 
     @Override
     public String getTitle() {
