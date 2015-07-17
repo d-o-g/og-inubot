@@ -6,12 +6,15 @@
  */
 package com.inubot.api.oldschool.event;
 
-public class MessageEvent {
+import java.util.EventObject;
+
+public class MessageEvent extends EventObject {
 
     private final String text, channel, source;
     private final int type;
 
     public MessageEvent(String source, String message, String channel, int type) {
+        super(source);
         this.source = source;
         this.text = message;
         this.channel = channel;
@@ -34,6 +37,7 @@ public class MessageEvent {
         return channel;
     }
 
+    @Override
     public String getSource() {
         return source;
     }

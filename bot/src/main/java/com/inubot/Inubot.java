@@ -64,6 +64,7 @@ public class Inubot extends Bot<RSClient> {
                 new HoveredRegionTileSetter(),
                 new GroundItemPosition(),
                 new MessageCallback(),
+                new ExperienceCallback(),
                 new UserDetailsSetter(),
                 new VarpBitHack(),
                 new LandscapeHack(),

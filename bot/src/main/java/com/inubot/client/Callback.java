@@ -5,7 +5,7 @@ import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Skills;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.action.tree.Action;
-import com.inubot.api.oldschool.event.MessageEvent;
+import com.inubot.api.oldschool.event.*;
 import com.inubot.api.util.Time;
 import com.inubot.script.Script;
 import com.inubot.script.Task;
@@ -17,6 +17,18 @@ public class Callback {
         if (!action.equals("Cancel")) {
             System.out.println(arg1 + "," + arg2 + "," + op + "," + arg0 + "," + action + "," + target);
             System.out.println("" + Action.valueOf(op, arg0, arg1, arg2));
+        }
+    }
+
+    @ClientInvoked
+    public static void experienceGain(int index, int experience) {
+        if (Skill.values().length <= index) {
+            return;
+        }
+        System.out.println(Skills.getExperience(Skill.values()[index]) + " -> " + experience);
+        Script script = Inubot.getInstance().getScriptFlux().getRunning();
+        if (script != null && script instanceof ExperienceListener) {
+            ((ExperienceListener) script).experienceChanged(new ExperienceEvent(index, Skills.getExperience(Skill.values()[index]), experience));
         }
     }
 
