@@ -49,7 +49,6 @@ public class ExperienceCallback implements Transform {
                             mn.instructions.insertBefore(ref, stack);
                             //insert before the arraystore ^
                         }
-                        System.out.println("Found get-reference in " + cn.name + "." + mn.name + mn.desc);
                     }
                 }
             }
