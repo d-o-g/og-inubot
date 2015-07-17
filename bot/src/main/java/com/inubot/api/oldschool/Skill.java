@@ -36,4 +36,9 @@ public enum Skill {
         return ordinal();
     }
 
+    @Override
+    public String toString() {
+        String name = super.name();
+        return name.charAt(0) + name.substring(1).toLowerCase();
+    }
 }

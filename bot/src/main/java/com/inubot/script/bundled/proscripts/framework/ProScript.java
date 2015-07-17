@@ -43,8 +43,8 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
     public final void render(Graphics2D graphics) {
         paintData.put("Runtime", stopWatch.toElapsedString());
         for (TrackedSkill trackedSkill : trackedSkills.values()) {
-            paintData.put(trackedSkill.skill.name().toLowerCase() + " experience", trackedSkill.gainedExperience);
-            paintData.put(trackedSkill.skill.name().toLowerCase() + " experience/hr", stopWatch.getHourlyRate(trackedSkill.gainedExperience));
+            paintData.put(trackedSkill.skill.toString().toLowerCase() + " experience", trackedSkill.gainedExperience);
+            paintData.put(trackedSkill.skill.toString().toLowerCase() + " experience/hr", stopWatch.getHourlyRate(trackedSkill.gainedExperience));
         }
         getPaintData(paintData);
         int widest = 0;
