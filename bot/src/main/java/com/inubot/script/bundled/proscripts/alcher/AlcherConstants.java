@@ -12,8 +12,6 @@ package com.inubot.script.bundled.proscripts.alcher;
  */
 public interface AlcherConstants {
     //paint
-    String EXP_KEY = "Experience";
-    String EXP_PH_KEY = "Experience/hr";
     String ALCHS_KEY = "Alchs";
     String ALCHS_PH_KEY = "Alchs/hr";
     String ALCHS_TL = "Alchs to level";

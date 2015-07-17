@@ -20,7 +20,7 @@ public class Fletcher extends ProScript {
 
     private long animated;
 
-    private int price, xp;
+    private int price;
 
     public String bow() {
         int level = Skills.getCurrentLevel(Skill.FLETCHING);
@@ -94,7 +94,6 @@ public class Fletcher extends ProScript {
 
     @Override
     public boolean setup() {
-        xp = Skills.getExperience(Skill.FLETCHING);
         price = Exchange.getPrice(62);
         return true;
     }
@@ -106,8 +105,7 @@ public class Fletcher extends ProScript {
 
     @Override
     public void getPaintData(Map<String, Object> data) {
-        int gain = Skills.getExperience(Skill.FLETCHING) - xp;
-        int actions = (int) (gain / 58.25);
+        int actions = (int) (getTrackedSkill(Skill.FLETCHING).getGainedExperience() / 58.25);
         data.put("Actions P/H", getStopWatch().getHourlyRate(actions));
         data.put("GP P/H", formatter.format(getStopWatch().getHourlyRate(actions) * price));
         data.put("Made", actions);

@@ -54,9 +54,6 @@ public class ProMiner extends ProScript implements MinerConstants {
 
     @Override
     public void getPaintData(Map<String, Object> data) {
-        int exp = Skills.getExperience(Skill.MINING) - controller.getModel().getStartExperience();
-        data.put(EXP_KEY, exp);
-        data.put(EXP_PH_KEY, getStopWatch().getHourlyRate(exp));
         data.put(MINED_KEY, controller.getModel().getOreMined());
         data.put(MINED_PH_KEY, getStopWatch().getHourlyRate(controller.getModel().getOreMined()));
     }
@@ -64,9 +61,6 @@ public class ProMiner extends ProScript implements MinerConstants {
     @Override
     public int loop() {
         if (Game.isLoggedIn()) {
-            if (controller.getModel().getStartExperience() == -1) { //loop because user might not start logged in
-                controller.getModel().setStartExperience(Skills.getExperience(Skill.MINING));
-            }
             if (Inventory.isFull()) {
                 if (!controller.getModel().isBanking()) {
                     Inventory.dropAll(item -> !item.getName().contains("pickaxe"));

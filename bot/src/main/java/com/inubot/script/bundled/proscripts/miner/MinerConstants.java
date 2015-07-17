@@ -13,8 +13,6 @@ public interface MinerConstants {
     String INITIATE_PROP = "initiate";
 
     //paint
-    String EXP_KEY = "Experience";
-    String EXP_PH_KEY = "Experience/hr";
     String MINED_KEY = "Ore mined";
     String MINED_PH_KEY = "Ore mined/hr";
 

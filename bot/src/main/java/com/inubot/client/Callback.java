@@ -1,8 +1,7 @@
 package com.inubot.client;
 
 import com.inubot.Inubot;
-import com.inubot.api.methods.Client;
-import com.inubot.api.methods.Skills;
+import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.oldschool.event.*;
@@ -22,7 +21,7 @@ public class Callback {
 
     @ClientInvoked
     public static void experienceGain(int index, int experience) {
-        if (Skill.values().length <= index) {
+        if (Skill.values().length <= index || !Game.isLoggedIn()) {
             return;
         }
         System.out.println(Skills.getExperience(Skill.values()[index]) + " -> " + experience);

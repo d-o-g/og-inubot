@@ -21,7 +21,7 @@ public class Stringer extends ProScript {
 
     private long animated;
 
-    private int price, cost, xp;
+    private int price, cost;
 
     public String bow() {
         int level = Skills.getCurrentLevel(Skill.FLETCHING);
@@ -80,7 +80,6 @@ public class Stringer extends ProScript {
 
     @Override
     public boolean setup() {
-        xp = Skills.getExperience(Skill.FLETCHING);
         cost = Exchange.getPrice(70) + Exchange.getPrice(1777);
         price = Exchange.getPrice(859);
         return true;
@@ -95,9 +94,7 @@ public class Stringer extends ProScript {
 
     @Override
     public void getPaintData(Map<String, Object> data) {
-        int gain = Skills.getExperience(Skill.FLETCHING) - xp;
-        int actions = (int) (gain / 92 );
-
+        int actions = getTrackedSkill(Skill.FLETCHING).getGainedExperience() / 92;
         data.put("Time Running", stopwatch.toElapsedString());
         data.put("Actions P/H", stopwatch.getHourlyRate(actions));
         data.put("GP P/H", formatter.format(stopwatch.getHourlyRate(actions) * (price - cost)));

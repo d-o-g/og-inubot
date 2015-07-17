@@ -26,7 +26,6 @@ public class ProAlcher extends ProScript implements AlcherConstants {
 
     private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));
     private static final Filter<WidgetItem> OTHER_FILTER = (i -> !NATURE_FILTER.accept(i));
-    private int startExp = -1;
 
     @Override
     public String getTitle() {
@@ -35,10 +34,8 @@ public class ProAlcher extends ProScript implements AlcherConstants {
 
     @Override
     public void getPaintData(Map<String, Object> data) {
-        int expGained = Skills.getExperience(Skill.MAGIC) - startExp;
-        data.put(EXP_KEY, expGained);
+        int expGained = getTrackedSkill(Skill.MAGIC).getGainedExperience();
         int hourlyExp = getStopWatch().getHourlyRate(expGained);
-        data.put(EXP_PH_KEY, hourlyExp);
         int expToLvl = Skills.getExperienceAt(Skills.getLevel(Skill.MAGIC) + 1) - Skills.getExperience(Skill.MAGIC);
         data.put(EXP_TL_KEY, expToLvl);
         data.put(TTL_KEY, Skills.getLevel(Skill.MAGIC) == 99 ? "Maxed!"
@@ -52,9 +49,6 @@ public class ProAlcher extends ProScript implements AlcherConstants {
     public int loop() {
         if (!Game.isLoggedIn()) {
             return 1200;
-        }
-        if (startExp == -1) {
-            startExp = Skills.getExperience(Skill.MAGIC);
         }
         WidgetItem runes = Inventory.getFirst(NATURE_FILTER);
         WidgetItem other = Inventory.getFirst(OTHER_FILTER);
