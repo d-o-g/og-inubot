@@ -6,7 +6,7 @@
  */
 package com.inubot.script.loader;
 
-import com.inubot.script.Script;
+import com.inubot.script.Manifest;
 
 import java.io.*;
 import java.net.*;
@@ -19,15 +19,15 @@ import java.util.jar.*;
  */
 public class LocalScriptLoader extends ScriptLoader<File> {
 
-    private final List<Class<? extends Script>> classes;
+    private final List<ScriptDefinition> definitions;
 
     public LocalScriptLoader() {
-        this.classes = new ArrayList<>();
+        this.definitions = new ArrayList<>();
     }
 
     @Override
     public void parse(File root) throws IOException, ClassNotFoundException {
-        classes.clear();
+        definitions.clear();
         Stack<File> files = new Stack<>();
         URLClassLoader loader = URLClassLoader.newInstance(new URL[]{root.toURI().toURL()});
         files.push(root);
@@ -48,8 +48,9 @@ public class LocalScriptLoader extends ScriptLoader<File> {
                 raw = raw.substring(0, raw.length() - ".class".length());
                 raw = raw.replace(File.separatorChar, '.');
                 Class<?> c = loader.loadClass(raw);
-                if (super.accept(c))
-                    classes.add((Class<? extends Script>) c);
+                if (super.accept(c)) {
+                    definitions.add(new ScriptDefinition(c.getAnnotation(Manifest.class)));
+                }
             } else if (file.getName().endsWith(".jar")) {
                 JarFile jar = new JarFile(file);
                 URLClassLoader ucl = new URLClassLoader(new URL[]{file.toURI().toURL()});
@@ -61,8 +62,9 @@ public class LocalScriptLoader extends ScriptLoader<File> {
                         name = name.substring(0, name.length() - ".class".length());
                         name = name.replace('/', '.');
                         Class<?> c = ucl.loadClass(name);
-                        if (super.accept(c))
-                            classes.add((Class<? extends Script>) c);
+                        if (super.accept(c)) {
+                            definitions.add(new ScriptDefinition(c.getAnnotation(Manifest.class)));
+                        }
                     }
                 }
             }
@@ -70,7 +72,7 @@ public class LocalScriptLoader extends ScriptLoader<File> {
     }
 
     @Override
-    public Class<?>[] getMainClasses() {
-        return classes.toArray(new Class[classes.size()]);
+    public ScriptDefinition[] getDefinitions() {
+        return definitions.toArray(new ScriptDefinition[definitions.size()]);
     }
 }

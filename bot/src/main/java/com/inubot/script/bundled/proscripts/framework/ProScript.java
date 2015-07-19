@@ -11,6 +11,7 @@ import com.inubot.api.oldschool.event.ExperienceEvent;
 import com.inubot.api.oldschool.event.ExperienceListener;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
+import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
 import java.awt.*;
@@ -36,7 +37,10 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
         this.stopWatch = new StopWatch(0);
     }
 
-    public abstract String getTitle();
+    public String getTitle() {
+        Manifest manifest = getClass().getAnnotation(Manifest.class);
+        return manifest.name() + " v" + manifest.version();
+    }
 
     public abstract void getPaintData(Map<String, Object> data);
 

@@ -14,6 +14,7 @@ import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.client.natives.oldschool.RSInteractableEntity;
+import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.List;
  * @author Dogerina
  * @since 11-07-2015
  */
+@Manifest(name = "BlueDragonKiller", developer = "blitz", desc = "Kills blue dragons using safe spots. Keep lobsters and falador teleport tablets in your bank")
 public class BlueDragonKiller extends Script {
 
     //wat else

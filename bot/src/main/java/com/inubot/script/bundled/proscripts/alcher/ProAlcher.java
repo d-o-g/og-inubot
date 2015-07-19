@@ -14,6 +14,7 @@ import com.inubot.api.oldschool.action.tree.SelectableSpellButtonAction;
 import com.inubot.api.oldschool.action.tree.TableAction;
 import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.filter.Filter;
+import com.inubot.script.Manifest;
 import com.inubot.script.bundled.proscripts.framework.ProScript;
 
 import java.util.Map;
@@ -22,6 +23,11 @@ import java.util.Map;
  * @author Dogerina
  * @since 16-07-2015
  */
+@Manifest(
+        name = "Pro Alcher",
+        developer = "blitz",
+        desc = "Alchs for decent magic experience. Start with only runes and the item to alch in your inventory"
+)
 public class ProAlcher extends ProScript implements AlcherConstants {
 
     private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));

@@ -16,6 +16,7 @@ import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
+import com.inubot.script.Manifest;
 import com.inubot.script.bundled.proscripts.framework.ProScript;
 
 import java.awt.*;
@@ -25,6 +26,11 @@ import java.util.Map;
  * @author Dogerina
  * @since 15-07-2015
  */
+@Manifest(
+        name = "Pro Miner",
+        developer = "blitz",
+        desc = "Mines almost anything, anywhere"
+)
 public class ProMiner extends ProScript implements MinerConstants {
 
     private final MinerController controller;
@@ -32,11 +38,6 @@ public class ProMiner extends ProScript implements MinerConstants {
 
     public ProMiner() {
         this.controller = new MinerController(new MinerView(), new MinerModel());
-    }
-
-    @Override
-    public String getTitle() {
-        return "ProMiner v1.00";
     }
 
     @Override

@@ -8,8 +8,9 @@ package com.inubot.bot.ui;
 
 import com.inubot.Inubot;
 import com.inubot.bot.util.Configuration;
+import com.inubot.script.Manifest;
 import com.inubot.script.Script;
-import com.inubot.script.loader.LocalScriptLoader;
+import com.inubot.script.loader.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,23 +30,29 @@ public class ScriptSelector extends JFrame {
 
         JPanel scripts = new JPanel();
 
-        JScrollPane scroll = new JScrollPane(scripts);
-        scroll.setPreferredSize(new Dimension(450, 110));
+        JScrollPane scroll = new JScrollPane(scripts, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll.setPreferredSize(new Dimension(450, 150));
 
         scripts.setLayout(new GridLayout(3, 3, 5, 5));
-        for (Class clazz : Inubot.SCRIPT_CLASSES)
-            scripts.add(new Entity(clazz));
+        for (Class clazz : Inubot.SCRIPT_CLASSES) {
+            if (clazz.isAnnotationPresent(Manifest.class)) {
+                Manifest m = (Manifest) clazz.getAnnotation(Manifest.class);
+                scripts.add(new Entity(new ScriptDefinition(m)));
+            } else {
+                scripts.add(new Entity(new RemoteScriptDefinition(clazz.getSimpleName(), "Developer", "", 1.0)));
+            }
+        }
         LocalScriptLoader loader = new LocalScriptLoader();
         try {
             loader.parse(new File(Configuration.SCRIPTS));
-            Class<?>[] definitions = loader.getMainClasses();
-            for (Class def : definitions)
+            ScriptDefinition[] definitions = loader.getDefinitions();
+            for (ScriptDefinition def : definitions) {
                 scripts.add(new Entity(def));
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         super.add(scroll);
-
         super.setLocationRelativeTo(null);
         super.pack();
         super.setResizable(false);
@@ -53,17 +60,19 @@ public class ScriptSelector extends JFrame {
 
     private class Entity extends JPanel {
 
-        public Entity(Class<? extends Script> target) {
+        public Entity(ScriptDefinition target) {
             super.setLayout(new BorderLayout());
             super.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 
-            JLabel name = new JLabel(target.getSimpleName());
+            JLabel name = new JLabel(target.name());
+            name.setToolTipText(String.valueOf(target.version()));
             super.add(name, BorderLayout.CENTER);
 
             JButton start = new JButton("Start");
+            start.setToolTipText(target.desc() + " - by " + target.developer());
             start.addActionListener(e -> {
                 try {
-                    Script targetInstance = target.newInstance();
+                    Script targetInstance = target.getScriptClass().newInstance();
                     Inubot.getInstance().getScriptFlux().execute(targetInstance);
                     dispose();
                 } catch (InstantiationException | IllegalAccessException e1) {

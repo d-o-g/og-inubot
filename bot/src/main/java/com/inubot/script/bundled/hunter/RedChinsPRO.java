@@ -12,6 +12,7 @@ import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.*;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
+import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
 import java.awt.*;
@@ -20,6 +21,11 @@ import java.awt.*;
  * @author unsigned
  * @since 17-05-2015
  */
+@Manifest(
+        name = "Red Chins PRO",
+        developer = "septron & blitz",
+        desc = "Catches carnivourous chinchompas for decent cash money!"
+)
 public class RedChinsPRO extends Script implements Paintable {
 
     private static final int EXP_EACH = 265;

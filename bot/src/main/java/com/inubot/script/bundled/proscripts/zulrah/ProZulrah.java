@@ -10,6 +10,7 @@ import com.inubot.api.methods.Npcs;
 import com.inubot.api.methods.Prayers;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Prayer;
+import com.inubot.script.Manifest;
 import com.inubot.script.bundled.proscripts.framework.ProScript;
 
 import java.util.Map;
@@ -18,16 +19,16 @@ import java.util.Map;
  * @author Dogerina
  * @since 17-07-2015
  */
+@Manifest(
+        name = "Pro Zulrah",
+        developer = "blitz",
+        desc = "Kills Zulrah for good cash money"
+)
 public class ProZulrah extends ProScript implements ZulrahConstants {
 
     public ProZulrah() {
         super.setForceIdleTimeClick(false);
         super.setPaintHidden(true);
-    }
-
-    @Override
-    public String getTitle() {
-        return "ProZulrah v1.00";
     }
 
     @Override

@@ -10,5 +10,5 @@ import java.io.IOException;
 
 public abstract class ScriptLoader<T> extends ScriptFilter {
     public abstract void parse(T t) throws IOException, ClassNotFoundException;
-    public abstract Class<?>[] getMainClasses();
+    public abstract ScriptDefinition[] getDefinitions();
 }

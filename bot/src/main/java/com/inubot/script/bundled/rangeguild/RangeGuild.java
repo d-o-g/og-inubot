@@ -5,6 +5,7 @@ import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
+import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
 import java.awt.*;
@@ -13,6 +14,11 @@ import java.text.DecimalFormat;
 /**
  * Created by Cameron on 2015-04-24.
  */
+@Manifest(
+        name = "AutoRangeGuild PRO",
+        developer = "blitz and bone",
+        desc = "Plays the range guild minigame for up to 50k experience per hour!"
+)
 public class RangeGuild extends Script implements Paintable {
 
     static final Filter<Widget> DIALOGUE_FILTER = w -> w.getText() != null && (w.getText().equals("Click here to continue") || w.getText().equals("Sure, I'll give it a go."));

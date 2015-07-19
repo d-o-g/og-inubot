@@ -7,13 +7,15 @@
 package com.inubot.script.loader;
 
 import com.inubot.api.util.filter.Filter;
+import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
 import java.lang.reflect.Modifier;
 
 public class ScriptFilter implements Filter<Class<?>> {
     @Override
-    public boolean accept(Class<?> aClass) {
-        return !Modifier.isAbstract(aClass.getModifiers()) && Script.class.isAssignableFrom(aClass);
+    public boolean accept(Class<?> c) {
+        return !Modifier.isAbstract(c.getModifiers()) && Script.class.isAssignableFrom(c)
+                && c.isAnnotationPresent(Manifest.class);
     }
 }
