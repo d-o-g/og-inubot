@@ -33,7 +33,10 @@ public class ScriptSelector extends JFrame {
         JScrollPane scroll = new JScrollPane(scripts, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scroll.setPreferredSize(new Dimension(450, 150));
 
-        scripts.setLayout(new GridLayout(3, 3, 5, 5));
+        int x = Inubot.SCRIPT_CLASSES.length / 3;
+        int y = Inubot.SCRIPT_CLASSES.length / 3;
+
+        scripts.setLayout(new GridLayout(x, x, y, y));
         for (Class clazz : Inubot.SCRIPT_CLASSES) {
             if (clazz.isAnnotationPresent(Manifest.class)) {
                 Manifest m = (Manifest) clazz.getAnnotation(Manifest.class);
