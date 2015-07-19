@@ -5,13 +5,14 @@ package com.inubot.model;
  * @since July 12, 2015
  */
 public class Owned {
+
     private int id;
     private int uid;
 
-   public Owned(int id, int uid) {
-       this.id = id;
-       this.uid = uid;
-   }
+    public Owned(int id, int uid) {
+        this.id = id;
+        this.uid = uid;
+    }
 
     public Owned() {
 

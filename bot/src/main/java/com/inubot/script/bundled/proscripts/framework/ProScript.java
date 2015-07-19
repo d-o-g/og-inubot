@@ -28,6 +28,7 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
     private final Map<Skill, TrackedSkill> trackedSkills;
     private final Map<String, Object> paintData;
     private final StopWatch stopWatch;
+    private boolean paintHidden = false;
 
     public ProScript() {
         this.paintData = new LinkedHashMap<>();
@@ -41,10 +42,13 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
 
     @Override
     public final void render(Graphics2D graphics) {
+        if (paintHidden) {
+            return;
+        }
         paintData.put("Runtime", stopWatch.toElapsedString());
         for (TrackedSkill trackedSkill : trackedSkills.values()) {
             paintData.put(trackedSkill.skill.toString().toLowerCase() + " experience", trackedSkill.gainedExperience);
-            paintData.put(trackedSkill.skill.toString().toLowerCase() + " experience/hr", stopWatch.getHourlyRate(trackedSkill.gainedExperience));
+            paintData.put(trackedSkill.skill.name().toLowerCase() + " experience/hr", stopWatch.getHourlyRate(trackedSkill.gainedExperience));
         }
         getPaintData(paintData);
         int widest = 0;
@@ -88,6 +92,14 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
             return trackedSkills.get(skill);
         }
         return trackedSkills.put(skill, new TrackedSkill(skill));
+    }
+
+    public boolean isPaintHidden() {
+        return paintHidden;
+    }
+
+    public void setPaintHidden(boolean paintHidden) {
+        this.paintHidden = paintHidden;
     }
 
     protected class TrackedSkill {

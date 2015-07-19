@@ -1,19 +1,10 @@
 package com.inubot;
 
-import com.inubot.model.Script;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.crypto.Data;
 import java.io.*;
-import java.lang.reflect.Modifier;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.nio.file.Files;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -45,23 +36,21 @@ public class Loader {
             if (file.getName().endsWith(".jar")) {
                 InputStream stream = new FileInputStream(file);
                 DataInputStream dis = new DataInputStream(stream);
-
                 byte[] data = new byte[dis.available()];
                 dis.readFully(data);
-
-                Enumeration<JarEntry> entries = new JarFile(file).entries();
+                JarFile jar = new JarFile(file);
+                Enumeration<JarEntry> entries = jar.entries();
                 while (entries.hasMoreElements()) {
                     JarEntry entry = entries.nextElement();
-
                     String name = entry.getName();
                     if (name.endsWith(".class")) {
                         name = name.substring(name.lastIndexOf("/") + 1).replace(".class", "");
-
                         //TODO: Make sure it's a script class -.-
-
                         scripts.put(name, data);
                     }
                 }
+                jar.close();
+                dis.close();
             }
         }
     }

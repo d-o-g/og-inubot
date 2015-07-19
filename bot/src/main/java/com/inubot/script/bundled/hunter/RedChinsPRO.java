@@ -121,33 +121,23 @@ public class RedChinsPRO extends Script implements Paintable {
     }
 
     private int getMaxTraps() {
-        return Skills.getLevel(Skill.HUNTER) / 20 + 1;
+        int inv = Inventory.getCount("Box trap");
+        int max = Skills.getLevel(Skill.HUNTER) / 20 + 1;
+        return Math.min(inv, max);
     }
 
     private Tile[] getTrapTactics() {
         switch (getMaxTraps()) {
             case 1:
-                return new Tile[]{
-                        tile
-                };
+                return new Tile[]{tile};
             case 2:
-                return new Tile[]{
-                        tile.derive(-1, 0), tile.derive(1, 0)};
+                return new Tile[]{tile.derive(-1, 0), tile.derive(1, 0)};
             case 3:
-                return new Tile[]{
-                        tile.derive(-1, 0), tile.derive(0, -1), tile.derive(1, 0)
-                };
+                return new Tile[]{tile.derive(-1, 0), tile.derive(0, -1), tile.derive(1, 0)};
             case 4:
-                return new Tile[]{
-                        new Tile(2503, 2882, 0), new Tile(2502, 2881, 0),
-                        new Tile(2503, 2880, 0), new Tile(2504, 2881, 0),
-                };
+                return new Tile[]{tile.derive(-1, 0), tile.derive(0, -1), tile.derive(1, 0), tile.derive(0, 1)};
             case 5:
-                return new Tile[]{
-                        new Tile(2502, 2880, 0), new Tile(2502, 2881, 0),
-                        new Tile(2503, 2882, 0), new Tile(2504, 2881, 0),
-                        new Tile(2504, 2880, 0)
-                };
+                return new Tile[]{tile.derive(-1, 1), tile.derive(-1, -1), tile, tile.derive(1, -1), tile.derive(1, 1)};
             default: {
                 return new Tile[0];
             }
