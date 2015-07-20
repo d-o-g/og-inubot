@@ -39,10 +39,13 @@ public class ScriptSelector extends JFrame {
         scripts.setLayout(new GridLayout(x, x, y, y));
         for (Class clazz : Inubot.SCRIPT_CLASSES) {
             if (clazz.isAnnotationPresent(Manifest.class)) {
-                Manifest m = (Manifest) clazz.getAnnotation(Manifest.class);
-                scripts.add(new Entity(new ScriptDefinition(m)));
+                ScriptDefinition sd = new ScriptDefinition((Manifest) clazz.getAnnotation(Manifest.class));
+                sd.setScriptClass(clazz);
+                scripts.add(new Entity(sd));
             } else {
-                scripts.add(new Entity(new RemoteScriptDefinition(clazz.getSimpleName(), "Developer", "", 1.0)));
+                RemoteScriptDefinition rsd = new RemoteScriptDefinition(clazz.getSimpleName(), "Developer", "", 1.0);
+                rsd.setScriptClass(clazz);
+                scripts.add(new Entity(rsd));
             }
         }
         LocalScriptLoader loader = new LocalScriptLoader();

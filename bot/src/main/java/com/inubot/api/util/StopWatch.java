@@ -10,14 +10,31 @@ import java.util.concurrent.TimeUnit;
 
 public class StopWatch {
 
-    private final long start;
+    private long start;
     private final long period;
-    private long end;
+    private long end, pause = -1;
 
     public StopWatch(final long period) {
         this.period = period;
         start = System.currentTimeMillis();
         end = start + period;
+    }
+
+    public boolean isPaused() {
+        return pause != -1;
+    }
+
+    public void pause() {
+        if (pause == -1) {
+            pause = System.nanoTime();
+        }
+    }
+
+    public void resume() {
+        if (pause != -1) {
+            start += System.nanoTime() - pause;
+            pause = -1;
+        }
     }
 
     public static String format(final long time) {

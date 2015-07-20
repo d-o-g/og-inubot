@@ -7,6 +7,7 @@
 package com.inubot.script.loader;
 
 import com.inubot.script.Manifest;
+import com.inubot.script.Script;
 
 import java.io.*;
 import java.net.*;
@@ -49,7 +50,9 @@ public class LocalScriptLoader extends ScriptLoader<File> {
                 raw = raw.replace(File.separatorChar, '.');
                 Class<?> c = loader.loadClass(raw);
                 if (super.accept(c)) {
-                    definitions.add(new ScriptDefinition(c.getAnnotation(Manifest.class)));
+                    ScriptDefinition def = new ScriptDefinition(c.getAnnotation(Manifest.class));
+                    def.setScriptClass((Class<? extends Script>) c);
+                    definitions.add(def);
                 }
             } else if (file.getName().endsWith(".jar")) {
                 JarFile jar = new JarFile(file);
@@ -63,10 +66,14 @@ public class LocalScriptLoader extends ScriptLoader<File> {
                         name = name.replace('/', '.');
                         Class<?> c = ucl.loadClass(name);
                         if (super.accept(c)) {
-                            definitions.add(new ScriptDefinition(c.getAnnotation(Manifest.class)));
+                            ScriptDefinition def = new ScriptDefinition(c.getAnnotation(Manifest.class));
+                            def.setScriptClass((Class<? extends Script>) c);
+                            definitions.add(def);
                         }
                     }
                 }
+                ucl.close();
+                jar.close();
             }
         }
     }

@@ -128,5 +128,13 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
         return stopWatch;
     }
 
-    //TODO maybe override onPause and onResume to stop/resume StopWatch?
+    @Override
+    public void onPause() {
+        stopWatch.pause();
+    }
+
+    @Override
+    public void onResume() {
+        stopWatch.resume();
+    }
 }
