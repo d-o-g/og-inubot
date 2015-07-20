@@ -54,9 +54,9 @@ public class BotMenuBar extends JMenuBar {
             Script script = Inubot.getInstance().getScriptFlux().getRunning();
             if (script != null) {
                 if (script.isPaused()) {
-                    script.onResume();
-                } else {
                     script.onPause();
+                } else {
+                    script.onResume();
                 }
             }
         });
