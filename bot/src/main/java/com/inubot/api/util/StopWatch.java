@@ -26,13 +26,13 @@ public class StopWatch {
 
     public void pause() {
         if (pause == -1) {
-            pause = System.nanoTime();
+            pause = System.currentTimeMillis();
         }
     }
 
     public void resume() {
         if (pause != -1) {
-            start += System.nanoTime() - pause;
+            start += System.currentTimeMillis() - pause;
             pause = -1;
         }
     }

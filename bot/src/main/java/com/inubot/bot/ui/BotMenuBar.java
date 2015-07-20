@@ -9,6 +9,7 @@ package com.inubot.bot.ui;
 import com.inubot.Bot;
 import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
+import com.inubot.script.Script;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,6 +51,14 @@ public class BotMenuBar extends JMenuBar {
         pause.addActionListener(e -> {
             Inubot.getInstance().getScriptFlux().switchState();
             updateButtonStates();
+            Script script = Inubot.getInstance().getScriptFlux().getRunning();
+            if (script != null) {
+                if (script.isPaused()) {
+                    script.onResume();
+                } else {
+                    script.onPause();
+                }
+            }
         });
         pause.setEnabled(false);
 
