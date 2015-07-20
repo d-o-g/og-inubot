@@ -1,10 +1,22 @@
 package com.inubot.api.event.concurrent;
 
 import com.inubot.api.event.*;
+import com.inubot.api.event.EventListener;
+
+import java.util.*;
 
 public class SynchronousEventBus implements EventBus {
+
+    private final Set<Event> events;
+    private final Object greedyLock;
+
+    public SynchronousEventBus() {
+        this.events = new LinkedHashSet<>();
+        this.greedyLock = new Object();
+    }
+
     @Override
-    public void fire(Event e) {
+    public void fire() {
 
     }
 

@@ -6,6 +6,8 @@
  */
 package com.inubot;
 
+import com.inubot.api.event.EventBus;
+import com.inubot.api.event.concurrent.SynchronousEventBus;
 import com.inubot.api.methods.Game;
 import com.inubot.api.util.Time;
 import com.inubot.bot.account.Account;
@@ -43,6 +45,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
     private final ScriptFlux scriptFlux;
     private final IRCConnection irc;
     private final LogPane logPane;
+    private final EventBus eventBus;
     private Client client;
 
     public Bot() {
@@ -52,9 +55,10 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         this.scriptFlux = new ScriptFlux();
         this.crawler = createCrawler();
         this.logPane = new LogPane();
+        this.irc = new IRCConnection();
+        this.eventBus = new SynchronousEventBus();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
-        irc = new IRCConnection();
         try {
             irc.connect("irc.foonetic.net");
             irc.joinChannel(IRC_CHANNEL);
@@ -144,6 +148,10 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
 
     public IRCConnection getIRCConnection() {
         return irc;
+    }
+
+    public EventBus getEventBus() {
+        return eventBus;
     }
 
     public ScriptFlux getScriptFlux() {

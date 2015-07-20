@@ -46,12 +46,10 @@ public class PestControl extends Script implements Paintable {
             return ScriptStage.JOINING;
         } else if (BOAT.contains(me)) {
             return ScriptStage.WAITING;
+        } else if (Npcs.getNearest(ATTACKABLE) != null) {
+            return ScriptStage.ATTACKING_NPC;
         } else {
-            if (Npcs.getNearest(ATTACKABLE) != null) {
-                return ScriptStage.ATTACKING_NPC;
-            } else {
-                return ScriptStage.MOVING;
-            }
+            return ScriptStage.MOVING;
         }
     }
 
