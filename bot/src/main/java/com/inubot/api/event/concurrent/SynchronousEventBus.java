@@ -5,6 +5,9 @@ import com.inubot.api.event.EventListener;
 
 import java.util.*;
 
+/**
+ * A concurrent implementation of an {@link com.inubot.api.event.EventBus}
+ */
 public class SynchronousEventBus implements EventBus {
 
     private final Set<Event> events;

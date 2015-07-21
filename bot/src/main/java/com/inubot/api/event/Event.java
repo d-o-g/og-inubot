@@ -4,16 +4,26 @@ import java.util.*;
 
 public abstract class Event {
 
+    /** Valid event states **/
+    /* If an event is marked as pending, it means that it has been queued but has yet to be executed */
     public static final byte PENDING  = 0;
+    /* If an event is marked as running, then the #fire method has been called */
     public static final byte RUNNING  = 1;
+    /* This state means that the event was complete, successfully */
     public static final byte COMPLETE = 2;
+    /* An event state marked as failure means that the event was unsuccessful */
     public static final byte FAILURE  = 3;
 
+    /* The events children, these get fired along with this event */
     private final List<Event> delegates;
+    /* Any EventListener's attached to this Event */
     private final List<EventListener<?>> listeners;
 
+    /* The parent event, if there is one */
     private Event parent = null;
+    /* Whether this event should be fired synchronously or not */
     private boolean parallel = true;
+    /* The current state of the event, see constant values above */
     private byte state = PENDING;
 
     public Event(Event parent, List<Event> delegates) {
@@ -74,7 +84,6 @@ public abstract class Event {
         delegates.remove(delegate);
     }
 
-    //TODO handle event parallelism
     public final boolean isParallel() {
         return parallel;
     }

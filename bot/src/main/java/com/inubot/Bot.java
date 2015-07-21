@@ -45,7 +45,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
     private final ScriptFlux scriptFlux;
     private final IRCConnection irc;
     private final LogPane logPane;
-    private final EventBus eventBus;
+    private EventBus eventBus;
     private Client client;
 
     public Bot() {
@@ -152,6 +152,10 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
 
     public EventBus getEventBus() {
         return eventBus;
+    }
+
+    public void setEventBus(EventBus eventBus) {
+        this.eventBus = eventBus;
     }
 
     public ScriptFlux getScriptFlux() {
