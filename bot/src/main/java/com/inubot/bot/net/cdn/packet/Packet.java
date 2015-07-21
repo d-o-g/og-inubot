@@ -7,8 +7,9 @@ public interface Packet {
 
     byte LOGIN = 0;
     byte REQUEST_SCRIPTS = 1;
-    byte OPENED_BOT = 2; //keep track of number of instances open
     byte CLOSED_BOT = 3;
+    byte AUTH_SUCCESS = 4;
+    byte INSTANCE_COUNT = 5;
 
     byte getOpcode();
     void encode(DataOutputStream out) throws IOException;

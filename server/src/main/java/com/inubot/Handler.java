@@ -6,10 +6,6 @@ import com.inubot.model.Script;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.DefaultHttpResponse;
-import io.netty.handler.codec.http.HttpResponse;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpVersion;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,16 +74,14 @@ public class Handler extends ChannelHandlerAdapter {
                 String hash = getMD5(getMD5(account.getSalt()) + getMD5(password));
 
                 if (hash.equals(account.getPassword())) {
-                    ctx.write(0);
-                    ctx.flush();
                     logger.info("Successfully logged " + username + " into account! (" + account.getId() + ")");
                     List owneds = session.createQuery("from Owned where uid=:uid").setParameter("uid", account.getId()).list();
                     for (Object asd : owneds) {
                         Script script = (Script) session.createQuery("from Script where id=:id")
                                 .setParameter("id", ((Owned) asd).getId()).uniqueResult();
                         byte[] data = Loader.scripts.get(script.getName());
-                        ctx.writeAndFlush(data);
-                        logger.info("Sent: "  + script.getName());
+                        ctx.write(data);
+                        logger.info("Sent: " + script.getName());
                     }
                 } else {
                     logger.info("Failed to log " + username + " into account!");
@@ -96,4 +90,5 @@ public class Handler extends ChannelHandlerAdapter {
             }
         }
     }
+
 }

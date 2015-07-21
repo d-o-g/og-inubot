@@ -6,9 +6,11 @@
  */
 package com.inubot.bot.net.cdn;
 
+import com.inubot.Bot;
 import com.inubot.Inubot;
 import com.inubot.bot.net.cdn.packet.LoginPacket;
 import com.inubot.bot.net.cdn.packet.Packet;
+import com.inubot.script.loader.ScriptLoaderImpl;
 
 import java.io.*;
 import java.net.*;
@@ -25,17 +27,22 @@ public class ServerConnection implements Runnable {
 
     public ServerConnection(String host, int port) throws IOException {
         this.connection = new Socket(this.host = host, this.port = port);
-        //this.connection.connect(new InetSocketAddress(this.host = host, this.port = port));
         this.input = new DataInputStream(connection.getInputStream());
         this.output = new DataOutputStream(connection.getOutputStream());
     }
 
-    public static void main(String... args) {
+    public synchronized static ServerConnection start() {
         try {
-            new Thread(new ServerConnection("127.0.0.1", 1111)).start();
-        } catch (Exception e) {
-            e.printStackTrace();
+            ServerConnection con = new ServerConnection("127.0.0.1", 1111);
+            new Thread(con).start();
+            return con;
+        } catch (IOException e) {
+            return null;
         }
+    }
+
+    public void reauthenticate() {
+        authenticated = false;
     }
 
     @Override
@@ -47,16 +54,49 @@ public class ServerConnection implements Runnable {
                     continue;
                 }
                 if (!authenticated) {
-                    output.writeByte(Packet.LOGIN);
-                    send(new LoginPacket("testing", "penis123"));
+                    String username = "testing";
+                    Inubot.getInstance().setUsername(username);
+                    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                        try {
+                            output.writeByte(Packet.CLOSED_BOT);
+                            output.writeInt(username.length());
+                            for (int i = 0; i < username.length(); i++) {
+                                output.writeChar(username.charAt(i));
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }));
+                    send(new LoginPacket(username, "penis123"));
                 }
-                if (input.available() > 0) { // y is never reached ??
+                if (Inubot.getInstance().getMaxInstances() == -1) {
+                    output.writeByte(Packet.INSTANCE_COUNT);
+                    String username = Bot.getInstance().getUsername();
+                    output.writeInt(username.length());
+                    for (int i = 0; i < username.length(); i++) {
+                        output.writeChar(username.charAt(i));
+                    }
+                    Inubot.getInstance().setMaxInstances(input.readInt());
+                    System.out.println("Max instances: " + Bot.getInstance().getMaxInstances());
+                }
+                if (input.available() > 0) {
                     byte opcode = input.readByte();
-
-                    System.out.println(opcode);
                     switch (opcode) {
-                        case Packet.LOGIN: {
+                        case Packet.AUTH_SUCCESS: {
+                            System.out.println("authed");
+                            Inubot.getInstance().setUsername("testing");
                             authenticated = true;
+                            break;
+                        }
+                        case Packet.REQUEST_SCRIPTS: {
+                            int count = input.readInt();
+                            String name = "";
+                            for (int i = 0; i < count; i++) {
+                                name += input.readChar();
+                            }
+                            byte[] buffer = new byte[2048];
+                            input.readFully(buffer);
+                            ScriptLoaderImpl.addLive(buffer, name);
                             break;
                         }
                     }
@@ -69,7 +109,7 @@ public class ServerConnection implements Runnable {
 
     public void send(Packet packet) throws IOException {
         if (packet == null)
-            throw new IllegalArgumentException("bad_packet");
+            throw new IllegalArgumentException("malformed_packet");
         output.writeByte(packet.getOpcode());
         packet.encode(output);
     }
