@@ -7,7 +7,6 @@
 package com.inubot.bot.ui;
 
 import com.inubot.Bot;
-import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 import com.inubot.script.Script;
 
@@ -49,9 +48,9 @@ public class BotMenuBar extends JMenuBar {
 
         pause.setEnabled(false);
         pause.addActionListener(e -> {
-            Inubot.getInstance().getScriptFlux().switchState();
+            Bot.getInstance().getScriptFlux().switchState();
             updateButtonStates();
-            Script script = Inubot.getInstance().getScriptFlux().getRunning();
+            Script script = Bot.getInstance().getScriptFlux().getRunning();
             if (script != null) {
                 if (script.isPaused()) {
                     script.onPause();
@@ -64,7 +63,7 @@ public class BotMenuBar extends JMenuBar {
 
         stop.setEnabled(false);
         stop.addActionListener(e -> {
-            Inubot.getInstance().getScriptFlux().stop();
+            Bot.getInstance().getScriptFlux().stop();
             updateButtonStates();
         });
         stop.setEnabled(false);
@@ -79,15 +78,15 @@ public class BotMenuBar extends JMenuBar {
         });
         NexusToggleableButton log = new NexusToggleableButton("Console", () -> Bot.getInstance().getLogPane().isToggled());
         log.addActionListener(e -> {
-            if (!Inubot.getInstance().getLogPane().isToggled()) {
-                scroller.add(Inubot.getInstance().getLogPane());
-                Inubot.getInstance().add(scroller, BorderLayout.SOUTH);
+            if (!Bot.getInstance().getLogPane().isToggled()) {
+                scroller.add(Bot.getInstance().getLogPane());
+                Bot.getInstance().add(scroller, BorderLayout.SOUTH);
             } else {
-                scroller.remove(Inubot.getInstance().getLogPane());
-                Inubot.getInstance().remove(scroller);
+                scroller.remove(Bot.getInstance().getLogPane());
+                Bot.getInstance().remove(scroller);
             }
-            Inubot.getInstance().pack();
-            Inubot.getInstance().getLogPane().setToggled(!Inubot.getInstance().getLogPane().isToggled());
+            Bot.getInstance().pack();
+            Bot.getInstance().getLogPane().setToggled(!Bot.getInstance().getLogPane().isToggled());
         });
 
         add(start);
@@ -100,9 +99,9 @@ public class BotMenuBar extends JMenuBar {
     }
 
     public void updateButtonStates() {
-        start.setEnabled(!Inubot.getInstance().getScriptFlux().isRunning());
-        stop.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
-        pause.setEnabled(Inubot.getInstance().getScriptFlux().isRunning());
-        pause.setText(Inubot.getInstance().getScriptFlux().isPaused() ? "Resume" : "Pause");
+        start.setEnabled(!Bot.getInstance().getScriptFlux().isRunning());
+        stop.setEnabled(Bot.getInstance().getScriptFlux().isRunning());
+        pause.setEnabled(Bot.getInstance().getScriptFlux().isRunning());
+        pause.setText(Bot.getInstance().getScriptFlux().isPaused() ? "Resume" : "Pause");
     }
 }

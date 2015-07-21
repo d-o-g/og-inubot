@@ -6,6 +6,7 @@
  */
 package com.inubot.script;
 
+import com.inubot.Bot;
 import com.inubot.Inubot;
 
 public class ScriptFlux {
@@ -20,7 +21,7 @@ public class ScriptFlux {
         stop();
         this.running = runningScript;
         this.running.start();
-        Inubot.getInstance().getJMenuBar().updateButtonStates();
+        Bot.getInstance().getJMenuBar().updateButtonStates();
     }
 
     public void switchState() {

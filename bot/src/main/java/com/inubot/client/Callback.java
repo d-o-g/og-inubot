@@ -1,5 +1,6 @@
 package com.inubot.client;
 
+import com.inubot.Bot;
 import com.inubot.Inubot;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Skill;
@@ -25,7 +26,7 @@ public class Callback {
             return;
         }
         System.out.println(Skills.getExperience(Skill.values()[index]) + " -> " + experience);
-        Script script = Inubot.getInstance().getScriptFlux().getRunning();
+        Script script = Bot.getInstance().getScriptFlux().getRunning();
         if (script != null && script instanceof ExperienceListener) {
             ((ExperienceListener) script).experienceChanged(new ExperienceEvent(index, Skills.getExperience(Skill.values()[index]), experience));
         }
@@ -33,25 +34,9 @@ public class Callback {
 
     @ClientInvoked
     public static void messageReceived(int type, String sender, String message, String channel) {
-        Script script = Inubot.getInstance().getScriptFlux().getRunning();
+        Script script = Bot.getInstance().getScriptFlux().getRunning();
         if (script != null && script.isRunning()) {
             script.messageReceived(new MessageEvent(sender, message, channel, type));
-            if (type == 0) {
-                if (message.contains("Congratulations")) {
-                    String a = message.replace("Congratulations, you just advanced a ", "").replace(" level.", "");
-                    a = a.replace("Congratulations, you've just advanced a ", "");
-                    a = a.replace("Congratulations, you just advanced an ", "");
-                    int level = 0;
-                    for (Skill skill : Skill.values()) {
-                        if (a.equalsIgnoreCase(skill.name()))
-                            level = Skills.getLevel(skill);
-                    }
-
-                    Inubot.getInstance().getIRCConnection().sendNotice("I am now level " + level + " in " + a);
-                }
-            } else if (message.contains("bot")) {
-                Inubot.getInstance().getIRCConnection().sendNotice("Someone said bot!");
-            }
         }
     }
 
@@ -60,9 +45,9 @@ public class Callback {
         Client.processActions();
         if (Client.GAME_TICK_SLEEP != -1)
             Time.sleep(Client.GAME_TICK_SLEEP);
-        if (Inubot.getInstance() == null)
+        if (Bot.getInstance() == null)
             return;
-        Script script = Inubot.getInstance().getScriptFlux().getRunning();
+        Script script = Bot.getInstance().getScriptFlux().getRunning();
         if (script == null || script.isPaused())
             return;
         script.getTickTasks().forEach(Task::execute);

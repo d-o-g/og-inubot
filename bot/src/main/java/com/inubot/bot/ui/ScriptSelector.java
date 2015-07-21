@@ -6,6 +6,7 @@
  */
 package com.inubot.bot.ui;
 
+import com.inubot.Bot;
 import com.inubot.Inubot;
 import com.inubot.bot.util.Configuration;
 import com.inubot.script.Manifest;
@@ -79,7 +80,7 @@ public class ScriptSelector extends JFrame {
             start.addActionListener(e -> {
                 try {
                     Script targetInstance = target.getScriptClass().newInstance();
-                    Inubot.getInstance().getScriptFlux().execute(targetInstance);
+                    Bot.getInstance().getScriptFlux().execute(targetInstance);
                     dispose();
                 } catch (InstantiationException | IllegalAccessException e1) {
                     e1.printStackTrace();

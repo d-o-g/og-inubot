@@ -1,5 +1,6 @@
 package com.inubot.bot.ui;
 
+import com.inubot.Bot;
 import com.inubot.Inubot;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Interfaces;
@@ -115,7 +116,7 @@ public class WidgetExplorer extends JFrame implements Paintable {
         this.add(searchPanel, BorderLayout.SOUTH);
 
         //EventManager.subscribeListener(this);
-        Inubot.getInstance().getCanvas().paintables.add(this);
+        Bot.getInstance().getCanvas().paintables.add(this);
     }
 
 

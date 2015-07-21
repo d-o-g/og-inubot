@@ -6,6 +6,7 @@
  */
 package com.inubot.script.bundled;
 
+import com.inubot.Bot;
 import com.inubot.Inubot;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Npc;
@@ -24,8 +25,8 @@ public class ZooFighter extends Script {
     @Override
     public int loop() {
         if (Interfaces.canContinue()) {
-            Inubot.getInstance().getCanvas().pressKey(KeyEvent.VK_SPACE, 200);
-            Inubot.getInstance().getCanvas().releaseKey(KeyEvent.VK_SPACE);
+            Bot.getInstance().getCanvas().pressKey(KeyEvent.VK_SPACE, 200);
+            Bot.getInstance().getCanvas().releaseKey(KeyEvent.VK_SPACE);
             return 1700;
         }
         if (Players.getLocal().getAnimation() != -1)

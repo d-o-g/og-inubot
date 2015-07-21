@@ -6,6 +6,7 @@
  */
 package com.inubot.script;
 
+import com.inubot.Bot;
 import com.inubot.Inubot;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.event.MessageEvent;
@@ -42,11 +43,12 @@ public abstract class Script extends LoopTask {
                     username = AccountManager.getCurrentAccount().getUsername();
                     password = AccountManager.getCurrentAccount().getPassword();
                 }
-                if (this instanceof Paintable)
-                    Inubot.getInstance().getCanvas().paintables.add((Paintable) this);
+                if (this instanceof Paintable) {
+                    Bot.getInstance().getCanvas().paintables.add((Paintable) this);
+                }
                 super.run();
             } else {
-                Inubot.getInstance().getCanvas().paintables.clear();
+                Bot.getInstance().getCanvas().paintables.clear();
                 stop();
             }
             throw new RuntimeException("haha i stopped script");
@@ -60,8 +62,9 @@ public abstract class Script extends LoopTask {
     @Override
     public final void onExit() {
         shutdownTasks.forEach(Task::execute);
-        if (this instanceof Paintable)
-            Inubot.getInstance().getCanvas().paintables.clear();
+        if (this instanceof Paintable) {
+            Bot.getInstance().getCanvas().paintables.clear();
+        }
     }
 
     @Override
