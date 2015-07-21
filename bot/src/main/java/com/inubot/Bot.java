@@ -41,7 +41,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
     private static final String IRC_CHANNEL = "#inubot";
     protected static Bot instance;
     private static boolean useProxy = false;
-    private final Crawler crawler;
+    protected final Crawler crawler;
     private final ScriptFlux scriptFlux;
     private final IRCConnection irc;
     private final LogPane logPane;
@@ -88,8 +88,8 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         if (randomDat.exists())
             randomDat.setReadOnly();
 
-        Injector injector = new Injector(new JarNode(new File(crawler.pack)));
-        initInjector(injector);
+        File pack = new File(crawler.pack);
+        Injector injector = initInjector(pack);;
         Map<String, byte[]> classes = injector.inject(false);
 
         RSClassLoader classloader = new RSClassLoader(classes);
@@ -162,7 +162,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         return logPane;
     }
 
-    protected abstract void initInjector(Injector injector);
+    protected abstract Injector initInjector(File pack);
 
     protected abstract void initCache(Client client);
 

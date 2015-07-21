@@ -6,7 +6,6 @@
  */
 package com.inubot.bot.modscript.transform;
 
-import com.inubot.Inubot;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
 import com.inubot.bot.modscript.hooks.InvokeHook;
@@ -91,7 +90,7 @@ public class InvokerTransform implements Transform {
 
     private void addDrawStringInvoker(String defined, String method, ClassNode target) {
         MethodNode mn = new MethodNode(ACC_PUBLIC, "drawString", "(Ljava/lang/String;II)V", null, null);
-        InvokeHook ih = ModScript.serveInvoke(defined + "#" + method);
+        InvokeHook ih = ModScript.getInvoke(defined + "#" + method);
         mn.instructions.add(new VarInsnNode(ALOAD, 0));
         mn.instructions.add(new VarInsnNode(ALOAD, 1));
         mn.instructions.add(new VarInsnNode(ILOAD, 2));
@@ -105,7 +104,7 @@ public class InvokerTransform implements Transform {
 
     private void addTransformInvoker(String defined, ClassNode node) {
         MethodNode mn = new MethodNode(ACC_PUBLIC, "transform", "()L" + PACKAGE + "RS" + defined + ";", null, null);
-        InvokeHook ih = ModScript.serveInvoke(defined + "#transform");
+        InvokeHook ih = ModScript.getInvoke(defined + "#transform");
         mn.instructions.add(new VarInsnNode(ALOAD, 0));
         if (ih.predicate != Integer.MAX_VALUE)
             mn.instructions.add(new LdcInsnNode(ih.predicate));
@@ -116,7 +115,7 @@ public class InvokerTransform implements Transform {
 
     private void addGetInvoker(String defined, ClassNode client) {
         MethodNode mn = new MethodNode(ACC_PUBLIC, "load" + defined, "(I)L" + PACKAGE + "RS" + defined + ";", null, null);
-        InvokeHook ih = ModScript.serveInvoke("Client#load" + defined);
+        InvokeHook ih = ModScript.getInvoke("Client#load" + defined);
         mn.instructions.add(new VarInsnNode(ILOAD, 1));
         if (ih.predicate != Integer.MAX_VALUE)
             mn.instructions.add(new LdcInsnNode(ih.predicate));
@@ -127,7 +126,7 @@ public class InvokerTransform implements Transform {
 
     private void addSpriteInvoker(String defined, String name, ClassNode client) {
         MethodNode mn = new MethodNode(ACC_PUBLIC, name, "(IIIIIZ)L" + PACKAGE + "RS" + defined + ";", null, null);
-        InvokeHook ih = ModScript.serveInvoke("Client#" + name);
+        InvokeHook ih = ModScript.getInvoke("Client#" + name);
         mn.instructions.add(new VarInsnNode(ILOAD, 1));
         mn.instructions.add(new VarInsnNode(ILOAD, 2));
         mn.instructions.add(new VarInsnNode(ILOAD, 3));

@@ -54,30 +54,7 @@ public class ModScript {
         return classloader;
     }
 
-    public static int multiplyValueByDecoder(int value, String hook) {
-        try {
-            FieldHook fh = FIELD_HOOK_MAP.get(hook);
-            if (fh.multiplier == -1)
-                return value;
-            return value * fh.multiplier;
-        } catch (Exception e) {
-            return value;
-        }
-    }
-
-    public static int multiplyValueByEncoder(int value, String hook) {
-        try {
-            FieldHook fh = FIELD_HOOK_MAP.get(hook);
-            if (fh.multiplier == -1)
-                return value;
-            BigInteger num = BigInteger.valueOf(fh.multiplier);
-            return value * num.modInverse(new BigInteger(String.valueOf(1L << 32))).intValue();
-        } catch (Exception e) {
-            return value;
-        }
-    }
-
-    public static InvokeHook serveInvoke(String name) {
+    public static InvokeHook getInvoke(String name) {
         try {
             return INVOKE_HOOK_MAP.get(name);
         } catch (Exception e) {
@@ -86,7 +63,7 @@ public class ModScript {
         }
     }
 
-    public static int inverseFor(int value) {
+    public static int getMMI(int value) {
         return BigInteger.valueOf(value).modInverse(new BigInteger(String.valueOf(1L << 32))).intValue();
     }
 
@@ -97,7 +74,7 @@ public class ModScript {
                 throw new IOException("Invalid modscript format");
             ModScript.type = in.readUTF();
             String innerHash = in.readUTF();
-            if (!innerHash.equals(hash))
+            if (!ModScript.getType().equals("modern") /* <-- is a temp hack */ && !innerHash.equals(hash))
                 throw new IOException("Modscript is out-of-date");
             try {
                 int classSize = in.readInt();

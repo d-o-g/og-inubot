@@ -8,14 +8,18 @@ package com.inubot;
 
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.transform.*;
+import com.inubot.bot.util.Unpacker;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.Crawler.GameType;
+import com.inubot.bot.util.io.JarNode;
 import com.inubot.client.natives.modern.RSClient;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.Collections;
 
 public class RS3Inubot extends Bot<RSClient> {
+
     public static void main(String... args) {
         SwingUtilities.invokeLater(() -> {
             try {
@@ -33,13 +37,16 @@ public class RS3Inubot extends Bot<RSClient> {
     }
 
     @Override
-    protected void initInjector(Injector injector) {
+    protected Injector initInjector(File pack) {
+        Unpacker unpacker = new Unpacker(pack, crawler.parameters.get("0"), crawler.parameters.get("-1"));
+        Injector injector = new Injector(new JarNode(unpacker.dump(pack)));
         Collections.addAll(injector.getTransforms(),
                 new InterfaceImpl(),
                 new CanvasHack(),
                 new GetterAdder(),
                 new CatchBlockSweeper()
         );
+        return injector;
     }
 
     @Override
@@ -49,6 +56,6 @@ public class RS3Inubot extends Bot<RSClient> {
 
     @Override
     protected Crawler createCrawler() {
-        return new Crawler(GameType.RS3); //TODO decryption
+        return new Crawler(GameType.RS3);
     }
 }

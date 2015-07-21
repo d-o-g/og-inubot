@@ -27,75 +27,16 @@ import java.util.jar.JarFile;
 
 public class RS3Updater extends Updater {
 
-    private static final boolean server =  new File("/usr/share/nginx/html/data/").exists();
-
-    @Override
-    public String getType() {
-        return "modern";
-    }
-
-    @Override
-    public String getAccessorPrefix() {
-        return "com/inubot/client/natives/modern/RS";
-    }
-
-    @Override
-    public String getWrapperPrefix() {
-        return "com/inubot/api/live";
-    }
-
-    @Override
-    public int getRevision(Map<ClassNode, Map<MethodNode, FlowGraph>> graphs) {
-        ClassNode client = null;
-        for (ClassNode cn : graphs.keySet()) {
-            if (cn.name.equals("Rs2Applet"))
-                continue;
-            if (!cn.ownerless() && cn.getMethodByName("init") != null) {
-                client = cn;
-                break;
-            }
-        }
-        if (client == null)
-            throw new RuntimeException("Cannot find client");
-        MethodNode init = client.getMethodByName("init");
-        FlowGraph graph = graphs.get(client).get(init);
-        AtomicInteger revision = new AtomicInteger(0);
-        for (Block block : graph) {
-            block.tree().accept(new NodeVisitor() {
-                public void visitMethod(MethodMemberNode mmn) {
-                    if (mmn.opcode() == INVOKEVIRTUAL && mmn.desc().contains("Ljava/lang/String;IIII")) {
-                        NumberNode nn = (NumberNode) mmn.first(SIPUSH);
-                        if (nn != null)
-                            revision.set(nn.number());
-                    }
-                }
-            });
-        }
-        return revision.get();
-    }
-
-    @Override
-    public String getModscriptLocation() {
-        return server ? "/usr/share/nginx/html/data/oldschool.dat" : Configuration.CACHE + "/modern.dat";
-    }
-
-    @Override
-    public String getHash() {
-        try (JarFile jar = new JarFile(file)) {
-            return Integer.toString(jar.getManifest().hashCode());
-        } catch (IOException | NullPointerException e) {
-            return file.getName().replace(".jar", "");
-        }
-    }
-
-    private static GraphVisitor[] createVisitors() {
-        return new GraphVisitor[]{new CoordinateSpace(), new Vector3f(), new Widget(),
-                new SceneGraphTile(), new SceneGraph(), new Scene(), new SceneOffset(),
-                new SceneSettings(), new SceneGraphLevel(), new Client()};
-    }
+    private static final boolean server = new File("/usr/share/nginx/html/data/").exists();
 
     public RS3Updater(File file) throws Exception {
         super(file, createVisitors(), false);
+    }
+
+    private static GraphVisitor[] createVisitors() {
+        return new GraphVisitor[]{new Canvas(), new CoordinateSpace(), new Vector3f(), new Widget(),
+                new SceneGraphTile(), new SceneGraph(), new Scene(), new SceneOffset(),
+                new SceneSettings(), new SceneGraphLevel(), new Client()};
     }
 
     private static void run(boolean global, boolean print, File pack) throws Exception {
@@ -107,7 +48,6 @@ public class RS3Updater extends Updater {
                     updater.print = print;
                     updater.run();
                     updater.flush();
-                    System.gc();
                 }
             }
         } else {
@@ -126,8 +66,8 @@ public class RS3Updater extends Updater {
             updater.print = print;
             updater.run();
             updater.flush();
-            System.gc();
         }
+        System.gc();
     }
 
     private static void run(boolean global, boolean print) throws Exception {
@@ -136,6 +76,70 @@ public class RS3Updater extends Updater {
 
     public static void main(String[] args) throws Exception {
         run(false, true);
+    }
+
+    @Override
+    public String getType() {
+        return "modern";
+    }
+
+    @Override
+    public String getAccessorPrefix() {
+        return "com/inubot/client/natives/modern/RS";
+    }
+
+    @Override
+    public String getWrapperPrefix() {
+        return "com/inubot/api/modern";
+    }
+
+    @Override
+    public int getRevision(Map<ClassNode, Map<MethodNode, FlowGraph>> graphs) {
+        ClassNode client = null;
+        for (ClassNode cn : graphs.keySet()) {
+            if (!cn.name.equals("Rs2Applet") && !cn.ownerless() && cn.getMethodByName("init") != null) {
+                client = cn;
+                break;
+            }
+        }
+        if (client == null) {
+            throw new RuntimeException("Cannot find client");
+        }
+        MethodNode init = client.getMethodByName("init");
+        FlowGraph graph = graphs.get(client).get(init);
+        AtomicInteger revision = new AtomicInteger(0);
+        for (Block block : graph) {
+            block.tree().accept(new NodeVisitor() {
+                public void visitMethod(MethodMemberNode mmn) {
+                    if (mmn.opcode() == INVOKEVIRTUAL && mmn.desc().contains("Ljava/lang/String;IIII")) {
+                        NumberNode nn = (NumberNode) mmn.first(SIPUSH);
+                        if (nn != null) {
+                            revision.set(nn.number());
+                        }
+                    }
+                }
+            });
+        }
+        return revision.get();
+    }
+
+    @Override
+    public String getModscriptLocation() {
+        /**
+         * TODO dont forget to change back
+         return server ? "/usr/share/nginx/html/data/modern" + getHash() + ".dat"
+         : Configuration.CACHE + "/modern" + getHash() + ".dat";
+         */
+        return server ? "/usr/share/nginx/html/data/modern.dat" : Configuration.CACHE + "/modern.dat";
+    }
+
+    @Override
+    public String getHash() {
+        try (JarFile jar = new JarFile(file)) {
+            return Integer.toString(jar.getManifest().hashCode());
+        } catch (IOException | NullPointerException e) {
+            return file.getName().replace(".jar", "");
+        }
     }
 }
 

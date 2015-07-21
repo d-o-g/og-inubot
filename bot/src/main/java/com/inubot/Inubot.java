@@ -11,6 +11,7 @@ import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.transform.*;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.Crawler.GameType;
+import com.inubot.bot.util.io.JarNode;
 import com.inubot.client.natives.oldschool.RSClient;
 import com.inubot.script.bundled.*;
 import com.inubot.script.bundled.agility.PerfectAgility;
@@ -27,6 +28,7 @@ import com.inubot.script.others.septron.fletching.Fletcher;
 import com.inubot.script.others.septron.fletching.Stringer;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.Collections;
 
 public class Inubot extends Bot<RSClient> {
@@ -53,7 +55,8 @@ public class Inubot extends Bot<RSClient> {
     };
 
     @Override
-    protected void initInjector(Injector injector) {
+    protected Injector initInjector(File pack) {
+        Injector injector = new Injector(new JarNode(pack));
         Collections.addAll(injector.getTransforms(),
                 new EngineTickCallback(),
                 new ProcessActionCallback(),
@@ -74,6 +77,7 @@ public class Inubot extends Bot<RSClient> {
                 new LowMemorySetter(),
                 new CatchBlockSweeper()
         );
+        return injector;
     }
 
     @Override

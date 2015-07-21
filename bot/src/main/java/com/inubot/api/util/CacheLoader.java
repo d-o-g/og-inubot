@@ -54,7 +54,7 @@ public class CacheLoader {
     }
 
     private static boolean loadObjectDefinitions(RSClient client) {
-        InvokeHook invoke = ModScript.serveInvoke("Client#loadObjectDefinition");
+        InvokeHook invoke = ModScript.getInvoke("Client#loadObjectDefinition");
         if (invoke == null)
             return false;
         try {
@@ -81,7 +81,7 @@ public class CacheLoader {
     }
 
     private static boolean loadNpcDefinitions(RSClient client) {
-        InvokeHook invoke = ModScript.serveInvoke("Client#loadNpcDefinition");
+        InvokeHook invoke = ModScript.getInvoke("Client#loadNpcDefinition");
         if (invoke == null)
             return false;
         try {
@@ -110,7 +110,7 @@ public class CacheLoader {
     }
 
     private static boolean loadItemDefinitions(RSClient client) {
-        InvokeHook invoke = ModScript.serveInvoke("Client#loadItemDefinition");
+        InvokeHook invoke = ModScript.getInvoke("Client#loadItemDefinition");
         if (invoke == null)
             return false;
         try {
