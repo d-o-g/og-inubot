@@ -3,13 +3,22 @@ package com.inubot.script.others.septron;
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
-import com.inubot.script.Script;
+import com.inubot.script.Manifest;
+import com.inubot.script.bundled.proscripts.framework.ProScript;
+
+import java.util.Map;
 
 /**
  * @author Septron
  * @since June 20, 2015
  */
-public class Combot extends Script {
+@Manifest(name = "Combot", developer = "Septron & Dog", desc = "Nagger", version = 1.0)
+public class Combot extends ProScript {
+
+    @Override
+    public void getPaintData(Map<String, Object> data) {
+
+    }
 
     private enum Monster {
         SEAGULL     (new Tile(3030, 3236), 25),

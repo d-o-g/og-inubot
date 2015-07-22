@@ -6,11 +6,8 @@
  */
 package com.inubot.bot.net.cdn;
 
-import com.inubot.Bot;
-import com.inubot.Inubot;
 import com.inubot.bot.net.cdn.packet.LoginPacket;
 import com.inubot.bot.net.cdn.packet.Packet;
-import com.inubot.script.loader.ScriptLoaderImpl;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
