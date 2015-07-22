@@ -136,6 +136,7 @@ public class PerfectAgility extends ProScript implements Paintable {
         if (course != null) {
             data.put("Course", course.toString());
         }
+        data.put("Experience to level", Skills.getExperienceAt(Skills.getCurrentLevel(Skill.AGILITY) + 1) - Skills.getExperience(Skill.AGILITY));
     }
 
     @Override

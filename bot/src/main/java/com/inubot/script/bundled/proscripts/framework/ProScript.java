@@ -40,7 +40,10 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
 
     public String getTitle() {
         Manifest manifest = getClass().getAnnotation(Manifest.class);
-        return manifest.name() + " v" + manifest.version();
+        if (manifest == null) {
+            return getClass().getSimpleName() + " v1.0";
+        }
+        return manifest.name() + " v" + manifest.version() + " by " + manifest.developer();
     }
 
     public abstract void getPaintData(Map<String, Object> data);
