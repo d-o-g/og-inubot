@@ -7,8 +7,11 @@
 package com.inubot.live.analysis;
 
 import com.inubot.modscript.hook.FieldHook;
-import com.inubot.visitor.*;
-import org.objectweb.asm.commons.cfg.*;
+import com.inubot.modscript.hook.InvokeHook;
+import com.inubot.visitor.GraphVisitor;
+import com.inubot.visitor.VisitorInfo;
+import org.objectweb.asm.commons.cfg.Block;
+import org.objectweb.asm.commons.cfg.BlockVisitor;
 import org.objectweb.asm.commons.cfg.query.*;
 import org.objectweb.asm.commons.cfg.tree.NodeVisitor;
 import org.objectweb.asm.commons.cfg.tree.node.*;
@@ -18,7 +21,8 @@ import org.objectweb.asm.tree.*;
  * @author Dogerina
  * @since 28-06-2015
  */
-@VisitorInfo(hooks = {"interfaceBounds", "mapOffset", "mapAngle", "mapScale", "mapState"})
+@VisitorInfo(hooks = {"interfaceBounds", "mapOffset", "mapAngle", "mapScale", "mapState", "menuX", "menuY",
+        "menuWidth", "menuHeight", "guidanceArrows", "processAction"})
 public class Client extends GraphVisitor {
 
     @Override
@@ -34,10 +38,61 @@ public class Client extends GraphVisitor {
                     continue;
                 if (fn.desc.equals("[Ljava/awt/Rectangle;")) {
                     addHook(new FieldHook("interfaceBounds", fn));
+                } else if (fn.desc.equals("[" + desc("GuidanceArrow"))) {
+                    addHook(new FieldHook("guidanceArrows", fn));
+                }
+            }
+            for (MethodNode mn : cn.methods) {
+                if ((mn.access & ACC_STATIC) == 0)
+                    continue;
+                if (mn.desc.startsWith("(" + desc("MenuItem") + "IIZ")) {
+                    addHook(new InvokeHook("processAction", mn));
                 }
             }
         }
-        visitAll(new AngularMapHooks(), new MapScale(), new MapState());
+        visitAll(new AngularMap(), new MapScale(), new MapState());
+        visitIfM(new MenuBounds(), m -> m.desc.startsWith("(" + desc("RenderConfiguration")));
+    }
+
+    private class MenuBounds extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            if (block.count(new InsnQuery(IFNE)) > 0) {
+                block.tree().accept(new NodeVisitor() {
+                    public void visitMethod(MethodMemberNode mmn) {
+                        if (mmn.desc().startsWith("(" + desc("RenderConfiguration") + "IIIIII")) {
+                            AbstractNode xmul = mmn.find(IMUL, 0);
+                            if (xmul == null) return;
+                            FieldMemberNode x = xmul.firstField();
+                            if (x == null || x.opcode() != GETSTATIC) return;
+                            AbstractNode ymul = mmn.find(IMUL, 1);
+                            if (ymul == null) return;
+                            FieldMemberNode y = ymul.firstField();
+                            if (y == null || y.opcode() != GETSTATIC) return;
+                            AbstractNode wmul = mmn.find(IMUL, 2);
+                            if (wmul == null) return;
+                            FieldMemberNode w = wmul.firstField();
+                            if (w == null || w.opcode() != GETSTATIC) return;
+                            AbstractNode hmul = mmn.find(IMUL, 3);
+                            if (hmul == null) return;
+                            FieldMemberNode h = hmul.firstField();
+                            if (h == null || h.opcode() != GETSTATIC) return;
+                            addHook(new FieldHook("menuX", x.fin()));
+                            addHook(new FieldHook("menuY", y.fin()));
+                            addHook(new FieldHook("menuWidth", w.fin()));
+                            addHook(new FieldHook("menuHeight", h.fin()));
+                            lock.set(true);
+                        }
+                    }
+                });
+            }
+        }
     }
 
     private class MapState extends BlockVisitor {
@@ -65,7 +120,7 @@ public class Client extends GraphVisitor {
         }
     }
 
-    private class AngularMapHooks extends BlockVisitor {
+    private class AngularMap extends BlockVisitor {
 
         @Override
         public boolean validate() {

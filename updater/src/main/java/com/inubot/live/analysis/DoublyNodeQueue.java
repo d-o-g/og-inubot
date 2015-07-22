@@ -7,23 +7,21 @@
 package com.inubot.live.analysis;
 
 import com.inubot.visitor.GraphVisitor;
-import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.tree.ClassNode;
 
 /**
  * @author Dogerina
- * @since 28-06-2015
+ * @since 22-07-2015
  */
-@VisitorInfo(hooks = {})
-public class Widget extends GraphVisitor {
+public class DoublyNodeQueue extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.ownerless() && cn.fieldCount("[Ljava/lang/Object;") > 15;
+        return cn.getFieldTypeCount() == 1 && cn.fieldCount(desc("DoublyNode")) == 2;
     }
 
     @Override
     public void visit() {
-        //class mv 745
+
     }
 }

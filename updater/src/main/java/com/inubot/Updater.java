@@ -191,10 +191,12 @@ public abstract class Updater extends Thread implements Runnable {
             graphs.put(cn, local);
         }
         revision = getRevision(graphs);
-        appendLine("----------- R" + revision + " -----------");
+        appendLine("\tBuild #" + revision);
+        appendLine("");
         int totalGraphs = 0;
-        for (Map<MethodNode, FlowGraph> map : graphs.values())
+        for (Map<MethodNode, FlowGraph> map : graphs.values()) {
             totalGraphs += map.size();
+        }
         int totalClasses = 0;
         int classes = 0;
         int totalHooks = 0;
@@ -214,20 +216,24 @@ public abstract class Updater extends Thread implements Runnable {
         for (GraphVisitor gv : visitors) {
             totalClasses++;
             if (gv.cn == null) {
-                appendLine(gv.id() + " as 'BROKEN'");
+                appendLine("\t" + gv.id() + " is BROKEN");
+                appendLine("");
                 continue;
             }
             if (print) {
-                appendLine(gv.id() + " as '" + gv.cn.name + "'");
-                appendLine(" ^ implements " + gv.iface());
+                appendLine("\t^ " + gv.cn.name + " implements " + gv.id());
             }
-            if (gv.cn == null)
+            if (gv.cn == null) {
+                appendLine("");
                 continue;
+            }
             classes++;
             hooks += gv.hooks.size();
             VisitorInfo info = gv.getClass().getAnnotation(VisitorInfo.class);
-            if (info == null)
+            if (info == null) {
+                appendLine("");
                 continue;
+            }
             totalHooks += info.hooks().length;
             for (Hook hook : gv.hooks.values()) {
                 if (hook instanceof FieldHook) {
@@ -240,46 +246,50 @@ public abstract class Updater extends Thread implements Runnable {
                             }
                         }
                     }
-                    if (!fh.isStatic)
+                    if (!fh.isStatic) {
                         fh.clazz = gv.cn.name;
+                    }
                 } else if (hook instanceof InvokeHook) {
                     InvokeHook ih = (InvokeHook) hook;
                     OpaquePredicateVisitor.OpaquePredicate predicate = opv.get(ih.clazz + "." + ih.method + ih.desc);
-                    if (predicate != null)
+                    if (predicate != null) {
                         ih.setOpaquePredicate(predicate.predicate, predicate.predicateType);
+                    }
                 }
                 if (print) {
-                    appendLine(" " + hook.getOutput());
+                    appendLine("\t" + hook.getOutput());
                 }
             }
             for (String hook : info.hooks()) {
                 if (!gv.hooks.containsKey(hook)) {
-                    appendLine(" ! BROKEN: " + gv.id() + "#" + hook);
+                    appendLine("\t!!! broken: " + gv.id() + "#" + hook);
                     //gv.hooks.put(hook, new BrokenHook(hook));
                 }
             }
+            appendLine("");
             gv.hooks.keySet().stream().filter(hook -> !Arrays.asList(info.hooks()).contains(hook)).forEach(hook ->
                             System.out.println("not in VisitorInfo annotation --> " + hook)
             );
         }
         this.classes = classes + "/" + totalClasses;
         this.hooks = hooks + "/" + totalHooks;
-        appendLine(umt.toString());
-        appendLine(String.format("graphs --> %d in %.2f seconds", totalGraphs, graphTime / 1e9));
+        appendLine(String.format("\tunused methods %d/%d", umt.getRemoved(), umt.getTotal()));
+        /*appendLine(String.format("graphs --> %d in %.2f seconds", totalGraphs, graphTime / 1e9));
         appendLine(String.format("trees --> %d in %.2f seconds", trees, treeTime / 1e9));
         appendLine(String.format("multipliers --> %s in %.2f seconds", inverseVisitor.toString(), multTime / 1e9));
-        appendLine(String.format("predicates --> %s in %.2f seconds", opv.toString(), predTime / 1e9));
-        appendLine(String.format("classes --> %d/%d", classes, totalClasses));
-        appendLine(String.format("hooks --> %d/%d", hooks, totalHooks));
-        appendLine(String.format("execution --> %.2f seconds", (end - start) / 1e9));
+        appendLine(String.format("predicates --> %s in %.2f seconds", opv.toString(), predTime / 1e9));*/
+        appendLine(String.format("\tidentified %d/%d classes", classes, totalClasses));
+        appendLine(String.format("\tidentfiied %d/%d hooks", hooks, totalHooks));
+        appendLine(String.format("\ttotal time %.2f seconds", (end - start) / 1e9));
         List<GraphVisitor> graphVisitors = new ArrayList<>();
         Collections.addAll(graphVisitors, this.visitors);
         try {
-            appendLine("hash --> " + hash);
+            appendLine("\thash " + hash);
             System.out.println(builder);
             String loc = getModscriptLocation();
-            if (loc != null)
+            if (loc != null) {
                 ModScript.write(loc, hash, getType(), graphVisitors);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

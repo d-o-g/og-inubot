@@ -1,6 +1,7 @@
 package com.inubot.modscript.hook;
 
 import com.inubot.modscript.Crypto;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.FieldNode;
 
@@ -49,13 +50,13 @@ public class FieldHook extends Hook {
     @Override
     public String getOutput() {
         StringBuilder output = new StringBuilder();
-        output.append("^ ").append(name).append(" --> ").append(clazz).append('.').append(field);
-        if (multiplier != 0)
+        String desc = org.objectweb.asm.Type.getType(fieldDesc).getClassName();
+        int idx = desc.lastIndexOf('.');
+        //TODO maybe replace obfuscated names with known names? e.g. xx -> Node
+        output.append("+ ").append(desc).append(" ").append(name).append(" is ").append(clazz).append('.').append(field);
+        if (multiplier != 0) {
             output.append(" * ").append(multiplier);
-        output.append(" - ");
-        if (isStatic)
-            output.append("static ");
-        output.append(fieldDesc);
+        }
         return output.toString();
     }
 

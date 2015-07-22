@@ -6,24 +6,27 @@
  */
 package com.inubot.live.analysis;
 
+import com.inubot.modscript.hook.FieldHook;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.tree.ClassNode;
 
 /**
  * @author Dogerina
- * @since 28-06-2015
+ * @since 22-07-2015
  */
-@VisitorInfo(hooks = {})
-public class Widget extends GraphVisitor {
+@VisitorInfo(hooks = {"doublyNodeQueue", "nodeTable"})
+public class Cache extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.ownerless() && cn.fieldCount("[Ljava/lang/Object;") > 15;
+        return cn.ownerless() && cn.getFieldTypeCount() == 4 && cn.fieldCount(desc("DoublyNodeQueue")) == 1 &&
+                cn.fieldCount(desc("NodeTable")) == 1 && cn.fieldCount(desc("DoublyNode")) == 0;
     }
 
     @Override
     public void visit() {
-        //class mv 745
+        addHook(new FieldHook("doublyNodeQueue", cn.getField(null, desc("DoublyNodeQueue"))));
+        addHook(new FieldHook("nodeTable", cn.getField(null, desc("NodeTable"))));
     }
 }

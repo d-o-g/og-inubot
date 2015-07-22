@@ -40,6 +40,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.TypePath;
 
+import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
@@ -437,7 +438,7 @@ public class ClassNode extends ClassVisitor {
             if (ignoreStatic && (mn.access & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC) {
                 continue;
             }
-            if (mn.desc.equals(desc)) {
+            if (desc == null || mn.desc.equals(desc)) {
                 count++;
             }
         }
@@ -476,6 +477,21 @@ public class ClassNode extends ClassVisitor {
 
     public int fieldCount() {
         return fieldCount(true);
+    }
+
+    public int fieldAccessCount(boolean ignoreStatic, int access) {
+        int count = 0;
+        for (FieldNode fn : fields) {
+            if (!ignoreStatic || (fn.access & Opcodes.ACC_STATIC) != Opcodes.ACC_STATIC) {
+                if ((access & fn.access) != 0)
+                    count++;
+            }
+        }
+        return count;
+    }
+
+    public int fieldAccessCount(int access) {
+        return fieldAccessCount(true, access);
     }
 
     public int fieldCount(String desc) {
@@ -529,5 +545,14 @@ public class ClassNode extends ClassVisitor {
 
     public boolean ownerless() {
         return superName.equals("java/lang/Object");
+    }
+
+    public void debug() {
+        for (FieldNode fn : fields) {
+            System.out.println(fn.name + " " + Type.getType(fn.desc).getClassName() + " " + Modifier.isStatic(fn.access));
+        }
+        for (MethodNode mn : methods) {
+            System.out.println(mn.name + mn.desc + " " + Type.getType(mn.desc).getClassName() + " " + Modifier.isStatic(mn.access));
+        }
     }
 }

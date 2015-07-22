@@ -71,4 +71,16 @@ public abstract class UnusedMethodTransform extends Transform {
         int removed = totalMethods - validMethods.size();
         return removed + "/" + totalMethods + " [V: " + validMethods.size() + "]";
     }
+
+    public int getRemoved() {
+        return totalMethods - validMethods.size();
+    }
+
+    public int getValid() {
+        return validMethods.size();
+    }
+
+    public int getTotal() {
+        return totalMethods;
+    }
 }
