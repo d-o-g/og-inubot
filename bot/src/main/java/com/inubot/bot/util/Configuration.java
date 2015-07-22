@@ -11,6 +11,8 @@ public class Configuration {
     public static final String CACHE = HOME + "cache" + File.separator;
     public static final String DATA = CACHE + "data" + File.separator;
     public static final String SCRIPTS = HOME + "scripts" + File.separator;
+    public static final String INJECTED = CACHE + "injected.jar";
+    public static final String INJECT_CACHE = CACHE + "inject_cache.wyd";
     public static final String[] DIRECTORIES = {CACHE, DATA, SCRIPTS};
     public static int WORLD = 18;
 
@@ -19,8 +21,9 @@ public class Configuration {
     }
 
     static {
-        for (String dir : DIRECTORIES)
+        for (String dir : DIRECTORIES) {
             new File(dir).mkdirs();
+        }
     }
 
     public static String getSystemHome() {

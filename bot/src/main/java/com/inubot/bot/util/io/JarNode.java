@@ -13,6 +13,7 @@ public class JarNode {
     private final Map<String, ClassStructure> nodes = new HashMap<>();
     private final File file;
     private final Map<String, byte[]> classes;
+    private Manifest manifest;
 
     public JarNode(File file) {
         this.file = file;
@@ -30,6 +31,7 @@ public class JarNode {
         if (file != null) {
             try (JarFile jf = new JarFile(file)) {
                 try (JarInputStream in = new JarInputStream(new FileInputStream(file))) {
+                    manifest = in.getManifest();
                     JarEntry entry = in.getNextJarEntry();
                     while (entry != null) {
                         String entryName = entry.getName();
@@ -58,5 +60,9 @@ public class JarNode {
             throw new IllegalStateException("wut");
         }
         return nodes;
+    }
+
+    public Manifest getManifest() {
+        return manifest;
     }
 }

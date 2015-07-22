@@ -30,12 +30,16 @@ import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
+import java.io.*;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.jar.JarInputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public abstract class Bot<Client extends ClientNative> extends JFrame implements Runnable {
 
@@ -60,7 +64,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         this.irc = new IRCConnection();
         this.asyncEventBus = new AsynchronousEventBus();
         this.syncEventBus = new SynchronousEventBus();
-        ServerConnection.start();
+//        ServerConnection.start();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
         try {
@@ -93,8 +97,53 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
             randomDat.setReadOnly();
 
         File pack = new File(crawler.pack);
-        Injector injector = initInjector(pack);;
-        Map<String, byte[]> classes = injector.inject(false);
+        File injectCache = new File(Configuration.INJECT_CACHE);
+        int hash = -1;
+        try (JarInputStream stream = new JarInputStream(new FileInputStream(Configuration.INJECTED))) {
+            hash = stream.getManifest().hashCode();
+        } catch (Exception ignore) {
+
+        }
+        boolean inject = true;
+        try {
+            if (!injectCache.exists() && new File(Configuration.INJECTED).exists()) {
+                injectCache.createNewFile();
+                BufferedWriter fw = new BufferedWriter(new FileWriter(injectCache));
+                fw.write(String.valueOf(hash));
+                fw.close();
+            } else if (injectCache.exists()) {
+                BufferedReader fr = new BufferedReader(new FileReader(injectCache));
+                int value = fr.read();
+                System.out.println(value);
+                inject = value == hash;
+                fr.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Map<String, byte[]> classes = new HashMap<>();
+        System.out.println(hash);
+        if (inject) {
+            System.out.println("Injecting");
+            Injector injector = initInjector(pack);
+            classes = injector.inject(true);
+        } else {
+            System.out.println("Not injecting");
+            try (ZipInputStream input = new JarInputStream(new FileInputStream(Configuration.INJECTED))) {
+                ZipEntry entry;
+                while ((entry = input.getNextEntry()) != null) {
+                    String entryName = entry.getName();
+                    if (entryName.endsWith(".class")) {
+                        byte[] read = read(input);
+                        entryName = entryName.replace('/', '.');
+                        String name = entryName.substring(0, entryName.length() - 6);
+                        classes.put(name, read);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         CachedClassLoader classloader = new CachedClassLoader(classes);
         ModScript.setClassLoader(classloader);
@@ -220,5 +269,19 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
                 com.inubot.api.methods.Client.MODEL_RENDERING_ENABLED = false;
             }
         }
+    }
+
+    private static byte[] read(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buffer = new byte[2048];
+        int read;
+        while (inputStream.available() > 0) {
+            read = inputStream.read(buffer, 0, buffer.length);
+            if (read < 0) {
+                break;
+            }
+            out.write(buffer, 0, read);
+        }
+        return out.toByteArray();
     }
 }

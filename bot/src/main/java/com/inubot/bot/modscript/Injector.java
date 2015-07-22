@@ -1,6 +1,7 @@
 package com.inubot.bot.modscript;
 
 import com.inubot.bot.modscript.transform.Transform;
+import com.inubot.bot.util.Configuration;
 import com.inubot.bot.util.io.JarNode;
 import jdk.internal.org.objectweb.asm.ClassWriter;
 import jdk.internal.org.objectweb.asm.tree.ClassNode;
@@ -33,7 +34,7 @@ public class Injector {
             out.put(cn.name, writer.toByteArray());
         }
         if (dump) {
-            try (JarOutputStream output = new JarOutputStream(new FileOutputStream("./injected.jar"))) {
+            try (JarOutputStream output = new JarOutputStream(new FileOutputStream(Configuration.INJECTED), arch.getManifest())) {
                 for (Map.Entry<String, byte[]> entry : out.entrySet()) {
                     output.putNextEntry(new JarEntry(entry.getKey() + ".class"));
                     output.write(entry.getValue());
