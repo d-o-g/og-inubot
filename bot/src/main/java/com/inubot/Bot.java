@@ -7,7 +7,8 @@
 package com.inubot;
 
 import com.inubot.api.event.EventBus;
-import com.inubot.api.event.concurrent.SynchronousEventBus;
+import com.inubot.api.event.impl.AsynchronousEventBus;
+import com.inubot.api.event.impl.SynchronousEventBus;
 import com.inubot.api.methods.Game;
 import com.inubot.api.util.Time;
 import com.inubot.bot.account.Account;
@@ -19,7 +20,6 @@ import com.inubot.bot.ui.BotMenuBar;
 import com.inubot.bot.ui.LogPane;
 import com.inubot.bot.util.*;
 import com.inubot.bot.util.io.Crawler;
-import com.inubot.bot.util.io.JarNode;
 import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.ClientNative;
 import com.inubot.script.ScriptFlux;
@@ -34,7 +34,7 @@ import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Bot<Client extends ClientNative> extends JFrame implements Runnable {
 
@@ -45,7 +45,8 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
     private final ScriptFlux scriptFlux;
     private final IRCConnection irc;
     private final LogPane logPane;
-    private EventBus eventBus;
+    private EventBus asyncEventBus;
+    private EventBus syncEventBus;
     private Client client;
 
     public Bot() {
@@ -56,7 +57,8 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         this.crawler = createCrawler();
         this.logPane = new LogPane();
         this.irc = new IRCConnection();
-        this.eventBus = new SynchronousEventBus();
+        this.asyncEventBus = new AsynchronousEventBus();
+        this.syncEventBus = new SynchronousEventBus();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
         try {
@@ -150,12 +152,20 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         return irc;
     }
 
-    public EventBus getEventBus() {
-        return eventBus;
+    public EventBus getSyncEventBus() {
+        return syncEventBus;
     }
 
-    public void setEventBus(EventBus eventBus) {
-        this.eventBus = eventBus;
+    public void setSyncEventBus(EventBus eventBus) {
+        this.syncEventBus = eventBus;
+    }
+
+    public EventBus getAsyncEventBus() {
+        return asyncEventBus;
+    }
+
+    public void setAsyncEventBus(EventBus eventBus) {
+        this.asyncEventBus = eventBus;
     }
 
     public ScriptFlux getScriptFlux() {

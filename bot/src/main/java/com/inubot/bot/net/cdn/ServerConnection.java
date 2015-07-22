@@ -8,6 +8,7 @@ package com.inubot.bot.net.cdn;
 
 import com.inubot.bot.net.cdn.packet.LoginPacket;
 import com.inubot.bot.net.cdn.packet.Packet;
+import com.inubot.script.loader.RemoteScriptDefinition;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -67,12 +68,12 @@ public class ServerConnection implements Runnable {
                     if (input.available() > 0) {
                         int value = input.read();
                         switch (value) {
-                            case 4: {
+                            case Packet.AUTH_SUCCESS: {
                                 System.out.println("Authenticated...");
                                 authenticated = true;
                                 break;
                             }
-                            case 5: {
+                            case Packet.REQUEST_SCRIPTS: {
                                 System.out.println("Receiving Script...");
                                 byte[] data = new byte[2056];
                                 int count = 0;
@@ -80,8 +81,7 @@ public class ServerConnection implements Runnable {
                                     int size = input.read(data);
                                     count += size;
                                 }
-
-                                System.out.println("Read " + count + " bytes");
+                                RemoteScriptDefinition.create(data);
                                 break;
                             }
                             default:

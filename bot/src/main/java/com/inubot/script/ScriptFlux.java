@@ -7,11 +7,20 @@
 package com.inubot.script;
 
 import com.inubot.Bot;
-import com.inubot.Inubot;
+import com.inubot.script.loader.RemoteScriptDefinition;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ScriptFlux {
 
     private Script running = null;
+
+    private final List<RemoteScriptDefinition> networkedScriptDefinitions = new LinkedList<>();
+
+    public List<RemoteScriptDefinition> getNetworkedScriptDefinitions() {
+        return networkedScriptDefinitions;
+    }
 
     public Script getRunning() {
         return running;

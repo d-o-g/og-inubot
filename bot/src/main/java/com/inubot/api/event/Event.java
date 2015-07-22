@@ -21,13 +21,11 @@ public abstract class Event {
 
     /* The parent event, if there is one */
     private Event parent = null;
-    /* Whether this event should be fired synchronously or not */
-    private boolean parallel = true;
     /* The current state of the event, see constant values above */
     private byte state = PENDING;
 
     public Event(Event parent, List<Event> delegates) {
-        this.parent = null;
+        setParent(parent);
         this.delegates = delegates;
         this.listeners = new LinkedList<>();
     }
@@ -73,10 +71,12 @@ public abstract class Event {
     }
 
     public final void setParent(Event parent) {
+        parent.delegate(this);
         this.parent = parent;
     }
 
     public final void delegate(Event delegate) {
+        delegate.setParent(this);
         delegates.add(delegate);
     }
 
@@ -86,16 +86,8 @@ public abstract class Event {
 
     public abstract void execute();
 
-    public final boolean isParallel() {
-        return parallel;
-    }
-
-    public final void setParallel(boolean parallel) {
-        this.parallel = parallel;
-    }
-
-    public List<Event> getDelegates() {
-        return delegates;
+    public Event[] getDelegates() {
+        return delegates.toArray(new Event[delegates.size()]);
     }
 
 }

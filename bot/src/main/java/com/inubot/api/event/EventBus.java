@@ -7,16 +7,24 @@ public interface EventBus {
     /**
      * @return The current {@link com.inubot.api.event.EventBus} that is in use
      */
+    static EventBus currentBus(boolean concurrent) {
+        return concurrent ? Bot.getInstance().getSyncEventBus() : Bot.getInstance().getAsyncEventBus();
+    }
+
     static EventBus currentBus() {
-        return Bot.getInstance().getEventBus();
+        return currentBus(true);
     }
 
     /**
      * Sets the current EventBus
      * @param eventBus The new {@link com.inubot.api.event.EventBus} instance
      */
-    static void setCurrent(EventBus eventBus) {
-        Bot.getInstance().setEventBus(eventBus);
+    static void setAsyncBus(EventBus eventBus) {
+        Bot.getInstance().setAsyncEventBus(eventBus);
+    }
+
+    static void setSyncBus(EventBus eventBus) {
+        Bot.getInstance().setSyncEventBus(eventBus);
     }
 
     /**
@@ -35,12 +43,6 @@ public interface EventBus {
      * @param e the {@link com.inubot.api.event.Event} to deregister
      */
     void deregister(Event e);
-
-    /**
-     * @param c the event class type
-     * @return an array of {@link com.inubot.api.event.EventListener}'s registered to the specified Event class
-     */
-    EventListener[] listenersFor(Class<? extends Event> c);
 
     /**
      * Fires the queued events asynchronously

@@ -6,7 +6,16 @@
  */
 package com.inubot.script.loader;
 
+import com.inubot.bot.util.Configuration;
+
+import java.io.*;
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.jar.JarEntry;
+import java.util.jar.JarInputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class RemoteScriptDefinition extends ScriptDefinition {
 
@@ -18,6 +27,31 @@ public class RemoteScriptDefinition extends ScriptDefinition {
         this.developer = developer;
         this.desc = desc;
         this.version = version;
+    }
+
+    public static RemoteScriptDefinition create(byte[] data) {
+        try {
+            FileOutputStream out = new FileOutputStream(Configuration.SCRIPTS + "ok.jar");
+            out.write(data);
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static byte[] read(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buffer = new byte[2048];
+        int read;
+        while (inputStream.available() > 0) {
+            read = inputStream.read(buffer, 0, buffer.length);
+            if (read < 0) {
+                break;
+            }
+            out.write(buffer, 0, read);
+        }
+        return out.toByteArray();
     }
 
     @Override
