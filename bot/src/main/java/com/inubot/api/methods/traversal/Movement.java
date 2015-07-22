@@ -69,10 +69,7 @@ public class Movement {
         return canReach(target.getLocation().getRegionX(), target.getLocation().getRegionY(), false);
     }
 
-    /**
-     * @see #isReachable(Locatable) for Npc reachability.
-     */
-    public static boolean isEntityReachable(Locatable target) {
+    public static boolean isObjectReachable(Locatable target) {
         return canReach(target.getLocation().getRegionX(), target.getLocation().getRegionY(), true);
     }
 

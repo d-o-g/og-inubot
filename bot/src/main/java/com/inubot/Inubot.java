@@ -14,7 +14,7 @@ import com.inubot.bot.util.io.Crawler.GameType;
 import com.inubot.bot.util.io.JarNode;
 import com.inubot.client.natives.oldschool.RSClient;
 import com.inubot.script.bundled.*;
-import com.inubot.script.bundled.agility.PerfectAgility;
+import com.inubot.script.bundled.proscripts.agility.PerfectAgility;
 import com.inubot.script.bundled.fisher.AutoFisherPRO;
 import com.inubot.script.bundled.hunter.*;
 import com.inubot.script.bundled.proscripts.alcher.ProAlcher;
@@ -51,7 +51,7 @@ public class Inubot extends Bot<RSClient> {
             ProMiner.class,
             ProAlcher.class,
             ProZulrah.class,
-            MinotaurFighter.class
+            MinowolfFighter.class
     };
 
     @Override

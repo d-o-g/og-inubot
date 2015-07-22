@@ -120,7 +120,7 @@ public class CombatTrainerPRO extends Script implements Paintable {
             case SEAGULL: {
                 Npc npc = Npcs.getNearest(n -> n.getName() != null && n.getName().equals("Seagull") && n.getTargetIndex() == -1 && n.getAnimation() == -1);
                 if (npc != null) {
-                    if (Movement.isEntityReachable(npc))
+                    if (Movement.isObjectReachable(npc))
                         npc.processAction("Attack");
                 } else if (SEAGULLS.distance() > 15) {
                     Movement.walkTo(SEAGULLS);
@@ -162,7 +162,7 @@ public class CombatTrainerPRO extends Script implements Paintable {
                 }*/
                 Npc npc = Npcs.getNearest(n -> n.getName() != null && (n.getName().equals("Cow") || n.getName().equals("Cow calf")) && n.getTargetIndex() == -1 && n.getAnimation() == -1);
                 if (npc != null) {
-                    if (Movement.isEntityReachable(npc)) {
+                    if (Movement.isObjectReachable(npc)) {
                         npc.processAction("Attack");
                     } else {
                         GameObject fence = GameObjects.getNearest(t -> t.getLocation().equals(GATE_TILE));
@@ -211,13 +211,13 @@ public class CombatTrainerPRO extends Script implements Paintable {
                         return 2000;
                     } else {
                         GroundItem coins = GroundItems.getNearest("Coins");
-                        if (coins != null && Movement.isEntityReachable(coins)) {
+                        if (coins != null && Movement.isObjectReachable(coins)) {
                             coins.processAction("Take");
                             return 2000;
                         }
                         Npc goblin = Npcs.getNearest(n -> n.getName() != null && n.getName().equals("Goblin") && n.getTargetIndex() == -1 && n.getAnimation() == -1);
                         if (goblin != null) {
-                            if (Movement.isEntityReachable(goblin))
+                            if (Movement.isObjectReachable(goblin))
                                 goblin.processAction("Attack");
                         }
                     }

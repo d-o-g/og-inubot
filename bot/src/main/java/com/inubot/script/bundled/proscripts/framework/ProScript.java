@@ -9,8 +9,7 @@ package com.inubot.script.bundled.proscripts.framework;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.event.ExperienceEvent;
 import com.inubot.api.oldschool.event.ExperienceListener;
-import com.inubot.api.util.Paintable;
-import com.inubot.api.util.StopWatch;
+import com.inubot.api.util.*;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
@@ -31,6 +30,8 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
     private final StopWatch stopWatch;
     private boolean paintHidden = false;
 
+    private Color textColor = Color.WHITE.darker(), lineColor = Color.GREEN;
+
     public ProScript() {
         this.paintData = new LinkedHashMap<>();
         this.trackedSkills = new HashMap<>();
@@ -39,7 +40,10 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
 
     public String getTitle() {
         Manifest manifest = getClass().getAnnotation(Manifest.class);
-        return manifest.name() + " v" + manifest.version();
+        if (manifest == null) {
+            return getClass().getSimpleName() + " v1.0";
+        }
+        return manifest.name() + " v" + manifest.version() + " by " + manifest.developer();
     }
 
     public abstract void getPaintData(Map<String, Object> data);
@@ -51,8 +55,8 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
         }
         paintData.put("Runtime", stopWatch.toElapsedString());
         for (TrackedSkill trackedSkill : trackedSkills.values()) {
-            paintData.put(trackedSkill.skill.toString().toLowerCase() + " experience", trackedSkill.gainedExperience);
-            paintData.put(trackedSkill.skill.name().toLowerCase() + " experience/hr", stopWatch.getHourlyRate(trackedSkill.gainedExperience));
+            paintData.put(trackedSkill.skill.toString() + " experience", trackedSkill.gainedExperience);
+            paintData.put(trackedSkill.skill.toString() + " experience/hr", stopWatch.getHourlyRate(trackedSkill.gainedExperience));
         }
         getPaintData(paintData);
         int widest = 0;
@@ -63,22 +67,25 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
                 widest = width;
             }
         }
+        int titleWidth = graphics.getFontMetrics().stringWidth(getTitle());
+        if (titleWidth > widest) {
+            widest = titleWidth;
+        }
         int dataLen = paintData.size() + 1;
-        graphics.setColor(Color.GREEN);
+        graphics.setColor(lineColor);
         graphics.setStroke(new BasicStroke(3.0f));
         graphics.drawRect(10, 10, widest + BASE_PAINT, BASE_PAINT + HEIGHT * dataLen);
         graphics.setColor(Color.BLACK);
         graphics.setComposite(AlphaComposite.SrcOver.derive(0.7f));
         graphics.fillRect(11, 11, widest + BASE_PAINT - 1, BASE_PAINT + (HEIGHT * dataLen) - 1);
-        graphics.setColor(Color.WHITE);
-        graphics.drawString(getTitle(), 13, BASE_PAINT + HEIGHT);
-        graphics.setColor(Color.GREEN);
+        AWTUtil.drawBoldedString(graphics, getTitle(), 13, BASE_PAINT + HEIGHT, textColor.brighter());
+        graphics.setColor(lineColor);
         graphics.drawLine(12, 13 + HEIGHT, widest + BASE_PAINT + 8, 13 + HEIGHT);
-        graphics.setColor(Color.WHITE.darker());
+        graphics.setColor(textColor);
         int index = 2;
         for (Map.Entry<String, Object> entry : paintData.entrySet()) {
             String data = entry.getKey() + ": " + entry.getValue().toString();
-            graphics.drawString(data, 13, BASE_PAINT + (HEIGHT * index));
+            AWTUtil.drawBoldedString(graphics, data, 13, BASE_PAINT + (HEIGHT * index));
             index++;
         }
     }
@@ -106,6 +113,36 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
         this.paintHidden = paintHidden;
     }
 
+    public Color getLineColor() {
+        return lineColor;
+    }
+
+    public void setLineColor(Color lineColor) {
+        this.lineColor = lineColor;
+    }
+
+    public Color getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(Color textColor) {
+        this.textColor = textColor;
+    }
+
+    public StopWatch getStopWatch() {
+        return stopWatch;
+    }
+
+    @Override
+    public void onPause() {
+        stopWatch.pause();
+    }
+
+    @Override
+    public void onResume() {
+        stopWatch.resume();
+    }
+
     protected class TrackedSkill {
 
         private final Skill skill;
@@ -122,19 +159,5 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
         private void increaseGainedExperience(int increase) {
             gainedExperience += increase;
         }
-    }
-
-    public StopWatch getStopWatch() {
-        return stopWatch;
-    }
-
-    @Override
-    public void onPause() {
-        stopWatch.pause();
-    }
-
-    @Override
-    public void onResume() {
-        stopWatch.resume();
     }
 }

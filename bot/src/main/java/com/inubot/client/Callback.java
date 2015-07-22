@@ -22,10 +22,9 @@ public class Callback {
 
     @ClientInvoked
     public static void experienceGain(int index, int experience) {
-        if (Skill.values().length <= index || !Game.isLoggedIn()) {
+        if (Skill.values().length <= index || !Game.isLoggedIn() || experience <= 0) {
             return;
         }
-        System.out.println(Skills.getExperience(Skill.values()[index]) + " -> " + experience);
         Script script = Bot.getInstance().getScriptFlux().getRunning();
         if (script != null && script instanceof ExperienceListener) {
             ((ExperienceListener) script).experienceChanged(new ExperienceEvent(index, Skills.getExperience(Skill.values()[index]), experience));
