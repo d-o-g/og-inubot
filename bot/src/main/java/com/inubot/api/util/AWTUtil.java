@@ -82,4 +82,8 @@ public class AWTUtil {
     public static void drawBoldedString(final Graphics g, final String string, final int x, final int y, final Color color) {
         drawShadowString(g, string, x, y, color, Color.BLACK, NORTH | SOUTH | EAST | WEST);
     }
+
+    public static void drawBoldedString(final Graphics g, final String string, final int x, final int y) {
+        drawBoldedString(g, string, x, y, g.getColor());
+    }
 }

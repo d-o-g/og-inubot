@@ -4,9 +4,8 @@
  * License as published by the Free Software Foundation; either
  * version 2 of the license, or (at your option) any later version.
  */
-package com.inubot.script.bundled.agility;
+package com.inubot.script.bundled.proscripts.agility;
 
-import com.inubot.Inubot;
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
@@ -14,36 +13,29 @@ import com.inubot.api.oldschool.action.tree.InputButtonAction;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
+import com.inubot.script.Manifest;
 import com.inubot.script.Script;
+import com.inubot.script.bundled.proscripts.framework.ProScript;
 
 import java.awt.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
-/**
- * @author unsigned
- * @since 26-04-2015
- */
-public class PerfectAgility extends Script implements Paintable {
+@Manifest(name = "ProAgility", developer = "Dogerina & luckruns0ut", version = 1.0, desc = "Does any course including rooftops except the barbarian course")
+public class PerfectAgility extends ProScript implements Paintable {
 
     private static final Filter<Widget> DIALOGUE_FILTER = w -> w.getText() != null && (w.getText().equals("Click here to continue") || w.getText().equals("Sure, I'll give it a go."));
     private static final Filter<Widget> LOBBY_FILTER = w -> w.getText() != null && w.getText().equals("Play RuneScape");
     private static final Tile ARDY_STUCK = new Tile(2654, 3299, 3);
-    private final StopWatch runtime = new StopWatch(0);
     private final StopWatch stucktime = new StopWatch(0);
     private Course course = null;
-    private int startingAgilityExperience;
     private int stuck = 0;
     private boolean loggedInLast = false;
 
-    public void useCourse(Course course) {
-        this.course = course;
-    }
-
     @Override
     public boolean setup() {
-        startingAgilityExperience = Skills.getExperience(Skill.AGILITY);
+        setRectangleColor(Color.RED.darker());
+        setTextColor(Color.WHITE);
         //JFrame frame = new JFrame();
         //frame.setLayout(new FlowLayout());
         //JComboBox<Course> courses = new JComboBox<>(Course.values());
@@ -76,7 +68,6 @@ public class PerfectAgility extends Script implements Paintable {
                 for (Obstacle obs : cours.getObstacles()) {
                     if (obs.getLocation().contains(Players.getLocal().getLocation())) {
                         this.course = cours;
-                        System.out.println("Using course: " + course.toString());
                     }
                 }
             }
@@ -97,8 +88,8 @@ public class PerfectAgility extends Script implements Paintable {
             stuck = 0;
         }
         if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 10) {
-            Mouse.move(578, 138);
-            Mouse.click(true);
+            Movement.toggleRun(true);
+            Time.sleep(600);
         }
         if (Skills.getCurrentLevel(Skill.HITPOINTS) < 10)
             return 5000;
@@ -119,7 +110,7 @@ public class PerfectAgility extends Script implements Paintable {
         if (obstacle == null)
             return 400;
 
-        final GameObject obj;
+        GameObject obj;
 
         if (obstacle.getTile() != null) {
             if (obstacle.getTile().getPlane() == Players.getLocal().getLocation().getPlane() && obstacle.getTile().distance() > 15) {
@@ -138,56 +129,24 @@ public class PerfectAgility extends Script implements Paintable {
             obj = GameObjects.getNearest(obstacle.name);
         if (obj != null)
             obj.processAction(obstacle.action);
-        return 400;
+        return 600;
     }
 
     @Override
-    public void render(Graphics2D g) {
-        AWTUtil.drawBoldedString(g, "Perfect Agility", 20, 40, Color.MAGENTA);
-        AWTUtil.drawBoldedString(g, "Runtime: " + runtime.toElapsedString(), 20, 60, Color.YELLOW);
-        AWTUtil.drawBoldedString(g, "Agility Experience: " + formatNumber((Skills.getExperience(Skill.AGILITY) - startingAgilityExperience)) + "(" + perHour(Skills.getExperience(Skill.AGILITY) - startingAgilityExperience) + ")", 20, 80, Color.YELLOW);
-        if (Skills.getCurrentLevel(Skill.HITPOINTS) < 10)
-            AWTUtil.drawBoldedString(g, "Waiting because your retarded-ass character has less than 10 health!", 20, 100, Color.RED);
-    }
-
-    //thanks kenneh
-    private String runtime(long i) {
-        DecimalFormat nf = new DecimalFormat("00");
-        long millis = System.currentTimeMillis() - i;
-        long hours = millis / (1000 * 60 * 60);
-        millis -= hours * (1000 * 60 * 60);
-        long minutes = millis / (1000 * 60);
-        millis -= minutes * (1000 * 60);
-        long seconds = millis / 1000;
-        return nf.format(hours) + ":" + nf.format(minutes) + ":" + nf.format(seconds);
-    }
-
-    private String perHour(int gained) {
-        return formatNumber((int) ((gained) * 3600000D / (System.currentTimeMillis() - runtime.getStart())));
-    }
-
-    private String formatNumber(int start) {
-        DecimalFormat nf = new DecimalFormat("0.0");
-        return start >= 1000000 ? nf.format(((double) start / 1000000)) + "m" : start >= 1000 ? nf.format(((double) start / 1000)) + "k" : String.valueOf(start);
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onResume() {
-
+    public void getPaintData(Map<String, Object> data) {
+        if (course != null) {
+            data.put("Course", course.toString());
+        }
     }
 
     @Override
     public void messageReceived(MessageEvent e) {
-        if (e.getText().contains("You can't do that from here"))
+        if (e.getText().contains("You can't do that from here")) {
             stuck++;
+        }
     }
 
-    public enum Course implements ICourse {
+    public enum Course {
 
         GNOME_COURSE(ObstacleFactory.newInstance(true)
                 .build(new Area(new Tile(2472, 3438, 0), new Tile(2490, 3436, 0)),
@@ -336,25 +295,27 @@ public class PerfectAgility extends Script implements Paintable {
 
         private final Obstacle[] obstacles;
 
-        private Course(final Obstacle[] obstacles) {
+        private Course(Obstacle[] obstacles) {
             this.obstacles = obstacles;
         }
 
         private Obstacle getNext() {
-            for (final Obstacle obstacle : obstacles) {
+            for (Obstacle obstacle : obstacles) {
                 if (obstacle.getLocation().contains(Players.getLocal()))
                     return obstacle;
             }
             return null;
         }
 
+        @Override
+        public String toString() {
+            String name = super.name();
+            return name.charAt(0) + name.substring(1).toLowerCase().replace('_', ' ');
+        }
+
         public Obstacle[] getObstacles() {
             return obstacles;
         }
-    }
-
-    private interface ICourse {
-        Obstacle[] getObstacles();
     }
 
     private static class Obstacle {
@@ -365,7 +326,7 @@ public class PerfectAgility extends Script implements Paintable {
         private final Tile tile; // exact location for obstacle, only needed if script tries 2 do prev obstacle agen
         private final boolean npc;
 
-        public Obstacle(final Area location, final String name, final String action, final boolean npc, Tile tile) {
+        public Obstacle(Area location, String name, String action, boolean npc, Tile tile) {
             this.location = location;
             this.name = name;
             this.action = action;
@@ -373,11 +334,11 @@ public class PerfectAgility extends Script implements Paintable {
             this.tile = tile;
         }
 
-        public Obstacle(final Area location, final String name, final String action, final Tile tile) {
+        public Obstacle(Area location, String name, String action, Tile tile) {
             this(location, name, action, false, tile);
         }
 
-        public Obstacle(final Area location, final String name, final String action) {
+        public Obstacle(Area location, String name, String action) {
             this(location, name, action, false, null);
         }
 
@@ -404,13 +365,13 @@ public class PerfectAgility extends Script implements Paintable {
 
     private static class ObstacleFactory {
 
-        private static List<Obstacle> obstacles = new ArrayList<>();
+        private static final List<Obstacle> obstacles = new ArrayList<>();
 
         private ObstacleFactory() {
 
         }
 
-        public static ObstacleFactory newInstance(final boolean clear) {
+        public static ObstacleFactory newInstance(boolean clear) {
             if (clear)
                 obstacles.clear();
             return new ObstacleFactory();
@@ -420,16 +381,16 @@ public class PerfectAgility extends Script implements Paintable {
             return newInstance(false);
         }
 
-        public ObstacleFactory build(final Area loc, final String action, final String target, final boolean npc, final Tile tile) {
+        public ObstacleFactory build(Area loc, String action, String target, boolean npc, Tile tile) {
             obstacles.add(new Obstacle(loc, action, target, npc, tile));
             return this;
         }
 
-        public ObstacleFactory build(final Area loc, final String action, final String target, final Tile tile) {
+        public ObstacleFactory build(Area loc, String action, String target, Tile tile) {
             return build(loc, action, target, false, tile);
         }
 
-        public ObstacleFactory build(final Area loc, final String action, final String target) {
+        public ObstacleFactory build(Area loc, String action, String target) {
             return build(loc, action, target, false, null);
         }
 
