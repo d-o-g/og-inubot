@@ -116,7 +116,8 @@ public class CdnServer {
                                             instances.put(account.getId(), instances.get(account.getId()) + 1);
                                         }
                                         output.writeByte(TEST);
-                                        System.out.println("Successfully logged " + username + " into account! (" + account.getId() + ")");
+                                        output.flush();
+                                        System.out.println("Successfully logged " + username + " into account! (" + account.getId() + ") " + instances.get(account.getId()));
                                         List owneds = session.createQuery("from Owned where uid=:uid").setParameter("uid", account.getId()).list();
                                         for (Object asd : owneds) {
                                             Script script = (Script) session.createQuery("from Script where id=:id")

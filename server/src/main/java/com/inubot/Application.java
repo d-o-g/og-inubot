@@ -31,8 +31,9 @@ public class Application {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            logger.info("... Done");
+            logger.info("... Cached " + Loader.scripts.size() + " scripts");
             logger.info("Starting server...");
+            logger.info("");
             new Server().open();
         }
     }

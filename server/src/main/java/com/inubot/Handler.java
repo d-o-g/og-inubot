@@ -4,6 +4,7 @@ import com.inubot.model.Account;
 import com.inubot.model.Owned;
 import com.inubot.model.Script;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.hibernate.Session;
@@ -44,6 +45,19 @@ public class Handler extends ChannelHandlerAdapter {
     }
 
     @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        if (cause.toString().contains("closed"))
+            return;
+        cause.printStackTrace();
+        ctx.close();
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) {
+        ctx.flush();
+    }
+
+    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         ByteBuf buffer = (ByteBuf) msg;
         int opcode = buffer.readByte();
@@ -75,12 +89,19 @@ public class Handler extends ChannelHandlerAdapter {
 
                 if (hash.equals(account.getPassword())) {
                     logger.info("Successfully logged " + username + " into account! (" + account.getId() + ")");
+                    ctx.write(Unpooled.wrappedBuffer(new byte[] { 4 }));
                     List owneds = session.createQuery("from Owned where uid=:uid").setParameter("uid", account.getId()).list();
                     for (Object asd : owneds) {
                         Script script = (Script) session.createQuery("from Script where id=:id")
                                 .setParameter("id", ((Owned) asd).getId()).uniqueResult();
                         byte[] data = Loader.scripts.get(script.getName());
-                        ctx.write(data);
+                        if (data == null) {
+                            logger.info("no have " + script.getName());
+                            continue;
+                        }
+                        ctx.write(Unpooled.wrappedBuffer(new byte[] { 5 }));
+                        ByteBuf buf = Unpooled.wrappedBuffer(data);
+                        ctx.write(buf);
                         logger.info("Sent: " + script.getName());
                     }
                 } else {
