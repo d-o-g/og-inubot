@@ -101,7 +101,7 @@ public class PerfectAgility extends ProScript implements Paintable {
             }
         }
         GroundItem mark = GroundItems.getNearest("Mark of grace");
-        if (mark != null && Movement.isEntityReachable(mark) && mark.getLocation().getPlane() == Players.getLocal().getLocation().getPlane()) {
+        if (mark != null && Movement.isObjectReachable(mark) && mark.getLocation().getPlane() == Players.getLocal().getLocation().getPlane()) {
             mark.processAction("Take");
             return 400;
         }

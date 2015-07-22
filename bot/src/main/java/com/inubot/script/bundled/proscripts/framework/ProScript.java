@@ -67,6 +67,10 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
                 widest = width;
             }
         }
+        int titleWidth = graphics.getFontMetrics().stringWidth(getTitle());
+        if (titleWidth > widest) {
+            widest = titleWidth;
+        }
         int dataLen = paintData.size() + 1;
         graphics.setColor(lineColor);
         graphics.setStroke(new BasicStroke(3.0f));

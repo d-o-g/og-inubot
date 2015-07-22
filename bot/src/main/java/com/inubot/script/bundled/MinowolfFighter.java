@@ -8,6 +8,7 @@ package com.inubot.script.bundled;
 
 import com.inubot.api.methods.Npcs;
 import com.inubot.api.methods.Players;
+import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.util.Time;
 import com.inubot.script.bundled.proscripts.framework.ProScript;
@@ -18,7 +19,7 @@ import java.util.Map;
  * @author Dogerina
  * @since 18-07-2015
  */
-public class MinotaurFighter extends ProScript {
+public class MinowolfFighter extends ProScript {
     @Override
     public String getTitle() {
         return "MinotaurFighter";
@@ -33,7 +34,7 @@ public class MinotaurFighter extends ProScript {
     public int loop() {
         if (Players.getLocal().getTarget() == null) {
             Npc npc = Npcs.getNearest(n -> n.getName() != null && (n.getName().equals("Wolf") || n.getName().equals("Minotaur"))
-                    && !n.isDying());
+                    && Movement.isReachable(n) && !n.isDying());
             if (npc != null) {
                 npc.processAction("Attack");
                 Time.await(() -> Players.getLocal().getTarget() != null, 2000);

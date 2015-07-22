@@ -51,7 +51,7 @@ public class Inubot extends Bot<RSClient> {
             ProMiner.class,
             ProAlcher.class,
             ProZulrah.class,
-            MinotaurFighter.class
+            MinowolfFighter.class
     };
 
     @Override
