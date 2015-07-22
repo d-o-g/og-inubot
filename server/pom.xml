@@ -31,5 +31,10 @@
             <version>5.0.0.Alpha2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.inubot</groupId>
+            <artifactId>bot</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

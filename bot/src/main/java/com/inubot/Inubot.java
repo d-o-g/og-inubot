@@ -23,7 +23,6 @@ import com.inubot.script.bundled.proscripts.zulrah.ProZulrah;
 import com.inubot.script.bundled.rangeguild.RangeGuild;
 import com.inubot.script.bundled.tutisland.TutorialIsland;
 import com.inubot.script.others.PestControl;
-import com.inubot.script.others.RealZoo;
 import com.inubot.script.others.septron.Combot;
 import com.inubot.script.others.septron.fletching.Fletcher;
 import com.inubot.script.others.septron.fletching.Stringer;
@@ -48,7 +47,6 @@ public class Inubot extends Bot<RSClient> {
             Stringer.class,
             TutorialIsland.class,
             Chinner.class,
-            RealZoo.class,
             ZooFighter.class,
             ProMiner.class,
             ProAlcher.class,

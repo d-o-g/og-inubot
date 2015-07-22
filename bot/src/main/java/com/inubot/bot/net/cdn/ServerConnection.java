@@ -10,6 +10,7 @@ import com.inubot.bot.net.cdn.packet.LoginPacket;
 import com.inubot.bot.net.cdn.packet.Packet;
 import com.inubot.script.loader.RemoteScriptDefinition;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -75,12 +76,14 @@ public class ServerConnection implements Runnable {
                             }
                             case Packet.REQUEST_SCRIPTS: {
                                 System.out.println("Receiving Script...");
-                                byte[] data = new byte[2056];
-                                int count = 0;
+                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
                                 while (input.available() > 0) {
-                                    int size = input.read(data);
-                                    count += size;
+                                    byte[] data = new byte[1024];
+                                    int count = input.read(data);
+                                    baos.write(data);
                                 }
+                                byte[] data = baos.toByteArray();
+                                System.out.println("read " + data.length);
                                 RemoteScriptDefinition.create(data);
                                 break;
                             }

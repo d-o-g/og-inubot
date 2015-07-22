@@ -99,8 +99,10 @@ public class Handler extends ChannelHandlerAdapter {
                             logger.info("no have " + script.getName());
                             continue;
                         }
-                        ctx.write(Unpooled.wrappedBuffer(new byte[] { 5 }));
-                        ByteBuf buf = Unpooled.wrappedBuffer(data);
+                        ctx.write(Unpooled.wrappedBuffer(new byte[] { 1 }));
+                        ctx.flush();
+                        ByteBuf buf = Unpooled.directBuffer(data.length);
+                        buf.writeBytes(data);
                         ctx.write(buf);
                         logger.info("Sent: " + script.getName());
                     }
