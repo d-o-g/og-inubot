@@ -20,17 +20,34 @@ public class SynchronousEventBus implements EventBus {
 
     @Override
     public void fire() {
-
+        if (events.size() > 0) {
+            synchronized (greedyLock) {
+                for (Event event : events) {
+                    for (Event delegrate : event.getDelegates()) {
+                        for (EventListener el : delegrate.getListeners()) {
+                            el.onEvent(delegrate);
+                        }
+                        delegrate.execute();
+                    }
+                    for (EventListener el : event.getListeners()) {
+                        el.onEvent(event);
+                    }
+                    event.execute();
+                }
+            }
+        }
     }
 
     @Override
     public void register(Event e) {
-
+        if (!events.contains(e))
+            events.add(e);
     }
 
     @Override
     public void deregister(Event e) {
-
+        if (events.contains(e))
+            events.remove(e);
     }
 
     @Override

@@ -84,6 +84,8 @@ public abstract class Event {
         delegates.remove(delegate);
     }
 
+    public abstract void execute();
+
     public final boolean isParallel() {
         return parallel;
     }
@@ -91,4 +93,9 @@ public abstract class Event {
     public final void setParallel(boolean parallel) {
         this.parallel = parallel;
     }
+
+    public List<Event> getDelegates() {
+        return delegates;
+    }
+
 }

@@ -129,13 +129,13 @@ public class PestControl extends Script implements Paintable {
         g.drawRect(7, 408, 489, 21);
 
         g.setColor(SKILL_ATTACK);
-        g.fillRect(8, 346, ((int) 4.87 * getPercentToNextLevel(Skill.ATTACK)), 20);
+        g.fillRect(8, 346, ((int) 4.89 * getPercentToNextLevel(Skill.ATTACK)), 20);
         g.setColor(SKILL_STRENGTH);
-        g.fillRect(8, 367, ((int) 4.87 * getPercentToNextLevel(Skill.STRENGTH)), 20);
+        g.fillRect(8, 367, ((int) 4.89 * getPercentToNextLevel(Skill.STRENGTH)), 20);
         g.setColor(SKILL_DEFENCE);
-        g.fillRect(8, 388, ((int) 4.87 * getPercentToNextLevel(Skill.DEFENCE)), 20);
+        g.fillRect(8, 388, ((int) 4.89 * getPercentToNextLevel(Skill.DEFENCE)), 20);
         g.setColor(SKILL_HITPOINTS);
-        g.fillRect(8, 409, ((int) 4.87 * getPercentToNextLevel(Skill.HITPOINTS)), 20);//testff
+        g.fillRect(8, 409, ((int) 4.89 * getPercentToNextLevel(Skill.HITPOINTS)), 20);//testff
 
         g.setColor(FONT_COLOUR);
         g.setFont(ARIAL);
