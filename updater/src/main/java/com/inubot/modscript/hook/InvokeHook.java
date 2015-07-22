@@ -43,7 +43,8 @@ public class InvokeHook extends Hook {
 
     @Override
     public String getOutput() {
-        String out = "# " + name + " --> " + clazz + "." + method + desc;
+        String desc0 = org.objectweb.asm.Type.getType(desc).getReturnType().getClassName();
+        String out = "¤ " + desc0 + " " + name + " is " + clazz + "." + method + desc;
         if (predicate != Integer.MAX_VALUE)
             out += " [" + predicate + "] - " + predicateType;
         return out;

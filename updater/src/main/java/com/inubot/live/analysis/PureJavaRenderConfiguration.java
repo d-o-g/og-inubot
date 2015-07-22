@@ -7,23 +7,28 @@
 package com.inubot.live.analysis;
 
 import com.inubot.visitor.GraphVisitor;
-import com.inubot.visitor.VisitorInfo;
-import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.*;
 
 /**
  * @author Dogerina
- * @since 28-06-2015
+ * @since 22-07-2015
  */
-@VisitorInfo(hooks = {})
-public class Widget extends GraphVisitor {
+public class PureJavaRenderConfiguration extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.ownerless() && cn.fieldCount("[Ljava/lang/Object;") > 15;
+        for (MethodNode mn : cn.methods) {
+            for (AbstractInsnNode ain : mn.instructions.toArray()) {
+                if (ain.opcode() == LDC && ((LdcInsnNode) ain).cst.equals("Pure Java")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
     public void visit() {
-        //class mv 745
+
     }
 }

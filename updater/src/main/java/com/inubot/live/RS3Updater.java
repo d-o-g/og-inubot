@@ -34,9 +34,15 @@ public class RS3Updater extends Updater {
     }
 
     private static GraphVisitor[] createVisitors() {
-        return new GraphVisitor[]{new Canvas(), new CoordinateSpace(), new Vector3f(), new Widget(),
-                new SceneGraphTile(), new SceneGraph(), new Scene(), new SceneOffset(),
-                new SceneSettings(), new SceneGraphLevel(), new Client()};
+        return new GraphVisitor[]{new Node(), new DoublyNode(), new NodeTable(),
+                new DoublyNodeQueue(), new Cache(),
+                new Canvas(), new RenderMode(), new RenderConfiguration(), new PureJavaRenderConfiguration(),
+                new Vector3f(), new Quaternion(), new CoordinateSpace(), new SceneGraphTile(),
+                new SceneGraph(), new Scene(), new SceneOffset(),
+                new SceneSettings(), new SceneGraphLevel(),
+                new GuidanceArrow(),
+                new MenuItem(),
+                new Widget(), new Client()};
     }
 
     private static void run(boolean global, boolean print, File pack) throws Exception {

@@ -14,6 +14,7 @@ import org.objectweb.asm.tree.ClassNode;
  * @since 21-07-2015
  */
 public class Canvas extends GraphVisitor {
+
     @Override
     public boolean validate(ClassNode cn) {
         return cn.superName.equals("java/awt/Canvas");

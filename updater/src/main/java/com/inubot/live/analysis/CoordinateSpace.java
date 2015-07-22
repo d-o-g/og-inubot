@@ -24,8 +24,8 @@ public class CoordinateSpace extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cf) {
-        return cf.fieldCount() == 2 && cf.getAbnormalFieldCount() == 2 && cf.ownerless()
-                && cf.constructors().contains("(L" + cf.name + ";)V");
+        return cf.fieldCount() == 2 && cf.ownerless() && cf.constructors().contains("(L" + cf.name + ";)V")
+                && cf.fieldCount(desc("Quaternion")) == 1 && cf.fieldCount(desc("Vector3f")) == 1;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class CoordinateSpace extends GraphVisitor {
 
         @Override
         public boolean validate() {
-            return !lock.get();
+            return true;
         }
 
         @Override
@@ -45,9 +45,9 @@ public class CoordinateSpace extends GraphVisitor {
             block.tree().accept(new NodeVisitor() {
                 @Override
                 public void visitField(FieldMemberNode fmn) {
-                    if (!hooks.containsKey("rotation")) {
+                    if (fmn.desc().equals(desc("Quaternion"))) {
                         addHook(new FieldHook("rotation", fmn.fin()));
-                    } else if (!hooks.containsKey("translation")) {
+                    } else if (fmn.desc().equals(desc("Vector3f"))) {
                         addHook(new FieldHook("translation", fmn.fin()));
                         lock.set(true);
                     }

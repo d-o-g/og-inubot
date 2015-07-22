@@ -18,28 +18,28 @@ import org.objectweb.asm.tree.ClassNode;
 
 /**
  * @author Dogerina
- * @since 05-07-2015
+ * @since 22-07-2015
  */
-@VisitorInfo(hooks = {"z", "x", "y"})
-public class Vector3f extends GraphVisitor {
+@VisitorInfo(hooks = {"buckets", "size"})
+public class NodeTable extends GraphVisitor {
 
     @Override
-    public boolean validate(ClassNode cf) {
-        return cf.ownerless() && cf.fieldCount("F") == 3 && cf.getFieldTypeCount() == 1;
+    public boolean validate(ClassNode cn) {
+        return cn.interfaces != null && cn.interfaces.contains("java/lang/Iterable") && cn.fieldCount(desc("Node")) == 2
+                && cn.fieldCount(long.class) == 1 && cn.fieldCount(int.class) == 2;
     }
 
     @Override
     public void visit() {
-        visitLocalIfM(new Hooks(), m -> m.name.equals("<init>") && m.desc.equals("(FFF)V"));
+        addHook(new FieldHook("buckets", cn.getField(null, "[" + desc("Node"))));
+        visitLocalIfM(new ConstructorHooks(), m -> m.desc.equals("(I)V") && m.name.equals("<init>"));
     }
 
-    private class Hooks extends BlockVisitor {
-
-        private int added = 0;
+    private class ConstructorHooks extends BlockVisitor {
 
         @Override
         public boolean validate() {
-            return added < 3;
+            return !lock.get();
         }
 
         @Override
@@ -47,19 +47,12 @@ public class Vector3f extends GraphVisitor {
             block.tree().accept(new NodeVisitor() {
                 @Override
                 public void visitVariable(VariableNode vn) {
-                    if (vn.opcode() != FLOAD || vn.parent() == null || vn.parent().opcode() != PUTFIELD)
-                        return;
-                    FieldMemberNode fmn = (FieldMemberNode) vn.parent();
-                    switch (vn.var()) {
-                        case 1:
-                            addHook(new FieldHook("x", fmn.fin()));
-                            break;
-                        case 2:
-                            addHook(new FieldHook("z", fmn.fin()));
-                            break;
-                        case 3:
-                            addHook(new FieldHook("y", fmn.fin()));
-                            break;
+                    if (vn.opcode() == ILOAD && vn.parent() != null && vn.parent().opcode() == PUTFIELD) {
+                        FieldMemberNode fmn = (FieldMemberNode) vn.parent();
+                        if (vn.var() == 1) {
+                            addHook(new FieldHook("size", fmn.fin()));
+                            lock.set(true);
+                        }
                     }
                 }
             });
