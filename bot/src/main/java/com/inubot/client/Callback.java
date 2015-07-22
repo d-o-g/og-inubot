@@ -22,7 +22,7 @@ public class Callback {
 
     @ClientInvoked
     public static void experienceGain(int index, int experience) {
-        if (Skill.values().length <= index || !Game.isLoggedIn() || experience == 0) {
+        if (Skill.values().length <= index || !Game.isLoggedIn() || experience <= 0) {
             return;
         }
         Script script = Bot.getInstance().getScriptFlux().getRunning();
