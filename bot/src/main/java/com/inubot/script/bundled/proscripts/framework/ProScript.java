@@ -30,7 +30,7 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
     private final StopWatch stopWatch;
     private boolean paintHidden = false;
 
-    private Color textColor = Color.WHITE.darker(), rectangleColor = Color.GREEN;
+    private Color textColor = Color.WHITE.darker(), lineColor = Color.GREEN;
 
     public ProScript() {
         this.paintData = new LinkedHashMap<>();
@@ -65,14 +65,14 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
             }
         }
         int dataLen = paintData.size() + 1;
-        graphics.setColor(rectangleColor);
+        graphics.setColor(lineColor);
         graphics.setStroke(new BasicStroke(3.0f));
         graphics.drawRect(10, 10, widest + BASE_PAINT, BASE_PAINT + HEIGHT * dataLen);
         graphics.setColor(Color.BLACK);
         graphics.setComposite(AlphaComposite.SrcOver.derive(0.7f));
         graphics.fillRect(11, 11, widest + BASE_PAINT - 1, BASE_PAINT + (HEIGHT * dataLen) - 1);
         AWTUtil.drawBoldedString(graphics, getTitle(), 13, BASE_PAINT + HEIGHT, textColor.brighter());
-        graphics.setColor(rectangleColor);
+        graphics.setColor(lineColor);
         graphics.drawLine(12, 13 + HEIGHT, widest + BASE_PAINT + 8, 13 + HEIGHT);
         graphics.setColor(textColor);
         int index = 2;
@@ -106,12 +106,12 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
         this.paintHidden = paintHidden;
     }
 
-    public Color getRectangleColor() {
-        return rectangleColor;
+    public Color getLineColor() {
+        return lineColor;
     }
 
-    public void setRectangleColor(Color rectangleColor) {
-        this.rectangleColor = rectangleColor;
+    public void setLineColor(Color lineColor) {
+        this.lineColor = lineColor;
     }
 
     public Color getTextColor() {

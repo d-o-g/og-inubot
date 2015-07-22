@@ -10,7 +10,6 @@ import com.inubot.Bot;
 import com.inubot.Inubot;
 import com.inubot.bot.net.cdn.packet.LoginPacket;
 import com.inubot.bot.net.cdn.packet.Packet;
-import com.inubot.script.loader.ScriptLoaderImpl;
 
 import java.io.*;
 import java.net.*;
@@ -55,7 +54,7 @@ public class ServerConnection implements Runnable {
                 }
                 if (!authenticated) {
                     String username = "testing";
-                    Inubot.getInstance().setUsername(username);
+              //      Inubot.getInstance().setUsername(username);
                     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                         try {
                             output.writeByte(Packet.CLOSED_BOT);
@@ -69,7 +68,7 @@ public class ServerConnection implements Runnable {
                     }));
                     send(new LoginPacket(username, "penis123"));
                 }
-                if (Inubot.getInstance().getMaxInstances() == -1) {
+             /*   if (Inubot.getInstance().getMaxInstances() == -1) {
                     output.writeByte(Packet.INSTANCE_COUNT);
                     String username = Bot.getInstance().getUsername();
                     output.writeInt(username.length());
@@ -78,13 +77,13 @@ public class ServerConnection implements Runnable {
                     }
                     Inubot.getInstance().setMaxInstances(input.readInt());
                     System.out.println("Max instances: " + Bot.getInstance().getMaxInstances());
-                }
+                }*/
                 if (input.available() > 0) {
                     byte opcode = input.readByte();
                     switch (opcode) {
                         case Packet.AUTH_SUCCESS: {
                             System.out.println("authed");
-                            Inubot.getInstance().setUsername("testing");
+                            //Inubot.getInstance().setUsername("testing");
                             authenticated = true;
                             break;
                         }
@@ -96,7 +95,7 @@ public class ServerConnection implements Runnable {
                             }
                             byte[] buffer = new byte[2048];
                             input.readFully(buffer);
-                            ScriptLoaderImpl.addLive(buffer, name);
+                       //     ScriptLoaderImpl.addLive(buffer, name);
                             break;
                         }
                     }

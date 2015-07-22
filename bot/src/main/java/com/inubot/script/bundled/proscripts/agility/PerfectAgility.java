@@ -14,7 +14,6 @@ import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Manifest;
-import com.inubot.script.Script;
 import com.inubot.script.bundled.proscripts.framework.ProScript;
 
 import java.awt.*;
@@ -34,7 +33,7 @@ public class PerfectAgility extends ProScript implements Paintable {
 
     @Override
     public boolean setup() {
-        setRectangleColor(Color.RED.darker());
+        setLineColor(Color.RED.darker());
         setTextColor(Color.WHITE);
         //JFrame frame = new JFrame();
         //frame.setLayout(new FlowLayout());
