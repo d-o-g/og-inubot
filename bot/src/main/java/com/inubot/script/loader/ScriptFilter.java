@@ -13,6 +13,7 @@ import com.inubot.script.Script;
 import java.lang.reflect.Modifier;
 
 public class ScriptFilter implements Filter<Class<?>> {
+
     @Override
     public boolean accept(Class<?> c) {
         return !Modifier.isAbstract(c.getModifiers()) && Script.class.isAssignableFrom(c)

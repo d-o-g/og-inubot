@@ -15,6 +15,7 @@ import com.inubot.bot.account.Account;
 import com.inubot.bot.account.AccountManager;
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.ModScript;
+import com.inubot.bot.net.cdn.ServerConnection;
 import com.inubot.bot.net.irc.IRCConnection;
 import com.inubot.bot.ui.BotMenuBar;
 import com.inubot.bot.ui.LogPane;
@@ -59,6 +60,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         this.irc = new IRCConnection();
         this.asyncEventBus = new AsynchronousEventBus();
         this.syncEventBus = new SynchronousEventBus();
+        ServerConnection.start();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
         try {
@@ -94,7 +96,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         Injector injector = initInjector(pack);;
         Map<String, byte[]> classes = injector.inject(false);
 
-        RSClassLoader classloader = new RSClassLoader(classes);
+        CachedClassLoader classloader = new CachedClassLoader(classes);
         ModScript.setClassLoader(classloader);
 
         if (useProxy && ProxyUtils.useAliveUSProxy())

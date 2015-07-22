@@ -6,21 +6,19 @@
  */
 package com.inubot.script.loader;
 
-import com.inubot.bot.util.Configuration;
-
 import java.io.*;
 import java.lang.annotation.Annotation;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.jar.JarEntry;
+import java.util.*;
 import java.util.jar.JarInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class RemoteScriptDefinition extends ScriptDefinition {
 
+    private static final Map<String, byte[]> networkedScriptDefinitions = new HashMap<>();
     private final String name, developer, desc;
     private final double version;
+    private byte[] buffer;
 
     public RemoteScriptDefinition(String name, String developer, String desc, double version) {
         this.name = name;
@@ -29,15 +27,32 @@ public class RemoteScriptDefinition extends ScriptDefinition {
         this.version = version;
     }
 
-    public static RemoteScriptDefinition create(byte[] data) {
-        try {
-            FileOutputStream out = new FileOutputStream(Configuration.SCRIPTS + "ok.jar");
-            out.write(data);
-            out.close();
+    public static Map<String, byte[]> getNetworkedScriptDefinitions() {
+        return networkedScriptDefinitions;
+    }
+
+    public static void addNetworkedDefinition(byte[] data) {
+        Map<String, byte[]> map = create(data);
+        networkedScriptDefinitions.putAll(map);
+    }
+
+    public static Map<String, byte[]> create(byte[] data) {
+        Map<String, byte[]> classes = new HashMap<>();
+        try (ZipInputStream input = new JarInputStream(new ByteArrayInputStream(data))) {
+            ZipEntry entry;
+            while ((entry = input.getNextEntry()) != null) {
+                String entryName = entry.getName();
+                if (entryName.endsWith(".class")) {
+                    byte[] read = read(input);
+                    entryName = entryName.replace('/', '.');
+                    String name = entryName.substring(0, entryName.length() - 6);
+                    classes.put(name, read);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return classes;
     }
 
     private static byte[] read(InputStream inputStream) throws IOException {

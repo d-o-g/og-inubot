@@ -1,8 +1,7 @@
 package com.inubot.bot.modscript;
 
-import com.inubot.Inubot;
 import com.inubot.bot.modscript.hooks.*;
-import com.inubot.bot.util.RSClassLoader;
+import com.inubot.bot.util.CachedClassLoader;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -17,10 +16,10 @@ public class ModScript {
 
     private static final int MAGIC = 0xFADFAD;
 
-    private static RSClassLoader classloader;
+    private static CachedClassLoader classloader;
     private static String type;
 
-    public static void setClassLoader(RSClassLoader classloader) {
+    public static void setClassLoader(CachedClassLoader classloader) {
         ModScript.classloader = classloader;
     }
 
@@ -108,7 +107,7 @@ public class ModScript {
         }
     }
 
-    public static RSClassLoader getClassLoader() {
+    public static CachedClassLoader getClassLoader() {
         return classloader;
     }
 }

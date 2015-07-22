@@ -10,14 +10,14 @@ import java.util.Map;
  * Created by Dogerina.
  * Copyright under GPL license by Dogerina.
  */
-public class RSClassLoader extends ClassLoader {
+public class CachedClassLoader extends ClassLoader {
 
     public final Map<String, byte[]> classes;
 
     public final Map<String, Class<?>> loaded = new HashMap<>();
     public final Map<String, Class<?>> defined = new HashMap<>();
 
-    public RSClassLoader(Map<String, byte[]> classes) {
+    public CachedClassLoader(Map<String, byte[]> classes) {
         this.classes = classes;
     }
 

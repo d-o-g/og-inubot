@@ -10,10 +10,7 @@ import com.inubot.bot.net.cdn.packet.LoginPacket;
 import com.inubot.bot.net.cdn.packet.Packet;
 import com.inubot.script.loader.RemoteScriptDefinition;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -22,10 +19,10 @@ public class ServerConnection implements Runnable {
     private final Socket connection;
     private final DataInputStream input;
     private final DataOutputStream output;
-    private boolean authenticated;
-
     private final String host;
     private final int port;
+    private boolean authenticated;
+    private boolean running = true;
 
     public ServerConnection(String host, int port) throws IOException {
         this.connection = new Socket(this.host = host, this.port = port);
@@ -33,7 +30,7 @@ public class ServerConnection implements Runnable {
         this.output = new DataOutputStream(connection.getOutputStream());
     }
 
-    public static void main(String... artg) {
+    public static void start() {
         try {
             ServerConnection connection = new ServerConnection("127.0.0.1", 1111);
             new Thread(connection).start();
@@ -45,8 +42,6 @@ public class ServerConnection implements Runnable {
     public void reauthenticate() {
         authenticated = false;
     }
-
-    private boolean running = true;
 
     @Override
     public void run() {
@@ -72,6 +67,7 @@ public class ServerConnection implements Runnable {
                             case Packet.AUTH_SUCCESS: {
                                 System.out.println("Authenticated...");
                                 authenticated = true;
+                                RemoteScriptDefinition.getNetworkedScriptDefinitions().clear();
                                 break;
                             }
                             case Packet.REQUEST_SCRIPTS: {
@@ -84,11 +80,13 @@ public class ServerConnection implements Runnable {
                                 }
                                 byte[] data = baos.toByteArray();
                                 System.out.println("read " + data.length);
-                                RemoteScriptDefinition.create(data);
+                                RemoteScriptDefinition.addNetworkedDefinition(data);
                                 break;
                             }
-                            default:
+                            default: {
                                 System.out.println(value);
+                                break;
+                            }
                         }
                     }
                 } catch (IOException e) {

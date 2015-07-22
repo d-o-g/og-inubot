@@ -201,6 +201,7 @@ public abstract class Updater extends Thread implements Runnable {
         int classes = 0;
         int totalHooks = 0;
         int hooks = 0;
+        int methodHooks = 0;
         Set<GraphVisitor> visitors = new TreeSet<>(new Comparator<GraphVisitor>() {
             public int compare(GraphVisitor g1, GraphVisitor g2) {
                 return g1.id().compareTo(g2.id());
@@ -229,6 +230,11 @@ public abstract class Updater extends Thread implements Runnable {
             }
             classes++;
             hooks += gv.hooks.size();
+            for (Hook hook : gv.hooks.values()) {
+                if (hook instanceof InvokeHook) {
+                    methodHooks++;
+                }
+            }
             VisitorInfo info = gv.getClass().getAnnotation(VisitorInfo.class);
             if (info == null) {
                 appendLine("");
@@ -278,8 +284,8 @@ public abstract class Updater extends Thread implements Runnable {
         appendLine(String.format("trees --> %d in %.2f seconds", trees, treeTime / 1e9));
         appendLine(String.format("multipliers --> %s in %.2f seconds", inverseVisitor.toString(), multTime / 1e9));
         appendLine(String.format("predicates --> %s in %.2f seconds", opv.toString(), predTime / 1e9));*/
-        appendLine(String.format("\tidentified %d/%d classes", classes, totalClasses));
-        appendLine(String.format("\tidentfiied %d/%d hooks", hooks, totalHooks));
+        appendLine(String.format("\tIdentified %d/%d classes", classes, totalClasses));
+        appendLine(String.format("\tIdentfiied %d/%d hooks, %d of which were methods", hooks, totalHooks, methodHooks));
         appendLine(String.format("\ttotal time %.2f seconds", (end - start) / 1e9));
         List<GraphVisitor> graphVisitors = new ArrayList<>();
         Collections.addAll(graphVisitors, this.visitors);

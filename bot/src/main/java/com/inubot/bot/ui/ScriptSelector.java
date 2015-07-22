@@ -8,6 +8,7 @@ package com.inubot.bot.ui;
 
 import com.inubot.Bot;
 import com.inubot.Inubot;
+import com.inubot.bot.util.CachedClassLoader;
 import com.inubot.bot.util.Configuration;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
@@ -59,6 +60,21 @@ public class ScriptSelector extends JFrame {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        CachedClassLoader remoteLoader = new CachedClassLoader(RemoteScriptDefinition.getNetworkedScriptDefinitions());
+        ScriptFilter filter = new ScriptFilter();
+        for (String name : RemoteScriptDefinition.getNetworkedScriptDefinitions().keySet()) {
+            try {
+                Class<?> clazz = remoteLoader.loadClass(name);
+                if (filter.accept(clazz)) {
+                    ScriptDefinition def = new ScriptDefinition(clazz.getAnnotation(Manifest.class));
+                    def.setScriptClass((Class<? extends Script>) clazz);
+                    def = new RemoteScriptDefinition(def.name(), def.developer(), def.desc(), def.version());
+                    scripts.add(new Entity(def));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         super.add(scroll);
         super.setLocationRelativeTo(null);
         super.pack();
@@ -70,6 +86,10 @@ public class ScriptSelector extends JFrame {
         public Entity(ScriptDefinition target) {
             super.setLayout(new BorderLayout());
             super.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+
+            if (target instanceof RemoteScriptDefinition) {
+                setBackground(getBackground().darker());
+            }
 
             JLabel name = new JLabel(target.name());
             name.setToolTipText(String.valueOf(target.version()));
