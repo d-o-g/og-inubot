@@ -8,6 +8,7 @@ package com.inubot.bot.net.cdn;
 
 import com.inubot.bot.net.cdn.packet.LoginPacket;
 import com.inubot.bot.net.cdn.packet.Packet;
+import com.inubot.bot.ui.Login;
 import com.inubot.script.loader.RemoteScriptDefinition;
 
 import java.io.*;
@@ -42,7 +43,7 @@ public class ServerConnection implements Runnable {
 	public void run() {
 		while (running) {
 			try {
-				send(new LoginPacket("testing", "penis123"));
+				send(new LoginPacket(Login.getUsername(), Login.getPassword()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -76,7 +77,6 @@ public class ServerConnection implements Runnable {
 								break;
 							}
 							case Packet.INSTANCE_COUNT: {
-								System.out.println("ayyy");
 								int asd = input.read();
 								if (asd != 1)
 									System.exit(0);

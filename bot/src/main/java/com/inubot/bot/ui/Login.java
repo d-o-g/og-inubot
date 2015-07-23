@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
 
 public class Login {
 
+    private static String username, password;
+
     public static void main(String... args) throws Exception {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         JFrame frame = new JFrame("Inubot");
@@ -39,18 +41,32 @@ public class Login {
 
         JButton login = new JButton("Login");
         frame.getContentPane().add(login, BorderLayout.SOUTH);
-        login.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Inubot.main(args);
-                //just pass the text in username/password textfields to servercon?
-                //dispose if successful  login
-            }
+        login.addActionListener(e -> {
+            Inubot.main(args);
+            setUsername(username.getText());
+            setPassword(password.getText());
+            frame.dispose();
         });
 
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        Login.password = password;
+    }
+
+    public static String getUsername() {
+        return username;
+    }
+
+    public static void setUsername(String username) {
+        Login.username = username;
     }
 }
