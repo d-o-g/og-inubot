@@ -21,7 +21,7 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
-@Manifest(name = "AutoFighter PRO", developer = "", desc = "Fishes almost anything, almost anywhere")
+@Manifest(name = "AutoFisherPRO", developer = "", desc = "Fishes almost anything, almost anywhere")
 public class AutoFisherPRO extends Script implements Paintable {
 
     private static final int[] EQUIPMENT_IDS = {305, 303, 301, 307, 309, 311};

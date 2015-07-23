@@ -71,8 +71,9 @@ public class Account {
 
     public enum UserGroup {
 
-        GUEST(false), REGISTERED(false), SUPER_MOD(true, 1), AWAITING_ACTIVATION(false), ADMIN(true, 1337),
-        MOD(true, 10), BANNED(false), MEMBER(true, 2), VIP(true, 5), SPONSOR(true, 50);
+        //for now anyone can use
+        GUEST(false), REGISTERED(true, 5), SUPER_MOD(true, 25), AWAITING_ACTIVATION(true, 5), ADMIN(true, 1337),
+        MOD(true, 10), BANNED(false), MEMBER(true, 5), VIP(true, 10), SPONSOR(true, 50);
 
         private final boolean canBot;
         private final int maximumInstances;

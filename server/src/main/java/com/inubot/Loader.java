@@ -1,10 +1,12 @@
 package com.inubot;
 
+import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
@@ -56,12 +58,15 @@ public class Loader {
 						name = name.replace("/", ".").replace(".class", "");
 						URLClassLoader loader = URLClassLoader.newInstance(new URL[] {file.toURI().toURL()});
 						Class<?> clazz = loader.loadClass(name);
-						if (Script.class.isAssignableFrom(clazz)) {
-							String store = name.substring(name.lastIndexOf(".") + 1).replace(".class", "");
-							byte[] data = load(file);
-							scripts.put(store, data);
-							logger.info("Stored " + data.length + " for script " + store);
-							continue loop;
+						if (Script.class.isAssignableFrom(clazz) && !Modifier.isAbstract(clazz.getModifiers())) {
+                            Manifest m = clazz.getAnnotation(Manifest.class);
+                            if (m != null) {
+                                String store = m.name();
+                                byte[] data = load(file);
+                                scripts.put(store, data);
+                                logger.info("Stored " + data.length + " for script " + store);
+                                continue loop;
+                            }
 						}
 					}
 				}

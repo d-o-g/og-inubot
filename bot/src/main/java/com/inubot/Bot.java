@@ -21,6 +21,7 @@ import com.inubot.bot.ui.BotMenuBar;
 import com.inubot.bot.ui.LogPane;
 import com.inubot.bot.util.*;
 import com.inubot.bot.util.io.Crawler;
+import com.inubot.bot.util.io.Internet;
 import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.ClientNative;
 import com.inubot.script.ScriptFlux;
@@ -33,6 +34,7 @@ import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -88,7 +90,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         if (forceInject = crawler.isOutdated())
             crawler.download();
         try {
-            ModScript.load(Files.readAllBytes(Paths.get(crawler.modscript)), Integer.toString(crawler.getHash()));
+            ModScript.load(Internet.downloadBinary(new URL(crawler.modscript).openStream(), null), Integer.toString(crawler.getHash()));
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse modscript", e);
         }

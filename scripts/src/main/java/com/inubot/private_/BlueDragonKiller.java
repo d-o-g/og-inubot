@@ -4,7 +4,7 @@
  * License as published by the Free Software Foundation; either
  * version 2 of the license, or (at your option) any later version.
  */
-package com.inubot.complete;
+package com.inubot.private_;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;

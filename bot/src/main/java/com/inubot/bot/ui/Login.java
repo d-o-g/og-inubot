@@ -45,7 +45,6 @@ public class Login {
             Inubot.main(args);
             setUsername(username.getText());
             setPassword(password.getText());
-            System.out.println(username.getText() + ":" + password.getText());
             frame.dispose();
         });
 
