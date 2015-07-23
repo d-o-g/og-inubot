@@ -6,12 +6,13 @@
  */
 package com.inubot.private_;
 
-import com.inubot.api.methods.Npcs;
-import com.inubot.api.methods.Players;
+import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.Npc;
+import com.inubot.api.oldschool.Skill;
 import com.inubot.api.util.Time;
 import com.inubot.proframework.ProScript;
+import com.inubot.script.Manifest;
 
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import java.util.Map;
  * @author Dogerina
  * @since 18-07-2015
  */
+@Manifest(name = "Minotaur", developer = "", desc = "")
 public class MinowolfFighter extends ProScript {
 
     @Override
@@ -28,8 +30,8 @@ public class MinowolfFighter extends ProScript {
 
     @Override
     public int loop() {
-        if (Players.getLocal().getTarget() == null) {
-            Npc npc = Npcs.getNearest(n -> n.getName() != null && (n.getName().equals("Wolf") || n.getName().equals("Minotaur"))
+        if (Players.getLocal().getTarget() == null && Skills.getCurrentLevel(Skill.HITPOINTS) > 10) {
+            Npc npc = Npcs.getNearest(n -> n.getName() != null && (n.getName().equals("Minotaur"))
                     && Movement.isReachable(n) && !n.isDying());
             if (npc != null) {
                 npc.processAction("Attack");

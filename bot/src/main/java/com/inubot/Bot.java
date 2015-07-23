@@ -64,7 +64,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         this.irc = new IRCConnection();
         this.asyncEventBus = new AsynchronousEventBus();
         this.syncEventBus = new SynchronousEventBus();
-        ServerConnection.start();
+        //ServerConnection.start();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
         try {
@@ -84,7 +84,8 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         BotMenuBar menuBar = new BotMenuBar();
         super.setJMenuBar(menuBar);
         crawler.crawl();
-        if (crawler.isOutdated())
+        boolean forceInject;
+        if (forceInject = crawler.isOutdated())
             crawler.download();
         try {
             ModScript.load(Files.readAllBytes(Paths.get(crawler.modscript)), Integer.toString(crawler.getHash()));
@@ -106,7 +107,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         }
         boolean inject = true;
         try {
-            if (!injectCache.exists() && new File(Configuration.INJECTED).exists()) {
+            if ((!injectCache.exists() && new File(Configuration.INJECTED).exists())) {
                 injectCache.createNewFile();
                 BufferedWriter fw = new BufferedWriter(new FileWriter(injectCache));
                 fw.write(String.valueOf(hash));
@@ -123,7 +124,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         }
         Map<String, byte[]> classes = new HashMap<>();
         System.out.println(hash);
-        if (inject) {
+        if (inject || forceInject) {
             Injector injector = initInjector(pack);
             classes = injector.inject(true);
         } else {

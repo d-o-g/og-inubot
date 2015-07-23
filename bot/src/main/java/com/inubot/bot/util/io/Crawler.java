@@ -24,9 +24,9 @@ public class Crawler {
 
     public Crawler(GameType type) {
         this.type = type;
-        this.pack = Configuration.CACHE + (type == GameType.OSRS ? "os" : "rs3") + "_pack.jar";
-        this.modscript = Configuration.CACHE + (type == GameType.OSRS ? "oldschool" : "modern") + ".dat";
-        this.home = "http://" + (type == GameType.RS3 ? "world" : "oldschool") + Configuration.WORLD + ".runescape.com/";
+        this.pack = Configuration.CACHE + "os_pack.jar";
+        this.modscript = Configuration.CACHE + "oldschool" + ".dat";
+        this.home = "http://oldschool" + Configuration.WORLD + ".runescape.com/";
         this.config = home + "jav_config.ws";
     }
 

@@ -29,7 +29,7 @@ public class ExperienceCallback implements Transform {
             throw new IllegalStateException("Experiences hook broke?");
         for (ClassNode cn : classes.values()) {
             for (MethodNode mn : cn.methods) {
-                if (Modifier.isStatic(mn.access) && Type.getArgumentTypes(mn.desc).length <= 1) {
+                if (Modifier.isStatic(mn.access) && Type.getArgumentTypes(mn.desc).length <= 2) {
                     for (AbstractInsnNode ain : mn.instructions.toArray()) {
                         if (ain.getOpcode() != GETSTATIC)
                             continue;

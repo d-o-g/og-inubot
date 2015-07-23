@@ -78,8 +78,9 @@ public class ServerConnection implements Runnable {
 							}
 							case Packet.INSTANCE_COUNT: {
 								int asd = input.read();
-								if (asd != 1)
+								if (asd != 1) {
 									System.exit(0);
+								}
 								break;
 							}
 							default: {
