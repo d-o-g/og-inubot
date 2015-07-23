@@ -114,5 +114,6 @@ public class OSUpdater extends Updater {
         Updater updater = new OSUpdater(null, false);
         updater.print = true;
         updater.run();
+        updater.archive.write(new File("dump.jar"));
     }
 }

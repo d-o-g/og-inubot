@@ -33,7 +33,7 @@ public class Crawler {
         this.home = "http://" + (type == GameType.OSRS ? "oldschool" : "world") +
                 (type == GameType.OSRS ? WORLDS[(int) (Math.random() * WORLDS.length)] : 1) + ".runescape.com/";
         this.config = home + "jav_config.ws";
-        this.pack = Configuration.CACHE + (type == GameType.OSRS ? "os" : "rs3") + "_pack.jar";
+        this.pack = Configuration.CACHE + (type == GameType.OSRS ? "game" : "rs3_") + "pack.jar";
     }
 
     private int getLocalHash() {

@@ -124,7 +124,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         }
         Map<String, byte[]> classes = new HashMap<>();
         System.out.println(hash);
-        if (inject || forceInject) {
+        if (inject || forceInject || !new File(Configuration.INJECTED).exists()) {
             Injector injector = initInjector(pack);
             classes = injector.inject(true);
         } else {
