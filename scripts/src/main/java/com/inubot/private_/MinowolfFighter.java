@@ -11,7 +11,7 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.util.Time;
-import com.inubot.proframework.ProScript;
+import com.inubot.bundledscripts.proframework.ProScript;
 import com.inubot.script.Manifest;
 
 import java.util.Map;

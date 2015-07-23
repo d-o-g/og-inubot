@@ -31,7 +31,7 @@ public class Bootstrap {
         if (system.contains("Windows") || system.contains("Linux") || system.contains("Mac")) {
             builder.append("java " + flags);
         }
-        builder.append(" -cp \"").append(location()).append("\" ").append(Login.class.getName());
+        builder.append(" -cp \"").append(location()).append("\" ").append(Inubot.class.getName());
         System.out.println("Executing: " + builder.toString());
         if (System.getProperty("os.name").contains("Windows")) {
             Runtime.getRuntime().exec(builder.toString());

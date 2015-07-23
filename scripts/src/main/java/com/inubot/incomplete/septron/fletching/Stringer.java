@@ -6,7 +6,7 @@ import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
-import com.inubot.proframework.ProScript;
+import com.inubot.bundledscripts.proframework.ProScript;
 
 import java.text.DecimalFormat;
 import java.util.Map;

@@ -11,7 +11,7 @@ import com.inubot.api.methods.Prayers;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Prayer;
 import com.inubot.script.Manifest;
-import com.inubot.proframework.ProScript;
+import com.inubot.bundledscripts.proframework.ProScript;
 
 import java.util.Map;
 

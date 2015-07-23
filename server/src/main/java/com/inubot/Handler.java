@@ -123,6 +123,7 @@ public class Handler extends ChannelHandlerAdapter {
                             ByteBuf buf = Unpooled.directBuffer(data.length);
                             buf.writeBytes(data);
                             ctx.write(buf);
+                            logger.info("Sent script");
                         }
                     } else {
                         for (Object asd : owneds) {

@@ -9,6 +9,17 @@ package com.inubot.bot.ui;
 import com.inubot.Bot;
 import com.inubot.bot.util.CachedClassLoader;
 import com.inubot.bot.util.Configuration;
+import com.inubot.bundledscripts.complete.Combot;
+import com.inubot.bundledscripts.complete.WineMaker;
+import com.inubot.bundledscripts.complete.agility.PerfectAgility;
+import com.inubot.bundledscripts.complete.alcher.ProAlcher;
+import com.inubot.bundledscripts.complete.fisher.ProFisher;
+import com.inubot.bundledscripts.complete.hunter.BirdSnarePRO;
+import com.inubot.bundledscripts.complete.hunter.FalconryPRO;
+import com.inubot.bundledscripts.complete.hunter.RedChinsPRO;
+import com.inubot.bundledscripts.complete.miner.ProMiner;
+import com.inubot.bundledscripts.complete.rangeguild.RangeGuild;
+import com.inubot.bundledscripts.complete.tutisland.TutorialIsland;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 import com.inubot.script.loader.LocalScriptLoader;
@@ -27,6 +38,20 @@ import java.util.ArrayList;
  * @since 26-04-2015
  */
 public class ScriptSelector extends JFrame {
+
+    private static final Class[] SCRIPT_CLASSES = {
+            Combot.class,
+            WineMaker.class,
+            TutorialIsland.class,
+            RangeGuild.class,
+            ProMiner.class,
+            RedChinsPRO.class,
+            FalconryPRO.class,
+            BirdSnarePRO.class,
+            ProFisher.class,
+            ProAlcher.class,
+            PerfectAgility.class
+    };
 
     public ScriptSelector() {
         super("Script Selector");
@@ -56,12 +81,21 @@ public class ScriptSelector extends JFrame {
                 Class<?> clazz = remoteLoader.loadClass(name);
                 if (filter.accept(clazz)) {
                     ScriptDefinition def = new ScriptDefinition(clazz.getAnnotation(Manifest.class));
-                    def.setScriptClass((Class<? extends Script>) clazz);
                     def = new RemoteScriptDefinition(def.name(), def.developer(), def.desc(), def.version());
+                    def.setScriptClass((Class<? extends Script>) clazz);
                     entities.add(new Entity(def));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        }
+
+        for (Class<?> clazz : SCRIPT_CLASSES) {
+            if (filter.accept(clazz)) {
+                ScriptDefinition def = new ScriptDefinition(clazz.getAnnotation(Manifest.class));
+                def = new RemoteScriptDefinition(def.name(), def.developer(), def.desc(), def.version());
+                def.setScriptClass((Class<? extends Script>) clazz);
+                entities.add(new Entity(def));
             }
         }
 

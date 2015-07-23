@@ -6,7 +6,7 @@
  */
 package com.inubot.private_.zulrah;
 
-import com.inubot.proframework.ProModel;
+import com.inubot.bundledscripts.proframework.ProModel;
 
 /**
  * @author Dogerina
