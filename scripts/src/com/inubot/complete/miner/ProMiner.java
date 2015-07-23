@@ -4,7 +4,7 @@
  * License as published by the Free Software Foundation; either
  * version 2 of the license, or (at your option) any later version.
  */
-package com.inubot.script.bundled.proscripts.miner;
+package com.inubot.complete.miner;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
@@ -17,7 +17,7 @@ import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
 import com.inubot.script.Manifest;
-import com.inubot.script.bundled.proscripts.framework.ProScript;
+import com.inubot.proframework.ProScript;
 
 import java.awt.*;
 import java.util.Map;

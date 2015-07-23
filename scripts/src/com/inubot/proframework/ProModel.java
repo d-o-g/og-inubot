@@ -4,7 +4,7 @@
  * License as published by the Free Software Foundation; either
  * version 2 of the license, or (at your option) any later version.
  */
-package com.inubot.script.bundled.proscripts.framework;
+package com.inubot.proframework;
 
 import java.util.*;
 

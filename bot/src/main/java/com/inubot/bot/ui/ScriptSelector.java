@@ -18,6 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 
 /**
  * @author unsigned
@@ -35,27 +36,13 @@ public class ScriptSelector extends JFrame {
         JScrollPane scroll = new JScrollPane(scripts, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scroll.setPreferredSize(new Dimension(450, 150));
 
-        int x = Inubot.SCRIPT_CLASSES.length / 3;
-        int y = Inubot.SCRIPT_CLASSES.length / 3;
-
-        scripts.setLayout(new GridLayout(x, x, y, y));
-        for (Class clazz : Inubot.SCRIPT_CLASSES) {
-            if (clazz.isAnnotationPresent(Manifest.class)) {
-                ScriptDefinition sd = new ScriptDefinition((Manifest) clazz.getAnnotation(Manifest.class));
-                sd.setScriptClass(clazz);
-                scripts.add(new Entity(sd));
-            } else {
-                RemoteScriptDefinition rsd = new RemoteScriptDefinition(clazz.getSimpleName(), "Developer", "", 1.0);
-                rsd.setScriptClass(clazz);
-                scripts.add(new Entity(rsd));
-            }
-        }
         LocalScriptLoader loader = new LocalScriptLoader();
+        java.util.List<Entity> entities = new ArrayList<>();
         try {
             loader.parse(new File(Configuration.SCRIPTS));
             ScriptDefinition[] definitions = loader.getDefinitions();
             for (ScriptDefinition def : definitions) {
-                scripts.add(new Entity(def));
+                entities.add(new Entity(def));
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -69,12 +56,20 @@ public class ScriptSelector extends JFrame {
                     ScriptDefinition def = new ScriptDefinition(clazz.getAnnotation(Manifest.class));
                     def.setScriptClass((Class<? extends Script>) clazz);
                     def = new RemoteScriptDefinition(def.name(), def.developer(), def.desc(), def.version());
-                    scripts.add(new Entity(def));
+                    entities.add(new Entity(def));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+        int x = entities.size() / 3;
+        int y = entities.size() / 3;
+        scripts.setLayout(new GridLayout(x, x, y, y));
+        for (Entity entity : entities) {
+            scripts.add(entity);
+        }
+
         super.add(scroll);
         super.setLocationRelativeTo(null);
         super.pack();

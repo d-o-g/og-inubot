@@ -4,18 +4,15 @@
  * License as published by the Free Software Foundation; either
  * version 2 of the license, or (at your option) any later version.
  */
-package com.inubot.script.bundled.rangeguild;
+package com.inubot.complete.rangeguild;
 
 import com.inubot.api.methods.GameObjects;
 import com.inubot.api.methods.Interfaces;
-import com.inubot.api.methods.Mouse;
 import com.inubot.api.methods.Players;
 import com.inubot.api.oldschool.Tile;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.util.Time;
-
-import java.util.Arrays;
 
 /**
  * @author unsigned
