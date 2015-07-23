@@ -23,7 +23,6 @@ public abstract class Script extends LoopTask {
     private final List<Task> tickTasks = new ArrayList<>();
     private boolean started = false;
     private String username = null, password = null;
-    private boolean forceIdleTimeClick = true;
 
     public boolean setup() {
         return true;
@@ -84,15 +83,6 @@ public abstract class Script extends LoopTask {
             }
         }
         Inubot.getInstance().getClient().resetMouseIdleTime();
-        // anti-logout, clicking stops it from logging you apparently
-        if (forceIdleTimeClick) {
-            Mouse.move(750, 15);
-            Mouse.click(true);
-        }
-    }
-
-    public void setForceIdleTimeClick(boolean click) {
-        this.forceIdleTimeClick = click;
     }
 
     public void onLogout() {
