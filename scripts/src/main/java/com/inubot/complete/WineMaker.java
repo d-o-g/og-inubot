@@ -24,7 +24,7 @@ import java.awt.*;
  * @author unsigned
  * @since 26-05-2015
  */
-@Manifest(name = "Wine Maker", developer = "", desc = "Makes wine for over 450k cooking experience per hour!")
+@Manifest(name = "WineMaker", developer = "", desc = "Makes wine for over 450k cooking experience per hour!")
 public class WineMaker extends Script implements Paintable {
 
     private final StopWatch stopWatch = new StopWatch(0);

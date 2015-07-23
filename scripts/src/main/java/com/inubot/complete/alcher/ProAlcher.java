@@ -24,7 +24,7 @@ import java.util.Map;
  * @since 16-07-2015
  */
 @Manifest(
-        name = "Pro Alcher",
+        name = "ProAlcher",
         developer = "blitz",
         desc = "Alchs for decent magic experience. Start with only runes and the item to alch in your inventory"
 )

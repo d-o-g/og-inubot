@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
  * Created by Cameron on 2015-04-24.
  */
 @Manifest(
-        name = "AutoRangeGuild PRO",
+        name = "RangeGuild PRO",
         developer = "bone",
         desc = "Plays the range guild minigame for up to 50k experience per hour!"
 )

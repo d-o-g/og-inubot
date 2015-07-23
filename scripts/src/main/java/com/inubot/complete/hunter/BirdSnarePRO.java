@@ -26,7 +26,7 @@ import java.text.DecimalFormat;
  * X
  * ---------------------------------------------------------------------------------------------------------
  */
-@Manifest(name = "Bird Trapper", developer = "", desc = "Places bird snares for hunter experience")
+@Manifest(name = "BirdTrapper PRO", developer = "", desc = "Places bird snares for hunter experience")
 public class BirdSnarePRO extends Script implements Paintable {
 
     private Tile tile = null;

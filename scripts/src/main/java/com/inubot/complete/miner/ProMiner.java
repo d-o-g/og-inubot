@@ -27,7 +27,7 @@ import java.util.Map;
  * @since 15-07-2015
  */
 @Manifest(
-        name = "Pro Miner",
+        name = "ProMiner",
         developer = "blitz",
         desc = "Mines almost anything, anywhere"
 )

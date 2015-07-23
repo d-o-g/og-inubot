@@ -10,19 +10,19 @@ import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.event.MessageEvent;
-import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.IdFilter;
+import com.inubot.proframework.ProScript;
 import com.inubot.script.Manifest;
-import com.inubot.script.Script;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
-@Manifest(name = "AutoFisherPRO", developer = "", desc = "Fishes almost anything, almost anywhere")
-public class AutoFisherPRO extends Script implements Paintable {
+@Manifest(name = "ProFisher", developer = "", desc = "Fishes almost anything, almost anywhere")
+public class ProFisher extends ProScript {
 
     private static final int[] EQUIPMENT_IDS = {305, 303, 301, 307, 309, 311};
     private static final String[] FISH_NAMES = {"Shrimps, Anchovies", "Shark",
@@ -31,7 +31,7 @@ public class AutoFisherPRO extends Script implements Paintable {
     private static final Tile BAD_TILE = new Tile(3246, 3157, 0); //hacky fix
 
     private boolean closed, powerfish;
-    private int startExp, startLvl, caught;
+    private int caught;
     private Location location;
     private Fish fish;
     private Tile start;
@@ -47,8 +47,6 @@ public class AutoFisherPRO extends Script implements Paintable {
             }
         } catch (Throwable ignored) {
         }
-        startExp = Skills.getExperience(Skill.FISHING);
-        startLvl = Skills.getLevel(Skill.FISHING); //maybe do this in loop? might not start logged in
         if (!powerfish) {
             actions = new Action[]{new Dropping(), new Fishing(), new Depositing(), new Walking()};
         } else {
@@ -77,15 +75,15 @@ public class AutoFisherPRO extends Script implements Paintable {
     }
 
     @Override
-    public void render(Graphics2D g) {
-
-    }
-
-    @Override
     public void messageReceived(MessageEvent e) {
         if (e.getType() == MessageEvent.Type.SERVER && e.getText().contains("You catch")) {
             caught++;
         }
+    }
+
+    @Override
+    public void getPaintData(Map<String, Object> data) {
+        data.put("Caught", caught);
     }
 
     private enum Fish {
@@ -141,7 +139,7 @@ public class AutoFisherPRO extends Script implements Paintable {
     private class GUI extends JFrame {
 
         private GUI() {
-            super("AutoFisherPRO");
+            super("ProFisher");
             setLayout(new GridLayout(0, 2));
             JComboBox<String> options = new JComboBox<>(FISH_NAMES);
             JComboBox<Location> loc = new JComboBox<>(Location.values());

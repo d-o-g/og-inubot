@@ -20,7 +20,7 @@ import java.awt.*;
  * @author unsigned
  * @since 16-05-2015
  */
-@Manifest(name = "Falconry", developer = "", desc = "Does falconry for hunter experience")
+@Manifest(name = "Falconry PRO", developer = "", desc = "Does falconry for hunter experience")
 public class FalconryPRO extends Script implements Paintable {
 
     private int startExp;

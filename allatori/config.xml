@@ -2,10 +2,14 @@
  
 <config>
   <jars>
-    <jar out="Inubot-out.jar" in="Inubot.jar"/>
+    <jar out="Inubot.jar" in="Inubot-unobbed.jar"/>
   </jars>
   <keep-names>
     <class template ="class com.inubot.api.*">
+      <method access = "private+"/>
+      <field access="private+"/>
+    </class>
+    <class template ="class com.inubot.Bootstrap">
       <method access = "private+"/>
       <field access="private+"/>
     </class>
