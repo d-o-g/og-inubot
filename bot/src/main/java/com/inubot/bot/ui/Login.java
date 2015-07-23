@@ -32,7 +32,7 @@ public class Login {
         JTextField username = new JTextField();
         username.setPreferredSize(new Dimension(120, username.getHeight()));
         fieldPanel.add(username);
-        JTextField password = new JTextField();
+        JPasswordField password = new JPasswordField();
         password.setPreferredSize(new Dimension(120, password.getHeight()));
         fieldPanel.add(password);
         frame.getContentPane().add(fieldPanel, BorderLayout.EAST);
@@ -44,6 +44,7 @@ public class Login {
             public void actionPerformed(ActionEvent e) {
                 Inubot.main(args);
                 //just pass the text in username/password textfields to servercon?
+                //dispose if successful  login
             }
         });
 
