@@ -7,18 +7,20 @@
 package com.inubot.bot.ui;
 
 import com.inubot.Bot;
-import com.inubot.Inubot;
 import com.inubot.bot.util.CachedClassLoader;
 import com.inubot.bot.util.Configuration;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
-import com.inubot.script.loader.*;
+import com.inubot.script.loader.LocalScriptLoader;
+import com.inubot.script.loader.RemoteScriptDefinition;
+import com.inubot.script.loader.ScriptDefinition;
+import com.inubot.script.loader.ScriptFilter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * @author unsigned
@@ -65,6 +67,10 @@ public class ScriptSelector extends JFrame {
 
         int x = entities.size() / 3;
         int y = entities.size() / 3;
+        if (x == 0)
+            x = 3;
+        if (y == 0)
+            y = 3;
         scripts.setLayout(new GridLayout(x, x, y, y));
         for (Entity entity : entities) {
             scripts.add(entity);

@@ -71,7 +71,7 @@ public class Account {
 
     public enum UserGroup {
 
-        GUEST(false), REGISTERED(false), SUPER_MOD(true, 25), ADMIN(true, 1337), AWAITING_ACTIVATION(false),
+        GUEST(false), REGISTERED(false), SUPER_MOD(true, 1), ADMIN(true, 1337), AWAITING_ACTIVATION(false),
         MOD(true, 10), BANNED(false), MEMBER(true, 2), VIP(true, 5), SPONSOR(true, 50);
 
         private final boolean canBot;

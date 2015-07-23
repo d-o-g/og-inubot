@@ -26,13 +26,7 @@ public class Bootstrap {
         }
         StringBuilder builder = new StringBuilder();
         String system = System.getProperty("os.name");
-        if (system.contains("Windows")) {
-            builder.append("java " + flags);
-        }
-        if (system.contains("Linux")) {
-            builder.append("java " + flags);
-        }
-        if (system.contains("Mac")) {
+        if (system.contains("Windows") || system.contains("Linux") || system.contains("Mac")) {
             builder.append("java " + flags);
         }
         builder.append(" -cp \"").append(location()).append("\" com.inubot.bot.ui.Login");

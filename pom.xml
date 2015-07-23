@@ -12,6 +12,7 @@
         <module>bot</module>
         <module>updater</module>
         <module>server</module>
+        <module>scripts</module>
     </modules>
 
     <properties>

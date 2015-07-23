@@ -13,9 +13,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Septron
@@ -23,10 +27,14 @@ import java.util.List;
  */
 public class Handler extends ChannelHandlerAdapter {
 
+    private static final Map<String, Integer> instances = new HashMap<>();
+
     private static final byte LOGIN = 0;
     private static final byte REQUEST_SCRIPTS = 1;
-    private static final byte OPENED_BOT = 2; //keep track of number of instances open
+    private static final byte OPENED_BOT = 2;
     private static final byte CLOSED_BOT = 3;
+    private static final byte INSTANCE_COUNT = 5;
+
 
     private static final Logger logger = LoggerFactory.getLogger(Handler.class);
 
@@ -57,9 +65,25 @@ public class Handler extends ChannelHandlerAdapter {
         ctx.flush();
     }
 
+    private boolean fuck = true;
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        logger.info(hnnf(ctx) + " ");
+        if (fuck)
+            instances.remove(hnnf(ctx));
+    }
+
+    private String hnnf(ChannelHandlerContext ctx) {
+        InetSocketAddress socketAddress = (InetSocketAddress) ctx.channel().remoteAddress();
+        InetAddress inetaddress = socketAddress.getAddress();
+        return inetaddress.getHostAddress();
+    }
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         ByteBuf buffer = (ByteBuf) msg;
+        logger.info(hnnf(ctx) + " ");
         int opcode = buffer.readByte();
         switch (opcode) {
             case LOGIN: {
@@ -91,23 +115,73 @@ public class Handler extends ChannelHandlerAdapter {
                     logger.info("Successfully logged " + username + " into account! (" + account.getId() + ")");
                     ctx.write(Unpooled.wrappedBuffer(new byte[] { 4 }));
                     List owneds = session.createQuery("from Owned where uid=:uid").setParameter("uid", account.getId()).list();
-                    for (Object asd : owneds) {
-                        Script script = (Script) session.createQuery("from Script where id=:id")
-                                .setParameter("id", ((Owned) asd).getId()).uniqueResult();
-                        byte[] data = Loader.scripts.get(script.getName());
-                        if (data == null) {
-                            logger.info("no have " + script.getName());
-                            continue;
+
+                    if (account.getUserGroup() == Account.UserGroup.ADMIN) {
+                        for (byte[] data : Loader.scripts.values()) {
+                            ctx.write(Unpooled.wrappedBuffer(new byte[]{REQUEST_SCRIPTS}));
+                            ctx.flush();
+                            ByteBuf buf = Unpooled.directBuffer(data.length);
+                            buf.writeBytes(data);
+                            ctx.write(buf);
                         }
-                        ctx.write(Unpooled.wrappedBuffer(new byte[] { 1 }));
-                        ctx.flush();
-                        ByteBuf buf = Unpooled.directBuffer(data.length);
-                        buf.writeBytes(data);
-                        ctx.write(buf);
-                        logger.info("Sent: " + script.getName());
+                    } else {
+                        for (Object asd : owneds) {
+                            Script script = (Script) session.createQuery("from Script where id=:id")
+                                    .setParameter("id", ((Owned) asd).getId()).uniqueResult();
+                            byte[] data = Loader.scripts.get(script.getName());
+                            if (data == null) {
+                                logger.info("no have " + script.getName());
+                                continue;
+                            }
+                            ctx.write(Unpooled.wrappedBuffer(new byte[]{REQUEST_SCRIPTS}));
+                            ctx.flush();
+                            ByteBuf buf = Unpooled.directBuffer(data.length);
+                            buf.writeBytes(data);
+                            ctx.write(buf);
+                            logger.info("Sent: " + script.getName());
+                        }
+                        int count;
+                        if (instances.get(hnnf(ctx)) == null)
+                            count = 0;
+                        else
+                            count = instances.get(hnnf(ctx));
+                        Account.UserGroup group = account.getUserGroup();
+                        logger.info(count + " count - allowed " + group.getMaximumInstances());
+                        if (count < group.getMaximumInstances()) {
+                            instances.put(hnnf(ctx), (count += 1));
+                            ctx.writeAndFlush(Unpooled.wrappedBuffer(new byte[]{INSTANCE_COUNT, 1}));
+                        } else {
+                            ctx.writeAndFlush(Unpooled.wrappedBuffer(new byte[]{INSTANCE_COUNT, 0}));
+                            fuck = false;
+                        }
                     }
                 } else {
                     logger.info("Failed to log " + username + " into account!");
+                }
+                break;
+            }
+            case CLOSED_BOT: {
+                StringBuilder builder = new StringBuilder();
+                int ulength = buffer.readInt();
+                for (int i = 0; i < ulength; i++) {
+                    logger.info(builder.toString());
+                    builder.append(buffer.readChar());
+                }
+                String name = builder.toString();
+
+                Session session = Application.factory().openSession();
+                Account account = (Account) session.createQuery("from Account where username=:username")
+                        .setParameter("username", name).uniqueResult();
+                if (account == null) {
+                    return;
+                }
+                if (instances.containsKey(hnnf(ctx))) {
+                    int count = instances.get(hnnf(ctx));
+                    if (count == 1) {
+                        instances.remove(hnnf(ctx));
+                    } else {
+                        instances.put(hnnf(ctx), count - 1);
+                    }
                 }
                 break;
             }
