@@ -31,6 +31,9 @@ public class AsynchronousEventBus implements EventBus {
                 listener.onEvent(event);
             }
             event.setState(Event.COMPLETE);
+            synchronized (this) {
+                events.remove(event);
+            }
             delegate(event.getDelegates());
         }
     }
@@ -43,6 +46,10 @@ public class AsynchronousEventBus implements EventBus {
                 listener.onEvent(event);
             }
             event.setState(Event.COMPLETE);
+            synchronized (this) {
+                event.setParent(null);
+                this.events.remove(event);
+            }
             delegate(event.getDelegates());
         }
     }

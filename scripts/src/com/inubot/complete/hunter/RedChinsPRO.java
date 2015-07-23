@@ -11,6 +11,7 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.*;
+import com.inubot.client.natives.oldschool.RSInteractableEntity;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
@@ -183,12 +184,11 @@ public class RedChinsPRO extends Script implements Paintable {
 
     public Tile getNextLocation() {
         Tile[] formation = getTrapTactics();
-        for (final Tile tile : formation) { //no trap is available
+        for (Tile tile : formation) { //no trap is available
             if (isMakingGarden(tile)) {
-                fuckOff = true;
                 continue;
             }
-            if (GameObjects.getNearest(o -> o.getLocation().equals(tile)) == null)
+            if (GameObjects.getNearest(o -> o.getLocation().equals(tile) && o.getRaw() instanceof RSInteractableEntity) == null)
                 return tile;
         }
         for (Tile tile : formation) {

@@ -11,9 +11,11 @@ import java.util.Set;
 public class SynchronousEventBus implements EventBus {
 
     private final Set<Event> events;
+    private final Object writeLock;
 
     public SynchronousEventBus() {
         this.events = new LinkedHashSet<>();
+        this.writeLock = new Object();
     }
 
     @Override
@@ -27,6 +29,9 @@ public class SynchronousEventBus implements EventBus {
                         listener.onEvent(event);
                     }
                     event.setState(Event.COMPLETE);
+                    synchronized (writeLock) {
+                        events.remove(event);
+                    }
                     delegate(event.getDelegates());
                 }
             }
@@ -41,6 +46,10 @@ public class SynchronousEventBus implements EventBus {
                 listener.onEvent(event);
             }
             event.setState(Event.COMPLETE);
+            synchronized (writeLock) {
+                event.setParent(null);
+                this.events.remove(event);
+            }
             delegate(event.getDelegates());
         }
     }

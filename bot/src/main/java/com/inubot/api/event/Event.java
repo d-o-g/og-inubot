@@ -71,8 +71,10 @@ public abstract class Event {
     }
 
     public final void setParent(Event parent) {
-        parent.delegate(this);
         this.parent = parent;
+        if (parent != null) {
+            parent.delegate(this);
+        }
     }
 
     public final void delegate(Event delegate) {

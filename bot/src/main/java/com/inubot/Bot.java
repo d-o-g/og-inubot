@@ -124,11 +124,9 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         Map<String, byte[]> classes = new HashMap<>();
         System.out.println(hash);
         if (inject) {
-            System.out.println("Injecting");
             Injector injector = initInjector(pack);
             classes = injector.inject(true);
         } else {
-            System.out.println("Not injecting");
             try (ZipInputStream input = new JarInputStream(new FileInputStream(Configuration.INJECTED))) {
                 ZipEntry entry;
                 while ((entry = input.getNextEntry()) != null) {
