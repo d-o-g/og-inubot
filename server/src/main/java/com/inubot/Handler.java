@@ -112,7 +112,7 @@ public class Handler extends ChannelHandlerAdapter {
                 String hash = getMD5(getMD5(account.getSalt()) + getMD5(password));
 
                 if (hash.equals(account.getPassword())) {
-                    logger.info("Successfully logged " + username + " into account! (" + account.getId() + ")");
+                    logger.info("Successfully logged " + username + " into account! (" + account.getGroup() + ")");
                     ctx.write(Unpooled.wrappedBuffer(new byte[] { 4 }));
                     List owneds = session.createQuery("from Owned where uid=:uid").setParameter("uid", account.getId()).list();
 
