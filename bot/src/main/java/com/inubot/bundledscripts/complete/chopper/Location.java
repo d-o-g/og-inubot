@@ -29,7 +29,7 @@ public enum Location {
 
     private Location(Area treeArea, Tree... availableTrees) {
         this(treeArea, 0, availableTrees);
-    }//
+    }
 
     public Area getTreeArea() {
         return treeArea;
