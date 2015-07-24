@@ -269,9 +269,15 @@ public class Bank {
     public static void depositAll(Filter<WidgetItem> filter) {
         if (!isOpen())
             throw new BankClosedException();
-        for (WidgetItem item : Inventory.getItems(filter)) {
-            if (item != null && item.getDefinition() != null)
+        WidgetItem[] items = Inventory.getItems(filter);
+        if (items.length == Inventory.getCount()) {
+            depositInventory();
+            return;
+        }
+        for (WidgetItem item : items) {
+            if (item != null && item.getDefinition() != null) {
                 item.processAction("Deposit-All");
+            }
         }
     }
 

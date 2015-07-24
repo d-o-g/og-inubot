@@ -28,12 +28,12 @@ public class NpcAction extends CharacterAction {
         return opcode - ActionOpcodes.NPC_ACTION_0;
     }
 
-    public int getNpcIndex() {
+    public int getArrayIndex() {
         return getEntityId();
     }
 
     public Npc getNpc() {
-        int index = getNpcIndex();
+        int index = getArrayIndex();
         if (index < 0 || index > Short.MAX_VALUE)
             return null;
         RSNpc npc = Npcs.raw()[index];
@@ -61,6 +61,6 @@ public class NpcAction extends CharacterAction {
 
     @Override
     public String toString() {
-        return "Npc Interaction [action-name(index=" + getActionIndex() + ")=" + getAction() + "] on " + getNpc();
+        return "Npc Interaction [action-name(index=" + getActionIndex() + ")=" + getAction() + "] on " + (getNpc() != null ? "null" : getNpc());
     }
 }

@@ -20,8 +20,8 @@ import java.util.Map;
  * @author Dogerina
  * @since 18-07-2015
  */
-@Manifest(name = "Minotaur", developer = "", desc = "")
-public class MinowolfFighter extends ProScript {
+@Manifest(name = "MossFighter", developer = "", desc = "")
+public class MossFighter extends ProScript {
 
     @Override
     public void getPaintData(Map<String, Object> data) {
@@ -30,8 +30,12 @@ public class MinowolfFighter extends ProScript {
 
     @Override
     public int loop() {
-        if (Players.getLocal().getTarget() == null && Skills.getCurrentLevel(Skill.HITPOINTS) > 10) {
-            Npc npc = Npcs.getNearest(n -> n.getName() != null && (n.getName().equals("Minotaur"))
+        if (Skills.getCurrentLevel(Skill.HITPOINTS) < 20) {
+            Inventory.getFirst("Shark").processAction("Eat");
+            return 3000;
+        }
+        if (Players.getLocal().getTarget() == null) {
+            Npc npc = Npcs.getNearest(n -> n.getName() != null && (n.getName().equals("Moss giant"))
                     && Movement.isReachable(n) && !n.isDying());
             if (npc != null) {
                 npc.processAction("Attack");

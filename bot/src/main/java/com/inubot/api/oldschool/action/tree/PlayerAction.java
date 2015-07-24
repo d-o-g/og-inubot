@@ -23,7 +23,7 @@ public class PlayerAction extends CharacterAction {
                 && opcode <= ActionOpcodes.PLAYER_ACTION_7;
     }
 
-    public int playerIndex() {
+    public int getArrayIndex() {
         return arg0;
     }
 
@@ -32,7 +32,7 @@ public class PlayerAction extends CharacterAction {
     }
 
     public Player getPlayer() {
-        int index = playerIndex();
+        int index = getArrayIndex();
         if (index < 0 || index > Players.MAX_PLAYERS)
             return null;
         RSPlayer player = Players.raw()[index];
@@ -41,6 +41,6 @@ public class PlayerAction extends CharacterAction {
 
     @Override
     public String toString() {
-        return "Player Action[" + playerIndex() + "](" + "@" + getActionIndex() + ") on " + getPlayer();
+        return "Player Action[" + getArrayIndex() + "](" + "@" + getActionIndex() + ") on " + getPlayer();
     }
 }
