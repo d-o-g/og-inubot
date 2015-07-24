@@ -14,12 +14,11 @@ import org.objectweb.asm.commons.cfg.Block;
 import org.objectweb.asm.commons.cfg.BlockVisitor;
 import org.objectweb.asm.commons.cfg.query.InsnQuery;
 import org.objectweb.asm.commons.cfg.tree.NodeVisitor;
-import org.objectweb.asm.commons.cfg.tree.node.FieldMemberNode;
-import org.objectweb.asm.commons.cfg.tree.node.VariableNode;
+import org.objectweb.asm.commons.cfg.tree.node.*;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
-import java.util.Hashtable;
+import java.util.*;
 
 /**
  * @author Dogerina
@@ -43,6 +42,43 @@ public class RenderConfiguration extends GraphVisitor {
                 addHook(new InvokeHook("getMode", mn));
             }
         }
+    }
+
+    //this.d(this.xPoints[var23], this.yPoints[var23], this.zPoints[var23], var75, var76, var77, var78, var32, var79, var31, var59);
+    public static List<FieldMemberNode> findVertices(GraphVisitor gv) {
+        List<FieldMemberNode> hooks = new ArrayList<>(4);
+        gv.visitLocalIfM(new BlockVisitor() {
+
+            private int added = 0;
+
+            @Override
+            public boolean validate() {
+                return added < 4;
+            }
+
+            @Override
+            public void visit(Block block) {
+                block.tree().accept(new NodeVisitor() {
+                    @Override
+                    public void visit(AbstractNode n) {
+                        if (n.opcode() == FASTORE) {
+                            ArithmeticNode add = n.firstOperation();
+                            if (add != null && add.opcode() == FADD) {
+                                FieldMemberNode abs = add.firstField();
+                                if (abs != null && abs.opcode() == GETFIELD && abs.desc().equals("F")) {
+                                    FieldMemberNode multi = (FieldMemberNode) add.layer(FDIV, FMUL, GETFIELD);
+                                    if (multi != null && multi.desc().equals("F")) {
+                                        hooks.add(abs);
+                                        hooks.add(multi);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }, mn -> mn.desc.endsWith("V") && mn.desc.startsWith("(FFF[F"));
+        return hooks.size() < 4 ? null : hooks;
     }
 
     private class Mode extends BlockVisitor {

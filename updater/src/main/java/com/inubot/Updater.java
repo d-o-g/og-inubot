@@ -41,6 +41,11 @@ public abstract class Updater extends Thread implements Runnable {
     public String callbacks, classes, hooks;
     protected Map<ClassNode, Map<MethodNode, FlowGraph>> graphs = new HashMap<>();
     private boolean updated = false;
+    private boolean removeUnusedMethods = false;
+
+    protected final void setRemoveUnusedMethods(boolean yes) {
+        this.removeUnusedMethods = yes;
+    }
 
     public Updater(File file, GraphVisitor[] visitors, boolean closeOnOld) throws Exception {
         if (file == null) {
@@ -135,7 +140,9 @@ public abstract class Updater extends Thread implements Runnable {
                 }
             }
         };
-        umt.transform(classnodes);
+        if (removeUnusedMethods) {
+            umt.transform(classnodes);
+        }
         for (GraphVisitor gv : visitors)
             gv.updater = this;
         for (GraphVisitor gv : visitors) {
@@ -217,7 +224,7 @@ public abstract class Updater extends Thread implements Runnable {
         for (GraphVisitor gv : visitors) {
             totalClasses++;
             if (gv.cn == null) {
-                appendLine("\t" + gv.id() + " is BROKEN");
+                appendLine("\t^ " + gv.id() + " is BROKEN");
                 appendLine("");
                 continue;
             }
@@ -268,7 +275,7 @@ public abstract class Updater extends Thread implements Runnable {
             }
             for (String hook : info.hooks()) {
                 if (!gv.hooks.containsKey(hook)) {
-                    appendLine("\t!!! broken: " + gv.id() + "#" + hook);
+                    appendLine("\t! broken: " + gv.id() + "#" + hook);
                     //gv.hooks.put(hook, new BrokenHook(hook));
                 }
             }
@@ -279,14 +286,14 @@ public abstract class Updater extends Thread implements Runnable {
         }
         this.classes = classes + "/" + totalClasses;
         this.hooks = hooks + "/" + totalHooks;
-        appendLine(String.format("\tunused methods %d/%d", umt.getRemoved(), umt.getTotal()));
+        appendLine(String.format("\tUnused methods %d/%d", umt.getRemoved(), umt.getTotal()));
         /*appendLine(String.format("graphs --> %d in %.2f seconds", totalGraphs, graphTime / 1e9));
         appendLine(String.format("trees --> %d in %.2f seconds", trees, treeTime / 1e9));
         appendLine(String.format("multipliers --> %s in %.2f seconds", inverseVisitor.toString(), multTime / 1e9));
         appendLine(String.format("predicates --> %s in %.2f seconds", opv.toString(), predTime / 1e9));*/
         appendLine(String.format("\tIdentified %d/%d classes", classes, totalClasses));
-        appendLine(String.format("\tIdentfiied %d/%d hooks, %d of which were methods", hooks, totalHooks, methodHooks));
-        appendLine(String.format("\ttotal time %.2f seconds", (end - start) / 1e9));
+        appendLine(String.format("\tIdentified %d/%d hooks, %d of which were methods", hooks, totalHooks, methodHooks));
+        appendLine(String.format("\tTotal time %.2f seconds", (end - start) / 1e9));
         List<GraphVisitor> graphVisitors = new ArrayList<>();
         Collections.addAll(graphVisitors, this.visitors);
         try {

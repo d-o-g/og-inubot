@@ -11,30 +11,20 @@ import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.commons.cfg.tree.node.FieldMemberNode;
 import org.objectweb.asm.commons.cfg.tree.node.NumberNode;
-import org.objectweb.asm.tree.*;
+import org.objectweb.asm.tree.ClassNode;
 
 import java.util.List;
 
 /**
  * @author Dogerina
- * @since 22-07-2015
+ * @since 23-07-2015
  */
 @VisitorInfo(hooks = {"absoluteX", "absoluteY", "multiplierX", "multiplierY"})
-public class PureJavaRenderConfiguration extends GraphVisitor {
+public class DirectXRenderConfiguration extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        if (!cn.superName.equals(clazz("RenderConfiguration"))) {
-            return false;
-        }
-        for (MethodNode mn : cn.methods) {
-            for (AbstractInsnNode ain : mn.instructions.toArray()) {
-                if (ain.opcode() == LDC && ((LdcInsnNode) ain).cst.equals("Pure Java")) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return cn.superName.equals(clazz("RenderConfiguration")) && (cn.access & ACC_ABSTRACT) != 0;
     }
 
     @Override

@@ -241,6 +241,14 @@ public class AbstractNode extends Tree<AbstractNode> implements Opcodes {
         return tree;
     }
 
+    public AbstractNode top() {
+        AbstractNode parent = parent();
+        while (parent != null && parent.hasParent() && parent.parent().opcode() != -1) {
+            parent = parent.parent();
+        }
+        return parent;
+    }
+
     public int index() {
         return method().instructions.indexOf(insn());//insn.insnIndex;
     }

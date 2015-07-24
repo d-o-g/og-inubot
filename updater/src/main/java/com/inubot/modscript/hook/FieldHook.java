@@ -53,7 +53,7 @@ public class FieldHook extends Hook {
         String desc = org.objectweb.asm.Type.getType(fieldDesc).getClassName();
         int idx = desc.lastIndexOf('.');
         //TODO maybe replace obfuscated names with known names? e.g. xx -> Node
-        output.append("+ ").append(desc).append(" ").append(name).append(" is ").append(clazz).append('.').append(field);
+        output.append("- ").append(desc).append(" ").append(name).append(" is ").append(clazz).append('.').append(field);
         if (multiplier != 0) {
             output.append(" * ").append(multiplier);
         }

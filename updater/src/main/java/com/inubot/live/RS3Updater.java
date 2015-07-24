@@ -37,9 +37,14 @@ public class RS3Updater extends Updater {
         return new GraphVisitor[]{new Node(), new DoublyNode(), new NodeTable(),
                 new DoublyNodeQueue(), new Cache(),
                 new Canvas(), new RenderMode(), new RenderConfiguration(), new PureJavaRenderConfiguration(),
+                new OpenGLRenderConfiguration(), new DirectXRenderConfiguration(), new Direct3DRenderConfiguration(),
+                new OpenGLFFRenderConfiguration(),
+                new Model(), new PureJavaModel(), new OpenGLModel(), new DirectXModel(),
                 new Vector3f(), new Quaternion(), new CoordinateSpace(), new SceneGraphTile(),
                 new SceneGraph(), new Scene(), new SceneOffset(),
-                new SceneSettings(), new SceneGraphLevel(),
+                new SceneSettings(), new SceneGraphLevel(), new PureJavaSceneGraphLevel(), new DirectXSceneGraphLevel(),
+                new OpenGLSceneGraphLevel(),
+                new Server(), new World(),
                 new GuidanceArrow(),
                 new MenuItem(),
                 new Widget(), new Client()};
@@ -52,6 +57,7 @@ public class RS3Updater extends Updater {
                 for (File p : packs) {
                     RS3Updater updater = new RS3Updater(p);
                     updater.print = print;
+                    updater.setRemoveUnusedMethods(false);
                     updater.run();
                     updater.flush();
                 }
@@ -69,6 +75,7 @@ public class RS3Updater extends Updater {
                 }
             }
             RS3Updater updater = new RS3Updater(pack);
+            updater.setRemoveUnusedMethods(false);
             updater.print = print;
             updater.run();
             updater.flush();

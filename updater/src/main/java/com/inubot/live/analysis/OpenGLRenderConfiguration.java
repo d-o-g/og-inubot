@@ -17,10 +17,10 @@ import java.util.List;
 
 /**
  * @author Dogerina
- * @since 22-07-2015
+ * @since 23-07-2015
  */
 @VisitorInfo(hooks = {"absoluteX", "absoluteY", "multiplierX", "multiplierY"})
-public class PureJavaRenderConfiguration extends GraphVisitor {
+public class OpenGLRenderConfiguration extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
@@ -29,7 +29,7 @@ public class PureJavaRenderConfiguration extends GraphVisitor {
         }
         for (MethodNode mn : cn.methods) {
             for (AbstractInsnNode ain : mn.instructions.toArray()) {
-                if (ain.opcode() == LDC && ((LdcInsnNode) ain).cst.equals("Pure Java")) {
+                if (ain.opcode() == LDC && ((LdcInsnNode) ain).cst.equals("OpenGL")) {
                     return true;
                 }
             }

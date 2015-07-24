@@ -10,33 +10,26 @@ import com.inubot.modscript.hook.FieldHook;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.FieldNode;
 
-import java.lang.reflect.Modifier;
+import java.util.List;
 
 /**
  * @author Dogerina
- * @since 22-07-2015
+ * @since 24-07-2015
  */
-@VisitorInfo(hooks = {"tail", "head"})
-public class DoublyNodeQueue extends GraphVisitor {
+@VisitorInfo(hooks = {"xVertices", "yVertices", "zVertices"})
+public class PureJavaModel extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.getFieldTypeCount() == 1 && cn.fieldCount(desc("DoublyNode")) == 2;
+        return cn.superName.equals(clazz("Model")) && cn.fieldCount(desc("PureJavaRenderConfiguration")) == 1;
     }
 
     @Override
     public void visit() {
-        for (FieldNode fn : cn.fields) {
-            if (Modifier.isStatic(fn.access)) {
-                continue;
-            }
-            if (Modifier.isPublic(fn.access)) {
-                addHook(new FieldHook("tail", fn));
-            } else {
-                addHook(new FieldHook("head", fn));
-            }
+        List<FieldHook> hooks = Model.findVertices(cn);
+        if (hooks != null) {
+            hooks.forEach(this::addHook);
         }
     }
 }
