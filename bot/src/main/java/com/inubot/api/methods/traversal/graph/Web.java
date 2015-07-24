@@ -17,7 +17,7 @@ public class Web extends Digraph<WebVertex, WebVertex> {
 
     public Web() {
         try {
-            InputStream in = new FileInputStream("./web.txt");
+            InputStream in = Web.class.getResourceAsStream("/com/inubot/api/methods/traversal/graph/data/web.txt");
             Scanner s = new Scanner(in);
             while (s.hasNextLine()) {
                 String line = s.nextLine();

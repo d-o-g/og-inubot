@@ -1,6 +1,7 @@
 package com.inubot.modscript.hook;
 
 import com.inubot.modscript.Crypto;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -44,10 +45,21 @@ public class InvokeHook extends Hook {
     @Override
     public String getOutput() {
         String desc0 = org.objectweb.asm.Type.getType(desc).getReturnType().getClassName();
-        String out = "¤ " + desc0 + " " + name + " is " + clazz + "." + method + desc;
-        if (predicate != Integer.MAX_VALUE)
-            out += " [" + predicate + "] - " + predicateType;
-        return out;
+        org.objectweb.asm.Type[] args = org.objectweb.asm.Type.getArgumentTypes(desc);
+        String params = "(";
+        int i = 0;
+        for (org.objectweb.asm.Type arg : args) {
+            String ok = arg.getClassName();
+            if (ok.lastIndexOf('.') != -1) {
+                ok = ok.substring(ok.lastIndexOf('.') + 1);
+            }
+            params += ok;
+            if (++i != args.length) {
+                params += ", ";
+            }
+        }
+        params += ")";
+        return "¤ " + desc0 + " " + name + " is " + clazz + "." + method + params;
     }
 
     @Override

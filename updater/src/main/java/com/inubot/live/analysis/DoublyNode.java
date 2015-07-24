@@ -7,6 +7,7 @@
 package com.inubot.live.analysis;
 
 import com.inubot.modscript.hook.FieldHook;
+import com.inubot.modscript.hook.InvokeHook;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.commons.cfg.Block;
@@ -21,7 +22,7 @@ import org.objectweb.asm.tree.FieldNode;
  * @author Dogerina
  * @since 22-07-2015
  */
-@VisitorInfo(hooks = {"subHash", "subNext", "subPrevious"})
+@VisitorInfo(hooks = {"subHash", "subNext", "subPrevious", "unlinkSub"})
 public class DoublyNode extends GraphVisitor {
 
     @Override
@@ -55,6 +56,7 @@ public class DoublyNode extends GraphVisitor {
                                 if (fn.desc.equals("L" + cn.name + ";")) {
                                     if (!fn.name.equals(fmn.name())) {
                                         addHook(new FieldHook("subNext", fn));
+                                        addHook(new InvokeHook("unlinkSub", block.owner));
                                         break;
                                     }
                                 }

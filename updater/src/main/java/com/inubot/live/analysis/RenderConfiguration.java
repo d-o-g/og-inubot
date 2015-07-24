@@ -10,6 +10,7 @@ import com.inubot.modscript.hook.FieldHook;
 import com.inubot.modscript.hook.InvokeHook;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.cfg.Block;
 import org.objectweb.asm.commons.cfg.BlockVisitor;
 import org.objectweb.asm.commons.cfg.query.InsnQuery;
@@ -19,6 +20,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Dogerina
@@ -44,8 +46,34 @@ public class RenderConfiguration extends GraphVisitor {
         }
     }
 
-    //this.d(this.xPoints[var23], this.yPoints[var23], this.zPoints[var23], var75, var76, var77, var78, var32, var79, var31, var59);
-    public static List<FieldMemberNode> findVertices(GraphVisitor gv) {
+    public static InvokeHook findUpdate(GraphVisitor gv) {
+        AtomicReference<InvokeHook> hookRef = new AtomicReference<>();
+        gv.visitLocalIfM(new BlockVisitor() {
+            @Override
+            public boolean validate() {
+                return !lock.get();
+            }
+
+            @Override
+            public void visit(Block block) {
+                block.tree().accept(new NodeVisitor() {
+                    @Override
+                    public void visitOperation(ArithmeticNode an) {
+                        if (an.opcode() == IOR) {
+                            NumberNode nn = an.firstNumber();
+                            if (nn != null && nn.number() == 16) {
+                                hookRef.set(new InvokeHook("update", block.owner));
+                                lock.set(true);
+                            }
+                        }
+                    }
+                });
+            }
+        }, m -> m.desc.endsWith("I") && m.desc.startsWith("(IIIIII") && Type.getArgumentTypes(m.desc).length < 8);
+        return hookRef.get();
+    }
+
+    public static List<FieldMemberNode> findHooks(GraphVisitor gv) {
         List<FieldMemberNode> hooks = new ArrayList<>(4);
         gv.visitLocalIfM(new BlockVisitor() {
 

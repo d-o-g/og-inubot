@@ -7,21 +7,24 @@
 package com.inubot.live.analysis;
 
 import com.inubot.modscript.hook.FieldHook;
+import com.inubot.modscript.hook.InvokeHook;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.cfg.Block;
 import org.objectweb.asm.commons.cfg.BlockVisitor;
 import org.objectweb.asm.commons.cfg.tree.NodeVisitor;
 import org.objectweb.asm.commons.cfg.tree.node.FieldMemberNode;
 import org.objectweb.asm.commons.cfg.tree.node.JumpNode;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.FieldNode;
+import org.objectweb.asm.tree.*;
+
+import java.lang.reflect.Modifier;
 
 /**
  * @author Dogerina
  * @since 22-07-2015
  */
-@VisitorInfo(hooks = {"hash", "next", "previous"})
+@VisitorInfo(hooks = {"hash", "next", "previous", "isLinked", "unlink"})
 public class Node extends GraphVisitor {
 
     @Override
@@ -33,6 +36,11 @@ public class Node extends GraphVisitor {
     public void visit() {
         add("hash", cn.getField(null, "J"));
         visit(new Hooks());
+        for (MethodNode mn : cn.methods) {
+            if (!Modifier.isStatic(mn.access) && mn.desc.endsWith("Z") && Type.getArgumentTypes(mn.desc).length < 2) {
+                addHook(new InvokeHook("isLinked", mn));
+            }
+        }
     }
 
     private class Hooks extends BlockVisitor {
@@ -54,6 +62,7 @@ public class Node extends GraphVisitor {
                                 if (fn.desc.equals("L" + cn.name + ";")) {
                                     if (!fn.name.equals(fmn.name())) {
                                         addHook(new FieldHook("next", fn));
+                                        addHook(new InvokeHook("unlink", block.owner));
                                         break;
                                     }
                                 }

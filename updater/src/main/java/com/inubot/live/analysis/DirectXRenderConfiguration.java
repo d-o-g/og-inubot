@@ -7,6 +7,7 @@
 package com.inubot.live.analysis;
 
 import com.inubot.modscript.hook.FieldHook;
+import com.inubot.modscript.hook.InvokeHook;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.commons.cfg.tree.node.FieldMemberNode;
@@ -19,7 +20,7 @@ import java.util.List;
  * @author Dogerina
  * @since 23-07-2015
  */
-@VisitorInfo(hooks = {"absoluteX", "absoluteY", "multiplierX", "multiplierY"})
+@VisitorInfo(hooks = {"absoluteX", "absoluteY", "multiplierX", "multiplierY", "update"})
 public class DirectXRenderConfiguration extends GraphVisitor {
 
     @Override
@@ -29,7 +30,11 @@ public class DirectXRenderConfiguration extends GraphVisitor {
 
     @Override
     public void visit() {
-        List<FieldMemberNode> hooks = RenderConfiguration.findVertices(this);
+        InvokeHook update = RenderConfiguration.findUpdate(this);
+        if (update != null) {
+            addHook(update);
+        }
+        List<FieldMemberNode> hooks = RenderConfiguration.findHooks(this);
         if (hooks != null) {
             while (hooks.size() > 4) {
                 hooks.remove(0);
