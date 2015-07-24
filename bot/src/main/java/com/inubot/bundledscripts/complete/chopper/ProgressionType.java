@@ -6,9 +6,6 @@
  */
 package com.inubot.bundledscripts.complete.chopper;
 
-import com.inubot.api.methods.Skills;
-import com.inubot.api.oldschool.Skill;
-
 import java.util.*;
 
 /**
@@ -18,21 +15,40 @@ import java.util.*;
 public class ProgressionType {
 
     //TODO make a ui to create custom progression types
-    public static final ProgressionType CASH_MONEY_WEED = new ProgressionType(
-            "CASHMONEYWEED 420 BLAZE IT",
-            new BasicFlux(Tree.REGULAR, 1), new BasicFlux(Tree.OAK, 15), new BasicFlux(Tree.WILLOW, 30),
-            new BasicFlux(Tree.MAPLE, 45), new BasicFlux(Tree.YEW, 65), new BasicFlux(Tree.MAGIC, 85)
+    //Add progression button
+    //checkboxes for level and duration
+    //if level is selected, enter level and tree type to chop
+    //Chops until the level is met and thereafter switches to the next tree
+    //if duration is selected, enter duration in minutes and tree type to chop
+    //Chops for X minutes and then moves onto the next task ect
+    public static final ProgressionType BEST_CASH = new ProgressionType(
+            "Cash mode",
+            new Progression.Basic(Tree.REGULAR, 1),
+            new Progression.Basic(Tree.OAK, 15),
+            new Progression.Basic(Tree.WILLOW, 30),
+            new Progression.Basic(Tree.MAPLE, 45),
+            new Progression.Basic(Tree.YEW, 65),
+            new Progression.Basic(Tree.MAGIC, 85)
     );
 
-    public static final ProgressionType NO_XP_WASTE = new ProgressionType(
-            "NO XP WASTE BIGDICK 99 WOODCUTTING",
-            new BasicFlux(Tree.REGULAR, 1), new BasicFlux(Tree.OAK, 15), new BasicFlux(Tree.WILLOW, 30)
+    public static final ProgressionType BEST_EXPERIENCE = new ProgressionType(
+            "Experience mode",
+            new Progression.Basic(Tree.REGULAR, 1),
+            new Progression.Basic(Tree.OAK, 15),
+            new Progression.Basic(Tree.WILLOW, 30)
+    );
+
+    public static final ProgressionType ejifojdf = new ProgressionType(
+            "imdidsovsgkofkgp",
+            new Progression.Timed(Tree.MAGIC, 1000 * 60 * 60), // 1 hour
+            new Progression.Timed(Tree.YEW, 1000 * 60 * 60),
+            new Progression.Timed(Tree.WILLOW, 1000 * 60 * 60)
     );
 
     private final String label;
-    private final List<ProgressionFlux> progressFlow;
+    private final List<Progression> progressFlow;
 
-    ProgressionType(String label, ProgressionFlux... movements) {
+    ProgressionType(String label, Progression... movements) {
         this.label = label;
         this.progressFlow = new ArrayList<>();
         Collections.addAll(progressFlow, movements);
@@ -42,22 +58,7 @@ public class ProgressionType {
         return label;
     }
 
-    public ProgressionFlux[] getProgressFlow() {
-        return progressFlow.toArray(new ProgressionFlux[progressFlow.size()]);
-    }
-
-    public static class BasicFlux extends ProgressionFlux {
-
-        private final int level;
-
-        private BasicFlux(Tree tree, int level) {
-            super(tree);
-            this.level = level;
-        }
-
-        @Override
-        public boolean canProgress() {
-            return Skills.getLevel(Skill.WOODCUTTING) >= this.level; //&& tree != currentTree?
-        }
+    public Progression[] getProgressFlow() {
+        return progressFlow.toArray(new Progression[progressFlow.size()]);
     }
 }
