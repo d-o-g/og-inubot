@@ -32,8 +32,7 @@ public class ProgressionType {
     private final String label;
     private final List<ProgressionFlux> progressFlow;
 
-    ProgressionType(String label,
-                    ProgressionFlux... movements) {
+    ProgressionType(String label, ProgressionFlux... movements) {
         this.label = label;
         this.progressFlow = new ArrayList<>();
         Collections.addAll(progressFlow, movements);
