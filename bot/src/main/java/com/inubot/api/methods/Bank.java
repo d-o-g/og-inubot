@@ -6,6 +6,7 @@
  */
 package com.inubot.api.methods;
 
+import com.inubot.Bot;
 import com.inubot.api.exceptions.BankClosedException;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
@@ -16,6 +17,7 @@ import com.inubot.api.util.filter.*;
 import com.inubot.client.natives.oldschool.RSVarpBit;
 import com.inubot.client.natives.oldschool.RSWidget;
 
+import java.awt.event.KeyEvent;
 import java.util.*;
 
 public class Bank {
@@ -367,23 +369,18 @@ public class Bank {
     public static boolean withdraw(int id, int amount) {
         if (!isOpen())
             throw new BankClosedException();
+        if (amount == 28)
+            return withdrawAll(id);
         WidgetItem item = getFirst(w -> w.getId() == id && w.getQuantity() >= amount);
         if (item != null) {
-            int withdrawn = 0;
-            while (withdrawn != amount && getFirst(new IdFilter<>(item.getId())) != null) {
-                int remaining = amount - withdrawn;
-                if (remaining >= 10) {
-                    item.processAction("Withdraw-10");
-                    withdrawn += 10;
-                } else if (remaining >= 5) {
-                    item.processAction("Withdraw-5");
-                    withdrawn += 5;
-                } else if (remaining >= 1) {
-                    item.processAction("Withdraw-1");
-                    withdrawn++;
+            if (Time.await(() -> !Interfaces.getWidget(162, 32).isExplicitlyHidden(), 1500)) {
+                for (char c : String.valueOf(amount).toCharArray()) {
+                    Bot.getInstance().getCanvas().pressKey(c, 200);
+                    Bot.getInstance().getCanvas().releaseKey(c);
                 }
+                Game.getCanvas().pressEnter();
+                return true;
             }
-            return true;
         }
         return false;
     }
