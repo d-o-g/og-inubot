@@ -1,22 +1,9 @@
-/*
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the license, or (at your option) any later version.
- */
 package com.inubot.bundledscripts.complete.chopper;
 
 import java.util.*;
 
 public class ProgressionType {
 
-    //TODO make a ui to create custom progression types
-    //Add progression button
-    //checkboxes for level and duration
-    //if level is selected, enter level and tree type to chop
-    //Chops until the level is met and thereafter switches to the next tree
-    //if duration is selected, enter duration in minutes and tree type to chop
-    //Chops for X minutes and then moves onto the next task ect
     public static final ProgressionType BEST_CASH = new ProgressionType(
             "Cash mode",
             new Progression.Basic(Tree.REGULAR, 1),

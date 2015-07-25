@@ -34,6 +34,14 @@ public class Area {
         this(start, end, 0);
     }
 
+    public Area(int minX, int minY, int maxX, int maxY, int floorLevel) {
+        this(new Tile(minX, minY), new Tile(maxX, maxY), floorLevel);
+    }
+
+    public Area(int minX, int minY, int maxX, int maxY) {
+        this(minX, minY, maxX, maxY, 0);
+    }
+
     public List<Tile> getTiles() {
         return tiles;
     }

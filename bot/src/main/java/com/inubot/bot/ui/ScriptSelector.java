@@ -13,6 +13,7 @@ import com.inubot.bundledscripts.complete.Combot;
 import com.inubot.bundledscripts.complete.WineMaker;
 import com.inubot.bundledscripts.complete.agility.PerfectAgility;
 import com.inubot.bundledscripts.complete.alcher.ProAlcher;
+import com.inubot.bundledscripts.complete.chopper.ProChopper;
 import com.inubot.bundledscripts.complete.fisher.ProFisher;
 import com.inubot.bundledscripts.complete.hunter.BirdSnarePRO;
 import com.inubot.bundledscripts.complete.hunter.FalconryPRO;
@@ -50,7 +51,8 @@ public class ScriptSelector extends JFrame {
             BirdSnarePRO.class,
             ProFisher.class,
             ProAlcher.class,
-            PerfectAgility.class
+            PerfectAgility.class,
+            ProChopper.class
     };
 
     public ScriptSelector() {

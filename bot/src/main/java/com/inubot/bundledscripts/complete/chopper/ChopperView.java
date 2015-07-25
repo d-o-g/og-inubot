@@ -1,13 +1,5 @@
-/*
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the license, or (at your option) any later version.
- */
 package com.inubot.bundledscripts.complete.chopper;
 
-import com.inubot.bundledscripts.proframework.ProModel;
-import com.inubot.bundledscripts.proframework.ProModel.*;
 import com.inubot.bundledscripts.proframework.ProModel.Event;
 import com.inubot.bundledscripts.proframework.ProView;
 
@@ -22,8 +14,6 @@ public class ChopperView extends ProView<ChopperController> implements ChopperCo
     private final JFrame frame;
     private final JList<Progression> tasks;
     private final DefaultListModel<Progression> taskModel;
-    private boolean banking;
-    private boolean progressive;
     private boolean disposable;
 
     ChopperView() {
@@ -79,6 +69,7 @@ public class ChopperView extends ProView<ChopperController> implements ChopperCo
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                disposable = true;
                 getController().encounter(new Event<>(this, START_PROP));
                 getController().getModel().setProgressionType(
                         new ProgressionType(
@@ -105,14 +96,11 @@ public class ChopperView extends ProView<ChopperController> implements ChopperCo
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());
         for (JRadioButton treeBtn : trees) {
-            treeBtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (treeBtn.isSelected()) {
-                        for (JRadioButton treeBtn0 : trees) {
-                            if (!treeBtn0.equals(treeBtn)) {
-                                treeBtn0.setSelected(false);
-                            }
+            treeBtn.addActionListener(e -> {
+                if (treeBtn.isSelected()) {
+                    for (JRadioButton treeBtn0 : trees) {
+                        if (!treeBtn0.equals(treeBtn)) {
+                            treeBtn0.setSelected(false);
                         }
                     }
                 }
@@ -167,25 +155,5 @@ public class ChopperView extends ProView<ChopperController> implements ChopperCo
 
     public boolean isDisposable() {
         return disposable;
-    }
-
-    public void setDisposable(boolean disposable) {
-        this.disposable = disposable;
-    }
-
-    public boolean isProgressive() {
-        return progressive;
-    }
-
-    public void setProgressive(boolean progressive) {
-        this.progressive = progressive;
-    }
-
-    public boolean isBanking() {
-        return banking;
-    }
-
-    public void setBanking(boolean banking) {
-        this.banking = banking;
     }
 }
