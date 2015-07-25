@@ -346,6 +346,24 @@ public class Bank {
         return getCount() == 0;
     }
 
+    public static boolean withdrawAll(int id) {
+        WidgetItem item = Inventory.getFirst(new IdFilter<>(id));
+        if (item != null) {
+            item.processAction("Withdraw-All");
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean withdrawAll(String name) {
+        WidgetItem item = Inventory.getFirst(new NameFilter<>(name));
+        if (item != null) {
+            item.processAction("Withdraw-All");
+            return true;
+        }
+        return false;
+    }
+
     public static boolean withdraw(int id, int amount) {
         if (!isOpen())
             throw new BankClosedException();
