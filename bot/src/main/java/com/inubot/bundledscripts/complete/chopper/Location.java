@@ -9,10 +9,6 @@ package com.inubot.bundledscripts.complete.chopper;
 import com.inubot.api.oldschool.Area;
 import com.inubot.api.oldschool.Tile;
 
-/**
- * @author Dogerina
- * @since 24-07-2015
- */
 public enum Location {
 
     LUMBY(new Area(new Tile(-1, -1), new Tile(-1, -1)), Tree.REGULAR);

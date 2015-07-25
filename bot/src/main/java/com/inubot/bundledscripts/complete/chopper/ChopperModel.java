@@ -8,15 +8,10 @@ package com.inubot.bundledscripts.complete.chopper;
 
 import com.inubot.bundledscripts.proframework.ProModel;
 
-/**
- * @author Dogerina
- * @since 24-07-2015
- */
 public class ChopperModel extends ProModel {
 
-    private boolean banking;
-    private boolean progressive;
     private int logsChopped;
+    private ProgressionType progressionType;
 
     ChopperModel() {
 
@@ -34,19 +29,11 @@ public class ChopperModel extends ProModel {
         logsChopped++;
     }
 
-    public boolean isBanking() {
-        return banking;
+    public ProgressionType getProgressionType() {
+        return progressionType;
     }
 
-    public void setBanking(boolean banking) {
-        this.banking = banking;
-    }
-
-    public boolean isProgressive() {
-        return progressive;
-    }
-
-    public void setProgressive(boolean progressive) {
-        this.progressive = progressive;
+    public void setProgressionType(ProgressionType progressionType) {
+        this.progressionType = progressionType;
     }
 }

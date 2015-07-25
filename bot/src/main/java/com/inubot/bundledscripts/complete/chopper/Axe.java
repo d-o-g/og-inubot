@@ -3,10 +3,6 @@ package com.inubot.bundledscripts.complete.chopper;
 import com.inubot.api.methods.Skills;
 import com.inubot.api.oldschool.Skill;
 
-/**
- * @author Dogerina
- * @since 24-07-2015
- */
 public enum Axe implements ChopperConstants {
 
     BRONZE(BRONZE_AXE, 1), IRON(IRON_AXE, 1), STEEL(STEEL_AXE, 10),

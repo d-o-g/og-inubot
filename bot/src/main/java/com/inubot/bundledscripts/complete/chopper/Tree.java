@@ -1,9 +1,5 @@
 package com.inubot.bundledscripts.complete.chopper;
 
-/**
- * @author Dogerina
- * @since 24-07-2015
- */
 public enum Tree implements ChopperConstants {
 
     REGULAR("Tree", LOGS_REGULAR), OAK("Oak", LOGS_OAK), WILLOW("Willow", LOGS_WILLOW),

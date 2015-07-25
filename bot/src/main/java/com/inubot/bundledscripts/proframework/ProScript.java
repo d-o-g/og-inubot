@@ -59,6 +59,9 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
         }
         paintData.put("Runtime", stopWatch.toElapsedString());
         for (TrackedSkill trackedSkill : trackedSkills.values()) {
+            if (trackedSkill.gainedExperience == 0) {
+                continue;
+            }
             paintData.put(trackedSkill.skill.toString() + " experience", trackedSkill.gainedExperience);
             paintData.put(trackedSkill.skill.toString() + " experience/hr", stopWatch.getHourlyRate(trackedSkill.gainedExperience));
         }

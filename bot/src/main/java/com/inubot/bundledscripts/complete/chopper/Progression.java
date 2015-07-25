@@ -9,6 +9,8 @@ package com.inubot.bundledscripts.complete.chopper;
 import com.inubot.api.methods.Skills;
 import com.inubot.api.oldschool.Skill;
 
+import java.util.concurrent.TimeUnit;
+
 public abstract class Progression {
 
     protected final Tree next;
@@ -18,6 +20,13 @@ public abstract class Progression {
     }
 
     public abstract boolean canProgress();
+
+    public abstract String verbose();
+
+    @Override
+    public final String toString() {
+        return verbose();
+    }
 
     public static class Basic extends Progression {
 
@@ -31,6 +40,11 @@ public abstract class Progression {
         @Override
         public boolean canProgress() {
             return Skills.getLevel(Skill.WOODCUTTING) >= this.level; //&& tree != currentTree?
+        }
+
+        @Override
+        public String verbose() {
+            return String.format("%s at level %d", next.getName(), level);
         }
     }
 
@@ -48,6 +62,11 @@ public abstract class Progression {
         @Override
         public boolean canProgress() {
             return System.currentTimeMillis() - startTime > duration;
+        }
+
+        @Override
+        public String verbose() {
+            return String.format("%s after %d minutes", next.getName(), TimeUnit.MILLISECONDS.toMinutes(duration));
         }
     }
 }

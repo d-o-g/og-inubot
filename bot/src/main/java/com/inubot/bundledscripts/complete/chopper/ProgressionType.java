@@ -8,10 +8,6 @@ package com.inubot.bundledscripts.complete.chopper;
 
 import java.util.*;
 
-/**
- * @author Dogerina
- * @since 24-07-2015
- */
 public class ProgressionType {
 
     //TODO make a ui to create custom progression types
@@ -60,5 +56,10 @@ public class ProgressionType {
 
     public Progression[] getProgressFlow() {
         return progressFlow.toArray(new Progression[progressFlow.size()]);
+    }
+
+    @Override
+    public final String toString() {
+        return getLabel();
     }
 }

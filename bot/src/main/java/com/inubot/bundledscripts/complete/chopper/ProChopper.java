@@ -12,10 +12,6 @@ import com.inubot.bundledscripts.proframework.ProScript;
 
 import java.util.Map;
 
-/**
- * @author Dogerina
- * @since 24-07-2015
- */
 public class ProChopper extends ProScript {
 
     private final ChopperController controller;

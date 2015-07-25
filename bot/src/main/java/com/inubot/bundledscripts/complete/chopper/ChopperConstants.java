@@ -1,9 +1,5 @@
 package com.inubot.bundledscripts.complete.chopper;
 
-/**
- * @author Dogerina
- * @since 24-07-2015
- */
 public interface ChopperConstants {
 
     String START_PROP = "start";
