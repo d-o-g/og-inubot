@@ -12,7 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * A concurrent implementation of an {@link com.inubot.api.event.EventBus}
+ * An asynchronous implementation of an {@link com.inubot.api.event.EventBus}
  */
 public class AsynchronousEventBus implements EventBus {
 

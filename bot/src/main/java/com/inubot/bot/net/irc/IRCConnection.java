@@ -1,8 +1,7 @@
 package com.inubot.bot.net.irc;
 
 import com.inubot.api.util.Random;
-import com.inubot.bot.net.irc.commands.Say;
-import com.inubot.bot.net.irc.commands.Walk;
+import com.inubot.bot.net.irc.commands.*;
 import org.jibble.pircbot.PircBot;
 
 import java.util.ArrayList;
@@ -24,6 +23,7 @@ public class IRCConnection extends PircBot {
     {
         commands.add(new Say());
         commands.add(new Walk());
+        commands.add(new Level());
     }
 
     public IRCConnection() {
@@ -34,7 +34,7 @@ public class IRCConnection extends PircBot {
         for (String master : masters) {
             sendRawLine("NOTICE " + master + " :" + notice);
         }
-        sendMessage("#bonecode-bot", notice);
+        sendMessage("#inubot", notice);
     }
 
     @Override
