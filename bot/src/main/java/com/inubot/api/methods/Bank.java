@@ -6,13 +6,12 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.Bot;
 import com.inubot.api.exceptions.BankClosedException;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.oldschool.action.tree.WidgetAction;
-import com.inubot.api.util.Time;
+import com.inubot.api.util.*;
 import com.inubot.api.util.filter.*;
 import com.inubot.client.natives.oldschool.RSVarpBit;
 import com.inubot.client.natives.oldschool.RSWidget;
@@ -373,10 +372,17 @@ public class Bank {
             return withdrawAll(id);
         WidgetItem item = getFirst(w -> w.getId() == id && w.getQuantity() >= amount);
         if (item != null) {
+            if (item.containsAction("Withdraw-" + amount)) {
+                item.processAction("Withdraw-" + amount);
+                return true;
+            }
+            item.processAction("Withdraw-X");
             if (Time.await(() -> !Interfaces.getWidget(162, 32).isExplicitlyHidden(), 1500)) {
+                Time.sleep(1000);
                 for (char c : String.valueOf(amount).toCharArray()) {
-                    Bot.getInstance().getCanvas().pressKey(c, 200);
-                    Bot.getInstance().getCanvas().releaseKey(c);
+                    Game.getCanvas().pressKey(c, 200);
+                    Game.getCanvas().releaseKey(c);
+                    Game.getCanvas().dispatch(new KeyEvent(Game.getCanvas(), KeyEvent.KEY_TYPED, System.currentTimeMillis() + 10, 0, KeyEvent.VK_UNDEFINED, c, KeyEvent.KEY_LOCATION_UNKNOWN));
                 }
                 Game.getCanvas().pressEnter();
                 return true;

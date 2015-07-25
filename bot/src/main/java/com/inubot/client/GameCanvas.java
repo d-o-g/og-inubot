@@ -58,7 +58,7 @@ public class GameCanvas extends Canvas {
         return raw.createGraphics();
     }
 
-    private void push(AWTEvent evt) {
+    public void dispatch(AWTEvent evt) {
         if (!evt.getSource().equals(this)) {
             super.dispatchEvent(evt);
             return;
@@ -91,19 +91,19 @@ public class GameCanvas extends Canvas {
     }
 
     public void setMouseLocation(int x, int y) {
-        push(generateMouseEvent(MouseEvent.MOUSE_MOVED, (mouseX = x), (mouseY = y), MouseEvent.NOBUTTON));
+        dispatch(generateMouseEvent(MouseEvent.MOUSE_MOVED, (mouseX = x), (mouseY = y), MouseEvent.NOBUTTON));
     }
 
     public void pressMouse(boolean left) {
-        push(generateMouseEvent(MouseEvent.MOUSE_PRESSED, mouseX, mouseY,
+        dispatch(generateMouseEvent(MouseEvent.MOUSE_PRESSED, mouseX, mouseY,
                 left ? MouseEvent.BUTTON1 : MouseEvent.BUTTON3));
     }
 
     public void releaseMouse(boolean left) {
         int offset = Random.nextInt(20, 30);
-        push(generateMouseEvent(MouseEvent.MOUSE_RELEASED, mouseX, mouseY,
+        dispatch(generateMouseEvent(MouseEvent.MOUSE_RELEASED, mouseX, mouseY,
                 left ? MouseEvent.BUTTON1 : MouseEvent.BUTTON3, offset));
-        push(generateMouseEvent(MouseEvent.MOUSE_CLICKED, mouseX, mouseY,
+        dispatch(generateMouseEvent(MouseEvent.MOUSE_CLICKED, mouseX, mouseY,
                 left ? MouseEvent.BUTTON1 : MouseEvent.BUTTON3, offset));
     }
 
@@ -113,7 +113,7 @@ public class GameCanvas extends Canvas {
     }
 
     public void scrollMouse(boolean up) {
-        push(new MouseWheelEvent(this, MouseEvent.MOUSE_WHEEL, System.currentTimeMillis(), 0,
+        dispatch(new MouseWheelEvent(this, MouseEvent.MOUSE_WHEEL, System.currentTimeMillis(), 0,
                 mouseX, mouseY, 0, false, MouseWheelEvent.WHEEL_UNIT_SCROLL, 1, up ? -1 : 1));
     }
 
@@ -121,14 +121,14 @@ public class GameCanvas extends Canvas {
         return (KeyEvent) mask(new KeyEvent(this, id, System.currentTimeMillis(), modifiers, code, c, location));
     }
 
-    public synchronized void sendKey(final char c, int delay) {
-        final AWTKeyStroke keystroke = AWTKeyStroke.getAWTKeyStroke(c);
+    public synchronized void sendKey(char c, int delay) {
+        AWTKeyStroke keystroke = AWTKeyStroke.getAWTKeyStroke(c);
         int keycode = keystroke.getKeyCode();
         if (c >= 'a' && c <= 'z')
             keycode -= 32;
-        push(new KeyEvent(this, KeyEvent.KEY_PRESSED, System.currentTimeMillis() + delay, 0, keycode, c, KeyEvent.KEY_LOCATION_STANDARD));
-        push(new KeyEvent(this, KeyEvent.KEY_RELEASED, System.currentTimeMillis() + 10, 0, keycode, c, KeyEvent.KEY_LOCATION_STANDARD));
-        push(new KeyEvent(this, KeyEvent.KEY_TYPED, System.currentTimeMillis() + 10, 0, KeyEvent.VK_UNDEFINED, c, KeyEvent.KEY_LOCATION_UNKNOWN));
+        dispatch(new KeyEvent(this, KeyEvent.KEY_PRESSED, System.currentTimeMillis() + delay, 0, keycode, c, KeyEvent.KEY_LOCATION_STANDARD));
+        dispatch(new KeyEvent(this, KeyEvent.KEY_RELEASED, System.currentTimeMillis() + 10, 0, keycode, c, KeyEvent.KEY_LOCATION_STANDARD));
+        dispatch(new KeyEvent(this, KeyEvent.KEY_TYPED, System.currentTimeMillis() + 10, 0, KeyEvent.VK_UNDEFINED, c, KeyEvent.KEY_LOCATION_UNKNOWN));
     }
 
     private KeyEvent generateKeyEvent(char key, int type, int wait) {
@@ -156,8 +156,8 @@ public class GameCanvas extends Canvas {
     }
 
     public synchronized void pressEventKey(final int eventKey, final int millis) {
-        push(new KeyEvent(this, KeyEvent.KEY_PRESSED, System.currentTimeMillis() + millis, 0, eventKey, (char) eventKey, KeyEvent.KEY_LOCATION_STANDARD));
-        push(new KeyEvent(this, KeyEvent.KEY_RELEASED, System.currentTimeMillis() + millis, 0, eventKey, (char) eventKey, KeyEvent.KEY_LOCATION_STANDARD));
+        dispatch(new KeyEvent(this, KeyEvent.KEY_PRESSED, System.currentTimeMillis() + millis, 0, eventKey, (char) eventKey, KeyEvent.KEY_LOCATION_STANDARD));
+        dispatch(new KeyEvent(this, KeyEvent.KEY_RELEASED, System.currentTimeMillis() + millis, 0, eventKey, (char) eventKey, KeyEvent.KEY_LOCATION_STANDARD));
     }
 
     public synchronized void pressKey(final int keycode) {
@@ -180,7 +180,7 @@ public class GameCanvas extends Canvas {
                 break;
             }
         }
-        push(new KeyEvent(this, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), mask, keycode, KeyEvent.CHAR_UNDEFINED));
+        dispatch(new KeyEvent(this, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), mask, keycode, KeyEvent.CHAR_UNDEFINED));
         Time.sleep(delay);
     }
 
@@ -237,11 +237,11 @@ public class GameCanvas extends Canvas {
             }
         }
         KeyEvent event = new KeyEvent(this, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), mod, keycode, KeyEvent.CHAR_UNDEFINED);
-        push(event);
+        dispatch(event);
     }
 
     public synchronized void releaseKey(final char ch, final int code, final int delay, final int mask) {
-        push(new KeyEvent(this, KeyEvent.KEY_RELEASED, System.currentTimeMillis() + delay, mask, code, getKeyChar(ch), getLocation(ch)));
+        dispatch(new KeyEvent(this, KeyEvent.KEY_RELEASED, System.currentTimeMillis() + delay, mask, code, getKeyChar(ch), getLocation(ch)));
     }
 
     @Override
