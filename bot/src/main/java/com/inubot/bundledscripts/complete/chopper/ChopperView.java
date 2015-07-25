@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class ChopperView extends ProView<ChopperController> implements ChopperConstants {
@@ -45,6 +46,7 @@ public class ChopperView extends ProView<ChopperController> implements ChopperCo
                 ProgressionType.BEST_EXPERIENCE,
                 ProgressionType.ejifojdf
         });
+        types.getModel().setSelectedItem("Select a preset or add your own tasks!");
         buttonPanel.add(add);
         buttonPanel.add(remove);
 
@@ -71,18 +73,22 @@ public class ChopperView extends ProView<ChopperController> implements ChopperCo
             public void actionPerformed(ActionEvent e) {
                 disposable = true;
                 getController().encounter(new Event<>(this, START_PROP));
+                java.util.List<Progression> progressions = new ArrayList<>();
+                for (Object o : taskModel.toArray()) {
+                    progressions.add((Progression) o);
+                }
                 getController().getModel().setProgressionType(
                         new ProgressionType(
                                 "Custom",
-                                (Progression[]) taskModel.toArray()
+                                progressions
                         )
                 );
             }
         });
         frame.getContentPane().add(start, BorderLayout.SOUTH);
-
+        frame.setMinimumSize(new Dimension(500, 300));
+        frame.setPreferredSize(new Dimension(500, 300));
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        frame.pack();
     }
 
     private JFrame mkAddFrame() {
@@ -138,7 +144,8 @@ public class ChopperView extends ProView<ChopperController> implements ChopperCo
 
         frame.getContentPane().add(BorderLayout.NORTH, top);
         frame.getContentPane().add(BorderLayout.SOUTH, bottom);
-        frame.setPreferredSize(new Dimension(500, 500));
+        frame.setPreferredSize(new Dimension(500, 300));
+        frame.setMinimumSize(new Dimension(500, 300));
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         return frame;
     }

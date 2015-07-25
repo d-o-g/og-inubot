@@ -1,5 +1,8 @@
 package com.inubot.bundledscripts.complete.chopper;
 
+import com.inubot.api.methods.Skills;
+import com.inubot.api.oldschool.Skill;
+
 import java.util.*;
 
 public class ProgressionType {
@@ -35,6 +38,21 @@ public class ProgressionType {
         this.label = label;
         this.progressFlow = new ArrayList<>();
         Collections.addAll(progressFlow, movements);
+    }
+
+    ProgressionType(String label, List<Progression> progression) {
+        this.label = label;
+        this.progressFlow = progression;
+    }
+
+    public Progression getBest() {
+        Progression best = null;
+        for (Progression p : progressFlow) {
+            if (p.canProgress()) {
+                best = p;
+            }
+        }
+        return best;
     }
 
     public String getLabel() {

@@ -45,37 +45,44 @@ public class ProChopper extends ProScript {
 
     @Override
     public int loop() {
-        for (Progression p : controller.getModel().getProgressionType().getProgressFlow()) {
-            if (p.canProgress()) {
-                Location location = Location.getClosestWithTree(p.next);
-                if (Inventory.isFull()) {
-                    WebBank b = Movement.getWeb().getNearestBank(t -> t.getType() != WebBank.Type.DEPOSIT_BOX);
-                    if (b.getLocation().distance() > 10) {
-                        try {
-                            WebPath wp = Movement.getWeb().findPathToBank(b);
-                            wp.step(Option.TOGGLE_RUN);
-                        } catch (Exception e) {
+        Progression p = controller.getModel().getProgressionType().getBest();
+        if (p.canProgress()) {
+            Location location = Location.getClosestWithTree(p.next);
+            if (Inventory.isFull()) {
+                WebBank b = Movement.getWeb().getNearestBank(t -> t.getType() != WebBank.Type.DEPOSIT_BOX);
+                if (b.getLocation().distance() > 15) {
+                    try {
+                        WebPath wp = Movement.getWeb().findPathToBank(b);
+                        if (wp.getNext().getTile().distance() < 15) {
                             Movement.walkTo(b.getLocation());
-                        }
-                    } else if (!Bank.isOpen()) {
-                        Bank.open();
-                    } else {
-                        Bank.depositAllExcept(new IdFilter<>(Axe.getIds()));
-                    }
-                } else if (Players.getLocal().getAnimation() == -1) {
-                    if (location.getTreeArea().contains(Players.getLocal())) {
-                        GameObject tree = GameObjects.getNearest(p.next.getName());
-                        if (tree != null) {
-                            tree.processAction("Chop-down");
-                        }
-                    } else {
-                        Tile dest = location.getTreeArea().getStart().derive(location.getTreeArea().getWidth() / 2, 0);
-                        try {
-                            WebPath wp = WebPath.build(dest);
+                        } else {
                             wp.step(Option.TOGGLE_RUN);
-                        } catch (Exception e) {
-                            Movement.walkTo(dest);
                         }
+                    } catch (Exception e) {
+                        Movement.walkTo(b.getLocation());
+                    }
+                } else if (!Bank.isOpen()) {
+                    Bank.open();
+                } else {
+                    Bank.depositAllExcept(new IdFilter<>(Axe.getIds()));
+                }
+            } else if (Players.getLocal().getAnimation() == -1 && !Players.getLocal().isMoving()) {
+                if (location.getTreeArea().contains(Players.getLocal())) {
+                    GameObject tree = GameObjects.getNearest(p.next.getName());
+                    if (tree != null) {
+                        tree.processAction("Chop down");
+                    }
+                } else {
+                    Tile dest = location.getTreeArea().getCenter();
+                    try {
+                        WebPath wp = WebPath.build(dest);
+                        if (wp.getNext().getTile().distance() < 15) {
+                            Movement.walkTo(dest);
+                        } else {
+                            wp.step(Option.TOGGLE_RUN);
+                        }
+                    } catch (Exception e) {
+                        Movement.walkTo(dest);
                     }
                 }
             }

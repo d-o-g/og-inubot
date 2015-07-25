@@ -73,5 +73,17 @@ public class Area {
         }
         return false;
     }
+
+    public Tile getCenter() {
+        List<Tile> tiles = getTiles();
+        int x = 0, y = 0;
+        for (Tile t : tiles) {
+            x += t.getX();
+            y += t.getY();
+        }
+        x /= tiles.size();
+        y /= tiles.size();
+        return new Tile(x, y);
+    }
 }
 
