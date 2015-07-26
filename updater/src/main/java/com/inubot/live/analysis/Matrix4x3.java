@@ -21,7 +21,8 @@ import org.objectweb.asm.tree.ClassNode;
  * @author Dogerina
  * @since 26-07-2015
  */
-@VisitorInfo(hooks = {"m1x1", "m1x2", "m1x3", "m2x1", "m2x2", "m2x3", "m3x1", "m3x2", "m3x3", "m4x1", "m4x2", "m4x3"})
+@VisitorInfo(hooks = {"entry1x1", "entry1x2", "entry1x3", "entry2x1", "entry2x2", "entry2x3",
+        "entry3x1", "entry3x2", "entry3x3", "entry4x1", "entry4x2", "entry4x3"})
 public class Matrix4x3 extends GraphVisitor {
 
     @Override
@@ -47,31 +48,31 @@ public class Matrix4x3 extends GraphVisitor {
                         FieldMemberNode fmn = (FieldMemberNode) vn.parent();
                         switch (vn.var()) {
                             case 1:
-                                addHook(new FieldHook("m1x1", fmn.fin()));
+                                addHook(new FieldHook("entry1x1", fmn.fin()));
                                 break;
                             case 2:
-                                addHook(new FieldHook("m1x2", fmn.fin()));
+                                addHook(new FieldHook("entry1x2", fmn.fin()));
                                 break;
                             case 3:
-                                addHook(new FieldHook("m1x3", fmn.fin()));
+                                addHook(new FieldHook("entry1x3", fmn.fin()));
                                 break;
                             case 4:
-                                addHook(new FieldHook("m2x1", fmn.fin()));
+                                addHook(new FieldHook("entry2x1", fmn.fin()));
                                 break;
                             case 5:
-                                addHook(new FieldHook("m2x2", fmn.fin()));
+                                addHook(new FieldHook("entry2x2", fmn.fin()));
                                 break;
                             case 6:
-                                addHook(new FieldHook("m2x3", fmn.fin()));
+                                addHook(new FieldHook("entry2x3", fmn.fin()));
                                 break;
                             case 7:
-                                addHook(new FieldHook("m3x1", fmn.fin()));
+                                addHook(new FieldHook("entry3x1", fmn.fin()));
                                 break;
                             case 8:
-                                addHook(new FieldHook("m3x2", fmn.fin()));
+                                addHook(new FieldHook("entry3x2", fmn.fin()));
                                 break;
                             case 9:
-                                addHook(new FieldHook("m3x3", fmn.fin()));
+                                addHook(new FieldHook("entry3x3", fmn.fin()));
                                 break;
                         }
                     }
@@ -97,13 +98,13 @@ public class Matrix4x3 extends GraphVisitor {
                         FieldMemberNode fmn = (FieldMemberNode) vn.parent();
                         switch (vn.var()) {
                             case 1:
-                                addHook(new FieldHook("m4x1", fmn.fin()));
+                                addHook(new FieldHook("entry4x1", fmn.fin()));
                                 break;
                             case 2:
-                                addHook(new FieldHook("m4x2", fmn.fin()));
+                                addHook(new FieldHook("entry4x2", fmn.fin()));
                                 break;
                             case 3:
-                                addHook(new FieldHook("m4x3", fmn.fin()));
+                                addHook(new FieldHook("entry4x3", fmn.fin()));
                                 break;
                         }
                     }

@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author Dogerina
  * @since 22-07-2015
  */
-@VisitorInfo(hooks = {"modeId", "hashtable", "getMode"})
+@VisitorInfo(hooks = {"modeId", "hashtable", "getMode", "worldToScreen"})
 public class RenderConfiguration extends GraphVisitor {
 
     @Override
@@ -39,8 +39,10 @@ public class RenderConfiguration extends GraphVisitor {
         visitIfM(new Mode(), m -> m.desc.startsWith("(" + desc()));
         String desc = desc("RenderMode");
         for (MethodNode mn : cn.methods) {
-            if ((mn.access & ACC_STATIC) == 0 && mn.desc.endsWith(desc)) {
-                addHook(new InvokeHook("getMode", mn));
+            if ((mn.access & ACC_STATIC) == 0) {
+                if (mn.desc.endsWith(desc)) {
+                    addHook(new InvokeHook("getMode", mn));
+                }
             }
         }
     }

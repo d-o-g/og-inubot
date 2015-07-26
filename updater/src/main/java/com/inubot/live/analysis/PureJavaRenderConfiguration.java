@@ -46,6 +46,17 @@ public class PureJavaRenderConfiguration extends GraphVisitor {
                 break;
             }
         }
+        for (MethodNode mn : cn.methods) {
+            if ((mn.access & ACC_STATIC) == 0) {
+                if (mn.desc.endsWith("V") && mn.desc.startsWith("(FFF[F")) {
+                    for (AbstractInsnNode ain : mn.instructions.toArray()) {
+                        if (ain instanceof IntInsnNode && ((IntInsnNode) ain).operand == 14) {
+                            updater.visitor("RenderConfiguration").addHook(new InvokeHook("worldToScreen", mn));
+                        }
+                    }
+                }
+            }
+        }
         InvokeHook update = RenderConfiguration.findUpdate(this);
         if (update != null) {
             addHook(update);

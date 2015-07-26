@@ -19,7 +19,7 @@ import org.objectweb.asm.tree.ClassNode;
  * @author Dogerina
  * @since 22-07-2015
  */
-@VisitorInfo(hooks = {"actionText", "targetText", "arg0", "arg1", "arg2", "opcode"})
+@VisitorInfo(hooks = {"actionText", "targetText", "arg0", "arg1", "arg2", "opcode", "type"})
 public class MenuItem extends GraphVisitor {
 
     @Override
@@ -38,7 +38,7 @@ public class MenuItem extends GraphVisitor {
 
         @Override
         public boolean validate() {
-            return added < 6;
+            return added < 7;
         }
 
         @Override
@@ -60,6 +60,10 @@ public class MenuItem extends GraphVisitor {
                             break;
                         case 2:
                             addHook(new FieldHook("targetText", fmn.fin()));
+                            added++;
+                            break;
+                        case 3:
+                            addHook(new FieldHook("type", fmn.fin()));
                             added++;
                             break;
                         case 4:

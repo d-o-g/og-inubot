@@ -1,8 +1,7 @@
 package com.inubot.visitor;
 
 import com.inubot.Updater;
-import com.inubot.modscript.hook.FieldHook;
-import com.inubot.modscript.hook.Hook;
+import com.inubot.modscript.hook.*;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.cfg.Block;
@@ -73,6 +72,10 @@ public abstract class GraphVisitor implements Opcodes {
     public final void addHook(Hook hook) {
         if (hook.name == null)
             return;
+        Hook hook0 = hooks.get(hook.name);
+        if (hook0 != null && !(hook0 instanceof FieldHook) && !(hook0 instanceof InvokeHook)) {
+            System.err.println("Hook overwrite --> " + id + "#" + hook.name);
+        }
         hooks.put(hook.name, hook);
     }
 

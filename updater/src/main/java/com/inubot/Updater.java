@@ -273,17 +273,22 @@ public abstract class Updater extends Thread implements Runnable {
                     appendLine("\t" + hook.getOutput());
                 }
             }
-            for (String hook : info.hooks()) {
-                if (!gv.hooks.containsKey(hook)) {
-                    appendLine("\t! broken: " + gv.id() + "#" + hook);
-                    //gv.hooks.put(hook, new BrokenHook(hook));
+            appendLine("");
+        }
+        for (GraphVisitor gv : visitors) {
+            VisitorInfo vi = gv.getClass().getAnnotation(VisitorInfo.class);
+            if (vi != null) {
+                gv.hooks.keySet().stream().filter(hook -> !Arrays.asList(vi.hooks()).contains(hook)).forEach(hook ->
+                                System.out.println("not in VisitorInfo annotation --> " + hook)
+                );
+                for (String hook : vi.hooks()) {
+                    if (!gv.hooks.containsKey(hook)) {
+                        appendLine("\t! BROKEN: " + gv.id() + "#" + hook);
+                    }
                 }
             }
-            appendLine("");
-            gv.hooks.keySet().stream().filter(hook -> !Arrays.asList(info.hooks()).contains(hook)).forEach(hook ->
-                            System.out.println("not in VisitorInfo annotation --> " + hook)
-            );
         }
+        appendLine("");
         this.classes = classes + "/" + totalClasses;
         this.hooks = hooks + "/" + totalHooks;
         appendLine(String.format("\tUnused methods %d/%d", umt.getRemoved(), umt.getTotal()));
