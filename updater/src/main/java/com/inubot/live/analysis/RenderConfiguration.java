@@ -16,8 +16,7 @@ import org.objectweb.asm.commons.cfg.BlockVisitor;
 import org.objectweb.asm.commons.cfg.query.InsnQuery;
 import org.objectweb.asm.commons.cfg.tree.NodeVisitor;
 import org.objectweb.asm.commons.cfg.tree.node.*;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.*;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -44,6 +43,26 @@ public class RenderConfiguration extends GraphVisitor {
                 addHook(new InvokeHook("getMode", mn));
             }
         }
+    }
+
+    public static FieldHook findMatrix4f(GraphVisitor gv) {
+        InvokeHook hook = (InvokeHook) gv.hooks.get("update");
+        if (hook == null) {
+            return null;
+        }
+        MethodNode mn = gv.cn.getMethod(hook.method, hook.desc);
+        if (mn == null) {
+            throw new RuntimeException("???");
+        }
+        for (AbstractInsnNode ain : mn.instructions.toArray()) {
+            if (ain instanceof FieldInsnNode) {
+                FieldInsnNode fin = (FieldInsnNode) ain;
+                if (fin.opcode() == GETFIELD && fin.desc.equals(gv.desc("Matrix4f"))) {
+                    return new FieldHook("matrix4f", fin);
+                }
+            }
+        }
+        return null;
     }
 
     public static InvokeHook findUpdate(GraphVisitor gv) {

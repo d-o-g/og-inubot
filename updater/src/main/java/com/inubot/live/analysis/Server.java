@@ -15,12 +15,13 @@ import org.objectweb.asm.commons.cfg.tree.NodeVisitor;
 import org.objectweb.asm.commons.cfg.tree.node.ArithmeticNode;
 import org.objectweb.asm.commons.cfg.tree.node.FieldMemberNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldNode;
 
 /**
  * @author Dogerina
  * @since 24-07-2015
  */
-@VisitorInfo(hooks = {"mask"})
+@VisitorInfo(hooks = {"mask", "population"})
 public class Server extends GraphVisitor {
 
     @Override
@@ -52,5 +53,10 @@ public class Server extends GraphVisitor {
                 });
             }
         });
+        for (FieldNode fn : cn.fields) {
+            if ((fn.access & ACC_STATIC) == 0 && (fn.access & ACC_PUBLIC) != 0) {
+                addHook(new FieldHook("population", fn));
+            }
+        }
     }
 }

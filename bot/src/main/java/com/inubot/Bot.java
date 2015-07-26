@@ -87,8 +87,23 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         super.setJMenuBar(menuBar);
         crawler.crawl();
         boolean forceInject;
-        if (forceInject = crawler.isOutdated())
-            crawler.download();
+        if (forceInject = crawler.isOutdated()) {
+            JFrame frame = new JFrame();
+            frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            JProgressBar bar = new JProgressBar(0, 100);
+            bar.setOrientation(JProgressBar.HORIZONTAL);
+            frame.getContentPane().add(bar);
+            frame.pack();
+            frame.setVisible(true);
+            frame.setLocationRelativeTo(null);
+            new Thread(() -> {
+                while (crawler.getPercent() < 100) {
+                    bar.setValue(crawler.getPercent());
+                }
+                frame.dispose();
+            }).start();
+            crawler.download(this);
+        }
         try {
             ModScript.load(Internet.downloadBinary(new URL(crawler.modscript).openStream(), null), Integer.toString(crawler.getHash()));
         } catch (Exception e) {

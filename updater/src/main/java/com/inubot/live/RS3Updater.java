@@ -34,14 +34,14 @@ public class RS3Updater extends Updater {
     }
 
     private static GraphVisitor[] createVisitors() {
-        return new GraphVisitor[]{new Node(), new DoublyNode(), new NodeTable(),
-                new DoublyNodeQueue(), new Cache(),
-                new Canvas(), new RenderMode(), new RenderConfiguration(), new PureJavaRenderConfiguration(),
+        return new GraphVisitor[]{new Node(), new DoublyNode(), new NodeTable(), new DoublyNodeQueue(),
+                new Cache(), new Canvas(), new Vector3f(), new Quaternion(), new Matrix4x3(),
+                new Matrix4f(), new CoordinateSpace(), new RenderMode(),
+                new RenderConfiguration(), new PureJavaRenderConfiguration(),
                 new OpenGLRenderConfiguration(), new DirectXRenderConfiguration(), new Direct3DRenderConfiguration(),
                 new OpenGLFFRenderConfiguration(),
                 new Model(), new PureJavaModel(), new OpenGLModel(), new DirectXModel(),
-                new Vector3f(), new Quaternion(), new CoordinateSpace(), new SceneGraphTile(),
-                new SceneGraph(), new Scene(), new SceneOffset(),
+                new SceneGraphTile(), new SceneGraph(), new Scene(), new SceneOffset(),
                 new SceneSettings(), new SceneGraphLevel(), new PureJavaSceneGraphLevel(), new DirectXSceneGraphLevel(),
                 new OpenGLSceneGraphLevel(),
                 new Server(), new World(),

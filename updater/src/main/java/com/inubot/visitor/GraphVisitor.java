@@ -183,4 +183,12 @@ public abstract class GraphVisitor implements Opcodes {
         FieldHook fh = (FieldHook) h;
         return fh.clazz + "." + fh.field;
     }
+
+    public FieldHook getFieldHook(String hook) {
+        Hook h = hooks.get(hook);
+        if (h != null && h instanceof FieldHook) {
+            return (FieldHook) h;
+        }
+        return null;
+    }
 }

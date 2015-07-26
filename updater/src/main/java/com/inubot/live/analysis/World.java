@@ -14,6 +14,7 @@ import org.objectweb.asm.tree.ClassNode;
  * @since 24-07-2015
  */
 public class World extends GraphVisitor {
+
     @Override
     public boolean validate(ClassNode cn) {
         return cn.superName.equals(clazz("Server"));

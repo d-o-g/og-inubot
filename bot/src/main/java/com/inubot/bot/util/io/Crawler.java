@@ -181,6 +181,10 @@ public class Crawler {
         }
     }
 
+    public int getPercent() {
+        return percent;
+    }
+
     public enum GameType {
         OSRS, RS3
     }

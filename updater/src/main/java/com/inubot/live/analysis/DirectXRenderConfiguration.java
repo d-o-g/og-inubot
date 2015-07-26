@@ -20,7 +20,7 @@ import java.util.List;
  * @author Dogerina
  * @since 23-07-2015
  */
-@VisitorInfo(hooks = {"absoluteX", "absoluteY", "multiplierX", "multiplierY", "update"})
+@VisitorInfo(hooks = {"absoluteX", "absoluteY", "multiplierX", "multiplierY", "update", "matrix4f"})
 public class DirectXRenderConfiguration extends GraphVisitor {
 
     @Override
@@ -33,6 +33,10 @@ public class DirectXRenderConfiguration extends GraphVisitor {
         InvokeHook update = RenderConfiguration.findUpdate(this);
         if (update != null) {
             addHook(update);
+            FieldHook matrix4f = RenderConfiguration.findMatrix4f(this);
+            if (matrix4f != null) {
+                addHook(matrix4f);
+            }
         }
         List<FieldMemberNode> hooks = RenderConfiguration.findHooks(this);
         if (hooks != null) {
