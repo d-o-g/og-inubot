@@ -96,8 +96,9 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         }
 
         File randomDat = new File(System.getProperty("user.home") + "/random.dat");
-        if (randomDat.exists())
+        if (randomDat.exists()) {
             randomDat.setReadOnly();
+        }
 
         File pack = new File(crawler.pack);
         File injectCache = new File(Configuration.INJECT_CACHE);
@@ -125,7 +126,6 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
             e.printStackTrace();
         }
         Map<String, byte[]> classes = new HashMap<>();
-        System.out.println(hash);
         if (inject || forceInject || !new File(Configuration.INJECTED).exists()) {
             Injector injector = initInjector(pack);
             classes = injector.inject(true);
