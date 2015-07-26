@@ -6,10 +6,7 @@
  */
 package com.inubot.bundledscripts.complete.alcher;
 
-import com.inubot.api.methods.Client;
-import com.inubot.api.methods.Game;
-import com.inubot.api.methods.Inventory;
-import com.inubot.api.methods.Skills;
+import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.oldschool.action.ActionOpcodes;
@@ -35,11 +32,6 @@ public class ProAlcher extends ProScript implements AlcherConstants {
 
     private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));
     private static final Filter<WidgetItem> OTHER_FILTER = (i -> !NATURE_FILTER.accept(i) && !i.getName().contains("Coins"));
-
-    @Override
-    public String getTitle() {
-        return "ProAlcher v1.00";
-    }
 
     @Override
     public void getPaintData(Map<String, Object> data) {

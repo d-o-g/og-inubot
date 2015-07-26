@@ -10,8 +10,7 @@ import com.inubot.Inubot;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.client.natives.oldschool.RSInterface;
-import com.inubot.client.natives.oldschool.RSWidget;
+import com.inubot.client.natives.oldschool.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +41,21 @@ public class Interfaces {
                 return face;
         }
         return null;
+    }
+
+    public static Widget get(int parent, int child, int... rest) {
+        RSClient client = Game.getClient();
+        RSWidget[][] all = client.getWidgets();
+        if (all == null || parent >= all.length) return null;
+        RSWidget[] chi = all[parent];
+        if (chi == null) return null;
+        RSWidget widget = chi[child];
+        for (final int child0 : rest) {
+            if (widget == null) return null;
+            if (widget.getChildren() == null) return null;
+            widget = widget.getChildren()[child0];
+        }
+        return new Widget(widget, widget.getIndex());
     }
 
     public static Widget[][] getAll() {
@@ -168,10 +182,10 @@ public class Interfaces {
         //int[] idces = {229, 231, 217};
         //for (int idx : idces) {
         Widget w = Interfaces.getWidgetByText("Click here to continue");
-            if (w != null) {
-                continueDialogId = w.getId();
-                return true;
-            }
+        if (w != null) {
+            continueDialogId = w.getId();
+            return true;
+        }
         //}
         return false;
     }

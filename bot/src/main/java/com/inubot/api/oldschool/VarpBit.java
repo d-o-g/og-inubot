@@ -46,4 +46,8 @@ public class VarpBit extends Wrapper<RSVarpBit> implements RSVarpBit {
     public String toString() {
         return String.format("(%d)<%d> ( %d -> %d | %d ) == %d", getId(), getVarpIndex(), getLeft(), getRight(), getMask(), getValue());
     }
+
+    public boolean booleanValue() {
+        return getValue() == 1;
+    }
 }
