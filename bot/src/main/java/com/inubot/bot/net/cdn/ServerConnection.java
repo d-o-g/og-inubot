@@ -11,98 +11,53 @@ import com.inubot.bot.net.cdn.packet.Packet;
 import com.inubot.bot.ui.Login;
 import com.inubot.script.loader.RemoteScriptDefinition;
 
-import java.io.*;
-import java.net.InetSocketAddress;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 public class ServerConnection implements Runnable {
 
-	private final Socket connection;
-	private final DataInputStream input;
-	private final DataOutputStream output;
+	private Socket connection;
+	private DataInputStream input;
+	private DataOutputStream output;
 	private final String host;
 	private final int port;
 	private boolean running = true;
 
 	public ServerConnection(String host, int port) throws IOException {
-		this.connection = new Socket(this.host = host, this.port = port);
-		this.input = new DataInputStream(connection.getInputStream());
-		this.output = new DataOutputStream(connection.getOutputStream());
+		this.host = host;
+		this.port = port;
 	}
 
-	public static void start() {
+	public static boolean start() {
 		try {
-			ServerConnection connection = new ServerConnection("127.0.0.1", 1111);
-			new Thread(connection).start();
+			new Thread(new ServerConnection("127.0.0.1", 1111)).start();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Failed to connect... Trying again in one second...");
+			try {
+				Thread.sleep(TimeUnit.SECONDS.toMillis(1));
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			start();
 		}
-	}
-
-	public static void main(String... args) {
-		start();
+		return false;
 	}
 
 	private boolean authd = false;
 
-	@Override
-	public void run() {
-		while (running) {
-			authd = false;
-			try {
-				send(new LoginPacket(Login.getUsername(), Login.getPassword()));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			if (connection.isClosed()) {
-				try {
-					connection.connect(new InetSocketAddress(host, port));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			while (connection.isConnected()) {
-				try {
-					if (input.available() > 0) {
-						int value = input.read();
-						switch (value) {
-							case Packet.AUTH_SUCCESS: {
-								System.out.println("Authenticated...");
-								if ( !authd )
-									RemoteScriptDefinition.getNetworkedScriptDefinitions().clear();
-								authd = true;
-								break;
-							}
-							case Packet.REQUEST_SCRIPTS: {
-								System.out.println("Receiving Script...");
-								ByteArrayOutputStream baos = new ByteArrayOutputStream();
-								while (input.available() > 0) {
-									byte[] data = new byte[1024];
-									int count = input.read(data);
-									baos.write(data);
-								}
-								byte[] data = baos.toByteArray();
-								RemoteScriptDefinition.addNetworkedDefinition(data);
-								break;
-							}
-							case Packet.INSTANCE_COUNT: {
-								int asd = input.read();
-								if (asd != 1) {
-									System.exit(0);
-								}
-								break;
-							}
-							default: {
-								System.out.println(value);
-								break;
-							}
-						}
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+	private void reconnect() {
+		try {
+				this.connection = new Socket(host, port);
+				this.input = new DataInputStream(connection.getInputStream());
+				this.output = new DataOutputStream(connection.getOutputStream());
+			} catch (IOException ignored) {}
+		try {
+			send(new LoginPacket(Login.getUsername(), Login.getPassword()));
+		} catch (IOException ignored) {}
 	}
 
 	public void send(Packet packet) throws IOException {
@@ -110,6 +65,58 @@ public class ServerConnection implements Runnable {
 			throw new IllegalArgumentException("malformed_packet");
 		output.writeByte(packet.getOpcode());
 		packet.encode(output);
+	}
+
+	@Override
+	public void run() {
+		reconnect();
+		while (true) {
+			try {
+				if (!connection.isConnected())
+					System.out.println("Ayyy");
+				int value = input.read();
+				switch (value) {
+					case Packet.AUTH_SUCCESS: {
+						System.out.println("Authenticated...");
+						if (!authd)
+							RemoteScriptDefinition.getNetworkedScriptDefinitions().clear();
+						authd = true;
+						break;
+					}
+					case Packet.REQUEST_SCRIPTS: {
+						System.out.println("Receiving Script...");
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						while (input.available() > 0) {
+							byte[] data = new byte[1024];
+							int count = input.read(data);
+							baos.write(data);
+						}
+						byte[] data = baos.toByteArray();
+						RemoteScriptDefinition.addNetworkedDefinition(data);
+						break;
+					}
+					case Packet.INSTANCE_COUNT: {
+						int asd = input.read();
+						if (asd != 1) {
+							System.exit(0);
+						}
+						break;
+					}
+					default: {
+						System.out.println(value);
+						break;
+					}
+				}
+			} catch (Exception e) {
+				System.out.println("Attempting to reconnect to SDN...");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				reconnect();
+			}
+		}
 	}
 }
 
