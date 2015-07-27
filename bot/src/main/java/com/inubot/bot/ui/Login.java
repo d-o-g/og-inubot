@@ -10,8 +10,6 @@ import com.inubot.Inubot;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Login {
 
@@ -28,6 +26,8 @@ public class Login {
         lblPanel.add(new JLabel("Password"));
         lblPanel.add(new JSeparator(JSeparator.HORIZONTAL));
         frame.getContentPane().add(lblPanel, BorderLayout.WEST);
+
+        frame.setLocationRelativeTo(null);
 
         JPanel fieldPanel = new JPanel();
         fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));

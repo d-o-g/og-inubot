@@ -27,166 +27,153 @@ import java.util.Map;
  */
 public class Handler extends ChannelHandlerAdapter {
 
-    private static final Map<String, Integer> instances = new HashMap<>();
+	private static final Map<String, Integer> instances = new HashMap<>();
 
-    private static final byte LOGIN = 0;
-    private static final byte REQUEST_SCRIPTS = 1;
-    private static final byte OPENED_BOT = 2;
-    private static final byte CLOSED_BOT = 3;
-    private static final byte INSTANCE_COUNT = 5;
+	private static final byte LOGIN = 0;
+	private static final byte REQUEST_SCRIPTS = 1;
+	private static final byte INSTANCE_COUNT = 5;
 
 
-    private static final Logger logger = LoggerFactory.getLogger(Handler.class);
+	private static final Logger logger = LoggerFactory.getLogger(Handler.class);
 
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) {
+	private static String getMD5(String message)
+			throws NoSuchAlgorithmException {
+		MessageDigest md5 = MessageDigest.getInstance("MD5");
+		md5.reset();
+		md5.update(message.getBytes());
+		byte[] digest = md5.digest();
+		return String.format("%0" + (digest.length << 1) + "x", new BigInteger(1, digest));
+	}
 
-    }
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		if (cause.toString().contains("closed"))
+			return;
+		cause.printStackTrace();
+		ctx.close();
+	}
 
-    private static String getMD5(String message)
-            throws NoSuchAlgorithmException {
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        md5.reset();
-        md5.update(message.getBytes());
-        byte[] digest = md5.digest();
-        return String.format("%0" + (digest.length << 1) + "x", new BigInteger(1, digest));
-    }
+	@Override
+	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+		logger.info(getAddressFromContext(ctx) + " Disconnected!");
+		if (instances.get(getAddressFromContext(ctx)) != null) {
+			int count = instances.get(getAddressFromContext(ctx));
+			if (count != 0) {
+				if (count == 1) {
+					instances.remove(getAddressFromContext(ctx));
+				} else {
+					instances.put(getAddressFromContext(ctx), count - 1);
+				}
+			}
+		}
+	}
 
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        if (cause.toString().contains("closed"))
-            return;
-        cause.printStackTrace();
-        ctx.close();
-    }
+	private String getAddressFromContext(ChannelHandlerContext ctx) {
+		InetSocketAddress socketAddress = (InetSocketAddress) ctx.channel().remoteAddress();
+		InetAddress inetaddress = socketAddress.getAddress();
+		return inetaddress.getHostAddress();
+	}
 
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
-        ctx.flush();
-    }
+	@Override
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		ByteBuf buffer = (ByteBuf) msg;
+		logger.info(getAddressFromContext(ctx) + " ");
+		int opcode = buffer.readByte();
+		switch (opcode) {
+			case LOGIN: {
+				if (!buffer.isReadable()) {
+					ByteBuf buf = Unpooled.buffer();
+					buf.writeByte(INSTANCE_COUNT);
+					buf.writeByte(0);
+					ctx.write(buf);
+					ctx.flush();
+					return;
+				}
 
-    private boolean fuck = true;
+				int ulength = buffer.readInt();
+				byte[] uarray = new byte[ulength];
+				for (int i = 0; i < ulength; i++) {
+					uarray[i] = buffer.readByte();
+				}
+				String username = new String(uarray, "UTF-8");
 
-    @Override
-    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-        logger.info(hnnf(ctx) + " ");
-        if (fuck)
-            instances.remove(hnnf(ctx));
-    }
+				int plength = buffer.readInt();
+				byte[] parray = new byte[plength];
+				for (int i = 0; i < plength; i++) {
+					parray[i] = buffer.readByte();
+				}
+				String password = new String(parray, "UTF-8");
 
-    private String hnnf(ChannelHandlerContext ctx) {
-        InetSocketAddress socketAddress = (InetSocketAddress) ctx.channel().remoteAddress();
-        InetAddress inetaddress = socketAddress.getAddress();
-        return inetaddress.getHostAddress();
-    }
+				Session session = Application.factory().openSession();
+				Account account = (Account) session.createQuery("from Account where username=:username")
+						.setParameter("username", username).uniqueResult();
+				if (account == null) {
+					logger.info("Account doesn't exist!");
+					ByteBuf buf = Unpooled.buffer();
+					buf.writeByte(INSTANCE_COUNT);
+					buf.writeByte(0);
+					ctx.write(buf);
+					ctx.flush();
+					return;
+				}
 
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        ByteBuf buffer = (ByteBuf) msg;
-        logger.info(hnnf(ctx) + " ");
-        int opcode = buffer.readByte();
-        switch (opcode) {
-            case LOGIN: {
-                StringBuilder builder = new StringBuilder();
-                int ulength = buffer.readInt();
-                for (int i = 0; i < ulength; i++) {
-                    builder.append(buffer.readChar());
-                }
-                String username = builder.toString();
+				String hash = getMD5(getMD5(account.getSalt()) + getMD5(password));
 
-                builder = new StringBuilder();
-                int plength = buffer.readInt();
-                for (int i = 0; i < plength; i++) {
-                    builder.append(buffer.readChar());
-                }
-                String password = builder.toString();
+				if (hash.equals(account.getPassword())) {
+					logger.info("Successfully logged " + username + " into account! (" + account.getGroup() + ")");
+					ctx.writeAndFlush(Unpooled.wrappedBuffer(new byte[]{4}));
 
-                Session session = Application.factory().openSession();
-                Account account = (Account) session.createQuery("from Account where username=:username")
-                        .setParameter("username", username).uniqueResult();
-                if (account == null) {
-                    logger.info("Account doesn't exist!");
-                    return;
-                }
+					int count;
+					if (instances.get(getAddressFromContext(ctx)) == null)
+						count = 0;
+					else
+						count = instances.get(getAddressFromContext(ctx));
 
-                String hash = getMD5(getMD5(account.getSalt()) + getMD5(password));
+					Account.UserGroup group = account.getUserGroup();
 
-                if (hash.equals(account.getPassword())) {
-                    logger.info("Successfully logged " + username + " into account! (" + account.getGroup() + ")");
-                    ctx.write(Unpooled.wrappedBuffer(new byte[] { 4 }));
-                    List owneds = session.createQuery("from Owned where uid=:uid").setParameter("uid", account.getId()).list();
+					logger.info(count + " count - allowed " + group.getMaximumInstances());
+					if (count < group.getMaximumInstances()) {
+						instances.put(getAddressFromContext(ctx), count + 1);
+						ByteBuf buf = Unpooled.buffer();
+						buf.writeByte(INSTANCE_COUNT);
+						buf.writeByte(1);
+						ctx.write(buf);
+						ctx.flush();
+					} else {
+						ByteBuf buf = Unpooled.buffer();
+						buf.writeByte(INSTANCE_COUNT);
+						buf.writeByte(0);
+						ctx.write(buf);
+						ctx.flush();
+						return;
+					}
 
-                    if (account.getUserGroup() == Account.UserGroup.ADMIN) {
-                        for (byte[] data : Loader.scripts.values()) {
-                            ctx.write(Unpooled.wrappedBuffer(new byte[]{REQUEST_SCRIPTS}));
-                            ctx.flush();
-                            ByteBuf buf = Unpooled.directBuffer(data.length);
-                            buf.writeBytes(data);
-                            ctx.write(buf);
-                            logger.info("Sent script");
-                        }
-                    } else {
-                        for (Object asd : owneds) {
-                            Script script = (Script) session.createQuery("from Script where id=:id")
-                                    .setParameter("id", ((Owned) asd).getId()).uniqueResult();
-                            byte[] data = Loader.scripts.get(script.getName());
-                            if (data == null) {
-                                logger.info("no have " + script.getName());
-                                continue;
-                            }
-                            ctx.write(Unpooled.wrappedBuffer(new byte[]{REQUEST_SCRIPTS}));
-                            ctx.flush();
-                            ByteBuf buf = Unpooled.directBuffer(data.length);
-                            buf.writeBytes(data);
-                            ctx.write(buf);
-                            logger.info("Sent: " + script.getName());
-                        }
-                        int count;
-                        if (instances.get(hnnf(ctx)) == null)
-                            count = 0;
-                        else
-                            count = instances.get(hnnf(ctx));
-                        Account.UserGroup group = account.getUserGroup();
-                        logger.info(count + " count - allowed " + group.getMaximumInstances());
-                        if (count < group.getMaximumInstances()) {
-                            instances.put(hnnf(ctx), (count += 1));
-                            ctx.writeAndFlush(Unpooled.wrappedBuffer(new byte[]{INSTANCE_COUNT, 1}));
-                        } else {
-                            ctx.writeAndFlush(Unpooled.wrappedBuffer(new byte[]{INSTANCE_COUNT, 0}));
-                            fuck = false;
-                        }
-                    }
-                } else {
-                    logger.info("Failed to log " + username + " into account!");
-                }
-                break;
-            }
-            case CLOSED_BOT: {
-                StringBuilder builder = new StringBuilder();
-                int ulength = buffer.readInt();
-                for (int i = 0; i < ulength; i++) {
-                    logger.info(builder.toString());
-                    builder.append(buffer.readChar());
-                }
-                String name = builder.toString();
-
-                Session session = Application.factory().openSession();
-                Account account = (Account) session.createQuery("from Account where username=:username")
-                        .setParameter("username", name).uniqueResult();
-                if (account == null) {
-                    return;
-                }
-                if (instances.containsKey(hnnf(ctx))) {
-                    int count = instances.get(hnnf(ctx));
-                    if (count == 1) {
-                        instances.remove(hnnf(ctx));
-                    } else {
-                        instances.put(hnnf(ctx), count - 1);
-                    }
-                }
-                break;
-            }
-        }
-    }
-
+					List owneds = session.createQuery("from Owned where uid=:uid").setParameter("uid", account.getId()).list();
+					for (Object asd : owneds) {
+						Script script = (Script) session.createQuery("from Script where id=:id")
+								.setParameter("id", ((Owned) asd).getId()).uniqueResult();
+						byte[] data = Loader.scripts.get(script.getName());
+						if (data == null) {
+							logger.info("no have " + script.getName());
+							continue;
+						}
+						ByteBuf buf = Unpooled.buffer();
+						buf.writeByte(REQUEST_SCRIPTS);
+						buf.writeBytes(data);
+						ctx.write(buf);
+						ctx.flush();
+						logger.info("Sent: " + script.getName());
+					}
+				} else {
+					logger.info("Failed to log " + username + " into account!");
+					ByteBuf buf = Unpooled.buffer();
+					buf.writeByte(INSTANCE_COUNT);
+					buf.writeByte(0);
+					ctx.write(buf);
+					ctx.flush();
+				}
+				break;
+			}
+		}
+	}
 }

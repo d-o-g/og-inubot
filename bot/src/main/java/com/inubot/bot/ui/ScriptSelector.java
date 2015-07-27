@@ -9,26 +9,12 @@ package com.inubot.bot.ui;
 import com.inubot.Bot;
 import com.inubot.bot.util.CachedClassLoader;
 import com.inubot.bot.util.Configuration;
-import com.inubot.bundledscripts.complete.Combot;
-import com.inubot.bundledscripts.complete.WineMaker;
-import com.inubot.bundledscripts.complete.agility.PerfectAgility;
-import com.inubot.bundledscripts.complete.alcher.ProAlcher;
-import com.inubot.bundledscripts.complete.chopper.ProChopper;
-import com.inubot.bundledscripts.complete.fisher.ProFisher;
-import com.inubot.bundledscripts.complete.hunter.BirdSnarePRO;
-import com.inubot.bundledscripts.complete.hunter.FalconryPRO;
-import com.inubot.bundledscripts.complete.hunter.RedChinsPRO;
-import com.inubot.bundledscripts.complete.miner.ProMiner;
-import com.inubot.bundledscripts.complete.rangeguild.RangeGuild;
-import com.inubot.bundledscripts.complete.tutisland.TutorialIsland;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 import com.inubot.script.loader.LocalScriptLoader;
 import com.inubot.script.loader.RemoteScriptDefinition;
 import com.inubot.script.loader.ScriptDefinition;
 import com.inubot.script.loader.ScriptFilter;
-import me.mad.MadTutorial;
-import me.septron.Pepperjack;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,20 +29,20 @@ import java.util.ArrayList;
 public class ScriptSelector extends JFrame {
 
     private static final Class[] SCRIPT_CLASSES = {
-            Combot.class,
-            WineMaker.class,
-            TutorialIsland.class,
-            RangeGuild.class,
-            ProMiner.class,
-            RedChinsPRO.class,
-            FalconryPRO.class,
-            BirdSnarePRO.class,
-            ProFisher.class,
-            ProAlcher.class,
-            PerfectAgility.class,
-            ProChopper.class,
-            Pepperjack.class,
-            MadTutorial.class
+//            Combot.class,
+//            WineMaker.class,
+//            TutorialIsland.class,
+//            RangeGuild.class,
+//            ProMiner.class,
+//            RedChinsPRO.class,
+//            FalconryPRO.class,
+//            BirdSnarePRO.class,
+//            ProFisher.class,
+//            ProAlcher.class,
+//            PerfectAgility.class,
+//            ProChopper.class,
+//            Pepperjack.class,
+//            MadTutorial.class
     };
 
     public ScriptSelector() {

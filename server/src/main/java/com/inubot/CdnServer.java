@@ -125,14 +125,10 @@ public class CdnServer {
                                             byte[] data = Loader.scripts.get(script.getName());
                                             if (data != null) {
                                                 output.writeByte(REQUEST_SCRIPTS);
-                                                int nlen = script.getName().length();
-                                                output.write(nlen);
-                                                for (int i = 0; i < nlen; i++) {
-                                                    output.writeChar(script.getName().charAt(i));
-                                                }
                                                 output.write(data);
                                                 System.out.println("Sent: " + script.getName());
                                             }
+                                            output.flush();
                                         }
                                     } else {
                                         System.out.println("Failed to log " + username + " into account!");

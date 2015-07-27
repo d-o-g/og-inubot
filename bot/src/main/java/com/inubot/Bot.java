@@ -19,7 +19,9 @@ import com.inubot.bot.net.cdn.ServerConnection;
 import com.inubot.bot.net.irc.IRCConnection;
 import com.inubot.bot.ui.BotMenuBar;
 import com.inubot.bot.ui.LogPane;
-import com.inubot.bot.util.*;
+import com.inubot.bot.util.CachedClassLoader;
+import com.inubot.bot.util.Configuration;
+import com.inubot.bot.util.ProxyUtils;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.Internet;
 import com.inubot.client.GameCanvas;
@@ -35,8 +37,6 @@ import java.io.*;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarInputStream;
@@ -66,7 +66,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         this.irc = new IRCConnection();
         this.asyncEventBus = new AsynchronousEventBus();
         this.syncEventBus = new SynchronousEventBus();
-        //ServerConnection.start();
+        ServerConnection.start();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
         try {

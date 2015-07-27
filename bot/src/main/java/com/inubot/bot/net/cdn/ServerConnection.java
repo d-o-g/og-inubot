@@ -32,11 +32,15 @@ public class ServerConnection implements Runnable {
 
 	public static void start() {
 		try {
-			ServerConnection connection = new ServerConnection("192.99.166.91", 1111);
+			ServerConnection connection = new ServerConnection("127.0.0.1", 1111);
 			new Thread(connection).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void main(String... args) {
+		start();
 	}
 
 	private boolean authd = false;

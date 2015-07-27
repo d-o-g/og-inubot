@@ -72,27 +72,17 @@ public class Account {
     public enum UserGroup {
 
         //for now anyone can use
-        GUEST(false), REGISTERED(true, 5), SUPER_MOD(true, 25), AWAITING_ACTIVATION(true, 5), ADMIN(true, 1337),
-        MOD(true, 10), BANNED(false), MEMBER(true, 5), VIP(true, 10), SPONSOR(true, 50);
+        EMPTY(0), GUEST(0), REGISTERED(1), SUPER_MOD(10), ADMIN(1337), AWAITING_ACTIVATION(0),
+        MOD(10), BANNED(0), MEMBER(5), VIP(10), SCRIPTER(10), SPONSOR(50);
 
-        private final boolean canBot;
         private final int maximumInstances;
 
-        UserGroup(boolean canBot, int maximumInstances) {
-            this.canBot = canBot;
+        UserGroup(int maximumInstances) {
             this.maximumInstances = maximumInstances;
-        }
-
-        UserGroup(boolean canBot) {
-            this(canBot, 0);
         }
 
         public int getId() {
             return super.ordinal() + 1;
-        }
-
-        public boolean canBot() {
-            return canBot;
         }
 
         public int getMaximumInstances() {
