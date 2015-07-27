@@ -13,6 +13,7 @@ import com.inubot.api.methods.traversal.graph.WebPath;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.GameObject.Landmark;
 import com.inubot.api.util.Time;
+import com.inubot.client.natives.oldschool.RSGrandExchangeOffer;
 
 public class GrandExchange {
 
@@ -35,6 +36,10 @@ public class GrandExchange {
             WebPath path = WebPath.build(LOCATION);
             path.step(Option.TOGGLE_RUN); //assume called in loop, so only do 1 action each call..
         }
+    }
+
+    public static RSGrandExchangeOffer[] getOffers() {
+        return Game.getClient().getGrandExchangeOffers();
     }
 
     public static void open() {

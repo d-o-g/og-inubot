@@ -28,10 +28,27 @@ import java.util.*;
         "hoveredRegionTileX", "hoveredRegionTileY", "socketState", "menuOpcodes", "menuArg0", "menuArg1", "menuArg2",
         "username", "password", "getVarpBit", "hintArrowX", "hintArrowY", "hintArrowType", "loginState",
         "itemTables", "lowMemory", "hintArrowNpcIndex", "hintArrowPlayerIndex", "loadItemSprite", "engineCycle",
-        "screenWidth", "screenHeight", "screenZoom", "screenState", "font_p12full"})
+        "screenWidth", "screenHeight", "screenZoom", "screenState", "font_p12full", "grandExchangeOffers",
+        "currentWorld", "membersWorld"})
 public class Client extends GraphVisitor {
 
     private final Map<String, String> profiledStrings = new HashMap<>();
+
+    private static FieldInsnNode next(AbstractInsnNode from, int op, String desc, String owner, int skips) {
+        int skipped = 0;
+        while ((from = from.next()) != null) {
+            if (from.opcode() == op) {
+                FieldInsnNode topkek = (FieldInsnNode) from;
+                if (topkek.desc.equals(desc) && (owner == null || owner.equals(topkek.owner))) {
+                    if (skipped == skips) {
+                        return topkek;
+                    }
+                    skipped++;
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
     public String iface() {
@@ -81,6 +98,29 @@ public class Client extends GraphVisitor {
         visitAll(new ScreenSizes());
         visitIfM(new ScreenState(), t -> t.desc.startsWith("([L") && t.desc.contains(";IIIIII"));
         visitAll(new HoveredTile());
+
+        for (ClassNode cn : updater.classnodes.values()) {
+            for (MethodNode mn : cn.methods) {
+                if (mn.desc.startsWith("(L")) {
+                    for (AbstractInsnNode ain : mn.instructions.toArray()) {
+                        if (ain instanceof IntInsnNode) {
+                            int oper = ((IntInsnNode) ain).operand;
+                            if (oper == 3912) {
+                                FieldInsnNode fin = next(ain, GETSTATIC, "Z", null, 0);
+                                if (fin != null) {
+                                    addHook(new FieldHook("membersWorld", fin));
+                                }
+                            } else if (oper == 3918) {
+                                FieldInsnNode fin = next(ain, GETSTATIC, "I", null, 0);
+                                if (fin != null) {
+                                    addHook(new FieldHook("currentWorld", fin));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         //because the blocks fuck this hook up...
         for (ClassNode cn : updater.classnodes.values()) {
             for (MethodNode mn : cn.methods) {
@@ -197,6 +237,8 @@ public class Client extends GraphVisitor {
                     add("groundItems", fn);
                 } else if (collisionDesc != null && fn.desc.equals("[" + collisionDesc)) {
                     add("collisionMaps", fn);
+                } else if (fn.desc.equals("[" + desc("GrandExchangeOffer"))) {
+                    add("grandExchangeOffers", fn);
                 }
             }
         }

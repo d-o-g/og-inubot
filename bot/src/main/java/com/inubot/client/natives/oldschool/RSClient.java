@@ -51,6 +51,9 @@ public interface RSClient extends ClientNative {
     int getScreenHeight();
     int getScreenState();
     int getScreenZoom();
+    int getCurrentWorld();
+    boolean isMembersWorld();
+    RSGrandExchangeOffer[] getGrandExchangeOffers();
 
     RSFont getFont_p12full();
 

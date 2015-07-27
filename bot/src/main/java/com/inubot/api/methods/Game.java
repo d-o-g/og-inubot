@@ -23,6 +23,14 @@ public class Game {
         return Inubot.getInstance().getClient().getGameState();
     }
 
+    public static int getCurrentWorld() {
+        return getClient().getCurrentWorld();
+    }
+
+    public static boolean isMembersWorld() {
+        return getClient().isMembersWorld();
+    }
+
     /**
      * @return The current value of the x position of the map base
      */
