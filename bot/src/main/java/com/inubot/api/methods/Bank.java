@@ -357,7 +357,7 @@ public class Bank {
     }
 
     public static boolean withdrawAll(String name) {
-        WidgetItem item = Inventory.getFirst(new NameFilter<>(name));
+        WidgetItem item = Bank.getFirst(new NameFilter<>(name));
         if (item != null) {
             item.processAction("Withdraw-All");
             return true;
