@@ -81,14 +81,6 @@ public class PerfectAgility extends ProScript implements Paintable {
             return 100;
         }
 
-        if (stucktime.getElapsed() > 12000) {
-            stucktime.reset();
-            if (stuck > 4 && Players.getLocal().getLocation().equals(ARDY_STUCK)) {
-                Movement.walkTo(new Tile(2656, 3296, 3));
-                Time.sleep(3000);
-            }
-            stuck = 0;
-        }
         if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 10) {
             Movement.toggleRun(true);
             Time.sleep(600);
@@ -112,6 +104,12 @@ public class PerfectAgility extends ProScript implements Paintable {
         if (obstacle == null)
             return 400;
 
+        if (Players.getLocal().getLocation().equals(ARDY_STUCK)) {
+            Movement.walkTo(new Tile(2656, 3296, 3));
+            Time.sleep(1800, 2200);
+            obstacle = course.getNext();
+        }
+
         GameObject obj;
 
         if (obstacle.getTile() != null) {
@@ -120,9 +118,10 @@ public class PerfectAgility extends ProScript implements Paintable {
                 return 400;
             }
 
+            final Obstacle finalObstacle = obstacle;
             obj = GameObjects.getNearest(gameObject -> {
-                if (gameObject.getName() != null && gameObject.getName().equals(obstacle.getName())) {
-                    if (gameObject.getLocation().getRegionX() == obstacle.getTile().getRegionX() && gameObject.getLocation().getRegionY() == obstacle.getTile().getRegionY())
+                if (gameObject.getName() != null && gameObject.getName().equals(finalObstacle.getName())) {
+                    if (gameObject.getLocation().getRegionX() == finalObstacle.getTile().getRegionX() && gameObject.getLocation().getRegionY() == finalObstacle.getTile().getRegionY())
                         return true;
                 }
                 return false;
