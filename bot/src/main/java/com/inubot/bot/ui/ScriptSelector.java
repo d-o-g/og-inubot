@@ -27,6 +27,8 @@ import com.inubot.script.loader.LocalScriptLoader;
 import com.inubot.script.loader.RemoteScriptDefinition;
 import com.inubot.script.loader.ScriptDefinition;
 import com.inubot.script.loader.ScriptFilter;
+import me.mad.MadTutorial;
+import me.septron.Pepperjack;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +54,9 @@ public class ScriptSelector extends JFrame {
             ProFisher.class,
             ProAlcher.class,
             PerfectAgility.class,
-            ProChopper.class
+            ProChopper.class,
+            Pepperjack.class,
+            MadTutorial.class
     };
 
     public ScriptSelector() {

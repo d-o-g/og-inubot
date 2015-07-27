@@ -4,7 +4,7 @@
  * License as published by the Free Software Foundation; either
  * version 2 of the license, or (at your option) any later version.
  */
-package com.dogerina.slayer;
+package me.dogerina;
 
 import com.inubot.api.methods.Inventory;
 import com.inubot.api.methods.ItemTables;

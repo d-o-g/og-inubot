@@ -9,6 +9,7 @@ package com.inubot.api.methods;
 import com.inubot.Inubot;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
+import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.oldschool.*;
 
@@ -192,6 +193,7 @@ public class Interfaces {
 
     public static boolean processContinue() {
         if (canContinue()) {
+            Time.sleep(300);
             Client.processAction(new DialogButtonAction(continueDialogId, -1), "Continue", "");
             return true;
         }

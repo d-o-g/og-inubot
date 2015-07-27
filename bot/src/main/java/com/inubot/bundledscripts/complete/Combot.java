@@ -39,48 +39,27 @@ public class Combot extends ProScript {
 
     private boolean bones = false;
 
-    private int[] getMeleeSkills() {
-        return new int[] {
-                Skills.getLevel(Skill.ATTACK),
-                Skills.getLevel(Skill.STRENGTH),
-                Skills.getLevel(Skill.DEFENCE)
-        };
-    }
-
     private void switchStyles() {
-        final int[] skills = getMeleeSkills();
         switch (Combat.getStyle()) {
             case 0:
-                if (skills[0] > skills[1])
+                if (Skills.getLevel(Skill.ATTACK) > Skills.getLevel(Skill.STRENGTH))
                     Combat.setStyle(1);
                 break;
             case 1:
-                if (skills[1] > skills[2])
+                if (Skills.getLevel(Skill.STRENGTH) > Skills.getLevel(Skill.DEFENCE))
                     Combat.setStyle(2);
                 break;
             case 2:
             case 3:
-                if (skills[2] >= skills[0])
+                if (Skills.getLevel(Skill.DEFENCE) >= Skills.getLevel(Skill.ATTACK))
                     Combat.setStyle(0);
                 break;
         }
     }
 
-    public int getLowestSkillLevel() {
-        final int[] skills = getMeleeSkills();
-
-        int lowest = skills[0];
-        for (int i = 1; i < skills.length; i++) {
-            if (lowest < skills[i])
-                lowest = skills[i];
-        }
-
-        return lowest;
-    }
-
     public Monster getCurrent() {
         for (Monster monster : Monster.values()) {
-            if (getLowestSkillLevel() < monster.max)
+            if (Skills.getLevel(Skill.DEFENCE) <= monster.max)
                 return monster;
         }
         return Monster.SEAGULL;

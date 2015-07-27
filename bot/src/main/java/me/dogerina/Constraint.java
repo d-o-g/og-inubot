@@ -1,4 +1,4 @@
-package com.dogerina.slayer;
+package me.dogerina;
 
 /**
  * @author Dogerina

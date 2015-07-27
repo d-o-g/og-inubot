@@ -45,6 +45,9 @@ public class ProChopper extends ProScript {
 
     @Override
     public int loop() {
+        if (!Game.isLoggedIn())
+            return 600;
+
         Progression p = controller.getModel().getProgressionType().getBest();
         if (p.canProgress()) {
             Location location = Location.getClosestWithTree(p.next);

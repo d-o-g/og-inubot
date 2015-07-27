@@ -39,9 +39,12 @@ public class ServerConnection implements Runnable {
 		}
 	}
 
+	private boolean authd = false;
+
 	@Override
 	public void run() {
 		while (running) {
+			authd = false;
 			try {
 				send(new LoginPacket(Login.getUsername(), Login.getPassword()));
 			} catch (IOException e) {
@@ -61,7 +64,9 @@ public class ServerConnection implements Runnable {
 						switch (value) {
 							case Packet.AUTH_SUCCESS: {
 								System.out.println("Authenticated...");
-								RemoteScriptDefinition.getNetworkedScriptDefinitions().clear();
+								if ( !authd )
+									RemoteScriptDefinition.getNetworkedScriptDefinitions().clear();
+								authd = true;
 								break;
 							}
 							case Packet.REQUEST_SCRIPTS: {

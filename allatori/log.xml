@@ -90,7 +90,7 @@
    <method old="start()V" new="start"/>
    <method old="startLater()V" new="startLater"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.MethodInsnFactory" new="com.inubot.a.b.a.a.a.B">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.MethodInsnFactory" new="com.inubot.a.b.a.a.a.B">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="desc(Ljava/lang/String;)Lcom/inubot/bot/modscript/transform/util/factory/MethodInsnFactory;" new="c"/>
@@ -259,7 +259,7 @@
    <field old="runner Lch/qos/logback/core/net/server/ServerRunner;" new="ALLATORIxDEMO"/>
    <field old="serverSocket Ljava/net/ServerSocket;" new="c"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.InstructionIterator" new="com.inubot.a.b.a.a.f">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.InstructionIterator" new="com.inubot.a.b.a.a.f">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="accept(Ljava/util/function/Predicate;Ljava/util/function/Consumer;)V" new="ALLATORIxDEMO"/>
    <field old="stack Ljdk/internal/org/objectweb/asm/tree/InsnList;" new="ALLATORIxDEMO"/>
@@ -289,7 +289,7 @@
    <field old="WHITE Ljava/lang/String;" new="e"/>
    <field old="YELLOW Ljava/lang/String;" new="j"/>
   </class>
-  <class old="ch.qos.logback.core.util.StatusPrinter" new="b.a.a.a.a.f">
+  <class old="ch.qos.logback.core.me.mad.util.StatusPrinter" new="b.a.a.a.a.f">
    <method old="appendThrowable(Ljava/lang/StringBuilder;Ljava/lang/Throwable;)V" new="ALLATORIxDEMO"/>
    <method old="buildStr(Ljava/lang/StringBuilder;Ljava/lang/String;Lch/qos/logback/core/status/Status;)V" new="ALLATORIxDEMO"/>
    <method old="buildStrFromStatusList(Ljava/lang/StringBuilder;Ljava/util/List;)V" new="ALLATORIxDEMO"/>
@@ -663,7 +663,7 @@
    <field old="name Ljava/lang/String;" new="L"/>
    <field old="serialVersionUID J" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.MethodIterator" new="com.inubot.a.b.a.a.B">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.MethodIterator" new="com.inubot.a.b.a.a.B">
    <method old="accept(Ljava/util/function/Predicate;Ljava/util/function/Consumer;)V" new="ALLATORIxDEMO"/>
    <field old="classes Ljava/util/Collection;" new="ALLATORIxDEMO"/>
    <field old="currentOwner Ljdk/internal/org/objectweb/asm/tree/ClassNode;" new="L"/>
@@ -820,7 +820,7 @@
    <field old="parentPropertyMap Ljava/util/Map;" new="c"/>
    <field old="value Ljava/lang/String;" new="H"/>
   </class>
-  <class old="ch.qos.logback.core.util.ExecutorServiceUtil$1" new="b.a.a.a.a.I">
+  <class old="ch.qos.logback.core.me.mad.util.ExecutorServiceUtil$1" new="b.a.a.a.a.I">
    <method old="newThread(Ljava/lang/Runnable;)Ljava/lang/Thread;" new="newThread"/>
    <field old="defaultFactory Ljava/util/concurrent/ThreadFactory;" new="L"/>
    <field old="threadNumber Ljava/util/concurrent/atomic/AtomicInteger;" new="ALLATORIxDEMO"/>
@@ -863,7 +863,7 @@
   <class old="ch.qos.logback.classic.html.DefaultCssBuilder" new="b.a.a.b.o.B">
    <method old="addCss(Ljava/lang/StringBuilder;)V" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.io.Crawler$GameType" new="com.inubot.a.c.a.a">
+  <class old="com.inubot.bot.me.mad.util.io.Crawler$GameType" new="com.inubot.a.c.a.a">
    <method old="valueOf(Ljava/lang/String;)Lcom/inubot/bot/util/io/Crawler$GameType;" new="valueOf"/>
    <method old="values()[Lcom/inubot/bot/util/io/Crawler$GameType;" new="values"/>
    <field old="$VALUES [Lcom/inubot/bot/util/io/Crawler$GameType;" new="ALLATORIxDEMO"/>
@@ -1159,7 +1159,7 @@
    <method old="setSyncBus(Lcom/inubot/api/event/EventBus;)V" new="setSyncBus"/>
    <field old="events Ljava/util/Set;" new="events"/>
   </class>
-  <class old="ch.qos.logback.core.util.InvocationGate" new="b.a.a.a.a.G">
+  <class old="ch.qos.logback.core.me.mad.util.InvocationGate" new="b.a.a.a.a.G">
    <method old="skipFurtherWork()Z" new="ALLATORIxDEMO"/>
    <method old="updateMaskIfNecessary(J)V" new="ALLATORIxDEMO"/>
    <field old="MAX_MASK I" new="f"/>
@@ -1636,7 +1636,7 @@
    <field old="CDATA_START Ljava/lang/String;" new="L"/>
    <field old="UNSAFE_XML_CHARS Ljava/util/regex/Pattern;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.classic.util.CopyOnInheritThreadLocal" new="b.a.a.b.i.h">
+  <class old="ch.qos.logback.classic.me.mad.util.CopyOnInheritThreadLocal" new="b.a.a.b.i.h">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="childValue(Ljava/lang/Object;)Ljava/lang/Object;" new="childValue"/>
    <method old="childValue(Ljava/util/HashMap;)Ljava/util/HashMap;" new="ALLATORIxDEMO"/>
@@ -1838,7 +1838,7 @@
    <method old="getCopyOfAttachedFiltersList()Ljava/util/List;" new="ALLATORIxDEMO"/>
    <method old="getFilterChainDecision(Ljava/lang/Object;)Lch/qos/logback/core/spi/FilterReply;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.api.util.Random" new="com.inubot.api.util.Random">
+  <class old="com.inubot.api.me.mad.util.Random" new="com.inubot.api.me.mad.util.Random">
    <method old="nextBoolean()Z" new="nextBoolean"/>
    <method old="nextDouble()D" new="nextDouble"/>
    <method old="nextElement(Ljava/util/Collection;)Ljava/lang/Object;" new="nextElement"/>
@@ -2049,7 +2049,7 @@
    <field old="declaredOrigin Ljava/lang/Object;" new="f"/>
    <field old="rules Ljava/util/HashMap;" new="L"/>
   </class>
-  <class old="com.inubot.api.util.AWTUtil" new="com.inubot.api.util.AWTUtil">
+  <class old="com.inubot.api.me.mad.util.AWTUtil" new="com.inubot.api.me.mad.util.AWTUtil">
    <method old="drawBoldedString(Ljava/awt/Graphics;Ljava/lang/String;II)V" new="drawBoldedString"/>
    <method old="drawBoldedString(Ljava/awt/Graphics;Ljava/lang/String;IILjava/awt/Color;)V" new="drawBoldedString"/>
    <method old="drawBoldedString(Ljava/awt/Graphics;Ljava/lang/String;IILjava/awt/Color;Ljava/awt/Color;)V" new="drawBoldedString"/>
@@ -2315,7 +2315,7 @@
    <field old="context Lch/qos/logback/core/Context;" new="ALLATORIxDEMO"/>
    <field old="declaredOrigin Ljava/lang/Object;" new="f"/>
   </class>
-  <class old="com.dogerina.slayer.Assignment" new="com.a.a.f">
+  <class old="me.dogerina.Assignment" new="com.a.a.f">
    <method old="getConstraints()[Lcom/dogerina/slayer/Constraint;" new="ALLATORIxDEMO"/>
    <method old="getLocation()Lcom/inubot/api/oldschool/Tile;" new="ALLATORIxDEMO"/>
    <method old="getName()Ljava/lang/String;" new="ALLATORIxDEMO"/>
@@ -2447,7 +2447,7 @@
    <field old="REGULAR_EXCEPTION_INDENT I" new="ALLATORIxDEMO"/>
    <field old="SUPPRESSED_EXCEPTION_INDENT I" new="f"/>
   </class>
-  <class old="com.inubot.bot.util.io.JarNode" new="com.inubot.a.c.a.m">
+  <class old="com.inubot.bot.me.mad.util.io.JarNode" new="com.inubot.a.c.a.m">
    <method old="get()Ljava/util/Map;" new="ALLATORIxDEMO"/>
    <method old="getManifest()Ljava/util/jar/Manifest;" new="ALLATORIxDEMO"/>
    <field old="classes Ljava/util/Map;" new="H"/>
@@ -2472,7 +2472,7 @@
   <class old="ch.qos.logback.core.joran.spi.DefaultClass" new="b.a.a.a.h.a.a">
    <method old="value()Ljava/lang/Class;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.core.util.ExecutorServiceUtil" new="b.a.a.a.a.e">
+  <class old="ch.qos.logback.core.me.mad.util.ExecutorServiceUtil" new="b.a.a.a.a.e">
    <method old="newExecutorService()Ljava/util/concurrent/ExecutorService;" new="ALLATORIxDEMO"/>
    <method old="shutdown(Ljava/util/concurrent/ExecutorService;)V" new="ALLATORIxDEMO"/>
    <field old="THREAD_FACTORY Ljava/util/concurrent/ThreadFactory;" new="ALLATORIxDEMO"/>
@@ -2773,7 +2773,7 @@
    <field old="declaredOrigin Ljava/lang/Object;" new="f"/>
    <field old="inError Z" new="I"/>
   </class>
-  <class old="com.dogerina.slayer.Master" new="com.a.a.a">
+  <class old="me.dogerina.Master" new="com.a.a.a">
    <method old="getAssignments()[Lcom/dogerina/slayer/Assignment;" new="ALLATORIxDEMO"/>
    <method old="getCombatLevel()I" new="ALLATORIxDEMO"/>
    <method old="getName()Ljava/lang/String;" new="ALLATORIxDEMO"/>
@@ -2800,7 +2800,7 @@
   <class old="ch.qos.logback.core.html.NOPThrowableRenderer" new="b.a.a.a.i.a">
    <method old="render(Ljava/lang/StringBuilder;Ljava/lang/Object;)V" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.VarInsnFactory" new="com.inubot.a.b.a.a.a.a">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.VarInsnFactory" new="com.inubot.a.b.a.a.a.a">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="getInstruction()Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
@@ -2829,7 +2829,7 @@
    <field old="localPropContainer Lch/qos/logback/core/spi/PropertyContainer;" new="L"/>
    <field old="map Ljava/util/Map;" new="H"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.RIS" new="com.inubot.a.b.a.a.a">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.RIS" new="com.inubot.a.b.a.a.a">
    <method old="getCurrentIndex()I" new="ALLATORIxDEMO"/>
    <method old="getKey(Ljava/lang/Integer;)Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
    <method old="getMatchFromRange(II)[Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
@@ -2849,7 +2849,7 @@
    <field old="instrIndexMap Ljava/util/Map;" new="ALLATORIxDEMO"/>
    <field old="mappedCode Ljava/lang/String;" new="H"/>
   </class>
-  <class old="ch.qos.logback.core.util.Duration" new="b.a.a.a.a.K">
+  <class old="ch.qos.logback.core.me.mad.util.Duration" new="b.a.a.a.a.K">
    <method old="buildByDays(D)Lch/qos/logback/core/util/Duration;" new="k"/>
    <method old="buildByHours(D)Lch/qos/logback/core/util/Duration;" new="ALLATORIxDEMO"/>
    <method old="buildByMilliseconds(D)Lch/qos/logback/core/util/Duration;" new="F"/>
@@ -3332,7 +3332,7 @@
   <class old="com.inubot.client.natives.oldschool.RSFont" new="com.inubot.client.natives.oldschool.RSFont">
    <method old="drawString(Ljava/lang/String;II)V" new="drawString"/>
   </class>
-  <class old="ch.qos.logback.classic.util.ContextSelectorStaticBinder" new="b.a.a.b.i.i">
+  <class old="ch.qos.logback.classic.me.mad.util.ContextSelectorStaticBinder" new="b.a.a.b.i.i">
    <method old="dynamicalContextSelector(Lch/qos/logback/classic/LoggerContext;Ljava/lang/String;)Lch/qos/logback/classic/selector/ContextSelector;" new="ALLATORIxDEMO"/>
    <method old="getContextSelector()Lch/qos/logback/classic/selector/ContextSelector;" new="ALLATORIxDEMO"/>
    <method old="getSingleton()Lch/qos/logback/classic/util/ContextSelectorStaticBinder;" new="ALLATORIxDEMO"/>
@@ -3444,7 +3444,7 @@
    <field old="sm Lch/qos/logback/core/status/StatusManager;" new="j"/>
    <field old="started Z" new="L"/>
   </class>
-  <class old="ch.qos.logback.classic.util.JNDIUtil" new="b.a.a.b.i.f">
+  <class old="ch.qos.logback.classic.me.mad.util.JNDIUtil" new="b.a.a.b.i.f">
    <method old="getInitialContext()Ljavax/naming/Context;" new="ALLATORIxDEMO"/>
    <method old="lookup(Ljavax/naming/Context;Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
@@ -3616,7 +3616,7 @@
   <class old="ch.qos.logback.classic.boolex.IEvaluator" new="b.a.a.b.h.m">
    <method old="doEvaluate(Lch/qos/logback/classic/spi/ILoggingEvent;)Z" new="doEvaluate"/>
   </class>
-  <class old="ch.qos.logback.core.util.LocationUtil" new="b.a.a.a.a.h">
+  <class old="ch.qos.logback.core.me.mad.util.LocationUtil" new="b.a.a.a.a.h">
    <method old="urlForResource(Ljava/lang/String;)Ljava/net/URL;" new="ALLATORIxDEMO"/>
    <field old="CLASSPATH_SCHEME Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <field old="SCHEME_PATTERN Ljava/lang/String;" new="L"/>
@@ -3881,7 +3881,7 @@
    <method old="select(Lcom/inubot/api/oldschool/Spell;)V" new="select"/>
    <field old="$assertionsDisabled Z" new="$assertionsDisabled"/>
   </class>
-  <class old="ch.qos.logback.core.util.SystemInfo" new="b.a.a.a.a.a">
+  <class old="ch.qos.logback.core.me.mad.util.SystemInfo" new="b.a.a.a.a.a">
    <method old="getJavaVendor()Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.classic.pattern.TargetLengthBasedClassNameAbbreviator" new="b.a.a.b.c.f">
@@ -4231,7 +4231,7 @@
    <method old="name()Ljava/lang/String;" new="name"/>
    <method old="version()D" new="version"/>
   </class>
-  <class old="com.inubot.api.util.filter.Filter" new="com.inubot.api.util.filter.Filter">
+  <class old="com.inubot.api.me.mad.util.filter.Filter" new="com.inubot.api.me.mad.util.filter.Filter">
    <method old="accept(Ljava/lang/Object;)Z" new="accept"/>
    <method old="always()Lcom/inubot/api/util/filter/Filter;" new="always"/>
    <method old="lambda$always$4(Ljava/lang/Object;)Z" new="lambda$always$4"/>
@@ -4621,7 +4621,7 @@
    <field old="ILL_FORMED I" new="L"/>
    <field old="UNRECOVERABLE_ERROR I" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.classic.util.LevelToSyslogSeverity" new="b.a.a.b.i.B">
+  <class old="ch.qos.logback.classic.me.mad.util.LevelToSyslogSeverity" new="b.a.a.b.i.B">
    <method old="convert(Lch/qos/logback/classic/spi/ILoggingEvent;)I" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.classic.filter.LevelFilter" new="b.a.a.b.q.L">
@@ -5056,7 +5056,7 @@
    <field old="arg2 I" new="arg2"/>
    <field old="opcode I" new="opcode"/>
   </class>
-  <class old="com.inubot.api.util.StopWatch" new="com.inubot.api.util.StopWatch">
+  <class old="com.inubot.api.me.mad.util.StopWatch" new="com.inubot.api.me.mad.util.StopWatch">
    <method old="format(J)Ljava/lang/String;" new="format"/>
    <method old="getElapsed()J" new="getElapsed"/>
    <method old="getElapsed(Ljava/util/concurrent/TimeUnit;)J" new="getElapsed"/>
@@ -5079,7 +5079,7 @@
    <field old="period J" new="period"/>
    <field old="start J" new="start"/>
   </class>
-  <class old="ch.qos.logback.classic.util.StatusListenerConfigHelper" new="b.a.a.b.i.m">
+  <class old="ch.qos.logback.classic.me.mad.util.StatusListenerConfigHelper" new="b.a.a.b.i.m">
    <method old="addStatusListener(Lch/qos/logback/classic/LoggerContext;Ljava/lang/String;)V" new="ALLATORIxDEMO"/>
    <method old="createListenerPerClassName(Lch/qos/logback/classic/LoggerContext;Ljava/lang/String;)Lch/qos/logback/core/status/StatusListener;" new="ALLATORIxDEMO"/>
    <method old="initAndAddListener(Lch/qos/logback/classic/LoggerContext;Lch/qos/logback/core/status/StatusListener;)V" new="ALLATORIxDEMO"/>
@@ -5186,7 +5186,7 @@
    <method old="getX()I" new="getX"/>
    <method old="getY()I" new="getY"/>
   </class>
-  <class old="ch.qos.logback.classic.util.ContextInitializer" new="b.a.a.b.i.l">
+  <class old="ch.qos.logback.classic.me.mad.util.ContextInitializer" new="b.a.a.b.i.l">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="autoConfig()V" new="ALLATORIxDEMO"/>
    <method old="configureByResource(Ljava/net/URL;)V" new="ALLATORIxDEMO"/>
@@ -5226,7 +5226,7 @@
    <method old="isSlatedForRemoval(Lch/qos/logback/core/spi/AbstractComponentTracker$Entry;J)Z" new="ALLATORIxDEMO"/>
    <field old="this$0 Lch/qos/logback/core/spi/AbstractComponentTracker;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.classic.util.DefaultNestedComponentRules" new="b.a.a.b.i.C">
+  <class old="ch.qos.logback.classic.me.mad.util.DefaultNestedComponentRules" new="b.a.a.b.i.C">
    <method old="addDefaultNestedComponentRegistryRules(Lch/qos/logback/core/joran/spi/DefaultNestedComponentRegistry;)V" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.core.spi.AppenderAttachableImpl" new="b.a.a.a.b.e">
@@ -5245,7 +5245,7 @@
    <method old="isSlatedForRemoval(Lch/qos/logback/core/spi/AbstractComponentTracker$Entry;J)Z" new="ALLATORIxDEMO"/>
    <field old="this$0 Lch/qos/logback/core/spi/AbstractComponentTracker;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.core.util.DynamicClassLoadingException" new="b.a.a.a.a.J">
+  <class old="ch.qos.logback.core.me.mad.util.DynamicClassLoadingException" new="b.a.a.a.a.J">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <field old="serialVersionUID J" new="ALLATORIxDEMO"/>
   </class>
@@ -5356,11 +5356,11 @@
    <field old="appender Lgroovy/lang/Reference;" new="H"/>
    <field old="appenderDelegate Lgroovy/lang/Reference;" new="L"/>
   </class>
-  <class old="com.inubot.api.util.Identifiable" new="com.inubot.api.util.Identifiable">
+  <class old="com.inubot.api.me.mad.util.Identifiable" new="com.inubot.api.me.mad.util.Identifiable">
    <method old="getId()I" new="getId"/>
    <method old="getName()Ljava/lang/String;" new="getName"/>
   </class>
-  <class old="ch.qos.logback.core.util.CloseUtil" new="b.a.a.a.a.c">
+  <class old="ch.qos.logback.core.me.mad.util.CloseUtil" new="b.a.a.a.a.c">
    <method old="closeQuietly(Ljava/io/Closeable;)V" new="ALLATORIxDEMO"/>
    <method old="closeQuietly(Ljava/net/ServerSocket;)V" new="ALLATORIxDEMO"/>
    <method old="closeQuietly(Ljava/net/Socket;)V" new="ALLATORIxDEMO"/>
@@ -5485,7 +5485,7 @@
    <field old="next Lch/qos/logback/core/pattern/Converter;" new="ALLATORIxDEMO"/>
    <field old="started Z" new="L"/>
   </class>
-  <class old="com.inubot.api.util.filter.IdFilter" new="com.inubot.api.util.filter.IdFilter">
+  <class old="com.inubot.api.me.mad.util.filter.IdFilter" new="com.inubot.api.me.mad.util.filter.IdFilter">
    <method old="accept(Lcom/inubot/api/util/Identifiable;)Z" new="accept"/>
    <method old="accept(Ljava/lang/Object;)Z" new="accept"/>
    <method old="always()Lcom/inubot/api/util/filter/Filter;" new="always"/>
@@ -5493,7 +5493,7 @@
    <method old="not(Lcom/inubot/api/util/filter/Filter;)Lcom/inubot/api/util/filter/Filter;" new="not"/>
    <field old="ids [I" new="ids"/>
   </class>
-  <class old="ch.qos.logback.classic.util.EnvUtil" new="b.a.a.b.i.M">
+  <class old="ch.qos.logback.classic.me.mad.util.EnvUtil" new="b.a.a.b.i.M">
    <method old="getServiceLoaderClassLoader()Ljava/lang/ClassLoader;" new="ALLATORIxDEMO"/>
    <method old="isGroovyAvailable()Z" new="ALLATORIxDEMO"/>
    <method old="isServiceLoaderAvailable()Z" new="k"/>
@@ -5754,7 +5754,7 @@
    <field old="started Z" new="L"/>
    <field old="timeout Lch/qos/logback/core/util/Duration;" new="H"/>
   </class>
-  <class old="ch.qos.logback.core.pattern.util.RestrictedEscapeUtil" new="b.a.a.a.f.a.B">
+  <class old="ch.qos.logback.core.pattern.me.mad.util.RestrictedEscapeUtil" new="b.a.a.a.f.a.B">
    <method old="escape(Ljava/lang/String;Ljava/lang/StringBuffer;CI)V" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.core.pattern.SpacePadder" new="b.a.a.a.f.M">
@@ -5846,7 +5846,7 @@
    <field old="PACKAGE Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <field old="catchblockkills I" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.core.util.EnvUtil" new="b.a.a.a.a.k">
+  <class old="ch.qos.logback.core.me.mad.util.EnvUtil" new="b.a.a.a.a.k">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="isJDK5()Z" new="F"/>
    <method old="isJDK6OrHigher()Z" new="k"/>
@@ -6032,7 +6032,7 @@
    <field old="WALK_WEST Lcom/inubot/Hotkey;" new="F"/>
    <field old="key I" new="k"/>
   </class>
-  <class old="ch.qos.logback.core.joran.util.ConfigurationWatchListUtil" new="b.a.a.a.h.d.B">
+  <class old="ch.qos.logback.core.joran.me.mad.util.ConfigurationWatchListUtil" new="b.a.a.a.h.d.B">
    <method old="addInfo(Lch/qos/logback/core/Context;Ljava/lang/String;)V" new="ALLATORIxDEMO"/>
    <method old="addStatus(Lch/qos/logback/core/Context;Lch/qos/logback/core/status/Status;)V" new="ALLATORIxDEMO"/>
    <method old="addToWatchList(Lch/qos/logback/core/Context;Ljava/net/URL;)V" new="k"/>
@@ -6118,7 +6118,7 @@
    <field old="ruleStore Lch/qos/logback/core/joran/spi/RuleStore;" new="c"/>
    <field old="skip Lch/qos/logback/core/joran/spi/ElementPath;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.core.util.StringCollectionUtil" new="b.a.a.a.a.B">
+  <class old="ch.qos.logback.core.me.mad.util.StringCollectionUtil" new="b.a.a.a.a.B">
    <method old="removeMatching(Ljava/util/Collection;Ljava/util/Collection;)V" new="k"/>
    <method old="removeMatching(Ljava/util/Collection;[Ljava/lang/String;)V" new="ALLATORIxDEMO"/>
    <method old="retainMatching(Ljava/util/Collection;Ljava/util/Collection;)V" new="ALLATORIxDEMO"/>
@@ -6634,7 +6634,7 @@
    <field old="_socket Ljava/net/Socket;" new="L"/>
    <field old="_writer Ljava/io/BufferedWriter;" new="j"/>
   </class>
-  <class old="ch.qos.logback.core.util.ContextUtil" new="b.a.a.a.a.b">
+  <class old="ch.qos.logback.core.me.mad.util.ContextUtil" new="b.a.a.a.a.b">
    <method old="acceptableAddress(Ljava/net/InetAddress;)Z" new="ALLATORIxDEMO"/>
    <method old="addError(Ljava/lang/String;)V" new="addError"/>
    <method old="addError(Ljava/lang/String;Ljava/lang/Throwable;)V" new="addError"/>
@@ -6710,7 +6710,7 @@
   <class old="com.inubot.api.oldschool.action.ActionFilter" new="com.inubot.api.oldschool.action.ActionFilter">
    <method old="accept(IIII)Z" new="accept"/>
   </class>
-  <class old="com.inubot.api.util.CacheLoader" new="com.inubot.api.util.CacheLoader">
+  <class old="com.inubot.api.me.mad.util.CacheLoader" new="com.inubot.api.me.mad.util.CacheLoader">
    <method old="findItemDefinition(I)Lcom/inubot/client/natives/oldschool/RSItemDefinition;" new="findItemDefinition"/>
    <method old="findNpcDefinition(I)Lcom/inubot/client/natives/oldschool/RSNpcDefinition;" new="findNpcDefinition"/>
    <method old="findObjectDefinition(I)Lcom/inubot/client/natives/oldschool/RSObjectDefinition;" new="findObjectDefinition"/>
@@ -7223,7 +7223,7 @@
    <field old="STATE_IN_GAME I" new="STATE_IN_GAME"/>
    <field old="STATE_LOADING_REGION I" new="STATE_LOADING_REGION"/>
   </class>
-  <class old="ch.qos.logback.core.util.DatePatternToRegexUtil" new="b.a.a.a.a.H">
+  <class old="ch.qos.logback.core.me.mad.util.DatePatternToRegexUtil" new="b.a.a.a.a.H">
    <method old="toRegex()Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="tokenize()Ljava/util/List;" new="ALLATORIxDEMO"/>
    <field old="datePattern Ljava/lang/String;" new="f"/>
@@ -7406,7 +7406,7 @@
   <class old="ch.qos.logback.core.net.SocketConnector$ExceptionHandler" new="b.a.a.a.g.m">
    <method old="connectionFailed(Lch/qos/logback/core/net/SocketConnector;Ljava/lang/Exception;)V" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.dogerina.slayer.Constraint" new="com.a.a.m">
+  <class old="me.dogerina.Constraint" new="com.a.a.m">
    <method old="isMet()Z" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.core.net.server.SSLServerSocketAppenderBase" new="b.a.a.a.g.b.E">
@@ -7523,7 +7523,7 @@
    <method old="getSelectInsertId()Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <field old="SELECT_CURRVAL Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.classic.util.LoggerNameUtil" new="b.a.a.b.i.L">
+  <class old="ch.qos.logback.classic.me.mad.util.LoggerNameUtil" new="b.a.a.b.i.L">
    <method old="computeNameParts(Ljava/lang/String;)Ljava/util/List;" new="ALLATORIxDEMO"/>
    <method old="getFirstSeparatorIndexOf(Ljava/lang/String;)I" new="ALLATORIxDEMO"/>
    <method old="getSeparatorIndexOf(Ljava/lang/String;I)I" new="ALLATORIxDEMO"/>
@@ -7641,7 +7641,7 @@
    <field old="logger Lch/qos/logback/classic/Logger;" new="L"/>
    <field old="socket Ljava/net/Socket;" new="H"/>
   </class>
-  <class old="ch.qos.logback.core.util.FixedDelay" new="b.a.a.a.a.g">
+  <class old="ch.qos.logback.core.me.mad.util.FixedDelay" new="b.a.a.a.a.g">
    <method old="nextDelay()J" new="ALLATORIxDEMO"/>
    <field old="nextDelay J" new="ALLATORIxDEMO"/>
    <field old="subsequentDelay J" new="L"/>
@@ -7953,7 +7953,7 @@
    <method old="UNUSED_findNumberOfCommonFrames([Ljava/lang/StackTraceElement;[Ljava/lang/StackTraceElement;)I" new="ALLATORIxDEMO"/>
    <method old="findNumberOfCommonFrames([Ljava/lang/StackTraceElement;[Lch/qos/logback/classic/spi/StackTraceElementProxy;)I" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.FieldInsnFactory" new="com.inubot.a.b.a.a.a.h">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.FieldInsnFactory" new="com.inubot.a.b.a.a.a.h">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="desc(Ljava/lang/String;)Lcom/inubot/bot/modscript/transform/util/factory/FieldInsnFactory;" new="C"/>
@@ -8159,7 +8159,7 @@
    <field old="pointer I" new="H"/>
    <field old="state Lch/qos/logback/core/subst/Tokenizer$TokenizerState;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.ProxyUtils$ProxyEntry" new="com.inubot.a.c.L">
+  <class old="com.inubot.bot.me.mad.util.ProxyUtils$ProxyEntry" new="com.inubot.a.c.L">
    <method old="isAlive()Z" new="ALLATORIxDEMO"/>
    <method old="toString()Ljava/lang/String;" new="toString"/>
    <field old="address Ljava/lang/String;" new="ALLATORIxDEMO"/>
@@ -8309,7 +8309,7 @@
    <field old="OPAQUE Lcom/inubot/api/methods/InterfaceOptions$ChatboxMode;" new="OPAQUE"/>
    <field old="TRANSPARENT Lcom/inubot/api/methods/InterfaceOptions$ChatboxMode;" new="TRANSPARENT"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.services.MethodInvokerFactory" new="com.inubot.a.b.a.a.a.a.L">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.services.MethodInvokerFactory" new="com.inubot.a.b.a.a.a.a.L">
    <method old="lambda$supply$39(I[Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;Ljdk/internal/org/objectweb/asm/tree/MethodInsnNode;Ljava/lang/String;Ljdk/internal/org/objectweb/asm/tree/MethodNode;)Ljdk/internal/org/objectweb/asm/tree/MethodNode;" new="ALLATORIxDEMO"/>
    <method old="supply(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Lcom/inubot/bot/modscript/transform/util/factory/MethodInsnFactory;[Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;)Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;" new="ALLATORIxDEMO"/>
    <method old="supply(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljdk/internal/org/objectweb/asm/tree/MethodInsnNode;[Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;)Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;" new="ALLATORIxDEMO"/>
@@ -8372,7 +8372,7 @@
    <method old="values()[Lcom/inubot/api/methods/traversal/Path$Option;" new="values"/>
    <field old="TOGGLE_RUN Lcom/inubot/api/methods/traversal/Path$Option;" new="TOGGLE_RUN"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.InsnFactory" new="com.inubot.a.b.a.a.a.C">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.InsnFactory" new="com.inubot.a.b.a.a.a.C">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="getInstruction()Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
@@ -8407,7 +8407,7 @@
    <field old="onMismatch Lch/qos/logback/core/spi/FilterReply;" new="L"/>
    <field old="start Z" new="L"/>
   </class>
-  <class old="ch.qos.logback.core.util.OptionHelper" new="b.a.a.a.a.C">
+  <class old="ch.qos.logback.core.me.mad.util.OptionHelper" new="b.a.a.a.a.C">
    <method old="extractDefaultReplacement(Ljava/lang/String;)[Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="getEnv(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="getSystemProperties()Ljava/util/Properties;" new="ALLATORIxDEMO"/>
@@ -8441,7 +8441,7 @@
    <method old="getOpen()Lcom/inubot/api/oldschool/Tab;" new="getOpen"/>
    <method old="open(Lcom/inubot/api/oldschool/Tab;)V" new="open"/>
   </class>
-  <class old="ch.qos.logback.core.util.AggregationType" new="b.a.a.a.a.U">
+  <class old="ch.qos.logback.core.me.mad.util.AggregationType" new="b.a.a.a.a.U">
    <method old="valueOf(Ljava/lang/String;)Lch/qos/logback/core/util/AggregationType;" new="valueOf"/>
    <method old="values()[Lch/qos/logback/core/util/AggregationType;" new="values"/>
    <field old="$VALUES [Lch/qos/logback/core/util/AggregationType;" new="L"/>
@@ -8504,7 +8504,7 @@
    <field old="val$password Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <field old="val$username Ljava/lang/String;" new="f"/>
   </class>
-  <class old="com.inubot.bot.util.Unpacker" new="com.inubot.a.c.m">
+  <class old="com.inubot.bot.me.mad.util.Unpacker" new="com.inubot.a.c.m">
    <method old="binary(Ljava/io/File;)[B" new="ALLATORIxDEMO"/>
    <method old="charIndex(C)I" new="ALLATORIxDEMO"/>
    <method old="dump(Ljava/io/File;)Ljava/util/Map;" new="ALLATORIxDEMO"/>
@@ -8626,7 +8626,7 @@
    <method old="getSelectInsertId()Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <field old="SELECT_CURRVAL Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.RIS$Node" new="com.inubot.a.b.a.a.L">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.RIS$Node" new="com.inubot.a.b.a.a.L">
    <field old="ain Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
    <field old="prev Lcom/inubot/bot/modscript/transform/util/RIS$Node;" new="f"/>
    <field old="this$0 Lcom/inubot/bot/modscript/transform/util/RIS;" new="L"/>
@@ -8776,7 +8776,7 @@
    <field old="nestedComplexProperty Ljava/lang/Object;" new="f"/>
    <field old="parentBean Lch/qos/logback/core/joran/util/PropertySetter;" new="L"/>
   </class>
-  <class old="ch.qos.logback.core.util.Loader" new="b.a.a.a.a.d">
+  <class old="ch.qos.logback.core.me.mad.util.Loader" new="b.a.a.a.a.d">
    <method old="getClassLoaderAsPrivileged(Ljava/lang/Class;)Ljava/lang/ClassLoader;" new="ALLATORIxDEMO"/>
    <method old="getClassLoaderOfClass(Ljava/lang/Class;)Ljava/lang/ClassLoader;" new="k"/>
    <method old="getClassLoaderOfObject(Ljava/lang/Object;)Ljava/lang/ClassLoader;" new="ALLATORIxDEMO"/>
@@ -9014,7 +9014,7 @@
    <field old="key Ljava/lang/String;" new="f"/>
    <field old="parentPropertyMap Ljava/util/Map;" new="L"/>
   </class>
-  <class old="com.inubot.api.util.Digraph" new="com.inubot.api.util.Digraph">
+  <class old="com.inubot.api.me.mad.util.Digraph" new="com.inubot.api.me.mad.util.Digraph">
    <method old="addEdge(Ljava/lang/Object;Ljava/lang/Object;)V" new="addEdge"/>
    <method old="addVertex(Ljava/lang/Object;)Z" new="addVertex"/>
    <method old="containsEdge(Ljava/lang/Object;Ljava/lang/Object;)Z" new="containsEdge"/>
@@ -9026,7 +9026,7 @@
   </class>
   <class old="com.inubot.bot.ui.ScriptSelector" new="com.inubot.a.d.i">
   </class>
-  <class old="com.inubot.api.util.Paintable" new="com.inubot.api.util.Paintable">
+  <class old="com.inubot.api.me.mad.util.Paintable" new="com.inubot.api.me.mad.util.Paintable">
    <method old="render(Ljava/awt/Graphics2D;)V" new="render"/>
   </class>
   <class old="org.slf4j.helpers.BasicMarkerFactory" new="a.a.c.F">
@@ -9181,7 +9181,7 @@
    <field old="val$file Ljava/io/File;" new="ALLATORIxDEMO"/>
    <field old="val$resume Z" new="f"/>
   </class>
-  <class old="ch.qos.logback.core.pattern.util.RegularEscapeUtil" new="b.a.a.a.f.a.L">
+  <class old="ch.qos.logback.core.pattern.me.mad.util.RegularEscapeUtil" new="b.a.a.a.f.a.L">
    <method old="basicEscape(Ljava/lang/String;)Ljava/lang/String;" new="k"/>
    <method old="escape(Ljava/lang/String;Ljava/lang/StringBuffer;CI)V" new="ALLATORIxDEMO"/>
    <method old="formatEscapeCharsForListing(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
@@ -9332,7 +9332,7 @@
    <field old="os Ljava/io/OutputStream;" new="ALLATORIxDEMO"/>
    <field old="presumedClean Z" new="L"/>
   </class>
-  <class old="com.inubot.api.util.filter.NameFilter" new="com.inubot.api.util.filter.NameFilter">
+  <class old="com.inubot.api.me.mad.util.filter.NameFilter" new="com.inubot.api.me.mad.util.filter.NameFilter">
    <method old="accept(Lcom/inubot/api/util/Identifiable;)Z" new="accept"/>
    <method old="accept(Ljava/lang/Object;)Z" new="accept"/>
    <method old="always()Lcom/inubot/api/util/filter/Filter;" new="always"/>
@@ -9638,7 +9638,7 @@
    <field old="socketFactory Ljavax/net/ServerSocketFactory;" new="ALLATORIxDEMO"/>
    <field old="ssl Lch/qos/logback/core/net/ssl/SSLConfiguration;" new="L"/>
   </class>
-  <class old="ch.qos.logback.core.util.CharSequenceToRegexMapper" new="b.a.a.a.a.A">
+  <class old="ch.qos.logback.core.me.mad.util.CharSequenceToRegexMapper" new="b.a.a.a.a.A">
    <method old="findMinMaxLengthsInSymbols([Ljava/lang/String;)[I" new="ALLATORIxDEMO"/>
    <method old="getRegexForAmPms()Ljava/lang/String;" new="k"/>
    <method old="getRegexForLongDaysOfTheWeek()Ljava/lang/String;" new="c"/>
@@ -9954,7 +9954,7 @@
   <class old="ch.qos.logback.core.rolling.RolloverFailure" new="b.a.a.a.e.l">
    <field old="serialVersionUID J" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.core.util.FileSize" new="b.a.a.a.a.D">
+  <class old="ch.qos.logback.core.me.mad.util.FileSize" new="b.a.a.a.a.D">
    <method old="getSize()J" new="ALLATORIxDEMO"/>
    <method old="valueOf(Ljava/lang/String;)Lch/qos/logback/core/util/FileSize;" new="ALLATORIxDEMO"/>
    <field old="DOUBLE_GROUP I" new="d"/>
@@ -9967,7 +9967,7 @@
    <field old="UNIT_PART Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <field old="size J" new="L"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.services.FieldGetterFactory" new="com.inubot.a.b.a.a.a.a.a">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.services.FieldGetterFactory" new="com.inubot.a.b.a.a.a.a.a">
    <method old="lambda$supply$73(ILjdk/internal/org/objectweb/asm/tree/FieldInsnNode;Ljava/lang/String;Ljdk/internal/org/objectweb/asm/tree/MethodNode;)Ljdk/internal/org/objectweb/asm/tree/MethodNode;" new="ALLATORIxDEMO"/>
    <method old="supply(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Lcom/inubot/bot/modscript/transform/util/factory/FieldInsnFactory;)Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;" new="ALLATORIxDEMO"/>
    <method old="supply(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljdk/internal/org/objectweb/asm/tree/FieldInsnNode;)Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;" new="ALLATORIxDEMO"/>
@@ -10008,7 +10008,7 @@
    <field old="context Lch/qos/logback/core/Context;" new="ALLATORIxDEMO"/>
    <field old="declaredOrigin Ljava/lang/Object;" new="f"/>
   </class>
-  <class old="ch.qos.logback.core.pattern.util.AsIsEscapeUtil" new="b.a.a.a.f.a.a">
+  <class old="ch.qos.logback.core.pattern.me.mad.util.AsIsEscapeUtil" new="b.a.a.a.f.a.a">
    <method old="escape(Ljava/lang/String;Ljava/lang/StringBuffer;CI)V" new="ALLATORIxDEMO"/>
   </class>
   <class old="com.inubot.script.loader.LocalScriptLoader" new="com.inubot.script.a.f">
@@ -10059,7 +10059,7 @@
    <field old="opcode I" new="opcode"/>
    <field old="type Lcom/inubot/api/oldschool/EntityType;" new="type"/>
   </class>
-  <class old="ch.qos.logback.core.util.CachingDateFormatter" new="b.a.a.a.a.T">
+  <class old="ch.qos.logback.core.me.mad.util.CachingDateFormatter" new="b.a.a.a.a.T">
    <method old="format(J)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="setTimeZone(Ljava/util/TimeZone;)V" new="ALLATORIxDEMO"/>
    <field old="cachedStr Ljava/lang/String;" new="L"/>
@@ -10110,7 +10110,7 @@
   <class old="ch.qos.logback.core.joran.action.ActionUtil$1" new="b.a.a.a.h.f.b">
    <field old="$SwitchMap$ch$qos$logback$core$joran$action$ActionUtil$Scope [I" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.classic.util.LogbackMDCAdapter" new="b.a.a.b.i.a">
+  <class old="ch.qos.logback.classic.me.mad.util.LogbackMDCAdapter" new="b.a.a.b.i.a">
    <method old="clear()V" new="ALLATORIxDEMO"/>
    <method old="duplicateAndInsertNewMap(Ljava/util/Map;)Ljava/util/Map;" new="ALLATORIxDEMO"/>
    <method old="get(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
@@ -10321,7 +10321,7 @@
    <field old="declaredOrigin Ljava/lang/Object;" new="f"/>
    <field old="inError Z" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.core.pattern.util.AlmostAsIsEscapeUtil" new="b.a.a.a.f.a.f">
+  <class old="ch.qos.logback.core.pattern.me.mad.util.AlmostAsIsEscapeUtil" new="b.a.a.a.f.a.f">
    <method old="escape(Ljava/lang/String;Ljava/lang/StringBuffer;CI)V" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.core.joran.action.ContextPropertyAction" new="b.a.a.a.h.f.k">
@@ -10547,7 +10547,7 @@
    <field old="isStarted Z" new="f"/>
    <field old="retrospective J" new="L"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.ASMFactory" new="com.inubot.a.b.a.a.M">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.ASMFactory" new="com.inubot.a.b.a.a.M">
    <method old="createGetter(Lcom/inubot/bot/modscript/hooks/FieldHook;)Ljdk/internal/org/objectweb/asm/tree/MethodNode;" new="ALLATORIxDEMO"/>
    <method old="createGetter(Lcom/inubot/bot/modscript/hooks/FieldHook;Ljava/lang/String;)Ljdk/internal/org/objectweb/asm/tree/MethodNode;" new="ALLATORIxDEMO"/>
    <method old="createGetter(ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljdk/internal/org/objectweb/asm/tree/MethodNode;" new="ALLATORIxDEMO"/>
@@ -10640,7 +10640,7 @@
   <class old="ch.qos.logback.core.db.dialect.SQLDialect" new="b.a.a.a.l.a.m">
    <method old="getSelectInsertId()Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.dogerina.slayer.ItemConstraint" new="com.a.a.B">
+  <class old="me.dogerina.ItemConstraint" new="com.a.a.B">
    <method old="isMet()Z" new="ALLATORIxDEMO"/>
    <field old="equipment Z" new="L"/>
    <field old="name Ljava/lang/String;" new="ALLATORIxDEMO"/>
@@ -10730,7 +10730,7 @@
    <method old="not(Lcom/inubot/api/util/filter/Filter;)Lcom/inubot/api/util/filter/Filter;" new="not"/>
    <method old="parse(Ljava/lang/Object;)V" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.io.Internet" new="com.inubot.a.c.a.L">
+  <class old="com.inubot.bot.me.mad.util.io.Internet" new="com.inubot.a.c.a.L">
    <method old="download(Ljava/lang/String;Ljava/lang/String;Lcom/inubot/bot/util/io/InternetCallback;)Ljava/io/File;" new="ALLATORIxDEMO"/>
    <method old="download(Ljava/lang/String;Ljava/lang/String;Lcom/inubot/bot/util/io/InternetCallback;Z)Ljava/io/File;" new="ALLATORIxDEMO"/>
    <method old="downloadBinary(Ljava/io/InputStream;Lcom/inubot/bot/util/io/InternetCallback;)[B" new="ALLATORIxDEMO"/>
@@ -10823,7 +10823,7 @@
    <field old="started Z" new="L"/>
    <field old="timeout Lch/qos/logback/core/util/Duration;" new="H"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.IntInsnFactory" new="com.inubot.a.b.a.a.a.M">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.IntInsnFactory" new="com.inubot.a.b.a.a.a.M">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="getInstruction()Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
@@ -10832,7 +10832,7 @@
    <method old="opcode(I)Lcom/inubot/bot/modscript/transform/util/factory/IntInsnFactory;" new="k"/>
    <method old="operand(I)Lcom/inubot/bot/modscript/transform/util/factory/IntInsnFactory;" new="C"/>
   </class>
-  <class old="ch.qos.logback.core.util.CharSequenceState" new="b.a.a.a.a.r">
+  <class old="ch.qos.logback.core.me.mad.util.CharSequenceState" new="b.a.a.a.a.r">
    <method old="incrementOccurrences()V" new="ALLATORIxDEMO"/>
    <field old="c C" new="ALLATORIxDEMO"/>
    <field old="occurrences I" new="L"/>
@@ -11004,7 +11004,7 @@
   </class>
   <class old="com.inubot.client.natives.ClientNative" new="com.inubot.client.natives.ClientNative">
   </class>
-  <class old="com.inubot.bot.util.io.InternetCallback" new="com.inubot.a.c.a.B">
+  <class old="com.inubot.bot.me.mad.util.io.InternetCallback" new="com.inubot.a.c.a.B">
    <method old="onDownload(I)V" new="ALLATORIxDEMO"/>
    <field old="length I" new="ALLATORIxDEMO"/>
   </class>
@@ -11450,7 +11450,7 @@
    <field old="serialVersionUID J" new="H"/>
    <field old="version Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.core.util.ContentTypeUtil" new="b.a.a.a.a.j">
+  <class old="ch.qos.logback.core.me.mad.util.ContentTypeUtil" new="b.a.a.a.a.j">
    <method old="getSubType(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="isTextual(Ljava/lang/String;)Z" new="ALLATORIxDEMO"/>
   </class>
@@ -11893,7 +11893,7 @@
    <field old="script Lgroovy/lang/Script;" new="ALLATORIxDEMO"/>
    <field old="started Z" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.ProxyUtils" new="com.inubot.a.c.a">
+  <class old="com.inubot.bot.me.mad.util.ProxyUtils" new="com.inubot.a.c.a">
    <method old="getLastIP()Ljava/lang/String;" new="k"/>
    <method old="getLastPort()Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="getProxyEntries()[Lcom/inubot/bot/util/ProxyUtils$ProxyEntry;" new="ALLATORIxDEMO"/>
@@ -12066,7 +12066,7 @@
    <field old="start Lcom/inubot/api/oldschool/Tile;" new="start"/>
    <field old="tiles Ljava/util/List;" new="tiles"/>
   </class>
-  <class old="ch.qos.logback.core.util.IncompatibleClassException" new="b.a.a.a.a.F">
+  <class old="ch.qos.logback.core.me.mad.util.IncompatibleClassException" new="b.a.a.a.a.F">
    <field old="obtainedClass Ljava/lang/Class;" new="f"/>
    <field old="requestedClass Ljava/lang/Class;" new="ALLATORIxDEMO"/>
    <field old="serialVersionUID J" new="L"/>
@@ -12137,7 +12137,7 @@
    <method old="getColumnName(Ljava/lang/Enum;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="getTableName(Ljava/lang/Enum;)Ljava/lang/String;" new="k"/>
   </class>
-  <class old="ch.qos.logback.core.pattern.util.IEscapeUtil" new="b.a.a.a.f.a.m">
+  <class old="ch.qos.logback.core.pattern.me.mad.util.IEscapeUtil" new="b.a.a.a.f.a.m">
    <method old="escape(Ljava/lang/String;Ljava/lang/StringBuffer;CI)V" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.classic.gaffer.PropertyUtil$_upperCaseFirstLetter_closure1" new="b.a.a.b.f.L">
@@ -12198,7 +12198,7 @@
    <method old="close()V" new="close"/>
    <method old="setLoggerContext(Lch/qos/logback/classic/LoggerContext;)V" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.api.util.Time" new="com.inubot.api.util.Time">
+  <class old="com.inubot.api.me.mad.util.Time" new="com.inubot.api.me.mad.util.Time">
    <method old="await(Ljava/util/function/BooleanSupplier;I)Z" new="await"/>
    <method old="sleep(I)Z" new="sleep"/>
    <method old="sleep(II)Z" new="sleep"/>
@@ -12518,7 +12518,7 @@
    <field old="OPTION_STATE Lch/qos/logback/core/pattern/parser/TokenStream$TokenizerState;" new="f"/>
    <field old="RIGHT_PARENTHESIS_STATE Lch/qos/logback/core/pattern/parser/TokenStream$TokenizerState;" new="F"/>
   </class>
-  <class old="ch.qos.logback.core.joran.util.StringToObjectConverter" new="b.a.a.a.h.d.m">
+  <class old="ch.qos.logback.core.joran.me.mad.util.StringToObjectConverter" new="b.a.a.a.h.d.m">
    <method old="canBeBuiltFromSimpleString(Ljava/lang/Class;)Z" new="k"/>
    <method old="convertArg(Lch/qos/logback/core/spi/ContextAware;Ljava/lang/String;Ljava/lang/Class;)Ljava/lang/Object;" new="k"/>
    <method old="convertByValueOfMethod(Lch/qos/logback/core/spi/ContextAware;Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/Object;" new="ALLATORIxDEMO"/>
@@ -12558,7 +12558,7 @@
    <method old="getMarkerFactory()Lorg/slf4j/IMarkerFactory;" new="ALLATORIxDEMO"/>
    <method old="getMarkerFactoryClassStr()Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.dogerina.slayer.SkillConstraint" new="com.a.a.L">
+  <class old="me.dogerina.SkillConstraint" new="com.a.a.L">
    <method old="getLevel()I" new="ALLATORIxDEMO"/>
    <method old="getSkill()Lcom/inubot/api/oldschool/Skill;" new="ALLATORIxDEMO"/>
    <method old="isMet()Z" new="ALLATORIxDEMO"/>
@@ -12639,7 +12639,7 @@
    <method old="lambda$new$0(Lcom/inubot/script/loader/ScriptDefinition;Ljava/awt/event/ActionEvent;)V" new="ALLATORIxDEMO"/>
    <field old="this$0 Lcom/inubot/bot/ui/ScriptSelector;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.core.util.DelayStrategy" new="b.a.a.a.a.m">
+  <class old="ch.qos.logback.core.me.mad.util.DelayStrategy" new="b.a.a.a.a.m">
    <method old="nextDelay()J" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.core.rolling.helper.RenameUtil" new="b.a.a.a.e.a.i">
@@ -12663,7 +12663,7 @@
    <field old="context Lch/qos/logback/core/Context;" new="ALLATORIxDEMO"/>
    <field old="declaredOrigin Ljava/lang/Object;" new="f"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.services.StackBuilder" new="com.inubot.a.b.a.a.a.a.m">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.services.StackBuilder" new="com.inubot.a.b.a.a.a.a.m">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="append(ILjdk/internal/org/objectweb/asm/tree/MethodNode;)Lcom/inubot/bot/modscript/transform/util/factory/services/StackBuilder;" new="ALLATORIxDEMO"/>
    <method old="append(Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;)Lcom/inubot/bot/modscript/transform/util/factory/services/StackBuilder;" new="ALLATORIxDEMO"/>
@@ -13478,11 +13478,11 @@
    <field old="next Lch/qos/logback/core/pattern/Converter;" new="ALLATORIxDEMO"/>
    <field old="started Z" new="L"/>
   </class>
-  <class old="ch.qos.logback.core.util.Loader$1" new="b.a.a.a.a.l">
+  <class old="ch.qos.logback.core.me.mad.util.Loader$1" new="b.a.a.a.a.l">
    <method old="run()Ljava/lang/Boolean;" new="ALLATORIxDEMO"/>
    <method old="run()Ljava/lang/Object;" new="run"/>
   </class>
-  <class old="ch.qos.logback.core.util.Loader$2" new="b.a.a.a.a.i">
+  <class old="ch.qos.logback.core.me.mad.util.Loader$2" new="b.a.a.a.a.i">
    <method old="run()Ljava/lang/ClassLoader;" new="ALLATORIxDEMO"/>
    <method old="run()Ljava/lang/Object;" new="run"/>
    <field old="val$clazz Ljava/lang/Class;" new="ALLATORIxDEMO"/>
@@ -13519,7 +13519,7 @@
    <field old="declaredOrigin Ljava/lang/Object;" new="f"/>
    <field old="inError Z" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.core.util.TimeUtil" new="b.a.a.a.a.L">
+  <class old="ch.qos.logback.core.me.mad.util.TimeUtil" new="b.a.a.a.a.L">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="computeStartOfNextDay(J)J" new="k"/>
    <method old="computeStartOfNextHour(J)J" new="c"/>
@@ -14257,7 +14257,7 @@
    <field old="state I" new="ALLATORIxDEMO"/>
    <field old="tokenStream Lch/qos/logback/core/pattern/parser/TokenStream;" new="H"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.LdcInsnFactory" new="com.inubot.a.b.a.a.a.f">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.LdcInsnFactory" new="com.inubot.a.b.a.a.a.f">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="constant(Ljava/lang/Object;)Lcom/inubot/bot/modscript/transform/util/factory/LdcInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
@@ -14755,7 +14755,7 @@
    <field old="opcode I" new="opcode"/>
    <field old="type Lcom/inubot/api/oldschool/EntityType;" new="type"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.AbstractInsnFactory" new="com.inubot.a.b.a.a.a.L">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.AbstractInsnFactory" new="com.inubot.a.b.a.a.a.L">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="getInstruction()Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
@@ -14948,7 +14948,7 @@
    <field old="current Lcom/inubot/client/natives/oldschool/RSNode;" new="current"/>
    <field old="raw Lcom/inubot/client/natives/ClientNative;" new="raw"/>
   </class>
-  <class old="com.inubot.bot.util.io.Crawler$1" new="com.inubot.a.c.a.M">
+  <class old="com.inubot.bot.me.mad.util.io.Crawler$1" new="com.inubot.a.c.a.M">
    <method old="appletResize(II)V" new="appletResize"/>
    <method old="getAppletContext()Ljava/applet/AppletContext;" new="getAppletContext"/>
    <method old="getCodeBase()Ljava/net/URL;" new="getCodeBase"/>
@@ -14958,7 +14958,7 @@
    <field old="this$0 Lcom/inubot/bot/util/io/Crawler;" new="L"/>
    <field old="val$applet Ljava/applet/Applet;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.io.Crawler$2" new="com.inubot.a.c.a.f">
+  <class old="com.inubot.bot.me.mad.util.io.Crawler$2" new="com.inubot.a.c.a.f">
    <method old="onDownload(I)V" new="ALLATORIxDEMO"/>
    <field old="length I" new="ALLATORIxDEMO"/>
    <field old="this$0 Lcom/inubot/bot/util/io/Crawler;" new="ALLATORIxDEMO"/>
@@ -15378,7 +15378,7 @@
    <field old="level Lch/qos/logback/classic/Level;" new="L"/>
    <field old="value Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.OS$1" new="com.inubot.a.c.B">
+  <class old="com.inubot.bot.me.mad.util.OS$1" new="com.inubot.a.c.B">
    <field old="$SwitchMap$com$inubot$bot$util$OS [I" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.core.subst.Token" new="b.a.a.a.n.f">
@@ -15934,7 +15934,7 @@
    <field old="ste Ljava/lang/StackTraceElement;" new="ALLATORIxDEMO"/>
    <field old="steAsString Ljava/lang/String;" new="f"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.FactoryAgent" new="com.inubot.a.b.a.a.a.m">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.FactoryAgent" new="com.inubot.a.b.a.a.a.m">
    <method old="supply()Ljava/lang/Object;" new="ALLATORIxDEMO"/>
   </class>
   <class old="com.inubot.api.oldschool.action.Processable" new="com.inubot.api.oldschool.action.Processable">
@@ -16452,7 +16452,7 @@
    <field old="presentationHeader Ljava/lang/String;" new="f"/>
    <field old="started Z" new="ALLATORIxDEMO"/>
   </class>
-  <class old="ch.qos.logback.core.util.PropertySetterException" new="b.a.a.a.a.M">
+  <class old="ch.qos.logback.core.me.mad.util.PropertySetterException" new="b.a.a.a.a.M">
    <field old="serialVersionUID J" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.core.sift.AppenderFactory" new="b.a.a.a.d.L">
@@ -16472,7 +16472,7 @@
    <method old="walkTo(Lcom/inubot/api/oldschool/Tile;)V" new="walkTo"/>
    <field old="web Lcom/inubot/api/methods/traversal/graph/Web;" new="web"/>
   </class>
-  <class old="com.inubot.bot.util.CachedClassLoader" new="com.inubot.a.c.C">
+  <class old="com.inubot.bot.me.mad.util.CachedClassLoader" new="com.inubot.a.c.C">
    <method old="loadClass(Ljava/lang/String;)Ljava/lang/Class;" new="loadClass"/>
    <field old="classes Ljava/util/Map;" new="f"/>
    <field old="defined Ljava/util/Map;" new="ALLATORIxDEMO"/>
@@ -16630,7 +16630,7 @@
    <field old="THIEVING Lcom/inubot/api/oldschool/Skill;" new="THIEVING"/>
    <field old="WOODCUTTING Lcom/inubot/api/oldschool/Skill;" new="WOODCUTTING"/>
   </class>
-  <class old="ch.qos.logback.core.joran.util.PropertySetter$1" new="b.a.a.a.h.d.L">
+  <class old="ch.qos.logback.core.joran.me.mad.util.PropertySetter$1" new="b.a.a.a.h.d.L">
    <field old="$SwitchMap$ch$qos$logback$core$util$AggregationType [I" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.core.pattern.color.CyanCompositeConverter" new="b.a.a.a.f.c.h">
@@ -16669,7 +16669,7 @@
    <field old="next Lch/qos/logback/core/pattern/Converter;" new="ALLATORIxDEMO"/>
    <field old="started Z" new="L"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.RIS$Constraint" new="com.inubot.a.b.a.a.m">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.RIS$Constraint" new="com.inubot.a.b.a.a.m">
    <method old="accept([Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;)Z" new="ALLATORIxDEMO"/>
   </class>
   <class old="ch.qos.logback.core.net.ssl.ConfigurableSSLSocketFactory" new="b.a.a.a.g.a.g">
@@ -16775,7 +16775,7 @@
    <field old="throwableRenderer Lch/qos/logback/core/html/IThrowableRenderer;" new="d"/>
    <field old="title Ljava/lang/String;" new="F"/>
   </class>
-  <class old="com.inubot.bot.util.Configuration" new="com.inubot.a.c.M">
+  <class old="com.inubot.bot.me.mad.util.Configuration" new="com.inubot.a.c.M">
    <method old="getSystemHome()Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="isLocal()Z" new="ALLATORIxDEMO"/>
    <field old="APPLICATION_NAME Ljava/lang/String;" new="F"/>
@@ -16920,7 +16920,7 @@
    <field old="UNSUCCESSFUL_INIT_URL Ljava/lang/String;" new="J"/>
    <field old="VERSION_MISMATCH Ljava/lang/String;" new="a"/>
   </class>
-  <class old="ch.qos.logback.core.util.FileUtil" new="b.a.a.a.a.E">
+  <class old="ch.qos.logback.core.me.mad.util.FileUtil" new="b.a.a.a.a.E">
    <method old="addError(Ljava/lang/String;)V" new="addError"/>
    <method old="addError(Ljava/lang/String;Ljava/lang/Throwable;)V" new="addError"/>
    <method old="addInfo(Ljava/lang/String;)V" new="addInfo"/>
@@ -17133,7 +17133,7 @@
    <method old="never()Lcom/inubot/api/util/filter/Filter;" new="never"/>
    <method old="not(Lcom/inubot/api/util/filter/Filter;)Lcom/inubot/api/util/filter/Filter;" new="not"/>
   </class>
-  <class old="com.inubot.bot.util.OS" new="com.inubot.a.c.f">
+  <class old="com.inubot.bot.me.mad.util.OS" new="com.inubot.a.c.f">
    <method old="get()Lcom/inubot/bot/util/OS;" new="ALLATORIxDEMO"/>
    <method old="getHomeDirectory()Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="getUserAgentPart()Ljava/lang/String;" new="k"/>
@@ -17522,7 +17522,7 @@
    <field old="next Lch/qos/logback/core/pattern/Converter;" new="ALLATORIxDEMO"/>
    <field old="started Z" new="L"/>
   </class>
-  <class old="ch.qos.logback.core.joran.util.PropertySetter" new="b.a.a.a.h.d.a">
+  <class old="ch.qos.logback.core.joran.me.mad.util.PropertySetter" new="b.a.a.a.h.d.a">
    <method old="addBasicProperty(Ljava/lang/String;Ljava/lang/String;)V" new="k"/>
    <method old="addComplexProperty(Ljava/lang/String;Ljava/lang/Object;)V" new="ALLATORIxDEMO"/>
    <method old="addError(Ljava/lang/String;)V" new="addError"/>
@@ -17631,7 +17631,7 @@
    <method old="render(Ljava/lang/StringBuilder;Ljava/lang/Object;)V" new="ALLATORIxDEMO"/>
    <field old="TRACE_PREFIX Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.io.Crawler" new="com.inubot.a.c.a.C">
+  <class old="com.inubot.bot.me.mad.util.io.Crawler" new="com.inubot.a.c.a.C">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="crawl()Z" new="F"/>
    <method old="download()Z" new="ALLATORIxDEMO"/>
