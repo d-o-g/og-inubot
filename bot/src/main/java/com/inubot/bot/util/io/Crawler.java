@@ -25,7 +25,7 @@ public class Crawler {
     public Crawler(GameType type) {
         this.type = type;
         this.pack = Configuration.CACHE + "gamepack.jar";
-        this.modscript = "http://inubot.com/modscript.dat";
+        this.modscript = "http://www.inubot.com/modscript.dat";
         this.home = "http://oldschool" + Configuration.WORLD + ".runescape.com/";
         this.config = home + "jav_config.ws";
     }
