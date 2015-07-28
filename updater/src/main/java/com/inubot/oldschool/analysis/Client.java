@@ -21,7 +21,7 @@ import java.util.*;
 
 @VisitorInfo(hooks = {"processAction", "players", "npcs", "canvas", "player", "region", "widgets", "objects",
         "groundItems", "cameraX", "cameraY", "cameraZ", "cameraPitch", "cameraYaw", "mapScale", "mapOffset",
-        "mapAngle", "baseX", "baseY", "varps", "tempVarps", "widgetPositionsX", "widgetPositionsY",
+        "mapRotation", "baseX", "baseY", "varps", "tempVarps", "widgetPositionsX", "widgetPositionsY",
         "widgetWidths", "widgetHeights", "renderRules", "tileHeights", "widgetNodes", "npcIndices",
         "loadObjectDefinition", "loadNpcDefinition", "loadItemDefinition", "plane", "gameState", "mouseIdleTime",
         "energy", "weight", "experiences", "levels", "realLevels", "playerActions", "collisionMaps",
@@ -808,7 +808,7 @@ public class Client extends GraphVisitor {
                 public void visitField(FieldMemberNode fmn) {
                     if (fmn.opcode() == PUTSTATIC && fmn.desc().equals("I")) {
                         if (fmn.layer(IMUL, IAND, IADD, IDIV) != null) {
-                            hooks.put("mapAngle", new FieldHook("mapAngle", fmn.fin()));
+                            hooks.put("mapRotation", new FieldHook("mapRotation", fmn.fin()));
                             lock.set(true);
                         }
                     }

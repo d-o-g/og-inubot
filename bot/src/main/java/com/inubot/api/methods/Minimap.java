@@ -16,7 +16,7 @@ public class Minimap {
     }
 
     public static int getRotation() {
-        return Inubot.getInstance().getClient().getMapAngle();
+        return Inubot.getInstance().getClient().getMapRotation();
     }
 
     public static int getOffset() {

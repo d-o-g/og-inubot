@@ -15,7 +15,7 @@ public interface RSClient extends ClientNative {
     int getCameraYaw();
     int getCameraPitch();
     int getMapScale();
-    int getMapAngle();
+    int getMapRotation();
     int getMapOffset();
     int[][][] getTileHeights();
     byte[][][] getRenderRules();
@@ -54,6 +54,7 @@ public interface RSClient extends ClientNative {
     int getCurrentWorld();
     boolean isMembersWorld();
     RSGrandExchangeOffer[] getGrandExchangeOffers();
+    void setMapRotation(int newRotation);
 
     RSFont getFont_p12full();
 

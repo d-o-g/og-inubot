@@ -122,14 +122,33 @@ public class Bank {
     }
 
     /**
+     * @param ids
+     * @return Gets the first {@link com.inubot.api.oldschool.WidgetItem} with the given ids
+     */
+    public static WidgetItem getFirst(int... ids) {
+        return getFirst(new IdFilter<WidgetItem>(ids));
+    }
+
+    /**
+     * @param names
+     * @return Gets the first {@link com.inubot.api.oldschool.WidgetItem} with the given names
+     */
+    public static WidgetItem getFirst(String... names) {
+        return getFirst(new NameFilter<WidgetItem>(names));
+    }
+
+    /**
      * Selects the close button of the bank if it is open
      */
-    public static void close() {
+    public static boolean close() {
         if (Bank.isOpen()) {
             Widget w = Interfaces.getWidget(12, 3).getChild(c -> c.getIndex() == 11);
-            if (w != null)
+            if (w != null) {
                 Client.processAction(new WidgetAction(ActionOpcodes.WIDGET_ACTION, 0, w.getIndex(), w.getId()), "Close", "");
+                return true;
+            }
         }
+        return false;
     }
 
     /**
