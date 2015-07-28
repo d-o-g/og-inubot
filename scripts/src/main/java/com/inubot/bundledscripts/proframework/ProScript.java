@@ -9,12 +9,16 @@ package com.inubot.bundledscripts.proframework;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.event.ExperienceEvent;
 import com.inubot.api.oldschool.event.ExperienceListener;
-import com.inubot.api.util.*;
+import com.inubot.api.util.AWTUtil;
+import com.inubot.api.util.Paintable;
+import com.inubot.api.util.StopWatch;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
 import java.awt.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author Dogerina
@@ -55,6 +59,9 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
         }
         paintData.put("Runtime", stopWatch.toElapsedString());
         for (TrackedSkill trackedSkill : trackedSkills.values()) {
+            if (trackedSkill.gainedExperience == 0) {
+                continue;
+            }
             paintData.put(trackedSkill.skill.toString() + " experience", trackedSkill.gainedExperience);
             paintData.put(trackedSkill.skill.toString() + " experience/hr", stopWatch.getHourlyRate(trackedSkill.gainedExperience));
         }

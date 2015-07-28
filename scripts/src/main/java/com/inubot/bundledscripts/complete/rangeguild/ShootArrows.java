@@ -9,9 +9,9 @@ package com.inubot.bundledscripts.complete.rangeguild;
 import com.inubot.api.methods.GameObjects;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.methods.Players;
-import com.inubot.api.oldschool.Tile;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.GameObject;
+import com.inubot.api.oldschool.Tile;
 import com.inubot.api.util.Time;
 
 /**

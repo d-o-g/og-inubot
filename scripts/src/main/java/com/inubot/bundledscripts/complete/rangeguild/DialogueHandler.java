@@ -1,8 +1,7 @@
 package com.inubot.bundledscripts.complete.rangeguild;
 
 import com.inubot.Bot;
-import com.inubot.api.methods.Client;
-import com.inubot.api.methods.Interfaces;
+import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
 
@@ -23,8 +22,8 @@ public class DialogueHandler implements Action {
         for (Widget widget : Interfaces.getWidgets(RangeGuild.DIALOGUE_FILTER)) {
             if (widget.getText() != null && widget.isVisible()) {
                 if (widget.getText().contains("Click here to continue")) {
-                    Bot.getInstance().getCanvas().pressKey(KeyEvent.VK_SPACE, 200);
-                    Bot.getInstance().getCanvas().releaseKey(KeyEvent.VK_SPACE);
+                    Game.getCanvas().pressKey(KeyEvent.VK_SPACE, 200);
+                    Game.getCanvas().releaseKey(KeyEvent.VK_SPACE);
                 } else {
                     Client.processAction(new DialogButtonAction(widget.getId(), 1), "Continue", "");
                     break;

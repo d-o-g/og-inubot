@@ -184,7 +184,9 @@ public class RedChinsPRO extends Script implements Paintable {
             if (isMakingGarden(tile)) {
                 continue;
             }
-            if (GameObjects.getNearest(o -> o.getLocation().equals(tile) && o.getRaw() instanceof RSInteractableEntity) == null)
+            if (GameObjects.getNearest(o -> o.getLocation().equals(tile)
+                    && o.getRaw() instanceof RSInteractableEntity
+                    && o.getName() != null && !o.getName().equals("Grass")) == null)
                 return tile;
         }
         for (Tile tile : formation) {

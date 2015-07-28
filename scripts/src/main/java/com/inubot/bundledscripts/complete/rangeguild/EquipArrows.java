@@ -1,8 +1,8 @@
 package com.inubot.bundledscripts.complete.rangeguild;
 
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.methods.Inventory;
+import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
 /**

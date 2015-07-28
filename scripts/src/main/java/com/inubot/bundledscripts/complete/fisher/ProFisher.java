@@ -8,7 +8,9 @@ package com.inubot.bundledscripts.complete.fisher;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.oldschool.*;
+import com.inubot.api.oldschool.GameObject;
+import com.inubot.api.oldschool.Npc;
+import com.inubot.api.oldschool.Tile;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.IdFilter;

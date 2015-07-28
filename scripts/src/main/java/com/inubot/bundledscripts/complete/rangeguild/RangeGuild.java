@@ -1,9 +1,12 @@
 package com.inubot.bundledscripts.complete.rangeguild;
 
-import com.inubot.api.methods.*;
+import com.inubot.api.methods.Game;
+import com.inubot.api.methods.Skills;
+import com.inubot.api.methods.Varps;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.Widget;
-import com.inubot.api.util.*;
+import com.inubot.api.util.AWTUtil;
+import com.inubot.api.util.Paintable;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;

@@ -11,14 +11,17 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.tree.InputButtonAction;
 import com.inubot.api.oldschool.event.MessageEvent;
-import com.inubot.api.util.*;
+import com.inubot.api.util.Paintable;
+import com.inubot.api.util.StopWatch;
+import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.script.Manifest;
 import com.inubot.bundledscripts.proframework.ProScript;
+import com.inubot.script.Manifest;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Manifest(name = "ProAgility", developer = "Dogerina & luckruns0ut", version = 1.0, desc = "Does any course including rooftops except the barbarian course")
 public class PerfectAgility extends ProScript implements Paintable {
@@ -78,14 +81,6 @@ public class PerfectAgility extends ProScript implements Paintable {
             return 100;
         }
 
-        if (stucktime.getElapsed() > 12000) {
-            stucktime.reset();
-            if (stuck > 4 && Players.getLocal().getLocation().equals(ARDY_STUCK)) {
-                Movement.walkTo(new Tile(2656, 3296, 3));
-                Time.sleep(3000);
-            }
-            stuck = 0;
-        }
         if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 10) {
             Movement.toggleRun(true);
             Time.sleep(600);
@@ -105,9 +100,18 @@ public class PerfectAgility extends ProScript implements Paintable {
             mark.processAction("Take");
             return 400;
         }
+
         Obstacle obstacle = course.getNext();
+
+        if (Players.getLocal().getLocation().equals(ARDY_STUCK)) {
+            Movement.walkTo(new Tile(2656, 3296, 3));
+            Time.sleep(1800, 2200);
+            obstacle = course.getNext();
+        }
+
         if (obstacle == null)
             return 400;
+
 
         GameObject obj;
 
@@ -117,9 +121,10 @@ public class PerfectAgility extends ProScript implements Paintable {
                 return 400;
             }
 
+            final Obstacle finalObstacle = obstacle;
             obj = GameObjects.getNearest(gameObject -> {
-                if (gameObject.getName() != null && gameObject.getName().equals(obstacle.getName())) {
-                    if (gameObject.getLocation().getRegionX() == obstacle.getTile().getRegionX() && gameObject.getLocation().getRegionY() == obstacle.getTile().getRegionY())
+                if (gameObject.getName() != null && gameObject.getName().equals(finalObstacle.getName())) {
+                    if (gameObject.getLocation().getRegionX() == finalObstacle.getTile().getRegionX() && gameObject.getLocation().getRegionY() == finalObstacle.getTile().getRegionY())
                         return true;
                 }
                 return false;

@@ -5,6 +5,7 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.*;
+import com.inubot.client.natives.oldschool.RSInteractableEntity;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
@@ -105,8 +106,10 @@ public class BirdSnarePRO extends Script implements Paintable {
 
     public Tile getNextLocation() {
         Tile[] formation = getTrapTactics();
-        for (final Tile tile : formation) { //no trap is available
-            if (GameObjects.getNearest(o -> o.getLocation().equals(tile)) == null)
+        for (Tile tile : formation) { //no trap is available
+            if (GameObjects.getNearest(o -> o.getLocation().equals(tile)
+                    && o.getRaw() instanceof RSInteractableEntity
+                    && o.getName() != null && !o.getName().equals("Grass")) == null)
                 return tile;
         }
         for (Tile tile : formation) {

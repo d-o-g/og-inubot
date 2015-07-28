@@ -39,18 +39,7 @@ import java.util.ArrayList;
 public class ScriptSelector extends JFrame {
 
     private static final Class[] SCRIPT_CLASSES = {
-            Combot.class,
-            WineMaker.class,
-            RangeGuild.class,
-            ProMiner.class,
-            RedChinsPRO.class,
-            FalconryPRO.class,
-            BirdSnarePRO.class,
-            ProFisher.class,
-            ProAlcher.class,
-            PerfectAgility.class,
-            ProChopper.class,
-            MadTutorial.class
+
     };
 
     public ScriptSelector() {

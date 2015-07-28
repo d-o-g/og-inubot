@@ -14,8 +14,8 @@ import com.inubot.api.oldschool.action.tree.SelectableSpellButtonAction;
 import com.inubot.api.oldschool.action.tree.TableAction;
 import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.script.Manifest;
 import com.inubot.bundledscripts.proframework.ProScript;
+import com.inubot.script.Manifest;
 
 import java.util.Map;
 
@@ -32,11 +32,6 @@ public class ProAlcher extends ProScript implements AlcherConstants {
 
     private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));
     private static final Filter<WidgetItem> OTHER_FILTER = (i -> !NATURE_FILTER.accept(i) && !i.getName().contains("Coins"));
-
-    @Override
-    public String getTitle() {
-        return "ProAlcher v1.00";
-    }
 
     @Override
     public void getPaintData(Map<String, Object> data) {

@@ -6,13 +6,14 @@
  */
 package com.inubot.bundledscripts.complete.hunter;
 
+import com.inubot.api.methods.*;
+import com.inubot.api.oldschool.Npc;
+import com.inubot.api.oldschool.Skill;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
-import com.inubot.api.methods.*;
-import com.inubot.api.oldschool.*;
 
 import java.awt.*;
 

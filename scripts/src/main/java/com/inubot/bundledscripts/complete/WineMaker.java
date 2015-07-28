@@ -6,17 +6,17 @@
  */
 package com.inubot.bundledscripts.complete;
 
+import com.inubot.Hotkey;
+import com.inubot.api.methods.*;
+import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
-import com.inubot.Hotkey;
 import com.inubot.api.util.Time;
-import com.inubot.api.oldschool.Skill;
 import com.inubot.api.util.filter.IdFilter;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
-import com.inubot.api.methods.*;
 
 import java.awt.*;
 

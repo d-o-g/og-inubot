@@ -6,7 +6,9 @@
  */
 package com.inubot.bundledscripts.proframework;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EventObject;
+import java.util.List;
 
 /**
  * @author Dogerina
