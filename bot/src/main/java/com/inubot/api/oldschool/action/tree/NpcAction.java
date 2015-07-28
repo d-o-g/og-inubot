@@ -36,7 +36,7 @@ public class NpcAction extends CharacterAction {
         int index = getArrayIndex();
         if (index < 0 || index > Short.MAX_VALUE)
             return null;
-        RSNpc npc = Npcs.raw()[index];
+        RSNpc npc = Npcs.internal()[index];
         return npc != null ? new Npc(npc, index) : null;
     }
 

@@ -10,18 +10,30 @@ import com.inubot.api.oldschool.Skill;
 
 public class Health {
 
+    /**
+     * @return The local health bar cycle
+     */
     public static int getCycle() {
         return Players.getLocal().getHealthBarCycle();
     }
 
+    /**
+     * @return The current health of the local player
+     */
     public static int getCurrent() {
         return Skills.getCurrentLevel(Skill.HITPOINTS);
     }
 
+    /**
+     * @return The maximum health of the local player (the hitpoints level)
+     */
     public static int getMaximum() {
         return Skills.getLevel(Skill.HITPOINTS);
     }
 
+    /**
+     * @return current health percentage
+     */
     public static int getPercentage() {
         return getCurrent() / getMaximum() * 100;
     }

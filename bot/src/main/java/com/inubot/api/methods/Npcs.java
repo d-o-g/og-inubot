@@ -10,7 +10,7 @@ import com.inubot.Inubot;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.collection.NpcPool;
-import com.inubot.api.util.filter.Filter;
+import com.inubot.api.util.filter.*;
 import com.inubot.client.natives.oldschool.RSNpc;
 
 import java.util.*;
@@ -27,12 +27,12 @@ public class Npcs {
         return pool;
     }
 
-    public static RSNpc[] raw() {
+    public static RSNpc[] internal() {
         return Inubot.getInstance().getClient().getNpcs();
     }
 
     public static Npc[] getLoaded(Filter<Npc> filter) {
-        RSNpc[] raws = raw();
+        RSNpc[] raws = internal();
         if (raws == null || raws.length == 0)
             return new Npc[0];
         int[] indices = Inubot.getInstance().getClient().getNpcIndices();
@@ -103,10 +103,19 @@ public class Npcs {
         return getNearestWithin(-1, filter);
     }
 
-    public static Npc getNearest(String name) {
-        return getNearest(npc -> {
-            String npcName = npc.getName();
-            return npcName != null && npcName.equals(name);
-        });
+    /**
+     * @param names
+     * @return The nearest {@link com.inubot.api.oldschool.Npc} matching the given names
+     */
+    public static Npc getNearest(String... names) {
+        return getNearest(new NameFilter<Npc>(names));
+    }
+
+    /**
+     * @param ids
+     * @return The nearest {@link com.inubot.api.oldschool.Npc} matching the given ids
+     */
+    public static Npc getNearest(int... ids) {
+        return getNearest(new IdFilter<Npc>(ids));
     }
 }

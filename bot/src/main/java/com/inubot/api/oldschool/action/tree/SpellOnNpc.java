@@ -17,7 +17,7 @@ public class SpellOnNpc extends CharacterAction {
     }
 
     public Npc npc() {
-        RSNpc[] npcs = Npcs.raw();
+        RSNpc[] npcs = Npcs.internal();
         int entityId = getEntityId();
         return npcs != null && entityId >= 0 && entityId < npcs.length ? new Npc(npcs[entityId], entityId) : null;
     }

@@ -11,7 +11,7 @@ import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.GameObject.Landmark;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.collection.GameObjectPool;
-import com.inubot.api.util.filter.Filter;
+import com.inubot.api.util.filter.*;
 import com.inubot.client.natives.oldschool.*;
 
 import java.util.*;
@@ -122,17 +122,34 @@ public class GameObjects {
         return loaded[0];
     }
 
+    /**
+     * @param filter
+     * @return The nearest {@link com.inubot.api.oldschool.GameObject} accepted by the given {@link com.inubot.api.util.filter.Filter}
+     */
     public static GameObject getNearest(Filter<GameObject> filter) {
         return getNearestWithin(-1, filter);
     }
 
-    public static GameObject getNearest(String name) {
-        return getNearest(o -> {
-            String oName = o.getName();
-            return oName != null && oName.equals(name);
-        });
+    /**
+     * @param names
+     * @return The nearest {@link com.inubot.api.oldschool.GameObject} matching the specified names
+     */
+    public static GameObject getNearest(String... names) {
+        return getNearest(new NameFilter<GameObject>(names));
     }
 
+    /**
+     * @param ids
+     * @return The nearest {@link com.inubot.api.oldschool.GameObject} matching the specified ids
+     */
+    public static GameObject getNearest(int... ids) {
+        return getNearest(new IdFilter<GameObject>(ids));
+    }
+
+    /**
+     * @param landmark
+     * @return The nearest {@link com.inubot.api.oldschool.GameObject} matching the given {@link com.inubot.api.oldschool.GameObject.Landmark}
+     */
     public static GameObject getNearest(Landmark landmark) {
         return getNearest(o -> o.getDefinition() != null && o.getLandmark() == landmark);
     }

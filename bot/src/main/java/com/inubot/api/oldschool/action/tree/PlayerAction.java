@@ -35,7 +35,7 @@ public class PlayerAction extends CharacterAction {
         int index = getArrayIndex();
         if (index < 0 || index > Players.MAX_PLAYERS)
             return null;
-        RSPlayer player = Players.raw()[index];
+        RSPlayer player = Players.internal()[index];
         return player != null ? new Player(player, index) : null;
     }
 

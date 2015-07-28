@@ -44,15 +44,18 @@ public class HintArrow {
         int index = Inubot.getInstance().getClient().getHintArrowNpcIndex();
         if (index < 0)
             return null;
-        RSNpc npc = Npcs.raw()[index];
+        RSNpc npc = Npcs.internal()[index];
         if (npc != null)
             return new Npc(npc, index);
-        RSPlayer player = Players.raw()[index = Inubot.getInstance().getClient().getHintArrowPlayerIndex()];
+        RSPlayer player = Players.internal()[index = Inubot.getInstance().getClient().getHintArrowPlayerIndex()];
         if (player != null)
             return new Player(player, index);
         return null;
     }
 
+    /**
+     * @return The current hint arrow type
+     */
     public static int getType() {
         return Inubot.getInstance().getClient().getHintArrowType();
     }

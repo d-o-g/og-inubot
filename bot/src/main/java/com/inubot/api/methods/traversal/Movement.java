@@ -25,20 +25,33 @@ public class Movement {
         web = new Web();
     }
 
+    /**
+     * @return <b>true</b> if run is enabled, <b>false</b> otherwise
+     */
     public static boolean isRunEnabled() {
         return Varps.getBoolean(173);
     }
 
+    /**
+     * Attempts to toggle run on
+     * @param on   Whether to toggle run on or not
+     */
     public static void toggleRun(boolean on) {
         if (isRunEnabled() == on)
             return;
         Client.processAction(1, -1, 10485781, 57, "Toggle Run", "", 50, 50);
     }
 
+    /**
+     * @return The current run energy
+     */
     public static int getRunEnergy() {
         return Inubot.getInstance().getClient().getEnergy();
     }
 
+    /**
+     * @param tiles The path to traverse
+     */
     public static void walk(Tile... tiles) {
         for (int i = 0; i <= tiles.length; i++) {
             if (i == 0) {
@@ -51,6 +64,11 @@ public class Movement {
         }
     }
 
+    /**
+     * Walks to the given tile, if the tile is not in the current region then it will walk
+     * to the corner of the region closest to the tile. For long paths, this is not recommended to be used.
+     * @param tile The tile to walk to
+     */
     public static void walkTo(Tile tile) {
         int x = tile.getRegionX();
         int y = tile.getRegionY();
@@ -65,10 +83,18 @@ public class Movement {
         Inubot.getInstance().getClient().setHoveredRegionTileY(y);
     }
 
+    /**
+     * @param target
+     * @return <b>true</b> if a tile is walkable
+     */
     public static boolean isReachable(Locatable target) {
         return canReach(target.getLocation().getRegionX(), target.getLocation().getRegionY(), false);
     }
 
+    /**
+     * @param target
+     * @return <b>true</b> if an object can be reached
+     */
     public static boolean isObjectReachable(Locatable target) {
         return canReach(target.getLocation().getRegionX(), target.getLocation().getRegionY(), true);
     }
@@ -210,6 +236,9 @@ public class Movement {
         return false;
     }
 
+    /**
+     * @return The current {@link com.inubot.api.methods.traversal.graph.Web} graph object
+     */
     public static Web getWeb() {
         return web;
     }

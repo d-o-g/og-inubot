@@ -90,8 +90,8 @@ public abstract class Character<T extends RSCharacter> extends Wrapper<T> implem
             index -= 32768;
         if (index >= 32767)
             return null;
-        RSPlayer[] players = Players.raw();
-        RSNpc[] npcs = Npcs.raw();
+        RSPlayer[] players = Players.internal();
+        RSNpc[] npcs = Npcs.internal();
         if (npcs == null || players == null)
             return null; //should never happen?
         RSNpc npc = index < npcs.length ? npcs[index] : null;
