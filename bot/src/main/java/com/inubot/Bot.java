@@ -65,7 +65,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         this.logPane = new LogPane();
         this.asyncEventBus = new AsynchronousEventBus();
         this.syncEventBus = new SynchronousEventBus();
-    //    ServerConnection.start();
+        ServerConnection.start();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
     }
@@ -84,7 +84,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
             crawler.download();
         try {
             //Internet.downloadBinary(new URL(crawler.modscript).openStream(), null)
-            ModScript.load(Files.readAllBytes(Paths.get(Configuration.CACHE + "oldschool.dat")), Integer.toString(crawler.getHash()));
+            ModScript.load(Files.readAllBytes(Paths.get(Configuration.CACHE + "")), Integer.toString(crawler.getHash()));
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse modscript", e);
         }

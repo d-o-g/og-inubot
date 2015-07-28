@@ -16,6 +16,15 @@ public class Login {
     private static String username, password;
 
     public static void main(String... args) throws Exception {
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            if (arg.equals("-login")) {
+                setUsername(args[i + 1]);
+                setPassword(args[i + 2]);
+                Inubot.main(args);
+                return;
+            }
+        }
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         JFrame frame = new JFrame("Inubot");
         frame.setLayout(new BorderLayout());

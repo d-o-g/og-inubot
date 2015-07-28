@@ -21,7 +21,7 @@ import java.util.*;
 
 @VisitorInfo(hooks = {"processAction", "players", "npcs", "canvas", "player", "region", "widgets", "objects",
         "groundItems", "cameraX", "cameraY", "cameraZ", "cameraPitch", "cameraYaw", "mapScale", "mapOffset",
-        "mapRotation", "baseX", "baseY", "varps", "tempVarps", "widgetPositionsX", "widgetPositionsY",
+        "mapRoation", "baseX", "baseY", "varps", "tempVarps", "widgetPositionsX", "widgetPositionsY",
         "widgetWidths", "widgetHeights", "renderRules", "tileHeights", "widgetNodes", "npcIndices",
         "loadObjectDefinition", "loadNpcDefinition", "loadItemDefinition", "plane", "gameState", "mouseIdleTime",
         "energy", "weight", "experiences", "levels", "realLevels", "playerActions", "collisionMaps",
