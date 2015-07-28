@@ -78,29 +78,32 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
     }
 
     @Override
-    public void processAction(int opcode, String action) {
+    public boolean processAction(int opcode, String action) {
         RSObjectDefinition definition = getDefinition();
         if (definition == null)
-            return;
+            return false;
         String name = definition.getName();
         if (name == null)
-            return;
-
+            return false;
         // if shit breaks look here
         //Client.processAction(Action.valueOf(opcode, raw.getId(), raw.getX(), raw.getY()), action, name);
         Client.processAction(Action.valueOf(opcode, raw.getId(), getRegionX(), getRegionY()), action, name);
+        return true;
     }
 
-    public void processAction(String action) {
+    public boolean processAction(String action) {
         RSObjectDefinition definition = getDefinition();
         if (definition == null)
-            return;
+            return false;
         String[] actions = definition.getActions();
         if (actions == null)
-            return;
+            return false;
         int index = Arrays.asList(actions).indexOf(action);
-        if (index >= 0)
+        if (index >= 0) {
             processAction(ActionOpcodes.OBJECT_ACTION_0 + index, action);
+            return true;
+        }
+        return false;
     }
 
     public String getName() {

@@ -62,25 +62,28 @@ public class GroundItem extends Wrapper<RSItem> implements Locatable, Identifiab
     }
 
     @Override
-    public void processAction(int opcode, String action) {
+    public boolean processAction(int opcode, String action) {
         String name = getName();
         if (name == null)
-            return;
+            return false;
         Client.processAction(new GroundItemAction(opcode, getId(), raw.getRegionX(), raw.getRegionY()), action, name);
+        return true;
     }
 
-    public void processAction(String action) {
+    public boolean processAction(String action) {
         RSItemDefinition definition = getDefinition();
         if (definition == null)
-            return;
+            return false;
         String[] actions = definition.getGroundActions();
         if (actions == null)
-            return;
+            return false;
         int index = Arrays.asList(actions).indexOf(action);
         if (index == -1 && (actions[2] == null || actions[2].equals("null")) && action.equals("Take")) {
             processAction(ActionOpcodes.GROUND_ITEM_ACTION_2, action);
+            return true;
         } else {
             processAction(ActionOpcodes.GROUND_ITEM_ACTION_0 + index, action);
+            return true;
         }
     }
 }

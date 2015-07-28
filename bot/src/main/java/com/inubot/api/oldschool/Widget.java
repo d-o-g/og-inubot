@@ -221,20 +221,28 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
     /**
      * Use #processAction(String) instead
      */
-    @Deprecated
-    public void processAction(int opcode, String action) {
+    public boolean processAction(int opcode, String action) {
         int index = Action.indexOf(getActions(), action) + 1;
+        if (index == -1)
+            return false;
         Client.processAction(new WidgetAction(index > 4, index, getParentHash() == -1 ? this.index : -1, getId()), action, "");
+        return true;
     }
 
-    public void processAction(String action) {
+    public boolean processAction(String action) {
         int index = Action.indexOf(getActions(), action) + 1;
+        if (index == -1)
+            return false;
         Client.processAction(new WidgetAction(index > 4, index, getParentHash() == -1 ? this.index : -1, getId()), action, "");
+        return true;
     }
 
-    public void processAction(String action, String target) {
+    public boolean processAction(String action, String target) {
         int index = Action.indexOf(getActions(), action) + 1;
+        if (index == -1)
+            return false;
         Client.processAction(new WidgetAction(index > 4, index, getParentHash() == -1 ? this.index : -1, getId()), action, target);
+        return true;
     }
 
     public int getArea() {

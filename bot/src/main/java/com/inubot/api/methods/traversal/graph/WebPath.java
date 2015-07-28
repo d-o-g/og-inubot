@@ -105,7 +105,7 @@ public class WebPath implements Path {
                 Movement.walkTo(next.getTile());
             }
             //TODO this timeout of 15 secs maybe too small? since 1 step can traverse an entire region with our bot..
-            return Time.await(() -> !Players.getLocal().isMoving() && Players.getLocal().getAnimation() == -1, 15000);
+            return Time.await(() -> !Players.getLocal().isMoving() && Players.getLocal().getAnimation() == -1, 5000);
         }
         return false;
     }

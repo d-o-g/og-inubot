@@ -25,6 +25,7 @@ public class Tabs {
 
     /**
      * Gets the {@link Widget} of all the tabs.
+     *
      * @return All the tabs in raw {@link Widget} format.
      */
     public static Widget[] asWidgets() {
@@ -37,14 +38,18 @@ public class Tabs {
 
     /**
      * Opens the provided tab.
+     *
      * @param tab The tab to open.
+     * @return <b>true</b> if the tab was successfully opened or already opened, <b>false</b> otherwise
      */
-    public static void open(Tab tab) {
+    public static boolean open(Tab tab) {
         if (Tabs.getOpen() == tab)
-            return;
+            return true;
         Widget widget = tab.getWidget();
         if (widget != null) {
             Client.processAction(1, -1, widget.getId(), ActionOpcodes.WIDGET_ACTION, tab.toString(), "", 50, 50);
+            return true;
         }
+        return false;
     }
 }

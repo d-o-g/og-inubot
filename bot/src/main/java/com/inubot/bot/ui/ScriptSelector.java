@@ -9,12 +9,22 @@ package com.inubot.bot.ui;
 import com.inubot.Bot;
 import com.inubot.bot.util.CachedClassLoader;
 import com.inubot.bot.util.Configuration;
+import com.inubot.bundledscripts.complete.Combot;
+import com.inubot.bundledscripts.complete.WineMaker;
+import com.inubot.bundledscripts.complete.agility.PerfectAgility;
+import com.inubot.bundledscripts.complete.alcher.ProAlcher;
+import com.inubot.bundledscripts.complete.chopper.ProChopper;
+import com.inubot.bundledscripts.complete.fisher.ProFisher;
+import com.inubot.bundledscripts.complete.hunter.*;
+import com.inubot.bundledscripts.complete.miner.ProMiner;
+import com.inubot.bundledscripts.complete.rangeguild.RangeGuild;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 import com.inubot.script.loader.LocalScriptLoader;
 import com.inubot.script.loader.RemoteScriptDefinition;
 import com.inubot.script.loader.ScriptDefinition;
 import com.inubot.script.loader.ScriptFilter;
+import me.mad.MadTutorial;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,20 +39,18 @@ import java.util.ArrayList;
 public class ScriptSelector extends JFrame {
 
     private static final Class[] SCRIPT_CLASSES = {
-//            Combot.class,
-//            WineMaker.class,
-//            TutorialIsland.class,
-//            RangeGuild.class,
-//            ProMiner.class,
-//            RedChinsPRO.class,
-//            FalconryPRO.class,
-//            BirdSnarePRO.class,
-//            ProFisher.class,
-//            ProAlcher.class,
-//            PerfectAgility.class,
-//            ProChopper.class,
-//            Pepperjack.class,
-//            MadTutorial.class
+            Combot.class,
+            WineMaker.class,
+            RangeGuild.class,
+            ProMiner.class,
+            RedChinsPRO.class,
+            FalconryPRO.class,
+            BirdSnarePRO.class,
+            ProFisher.class,
+            ProAlcher.class,
+            PerfectAgility.class,
+            ProChopper.class,
+            MadTutorial.class
     };
 
     public ScriptSelector() {
@@ -98,7 +106,16 @@ public class ScriptSelector extends JFrame {
         if (y == 0)
             y = 3;
         scripts.setLayout(new GridLayout(x, x, y, y));
+        outer:
         for (Entity entity : entities) {
+            for (Component c : scripts.getComponents()) {
+                if (c instanceof Entity) {
+                    Entity entity0 = (Entity) c;
+                    if (entity.target.getScriptClass() == entity0.target.getScriptClass()) {
+                        continue outer;
+                    }
+                }
+            }
             scripts.add(entity);
         }
 
@@ -110,7 +127,10 @@ public class ScriptSelector extends JFrame {
 
     private class Entity extends JPanel {
 
+        private final ScriptDefinition target;
+
         public Entity(ScriptDefinition target) {
+            this.target = target;
             super.setLayout(new BorderLayout());
             super.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
 

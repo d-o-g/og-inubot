@@ -33,18 +33,24 @@ public class Player extends Character<RSPlayer> {
     }
 
     @Override
-    public void processAction(int opcode, String action) {
+    public boolean processAction(int opcode, String action) {
         String name = getName();
-        if (name != null)
+        if (name != null) {
             Client.processAction(new PlayerAction(opcode, arrayIndex), action, name);
+            return true;
+        }
+        return false;
     }
 
-    public void processAction(String action) {
+    public boolean processAction(String action) {
         String[] actions = Inubot.getInstance().getClient().getPlayerActions();
         if (actions == null)
-            return;
+            return false;
         int index = Action.indexOf(actions, action);
-        if (index >= 0)
+        if (index >= 0) {
             processAction(ActionOpcodes.PLAYER_ACTION_0 + index, action);
+            return true;
+        }
+        return false;
     }
 }

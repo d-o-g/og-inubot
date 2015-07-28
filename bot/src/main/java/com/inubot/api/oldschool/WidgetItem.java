@@ -60,19 +60,21 @@ public class WidgetItem implements Identifiable, Processable {
         return owner.getType() == 2;
     }
 
-    public void processAction(int opcode, String action) {
+    public boolean processAction(int opcode, String action) {
         String itemName = getName();
         if (itemName == null)
-            return;
+            return false;
         if (isInTable()) {
             Client.processAction(new TableItemAction(opcode, getId(), getIndex(), getOwner().getRaw().getId()), action, action);
+            return true;
+        }
+        int index = Action.indexOf(owner.getActions(), action) + 1;
+        if (index > 4) {
+            Client.processAction(new WidgetAction(true, index, this.index, owner.getId()), action, action);
+            return true;
         } else {
-            int index = Action.indexOf(owner.getActions(), action) + 1;
-            if (index > 4) {
-                Client.processAction(new WidgetAction(true, index, this.index, owner.getId()), action, action);
-            } else {
-                Client.processAction(new WidgetAction(opcode, index, this.index, owner.getId()), action, action);
-            }
+            Client.processAction(new WidgetAction(opcode, index, this.index, owner.getId()), action, action);
+            return true;
         }
     }
 
@@ -101,16 +103,19 @@ public class WidgetItem implements Identifiable, Processable {
         }
     }
 
-    public void processAction(String action) {
+    public boolean processAction(String action) {
         if (isInTable()) {
             RSItemDefinition def = getDefinition();
-            if (def == null)
-                return;
-            processAction(ActionOpcodes.ITEM_ACTION_0 + Action.indexOf(def.getActions(), action), action);
+            if (def != null) {
+                processAction(ActionOpcodes.ITEM_ACTION_0 + Action.indexOf(def.getActions(), action), action);
+                return true;
+            }
         } else {
             int index = Action.indexOf(owner.getActions(), action) + 1;
             Client.processAction(new WidgetAction(index > 4, index, this.index, owner.getId()), action, action);
+            return true;
         }
+        return false;
     }
 
     public void processAction(String action, String option) {

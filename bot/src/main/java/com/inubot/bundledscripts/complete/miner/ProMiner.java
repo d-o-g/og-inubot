@@ -21,6 +21,7 @@ import com.inubot.bundledscripts.proframework.ProScript;
 import com.inubot.script.Manifest;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -86,9 +87,10 @@ public class ProMiner extends ProScript implements MinerConstants {
                 }
                 if (Players.getLocal().getAnimation() == -1 || (rock != null && !isGoodRock(rock))) {
                     rock = GameObjects.getNearest(this::isGoodRock);
-                    if (rock != null)
+                    if (rock != null) {
                         rock.processAction("Mine");
-                    return 1500;
+                        return 1500;
+                    }
                 }
             }
         }
@@ -169,17 +171,21 @@ public class ProMiner extends ProScript implements MinerConstants {
             return distance(veinColor, color);
         }
 
-        private static Rock identify(final int objectID) {
-            RSObjectDefinition def = CacheLoader.findObjectDefinition(objectID);
-            if (def == null || !def.getName().equals("Rocks"))
+        private static Rock identify(int objectId) {
+            RSObjectDefinition def = CacheLoader.findObjectDefinition(objectId);
+            if (def == null || !def.getName().equals("Rocks")) {
                 return null;
+            }
             short[] newColors = def.getNewColors();
-            if (newColors == null)
+            if (newColors == null) {
                 return Rock.MINED;
-            if (newColors.length > 2 || newColors.length == 0)
+            }
+            if (newColors.length > 2 || newColors.length == 0) {
                 return null;
-            if (newColors.length == 2 && newColors[0] == newColors[1])
+            }
+            if (newColors.length == 2 && newColors[0] == newColors[1]) {
                 return Rock.MINED;
+            }
             boolean oldRock = newColors.length == 1;
             int color = oldRock ? newColors[0] : newColors[1];
             Rock best = null;

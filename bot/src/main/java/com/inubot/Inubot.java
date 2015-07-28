@@ -55,6 +55,7 @@ public class Inubot extends Bot<RSClient> {
                 new ExperienceCallback(),
                 new UserDetailsSetter(),
                 new VarpBitHack(),
+                new WidgetHack(),
                 new LandscapeHack(),
                 new LowMemorySetter(),
                 new CatchBlockSweeper()

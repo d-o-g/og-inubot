@@ -47,20 +47,26 @@ public class Npc extends Character<RSNpc> implements Identifiable, Processable {
     }
 
     @Override
-    public void processAction(int opcode, String action) {
+    public boolean processAction(int opcode, String action) {
         String name = getName();
-        if (name != null)
+        if (name != null) {
             Client.processAction(new NpcAction(opcode, arrayIndex), action, name);
+            return true;
+        }
+        return false;
     }
 
-    public void processAction(String action) {
+    public boolean processAction(String action) {
         if (definition == null)
-            return;
+            return false;
         String[] actions = definition.getActions();
         if (actions == null)
-            return;
+            return false;
         int index = Arrays.asList(actions).indexOf(action);
-        if (index >= 0)
+        if (index >= 0) {
             processAction(ActionOpcodes.NPC_ACTION_0 + index, action);
+            return true;
+        }
+        return false;
     }
 }

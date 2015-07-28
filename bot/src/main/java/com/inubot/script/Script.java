@@ -49,8 +49,9 @@ public abstract class Script extends LoopTask {
             } else {
                 Bot.getInstance().getCanvas().paintables.clear();
                 stop();
+                onFinish();
             }
-            throw new RuntimeException("haha i stopped script");
+            System.out.println("Finished script");
         }
     }
 

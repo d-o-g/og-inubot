@@ -100,15 +100,18 @@ public class PerfectAgility extends ProScript implements Paintable {
             mark.processAction("Take");
             return 400;
         }
+
         Obstacle obstacle = course.getNext();
-        if (obstacle == null)
-            return 400;
 
         if (Players.getLocal().getLocation().equals(ARDY_STUCK)) {
             Movement.walkTo(new Tile(2656, 3296, 3));
             Time.sleep(1800, 2200);
             obstacle = course.getNext();
         }
+
+        if (obstacle == null)
+            return 400;
+
 
         GameObject obj;
 
