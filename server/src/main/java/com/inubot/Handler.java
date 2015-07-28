@@ -49,7 +49,11 @@ public class Handler extends ChannelHandlerAdapter {
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		if (cause.toString().contains("closed"))
 			return;
-		cause.printStackTrace();
+		ByteBuf buf = Unpooled.buffer();
+		buf.writeByte(INSTANCE_COUNT);
+		buf.writeByte(0);
+		ctx.write(buf);
+		ctx.flush();
 		ctx.close();
 	}
 

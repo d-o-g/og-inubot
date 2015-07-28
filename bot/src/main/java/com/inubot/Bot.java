@@ -16,7 +16,6 @@ import com.inubot.bot.account.AccountManager;
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.net.cdn.ServerConnection;
-import com.inubot.bot.net.irc.IRCConnection;
 import com.inubot.bot.ui.BotMenuBar;
 import com.inubot.bot.ui.LogPane;
 import com.inubot.bot.util.CachedClassLoader;
@@ -50,7 +49,6 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
     private static boolean useProxy = false;
     protected final Crawler crawler;
     private final ScriptFlux scriptFlux;
-    private final IRCConnection irc;
     private final LogPane logPane;
     private EventBus asyncEventBus;
     private EventBus syncEventBus;
@@ -63,18 +61,11 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         this.scriptFlux = new ScriptFlux();
         this.crawler = createCrawler();
         this.logPane = new LogPane();
-        this.irc = new IRCConnection();
         this.asyncEventBus = new AsynchronousEventBus();
         this.syncEventBus = new SynchronousEventBus();
         ServerConnection.start();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
-        try {
-            irc.connect("irc.foonetic.net");
-            irc.joinChannel(IRC_CHANNEL);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public static <T extends ClientNative> Bot<T> getInstance() {
@@ -198,10 +189,6 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
     @Override
     public BotMenuBar getJMenuBar() {
         return (BotMenuBar) super.getJMenuBar();
-    }
-
-    public IRCConnection getIRCConnection() {
-        return irc;
     }
 
     public EventBus getSyncEventBus() {
