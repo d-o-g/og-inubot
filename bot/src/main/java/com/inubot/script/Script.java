@@ -71,13 +71,13 @@ public abstract class Script extends LoopTask {
         if (!Game.isLoggedIn()) {
             onLogout();
             if (Login.getState() == Login.STATE_MAIN_MENU) {
-                Mouse.move(Login.EXISTING_USER.x, Login.EXISTING_USER.y);
+                Mouse.setLocation(Login.EXISTING_USER.x, Login.EXISTING_USER.y);
                 Mouse.click(true);
                 Time.sleep(600, 700);
             } else if (Login.getState() == Login.STATE_CREDENTIALS) {
                 Login.setUsername(username);
                 Login.setPassword(password);
-                Mouse.move(Login.LOGIN.x, Login.LOGIN.y);
+                Mouse.setLocation(Login.LOGIN.x, Login.LOGIN.y);
                 Mouse.click(true);
                 Time.sleep(600, 700);
             }

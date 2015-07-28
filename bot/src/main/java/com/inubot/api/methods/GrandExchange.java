@@ -128,7 +128,7 @@ public class GrandExchange {
         if (results != null) {
             Widget match = results.getChild(t -> name.equals(t.getText()));
             if (match != null) {
-                Mouse.move(match.getX(), match.getY());
+                Mouse.setLocation(match.getX(), match.getY());
                 Mouse.click(true);
                 Time.sleep(400);
                 int currPrice = getCurrentItemPrice();

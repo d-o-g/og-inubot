@@ -24,7 +24,7 @@ public class Mouse {
         return new Point(getX(), getY());
     }
 
-    public static void move(int x, int y) {
+    public static void setLocation(int x, int y) {
         Inubot.getInstance().getCanvas().setMouseLocation(x, y);
     }
 

@@ -12,6 +12,9 @@ import com.inubot.api.oldschool.action.ActionOpcodes;
 
 public class Tabs {
 
+    /**
+     * @return The current open tab.
+     */
     public static Tab getOpen() {
         for (Tab tab : Tab.values()) {
             if (tab.isOpen())
@@ -20,6 +23,10 @@ public class Tabs {
         return null;
     }
 
+    /**
+     * Gets the {@link Widget} of all the tabs.
+     * @return All the tabs in raw {@link Widget} format.
+     */
     public static Widget[] asWidgets() {
         Tab[] values = Tab.values();
         Widget[] tabs = new Widget[values.length];
@@ -28,6 +35,10 @@ public class Tabs {
         return tabs;
     }
 
+    /**
+     * Opens the provided tab.
+     * @param tab The tab to open.
+     */
     public static void open(Tab tab) {
         if (Tabs.getOpen() == tab)
             return;

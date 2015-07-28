@@ -26,7 +26,7 @@ public class LoginPacket implements Packet {
     @Override
     public void encode(DataOutputStream out) throws IOException {
         if (username == null || password == null) {
-            System.out.println("WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+            System.out.println("Please supply a username and password.");
             out.writeInt(1);
             return;
         }

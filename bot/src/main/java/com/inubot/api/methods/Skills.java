@@ -90,6 +90,10 @@ public class Skills {
         return getExperience(skill.getIndex());
     }
 
+    /**
+     * @param skill the skill
+     * @return the experience needed for the next level
+     */
     public static int getExperienceToNextLevel(final Skill skill) {
         int nextLvl = getLevel(skill) + 1;
         if (nextLvl > 99)
@@ -97,6 +101,10 @@ public class Skills {
         return getExperienceAt(nextLvl) - getExperience(skill);
     }
 
+    /**
+     * @param deslvl The destination level
+     * @return The experience needed to progress to the desired level.
+     */
     public static int getExperienceAt(final int deslvl) {
         double t = 0;
         for (int lvl = 1; lvl < deslvl; lvl++)

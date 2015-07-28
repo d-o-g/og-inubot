@@ -9,6 +9,7 @@ package com.inubot;
 import com.inubot.bot.ui.Login;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Bootstrap {
 
@@ -31,7 +32,8 @@ public class Bootstrap {
         if (system.contains("Windows") || system.contains("Linux") || system.contains("Mac")) {
             builder.append("java " + flags);
         }
-        builder.append(" -cp \"").append(location()).append("\" ").append(Inubot.class.getName());
+        builder.append(" -cp \"").append(location()).append("\" ").append(Login.class.getName());
+        builder.append(" ").append(Arrays.toString(arguments).replace("[","").replace("]", "").replace(",", ""));
         System.out.println("Executing: " + builder.toString());
         if (System.getProperty("os.name").contains("Windows")) {
             Runtime.getRuntime().exec(builder.toString());
