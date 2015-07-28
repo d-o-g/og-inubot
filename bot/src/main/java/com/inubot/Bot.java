@@ -36,6 +36,8 @@ import java.io.*;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarInputStream;
@@ -81,7 +83,8 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         if (forceInject = crawler.isOutdated())
             crawler.download();
         try {
-            ModScript.load(Internet.downloadBinary(new URL(crawler.modscript).openStream(), null), Integer.toString(crawler.getHash()));
+            //Internet.downloadBinary(new URL(crawler.modscript).openStream(), null)
+            ModScript.load(Files.readAllBytes(Paths.get(Configuration.CACHE + "oldschool.dat")), Integer.toString(crawler.getHash()));
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse modscript", e);
         }

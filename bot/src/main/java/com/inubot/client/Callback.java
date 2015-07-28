@@ -1,7 +1,6 @@
 package com.inubot.client;
 
 import com.inubot.Bot;
-import com.inubot.Inubot;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.action.tree.Action;

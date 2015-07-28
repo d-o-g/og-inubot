@@ -14,9 +14,12 @@ import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.bot.ui.CreaterGUI;
 import com.inubot.bot.ui.WidgetExplorer;
+import com.inubot.client.natives.oldschool.RSModel;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.*;
+import java.util.List;
 
 public enum Hotkey {
 
