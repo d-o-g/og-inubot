@@ -279,6 +279,14 @@ public class Bank {
         depositAll(Filter.not(filter));
     }
 
+    public static void depositAllExcept(int... ids) {
+        depositAllExcept(new IdFilter<WidgetItem>(ids));
+    }
+
+    public static void depositAllExcept(String... names) {
+        depositAllExcept(new NameFilter<WidgetItem>(names));
+    }
+
     /**
      * Deposits all items into the bank that are accepted by the filter
      *
@@ -299,6 +307,14 @@ public class Bank {
                 item.processAction("Deposit-All");
             }
         }
+    }
+
+    public static void depositAll(String... names) {
+        depositAll(new NameFilter<WidgetItem>(names));
+    }
+
+    public static void depositAll(int... ids) {
+        depositAll(new IdFilter<WidgetItem>(ids));
     }
 
     /**
