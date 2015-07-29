@@ -1,4 +1,4 @@
-package me.mad.modules;
+package com.inubot.bundledscripts.mad.modules;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;

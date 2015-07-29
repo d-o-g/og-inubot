@@ -1,6 +1,6 @@
-package me.mad.modules;
+package com.inubot.bundledscripts.mad.modules;
 
-import me.mad.util.interfaces.Module;
+import com.inubot.bundledscripts.mad.util.interfaces.Module;
 
 /**
  * Created by mad on 7/26/15.

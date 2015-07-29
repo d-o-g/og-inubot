@@ -1,4 +1,4 @@
-package me.mad.modules;
+package com.inubot.bundledscripts.mad.modules;
 
 import
         com.inubot.api.methods.Interfaces;
@@ -10,9 +10,7 @@ import com.inubot.api.oldschool.Tile;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.Time;
-import me.mad.util.interfaces.Module;
-
-import static me.mad.modules.Tutorial.*;
+import com.inubot.bundledscripts.mad.util.interfaces.Module;
 
 
 /**
@@ -22,20 +20,20 @@ public class Combat implements Module {
 
     @Override
     public boolean validate() {
-        return setting() < 510;
+        return Tutorial.setting() < 510;
     }
 
     @Override
     public void execute() {
 
-        if(!isChatOpen()) {
-            switch (setting()) {
+        if(!Tutorial.isChatOpen()) {
+            switch (Tutorial.setting()) {
                 case 370:
-                    interact("Combat Instructor", "Talk-to");
+                    Tutorial.interact("Combat Instructor", "Talk-to");
                     Time.await(Tutorial::isChatOpen, 1200);
                     break;
                 case 390:
-                    openTab(Tab.EQUIPMENT);
+                    Tutorial.openTab(Tab.EQUIPMENT);
                     break;
                 case 400:
                     Widget combatStats = Interfaces.getWidget(387,17);
@@ -45,11 +43,11 @@ public class Combat implements Module {
                     WidgetItem dagger = Inventory.getFirst("Bronze dagger");
                     if(dagger !=null) {
                         dagger.processAction("Wield");
-                        Time.await(() -> setting() != 405, 1200);
+                        Time.await(() -> Tutorial.setting() != 405, 1200);
                     }
                     break;
                 case 410:
-                    interact("Combat Instructor", "Talk-to");
+                    Tutorial.interact("Combat Instructor", "Talk-to");
                     Time.await(Tutorial::isChatOpen, 1200);
                     break;
                 case 420:
@@ -65,28 +63,28 @@ public class Combat implements Module {
                     }
                     break;
                 case 430:
-                    openTab(Tab.COMBAT);
+                    Tutorial.openTab(Tab.COMBAT);
                     break;
                 case 440:
-                    interactGB("Gate", "Open", new Tile(3111,9518));
+                    Tutorial.interactGB("Gate", "Open", new Tile(3111, 9518));
                     break;
                 case 450:
                     if(!Players.getLocal().isHealthBarVisible()) {
-                        interact("Giant rat", "Attack");
+                        Tutorial.interact("Giant rat", "Attack");
                         Time.await(Tutorial::isAnimating, 1200);
                     }
                     break;
                 case 460:
                     if(!Players.getLocal().isHealthBarVisible()) {
-                        interact("Giant rat", "Attack");
+                        Tutorial.interact("Giant rat", "Attack");
                         Time.await(Tutorial::isAnimating, 1200);
                     }
                     break;
                 case 470:
                     if(Movement.isReachable(new Tile(3107, 9509))) {
-                        interact("Combat Instructor", "Talk-to");
+                        Tutorial.interact("Combat Instructor", "Talk-to");
                         Time.await(Tutorial::isChatOpen, 1850);
-                    } else interactGB("Gate", "Open", new Tile(3111,9518));
+                    } else Tutorial.interactGB("Gate", "Open", new Tile(3111, 9518));
                     break;
                 case 480:
                     WidgetItem bow = Inventory.getFirst("Shortbow");
@@ -100,17 +98,17 @@ public class Combat implements Module {
                         Time.await(() -> arrow == null, 1200);
                     }
                     if(bow == null && arrow == null) {
-                        interact("Giant rat", "Attack");
+                        Tutorial.interact("Giant rat", "Attack");
                     }
                     break;
                 case 490:
 
-                    interact("Giant rat", "Attack");
+                    Tutorial.interact("Giant rat", "Attack");
                     break;
                 case 500:
-                    interactGB("Ladder", "Climb-up");
-                    Time.await(() -> setting() != 500, 1200);
+                    Tutorial.interactGB("Ladder", "Climb-up");
+                    Time.await(() -> Tutorial.setting() != 500, 1200);
             }
-        } else continueChat();
+        } else Tutorial.continueChat();
     }
 }

@@ -1,4 +1,4 @@
-package me.mad.modules;
+package com.inubot.bundledscripts.mad.modules;
 
 import com.inubot.api.methods.GameObjects;
 import com.inubot.api.methods.Inventory;
@@ -6,9 +6,7 @@ import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.Tab;
 import com.inubot.api.oldschool.Tile;
 import com.inubot.api.util.Time;
-import me.mad.util.interfaces.Module;
-
-import static me.mad.modules.Tutorial.*;
+import com.inubot.bundledscripts.mad.util.interfaces.Module;
 
 
 /**

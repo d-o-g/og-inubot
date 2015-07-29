@@ -62,7 +62,12 @@ public class CacheLoader {
             for (int i = 0; i < Short.MAX_VALUE; i++) {
                 RSObjectDefinition raw = client.loadObjectDefinition(i);
                 if (raw != null) {
-                    RSObjectDefinition transformed = raw.transform();
+                    RSObjectDefinition transformed = null;
+                    try {
+                        transformed = raw.transform();
+                    } catch (Exception e) {
+
+                    }
                     if (transformed != null) {
                         data.put(transformed.getId(), raw);
                     } else {
@@ -115,8 +120,9 @@ public class CacheLoader {
                 RSItemDefinition raw = client.loadItemDefinition(i);
                 if (raw != null) {
                     String name = raw.getName();
-                    if (name != null && !name.equals(NULL))
+                    if (name != null && !name.equals(NULL)) {
                         data.put(i, raw);
+                    }
                 }
             }
             ITEM_DEFINITIONS.putAll(data);
