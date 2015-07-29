@@ -1,6 +1,7 @@
 package com.inubot.incomplete.septron;
 
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.exchange.ExchangePricing;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
@@ -43,7 +44,7 @@ public class Powermine extends Script implements Paintable {
             return false;
         }
         xp = Skills.getExperience(Skill.MINING);
-        price = Exchange.getPrice(440);
+        price = ExchangePricing.getPrice(440);
         runtime = new StopWatch(0);
         return true;
     }

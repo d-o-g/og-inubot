@@ -1,6 +1,7 @@
 package com.inubot.incomplete.septron.fletching;
 
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.exchange.ExchangePricing;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.StopWatch;
@@ -80,8 +81,8 @@ public class Stringer extends ProScript {
 
     @Override
     public boolean setup() {
-        cost = Exchange.getPrice(70) + Exchange.getPrice(1777);
-        price = Exchange.getPrice(859);
+        cost = ExchangePricing.getPrice(70) + ExchangePricing.getPrice(1777);
+        price = ExchangePricing.getPrice(859);
         return true;
     }
 

@@ -1,6 +1,7 @@
 package com.inubot.incomplete.septron;
 
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.exchange.ExchangePricing;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Random;
@@ -39,7 +40,7 @@ public class Willowcutter extends Script implements Paintable {
             return false;
         }
         xp = Skills.getExperience(Skill.WOODCUTTING);
-        price = Exchange.getPrice(1519);
+        price = ExchangePricing.getPrice(1519);
         runtime = new StopWatch(0);
         return true;
     }

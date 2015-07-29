@@ -1,4 +1,4 @@
-package com.inubot.api.methods;
+package com.inubot.api.methods.exchange;
 
 import java.io.*;
 import java.net.URL;
@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * @author Septron
  * @since June 26, 2015
  */
-public class Exchange {
+public class ExchangePricing {
 
     private static final String BASE_URL = "https://api.rsbuddy.com/grandExchange?a=guidePrice&i=";
 

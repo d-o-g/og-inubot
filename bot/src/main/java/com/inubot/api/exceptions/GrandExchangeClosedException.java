@@ -11,9 +11,9 @@ package com.inubot.api.exceptions;
  * a 'grand-exchange-open dependant' logic was attempted when the grand-exchange
  * was closed, an explicit default return could not be made.
  */
-public class ExchangeClosedException extends IllegalStateException {
+public class GrandExchangeClosedException extends IllegalStateException {
 
-    public ExchangeClosedException() {
+    public GrandExchangeClosedException() {
         super("The exchange interface is closed!");
     }
 
