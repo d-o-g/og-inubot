@@ -47,7 +47,6 @@ public class ExperienceCallback implements Transform {
                                 "experienceGain", "(II)V", false));
                         mn.instructions.insertBefore(ref, stack);
                         //insert before the arraystore ^
-                        System.out.println(cn.name + "." + mn.name + mn.desc);
                     }
                 }
             }
