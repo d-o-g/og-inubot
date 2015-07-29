@@ -16,14 +16,10 @@ import com.inubot.bundledscripts.complete.alcher.ProAlcher;
 import com.inubot.bundledscripts.complete.chopper.ProChopper;
 import com.inubot.bundledscripts.complete.fisher.ProFisher;
 import com.inubot.bundledscripts.complete.hunter.*;
-import com.inubot.bundledscripts.complete.miner.ProMiner;
 import com.inubot.bundledscripts.complete.rangeguild.RangeGuild;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
-import com.inubot.script.loader.LocalScriptLoader;
-import com.inubot.script.loader.RemoteScriptDefinition;
-import com.inubot.script.loader.ScriptDefinition;
-import com.inubot.script.loader.ScriptFilter;
+import com.inubot.script.loader.*;
 import me.mad.MadTutorial;
 
 import javax.swing.*;
@@ -39,7 +35,17 @@ import java.util.ArrayList;
 public class ScriptSelector extends JFrame {
 
     private static final Class[] SCRIPT_CLASSES = {
-
+            PerfectAgility.class,
+            ProAlcher.class,
+            ProChopper.class,
+            ProFisher.class,
+            RedChinsPRO.class,
+            BirdSnarePRO.class,
+            FalconryPRO.class,
+            Combot.class,
+            WineMaker.class,
+            RangeGuild.class,
+            MadTutorial.class
     };
 
     public ScriptSelector() {

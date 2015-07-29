@@ -62,12 +62,12 @@ public class CacheLoader {
             for (int i = 0; i < Short.MAX_VALUE; i++) {
                 RSObjectDefinition raw = client.loadObjectDefinition(i);
                 if (raw != null) {
-                    String name = raw.getName();
+                   /* String name = raw.getName();
                     if (name != null && name.equals(NULL)) {
                         raw = raw.transform();
                         if (raw == null)
                             continue;
-                    }
+                    }*/
                     data.put(i, raw);
                 }
             }

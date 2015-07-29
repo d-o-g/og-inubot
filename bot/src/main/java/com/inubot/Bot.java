@@ -65,7 +65,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         this.logPane = new LogPane();
         this.asyncEventBus = new AsynchronousEventBus();
         this.syncEventBus = new SynchronousEventBus();
-        ServerConnection.start();
+        //ServerConnection.start();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
     }
