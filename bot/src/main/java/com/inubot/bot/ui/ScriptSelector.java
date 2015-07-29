@@ -34,6 +34,7 @@ public class ScriptSelector extends JFrame {
             Manifest m = (Manifest) c.getAnnotation(Manifest.class);
             if (m != null) {
                 RemoteScriptDefinition rem = new RemoteScriptDefinition(m.name(), m.developer(), m.desc(), m.version());
+                rem.setScriptClass(c);
                 entities.add(new Entity(rem));
             }
         }
