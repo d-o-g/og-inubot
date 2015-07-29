@@ -38,6 +38,7 @@ public class PerfectAgility extends ProScript implements Paintable {
     public boolean setup() {
         setLineColor(Color.RED.darker());
         setTextColor(Color.WHITE);
+        Client.setWidgetRendering(false);
         //JFrame frame = new JFrame();
         //frame.setLayout(new FlowLayout());
         //JComboBox<Course> courses = new JComboBox<>(Course.values());
@@ -53,6 +54,11 @@ public class PerfectAgility extends ProScript implements Paintable {
         //while (course == null)
 //            Time.sleep(400);
         return true;
+    }
+
+    @Override
+    public void onFinish() {
+        Client.setWidgetRendering(true);
     }
 
     @Override
