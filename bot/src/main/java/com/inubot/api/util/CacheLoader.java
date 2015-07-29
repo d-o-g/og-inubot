@@ -10,8 +10,7 @@ import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.hooks.InvokeHook;
 import com.inubot.client.natives.oldschool.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CacheLoader {
 
@@ -62,13 +61,16 @@ public class CacheLoader {
             for (int i = 0; i < Short.MAX_VALUE; i++) {
                 RSObjectDefinition raw = client.loadObjectDefinition(i);
                 if (raw != null) {
-                   /* String name = raw.getName();
-                    if (name != null && name.equals(NULL)) {
-                        raw = raw.transform();
-                        if (raw == null)
-                            continue;
-                    }*/
-                    data.put(i, raw);
+                    RSObjectDefinition transformed = null;
+                    try {
+                        transformed = raw.transform();
+                    } catch (Exception ignored) {
+                    }
+                    if (transformed != null) {
+                        data.put(transformed.getId(), raw);
+                    } else {
+                        data.put(raw.getId(), raw);
+                    }
                 }
             }
             OBJECT_DEFINITIONS.putAll(data);
@@ -86,17 +88,14 @@ public class CacheLoader {
             return false;
         try {
             Map<Integer, RSNpcDefinition> data = new HashMap<>();
-            for (int i = 0; i < 20000; i++) {
+            for (int i = 0; i < Short.MAX_VALUE; i++) {
                 RSNpcDefinition raw = client.loadNpcDefinition(i);
                 if (raw != null) {
-                    String name = raw.getName();
-                    if (name != null) {
-                        if (name.equals(NULL)) {
-                            raw = raw.transform();
-                            if (raw == null)
-                                continue;
-                        }
-                        data.put(i, raw);
+                    RSNpcDefinition transformed = raw.transform();
+                    if (transformed != null) {
+                        data.put(transformed.getId(), raw);
+                    } else {
+                        data.put(raw.getId(), raw);
                     }
                 }
             }
