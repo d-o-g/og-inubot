@@ -8,8 +8,7 @@ package com.inubot.api.methods;
 
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.util.filter.Filter;
-import com.inubot.api.util.filter.NameFilter;
+import com.inubot.api.util.filter.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,6 +156,22 @@ public class Inventory {
         for (WidgetItem item : Inventory.getItems(Filter.not(filter)))
             item.processAction(ActionOpcodes.ITEM_ACTION_4, "Drop");
         return getItems(filter).length == getCount();
+    }
+
+    public static boolean dropAllExcept(int... ids) {
+        return dropAllExcept(new IdFilter<WidgetItem>(ids));
+    }
+
+    public static boolean dropAllExcept(String... names) {
+        return dropAllExcept(new NameFilter<WidgetItem>(names));
+    }
+
+    public static boolean dropAll(int... ids) {
+        return dropAll(new IdFilter<WidgetItem>(ids));
+    }
+
+    public static boolean dropAll(String... names) {
+        return dropAll(new NameFilter<WidgetItem>(names));
     }
 
     public static void use(WidgetItem a, WidgetItem b) {

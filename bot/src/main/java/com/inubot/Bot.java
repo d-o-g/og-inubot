@@ -101,7 +101,6 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
             } else if (injectCache.exists()) {
                 BufferedReader fr = new BufferedReader(new FileReader(injectCache));
                 int value = fr.read();
-                System.out.println(value);
                 inject = value == hash;
                 fr.close();
             }
