@@ -48,7 +48,7 @@ public class Login {
         fieldPanel.add(password);
         frame.getContentPane().add(fieldPanel, BorderLayout.EAST);
 
-        JButton login = new JButton("Login");
+        JButton login = new JButton("Submit");
         frame.getContentPane().add(login, BorderLayout.SOUTH);
         login.addActionListener(e -> {
             Inubot.main(args);

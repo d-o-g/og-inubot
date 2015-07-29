@@ -2,14 +2,17 @@ package com.inubot;
 
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -18,8 +21,6 @@ import java.util.jar.JarFile;
  * @since July 12, 2015
  */
 public class Loader {
-
-	private static final Logger logger = LoggerFactory.getLogger(Loader.class);
 
 	public static final Map<String, byte[]> scripts = new HashMap<>();
 
@@ -64,7 +65,7 @@ public class Loader {
                                 String store = m.name();
                                 byte[] data = load(file);
                                 scripts.put(store, data);
-                                logger.info("Stored " + data.length + " for script " + store);
+                                System.out.println("Stored " + data.length + " for script " + store);
                                 continue loop;
                             }
 						}

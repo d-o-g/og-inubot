@@ -1,5 +1,6 @@
-package com.inubot;
+package com.inubot.old;
 
+import com.inubot.Loader;
 import com.inubot.model.Account;
 import com.inubot.model.Owned;
 import com.inubot.model.Script;
@@ -86,18 +87,10 @@ public class CdnServer {
                             switch (opcode) {
                                 case LOGIN: {
                                     StringBuilder builder = new StringBuilder();
-                                    int ulength = input.readInt();
-                                    for (int i = 0; i < ulength; i++) {
-                                        builder.append(input.readChar());
-                                    }
-                                    String username = builder.toString();
 
-                                    builder = new StringBuilder();
-                                    int plength = input.readInt();
-                                    for (int i = 0; i < plength; i++) {
-                                        builder.append(input.readChar());
-                                    }
-                                    String password = builder.toString();
+                                    String username = input.readUTF();
+                                    String password = input.readUTF();
+
 
                                     Session session = factory.openSession();
                                     Account account = (Account) session.createQuery("from Account where username=:username")

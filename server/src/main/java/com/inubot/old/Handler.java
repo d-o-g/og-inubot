@@ -1,5 +1,6 @@
-package com.inubot;
+package com.inubot.old;
 
+import com.inubot.Loader;
 import com.inubot.model.Account;
 import com.inubot.model.Owned;
 import com.inubot.model.Script;
@@ -17,17 +18,13 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Septron
  * @since July 07, 2015
  */
 public class Handler extends ChannelHandlerAdapter {
-
-	private static final Map<String, Integer> instances = new HashMap<>();
 
 	private static final byte LOGIN = 0;
 	private static final byte REQUEST_SCRIPTS = 1;
@@ -49,6 +46,7 @@ public class Handler extends ChannelHandlerAdapter {
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		if (cause.toString().contains("closed"))
 			return;
+		cause.printStackTrace();
 		ByteBuf buf = Unpooled.buffer();
 		buf.writeByte(INSTANCE_COUNT);
 		buf.writeByte(0);
@@ -60,16 +58,16 @@ public class Handler extends ChannelHandlerAdapter {
 	@Override
 	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
 		logger.info(getAddressFromContext(ctx) + " Disconnected!");
-		if (instances.get(getAddressFromContext(ctx)) != null) {
-			int count = instances.get(getAddressFromContext(ctx));
-			if (count != 0) {
-				if (count == 1) {
-					instances.remove(getAddressFromContext(ctx));
-				} else {
-					instances.put(getAddressFromContext(ctx), count - 1);
-				}
-			}
-		}
+//		if (instances.get(getAddressFromContext(ctx)) != null) {
+//			int count = instances.get(getAddressFromContext(ctx));
+//			if (count != 0) {
+//				if (count == 1) {
+//					instances.remove(getAddressFromContext(ctx));
+//				} else {
+//					instances.put(getAddressFromContext(ctx), count - 1);
+//				}
+//			}
+//		}
 	}
 
 	private String getAddressFromContext(ChannelHandlerContext ctx) {
@@ -78,21 +76,24 @@ public class Handler extends ChannelHandlerAdapter {
 		return inetaddress.getHostAddress();
 	}
 
+	private void disconnect(ChannelHandlerContext ctx) {
+		ByteBuf buf = Unpooled.buffer();
+		buf.writeByte(INSTANCE_COUNT);
+		buf.writeByte(0);
+		ctx.write(buf);
+		ctx.flush();
+	}
+
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		logger.info("bbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 		ByteBuf buffer = (ByteBuf) msg;
 		logger.info(getAddressFromContext(ctx) + " ");
 		int opcode = buffer.readByte();
+		logger.info("opcode: " + opcode);
 		switch (opcode) {
 			case LOGIN: {
-				if (!buffer.isReadable()) {
-					ByteBuf buf = Unpooled.buffer();
-					buf.writeByte(INSTANCE_COUNT);
-					buf.writeByte(0);
-					ctx.write(buf);
-					ctx.flush();
-					return;
-				}
+				logger.info("aaaaaaaaaaaaaaaaaaaaaaaaaa");
 
 				int ulength = buffer.readInt();
 				byte[] uarray = new byte[ulength];
@@ -101,6 +102,8 @@ public class Handler extends ChannelHandlerAdapter {
 				}
 				String username = new String(uarray, "UTF-8");
 
+				logger.info(username);
+
 				int plength = buffer.readInt();
 				byte[] parray = new byte[plength];
 				for (int i = 0; i < plength; i++) {
@@ -108,16 +111,14 @@ public class Handler extends ChannelHandlerAdapter {
 				}
 				String password = new String(parray, "UTF-8");
 
+				logger.info(username + " " + password);
+
 				Session session = Application.factory().openSession();
 				Account account = (Account) session.createQuery("from Account where username=:username")
 						.setParameter("username", username).uniqueResult();
 				if (account == null) {
 					logger.info("Account doesn't exist!");
-					ByteBuf buf = Unpooled.buffer();
-					buf.writeByte(INSTANCE_COUNT);
-					buf.writeByte(0);
-					ctx.write(buf);
-					ctx.flush();
+					disconnect(ctx);
 					return;
 				}
 
@@ -127,30 +128,26 @@ public class Handler extends ChannelHandlerAdapter {
 					logger.info("Successfully logged " + username + " into account! (" + account.getGroup() + ")");
 					ctx.writeAndFlush(Unpooled.wrappedBuffer(new byte[]{4}));
 
-					int count;
-					if (instances.get(getAddressFromContext(ctx)) == null)
-						count = 0;
-					else
-						count = instances.get(getAddressFromContext(ctx));
-
-					Account.UserGroup group = account.getUserGroup();
-
-					logger.info(count + " count - allowed " + group.getMaximumInstances());
-					if (count < group.getMaximumInstances()) {
-						instances.put(getAddressFromContext(ctx), count + 1);
-						ByteBuf buf = Unpooled.buffer();
-						buf.writeByte(INSTANCE_COUNT);
-						buf.writeByte(1);
-						ctx.write(buf);
-						ctx.flush();
-					} else {
-						ByteBuf buf = Unpooled.buffer();
-						buf.writeByte(INSTANCE_COUNT);
-						buf.writeByte(0);
-						ctx.write(buf);
-						ctx.flush();
-						return;
-					}
+//					int count;
+//					if (instances.get(getAddressFromContext(ctx)) == null)
+//						count = 0;
+//					else
+//						count = instances.get(getAddressFromContext(ctx));
+//
+//					Account.UserGroup group = account.getUserGroup();
+//
+//					logger.info(count + " count - allowed " + group.getMaximumInstances());
+//					if (count < group.getMaximumInstances()) {
+//						instances.put(getAddressFromContext(ctx), count + 1);
+//						ByteBuf buf = Unpooled.buffer();
+//						buf.writeByte(INSTANCE_COUNT);
+//						buf.writeByte(1);
+//						ctx.write(buf);
+//						ctx.flush();
+//					} else {
+//						disconnect(ctx);
+//						return;
+//					}
 
 					List owneds = session.createQuery("from Owned where uid=:uid").setParameter("uid", account.getId()).list();
 					for (Object asd : owneds) {
@@ -170,11 +167,7 @@ public class Handler extends ChannelHandlerAdapter {
 					}
 				} else {
 					logger.info("Failed to log " + username + " into account!");
-					ByteBuf buf = Unpooled.buffer();
-					buf.writeByte(INSTANCE_COUNT);
-					buf.writeByte(0);
-					ctx.write(buf);
-					ctx.flush();
+
 				}
 				break;
 			}
