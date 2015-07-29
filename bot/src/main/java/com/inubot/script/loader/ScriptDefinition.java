@@ -68,4 +68,13 @@ public class ScriptDefinition implements Manifest {
     public final void setScriptClass(Class<? extends Script> scriptClass) {
         this.scriptClass = scriptClass;
     }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (o instanceof ScriptDefinition) {
+            ScriptDefinition s = (ScriptDefinition) o;
+            return s.version() == version() && s.name().equals(name()) && s.desc().equals(desc()) && s.developer().equals(developer());
+        }
+        return false;
+    }
 }

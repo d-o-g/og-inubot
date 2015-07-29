@@ -15,12 +15,8 @@ import com.inubot.bot.account.Account;
 import com.inubot.bot.account.AccountManager;
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.ModScript;
-import com.inubot.bot.net.cdn.ServerConnection;
 import com.inubot.bot.ui.BotMenuBar;
-import com.inubot.bot.ui.LogPane;
-import com.inubot.bot.util.CachedClassLoader;
-import com.inubot.bot.util.Configuration;
-import com.inubot.bot.util.ProxyUtils;
+import com.inubot.bot.util.*;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.Internet;
 import com.inubot.client.GameCanvas;
@@ -33,11 +29,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarInputStream;
@@ -51,7 +43,6 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
     private static boolean useProxy = false;
     protected final Crawler crawler;
     private final ScriptFlux scriptFlux;
-    private final LogPane logPane;
     private EventBus asyncEventBus;
     private EventBus syncEventBus;
     private Client client;
@@ -62,7 +53,6 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.scriptFlux = new ScriptFlux();
         this.crawler = createCrawler();
-        this.logPane = new LogPane();
         this.asyncEventBus = new AsynchronousEventBus();
         this.syncEventBus = new SynchronousEventBus();
         //ServerConnection.start();
@@ -211,10 +201,6 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
 
     public ScriptFlux getScriptFlux() {
         return scriptFlux;
-    }
-
-    public LogPane getLogPane() {
-        return logPane;
     }
 
     protected abstract Injector initInjector(File pack);

@@ -4,26 +4,20 @@ import com.inubot.Bot;
 import com.inubot.bot.util.CachedClassLoader;
 import com.inubot.bot.util.Configuration;
 import com.inubot.script.Manifest;
-import com.inubot.script.loader.LocalScriptLoader;
-import com.inubot.script.loader.RemoteScriptDefinition;
-import com.inubot.script.loader.ScriptDefinition;
-import com.inubot.script.loader.ScriptFilter;
+import com.inubot.script.Script;
+import com.inubot.script.loader.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bytehound on 7/28/2015.
  */
 public class ScriptSelector extends JFrame {
-
-    private final JPanel content = new JPanel();
-    private final JScrollPane scrollPane = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-    private java.util.List<Entity> entities = new ArrayList<>();
 
     private static final Class[] SCRIPT_CLASSES = {
 
@@ -33,15 +27,23 @@ public class ScriptSelector extends JFrame {
         super("Script Selector");
 
         LocalScriptLoader loader = new LocalScriptLoader();
+        List<Entity> entities = new ArrayList<>();
         try {
             loader.parse(new File(Configuration.SCRIPTS));
             ScriptDefinition[] definitions = loader.getDefinitions();
+            outer:
             for (ScriptDefinition def : definitions) {
+                for (Entity e : entities) {
+                    if (e.target.equals(def)) {
+                        continue outer;
+                    }
+                }
                 entities.add(new Entity(def));
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
         CachedClassLoader remoteLoader = new CachedClassLoader(RemoteScriptDefinition.getNetworkedScriptDefinitions());
         ScriptFilter filter = new ScriptFilter();
         for (String name : RemoteScriptDefinition.getNetworkedScriptDefinitions().keySet()) {
@@ -50,7 +52,7 @@ public class ScriptSelector extends JFrame {
                 if (filter.accept(clazz)) {
                     ScriptDefinition def = new ScriptDefinition(clazz.getAnnotation(Manifest.class));
                     def = new RemoteScriptDefinition(def.name(), def.developer(), def.desc(), def.version());
-                    def.setScriptClass((Class<? extends com.inubot.script.Script>) clazz);
+                    def.setScriptClass((Class<? extends Script>) clazz);
                     entities.add(new Entity(def));
                 }
             } catch (Exception e) {
@@ -58,48 +60,56 @@ public class ScriptSelector extends JFrame {
             }
         }
 
-        for (Class<?> clazz : SCRIPT_CLASSES) {
-            if (filter.accept(clazz)) {
-                ScriptDefinition def = new ScriptDefinition(clazz.getAnnotation(Manifest.class));
-                def = new RemoteScriptDefinition(def.name(), def.developer(), def.desc(), def.version());
-                def.setScriptClass((Class<? extends com.inubot.script.Script>) clazz);
-                entities.add(new Entity(def));
+        JPanel content = new JPanel();
+        outer:
+        for (Entity entity : entities) {
+            for (Component c : content.getComponents()) {
+                if (c instanceof Entity) {
+                    Entity entity0 = (Entity) c;
+                    if (entity.target.equals(entity0.target)) {
+                        continue outer;
+                    }
+                }
             }
+            content.add(entity);
         }
 
         content.setLayout(new GridLayout(entities.size(), 1));
         entities.forEach(content::add);
+        JScrollPane scrollPane = new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setPreferredSize(new Dimension(320, 100));
         add(scrollPane);
-        
+
         pack();
         setResizable(false);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
-    class Entity extends JPanel {
+    private class Entity extends JPanel {
 
-        private final JButton initiate = new JButton("Initiate");
-        private final JLabel title;
+        private final ScriptDefinition target;
 
-        public Entity(ScriptDefinition target) {
-            title = new JLabel("   ".concat(target.name()));
+        private Entity(ScriptDefinition target) {
+            this.target = target;
 
             this.setLayout(new BorderLayout());
             this.setPreferredSize(new Dimension(300, 20));
 
-            this.initiate.setFocusable(false);
-            this.initiate.setToolTipText(target.desc());
+            JButton initiate = new JButton("Start");
+            initiate.setFocusable(false);
+            initiate.setToolTipText(target.desc());
 
-            this.setToolTipText("Author: ".concat(target.developer()));
+
+            this.setToolTipText("Author: " + target.developer());
+            JLabel title = new JLabel("   " + target.name());
 
             this.add(title, BorderLayout.WEST);
             this.add(initiate, BorderLayout.EAST);
 
-            this.initiate.addActionListener(e -> {
+            initiate.addActionListener(e -> {
                 try {
-                    com.inubot.script.Script targetInstance = target.getScriptClass().newInstance();
+                    Script targetInstance = target.getScriptClass().newInstance();
                     Bot.getInstance().getScriptFlux().execute(targetInstance);
                     dispose();
                 } catch (InstantiationException | IllegalAccessException e1) {
@@ -108,7 +118,9 @@ public class ScriptSelector extends JFrame {
             });
 
             this.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, this.getBackground().darker()));
+            if (target instanceof RemoteScriptDefinition) {
+                setBackground(getBackground().darker());
+            }
         }
-
     }
 }

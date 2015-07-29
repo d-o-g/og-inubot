@@ -85,7 +85,7 @@ public class InterfaceOptions {
         } catch (AbstractMethodError e) {
             return ViewMode.FIXED_MODE;
         }
-        throw new IllegalStateException("Unknown state..? " + screenState);
+        return ViewMode.FIXED_MODE;
     }
 
     public static boolean isAcceptingAid() {
