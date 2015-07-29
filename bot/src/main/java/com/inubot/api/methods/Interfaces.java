@@ -13,6 +13,7 @@ import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.oldschool.*;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,7 +195,9 @@ public class Interfaces {
     public static boolean processContinue() {
         if (canContinue()) {
             Time.sleep(300);
-            Client.processAction(new DialogButtonAction(continueDialogId, -1), "Continue", "");
+            Game.getCanvas().pressKey(KeyEvent.VK_SPACE, 200);
+            Game.getCanvas().releaseKey(KeyEvent.VK_SPACE);
+            //Client.processAction(new DialogButtonAction(continueDialogId, -1), "Continue", "");
             return true;
         }
         return false;

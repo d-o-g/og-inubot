@@ -15,6 +15,7 @@ import com.inubot.bot.account.Account;
 import com.inubot.bot.account.AccountManager;
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.ModScript;
+import com.inubot.bot.net.cdn.ServerConnection;
 import com.inubot.bot.ui.BotMenuBar;
 import com.inubot.bot.util.*;
 import com.inubot.bot.util.io.Crawler;
@@ -55,7 +56,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         this.crawler = createCrawler();
         this.asyncEventBus = new AsynchronousEventBus();
         this.syncEventBus = new SynchronousEventBus();
-        //ServerConnection.start();
+       // ServerConnection.start();
         JPopupMenu.setDefaultLightWeightPopupEnabled(false);
         new Thread(this).start();
     }
