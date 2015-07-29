@@ -28,10 +28,6 @@ public abstract class Script extends LoopTask {
         return true;
     }
 
-    public void onFinish() {
-
-    }
-
     public final void run() {
         if (!started) {
             if (started = setup()) {
@@ -49,7 +45,6 @@ public abstract class Script extends LoopTask {
             } else {
                 Bot.getInstance().getCanvas().paintables.clear();
                 stop();
-                onFinish();
             }
             System.out.println("Finished script");
         }

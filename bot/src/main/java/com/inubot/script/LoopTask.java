@@ -23,6 +23,11 @@ public abstract class LoopTask implements Task {
     public final void stop() {
         this.running = false;
         onExit();
+        onFinish();
+    }
+
+    public void onFinish() {
+
     }
 
     public final boolean isPaused() {
