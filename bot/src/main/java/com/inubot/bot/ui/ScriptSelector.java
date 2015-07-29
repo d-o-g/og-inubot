@@ -3,6 +3,7 @@ package com.inubot.bot.ui;
 import com.inubot.Bot;
 import com.inubot.bot.util.CachedClassLoader;
 import com.inubot.bot.util.Configuration;
+import com.inubot.bundledscripts.complete.alcher.ProAlcher;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 import com.inubot.script.loader.*;
@@ -20,7 +21,7 @@ import java.util.List;
 public class ScriptSelector extends JFrame {
 
     private static final Class[] SCRIPT_CLASSES = {
-
+            ProAlcher.class
     };
 
     public ScriptSelector() {
@@ -28,6 +29,15 @@ public class ScriptSelector extends JFrame {
 
         LocalScriptLoader loader = new LocalScriptLoader();
         List<Entity> entities = new ArrayList<>();
+
+        for (Class c : SCRIPT_CLASSES) {
+            Manifest m = (Manifest) c.getAnnotation(Manifest.class);
+            if (m != null) {
+                RemoteScriptDefinition rem = new RemoteScriptDefinition(m.name(), m.developer(), m.desc(), m.version());
+                entities.add(new Entity(rem));
+            }
+        }
+
         try {
             loader.parse(new File(Configuration.SCRIPTS));
             ScriptDefinition[] definitions = loader.getDefinitions();
