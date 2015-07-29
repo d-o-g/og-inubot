@@ -24,6 +24,10 @@ public class Skills {
             XP_TABLE[i] = getExperienceAt(i);
     }
 
+    public static void setLevel(Skill skill, int level) {
+        Inubot.getInstance().getClient().getLevels()[skill.getIndex()] = level;
+    }
+
     public static int[] getExperiences() {
         return Inubot.getInstance().getClient().getExperiences();
     }
