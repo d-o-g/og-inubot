@@ -29,8 +29,6 @@ public class Inubot extends Bot<RSClient> {
                     if (arg.equals("-login")) {
                         Login.setUsername(args[i + 1]);
                         Login.setPassword(args[i + 2]);
-                        Inubot.main(args);
-                        return;
                     }
                 }
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
