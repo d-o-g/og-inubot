@@ -19,17 +19,9 @@ import java.awt.*;
  */
 public class BotMenuBar extends JMenuBar {
 
-    private final JMenuItem widget = new JMenuItem("Widget Explorer");
-    private final JMenuItem acc = new JMenuItem("Account Creator");
-
     private final JButton pause = new JButton("Pause");
     private final JButton start = new JButton("Start");
     private final JButton stop = new JButton("Stop");
-
-    private final JMenu debug = new JMenu("Debug");
-    private final JMenu tools = new JMenu("Tools");
-
-    private JScrollPane scroller;
 
     public BotMenuBar() {
 //        widget.addActionListener(e -> new WidgetExplorer().setVisible(true));
@@ -40,7 +32,7 @@ public class BotMenuBar extends JMenuBar {
 //            }
 //        });
 
-        scroller = new JScrollPane();
+        JScrollPane scroller = new JScrollPane();
         scroller.setPreferredSize(new Dimension(0, 100));
 
         start.setEnabled(true);
