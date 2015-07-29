@@ -6,6 +6,9 @@
  */
 package com.inubot.api.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class StopWatch {
@@ -38,12 +41,10 @@ public class StopWatch {
     }
 
     public static String format(final long time) {
-        final long days = time / (3600 * 24);
-        final long hours = (time / 3600) - (days * 24);
-        final long minutes = (time / 60) - (days * (60 * 24)) - (hours * 60);
-        final long seconds = (time) - (days * (3600 * 24)) - (hours * 3600) - (minutes * 60);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd:HH:mm:ss", Locale.UK);
 
-        return days + ":" + hours + ":" + minutes + ":" + seconds;
+        Date date = new Date(time);
+        return formatter.format(date);
     }
 
     public long getElapsed() {
