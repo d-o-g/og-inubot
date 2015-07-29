@@ -123,10 +123,20 @@ public class Client {
         processAction(action.arg0, action.arg1, action.arg2, action.opcode, actionText, targetText, 50, 50);
     }
 
+    /**
+     * @param npc              The target
+     * @param actionArrayIndex The index within the npc's actions. This is generally the menu action index, but in some cases the actions may be [null, "ACTION", null, null, null] in which case the index is 1, not 0 as it appears in game
+     * @param action The action text
+     */
     public static void forceAction(Npc npc, int actionArrayIndex, String action) {
         processAction(new NpcAction(ActionOpcodes.NPC_ACTION_0 + actionArrayIndex, npc.getArrayIndex()), action, "");
     }
 
+    /**
+     * @param obj              The target
+     * @param actionArrayIndex The index within the objects actions. This is generally the menu action index, but in some cases the actions may be [null, "ACTION", null, null, null] in which case the index is 1, not 0 as it appears in game
+     * @param action The action text
+     */
     public static void forceAction(GameObject obj, int actionArrayIndex, String action) {
         processAction(new ObjectAction(ActionOpcodes.OBJECT_ACTION_0 + actionArrayIndex,
                 obj.getRaw().getId(), obj.getRegionX(), obj.getRegionY()), action, "");
