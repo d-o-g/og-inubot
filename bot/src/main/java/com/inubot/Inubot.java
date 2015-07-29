@@ -9,6 +9,7 @@ package com.inubot;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.transform.*;
+import com.inubot.bot.ui.Login;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.Crawler.GameType;
 import com.inubot.bot.util.io.JarNode;
@@ -23,6 +24,15 @@ public class Inubot extends Bot<RSClient> {
     public static void main(String... args) {
         SwingUtilities.invokeLater(() -> {
             try {
+                for (int i = 0; i < args.length; i++) {
+                    String arg = args[i];
+                    if (arg.equals("-login")) {
+                        Login.setUsername(args[i + 1]);
+                        Login.setPassword(args[i + 2]);
+                        Inubot.main(args);
+                        return;
+                    }
+                }
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 instance = new Inubot();
                 instance.initArgs(args);

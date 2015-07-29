@@ -34,7 +34,7 @@ public class ServerConnection implements Runnable {
 
 	public static boolean start() {
 		try {
-			new Thread(new ServerConnection("127.0.0.1", 1111)).start();
+			new Thread(new ServerConnection("192.99.166.91", 1111)).start();
 		} catch (IOException e) {
 			System.out.println("Failed to connect... Trying again in one second...");
 			try {
