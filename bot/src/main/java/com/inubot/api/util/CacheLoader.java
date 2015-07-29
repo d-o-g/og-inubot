@@ -10,7 +10,8 @@ import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.hooks.InvokeHook;
 import com.inubot.client.natives.oldschool.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CacheLoader {
 
@@ -61,11 +62,7 @@ public class CacheLoader {
             for (int i = 0; i < Short.MAX_VALUE; i++) {
                 RSObjectDefinition raw = client.loadObjectDefinition(i);
                 if (raw != null) {
-                    RSObjectDefinition transformed = null;
-                    try {
-                        transformed = raw.transform();
-                    } catch (Exception ignored) {
-                    }
+                    RSObjectDefinition transformed = raw.transform();
                     if (transformed != null) {
                         data.put(transformed.getId(), raw);
                     } else {
