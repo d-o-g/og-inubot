@@ -81,8 +81,8 @@ public class Stringer extends ProScript {
 
     @Override
     public boolean setup() {
-        cost = ExchangePricing.getPrice(70) + ExchangePricing.getPrice(1777);
-        price = ExchangePricing.getPrice(859);
+        cost = ExchangePricing.get(70) + ExchangePricing.get(1777);
+        price = ExchangePricing.get(859);
         return true;
     }
 

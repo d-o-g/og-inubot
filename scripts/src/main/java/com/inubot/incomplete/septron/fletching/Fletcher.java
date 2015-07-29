@@ -94,7 +94,7 @@ public class Fletcher extends ProScript {
 
     @Override
     public boolean setup() {
-        price = ExchangePricing.getPrice(62);
+        price = ExchangePricing.get(62);
         return true;
     }
 

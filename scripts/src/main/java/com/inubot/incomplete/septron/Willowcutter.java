@@ -40,7 +40,7 @@ public class Willowcutter extends Script implements Paintable {
             return false;
         }
         xp = Skills.getExperience(Skill.WOODCUTTING);
-        price = ExchangePricing.getPrice(1519);
+        price = ExchangePricing.get(1519);
         runtime = new StopWatch(0);
         return true;
     }

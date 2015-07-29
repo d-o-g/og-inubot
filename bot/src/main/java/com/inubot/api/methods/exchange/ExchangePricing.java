@@ -31,7 +31,7 @@ public class ExchangePricing {
      * @param itemId the id of the item to lookup
      * @return the price of the item, 0 if not found
      */
-    public static int getPrice(int itemId) {
+    public static int get(int itemId) {
         try {
             String line = getData(itemId);
             if (line != null) {

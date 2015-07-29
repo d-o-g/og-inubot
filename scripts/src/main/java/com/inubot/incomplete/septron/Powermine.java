@@ -44,7 +44,7 @@ public class Powermine extends Script implements Paintable {
             return false;
         }
         xp = Skills.getExperience(Skill.MINING);
-        price = ExchangePricing.getPrice(440);
+        price = ExchangePricing.get(440);
         runtime = new StopWatch(0);
         return true;
     }
