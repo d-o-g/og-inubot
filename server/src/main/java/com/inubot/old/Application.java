@@ -1,5 +1,6 @@
-package com.inubot;
+package com.inubot.old;
 
+import com.inubot.Loader;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
@@ -32,8 +33,7 @@ public class Application {
             e.printStackTrace();
         } finally {
             logger.info("... Cached " + Loader.scripts.size() + " scripts");
-            logger.info("Starting server...");
-            logger.info("");
+            logger.info("Starting server...\n");
             new Server().open();
         }
     }

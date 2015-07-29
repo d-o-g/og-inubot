@@ -38,28 +38,12 @@ public class StopWatch {
     }
 
     public static String format(final long time) {
-        final StringBuilder t = new StringBuilder();
-        final long total_secs = time / 1000;
-        final long total_mins = total_secs / 60;
-        final long total_hrs = total_mins / 60;
-        final int secs = (int) total_secs % 60;
-        final int mins = (int) total_mins % 60;
-        final int hrs = (int) total_hrs % 60;
-        if (hrs < 10) {
-            t.append("0");
-        }
-        t.append(hrs);
-        t.append(":");
-        if (mins < 10) {
-            t.append("0");
-        }
-        t.append(mins);
-        t.append(":");
-        if (secs < 10) {
-            t.append("0");
-        }
-        t.append(secs);
-        return t.toString();
+        final long days = time / (3600 * 24);
+        final long hours = (time / 3600) - (days * 24);
+        final long minutes = (time / 60) - (days * (60 * 24)) - (hours * 60);
+        final long seconds = (time) - (days * (3600 * 24)) - (hours * 3600) - (minutes * 60);
+
+        return days + ":" + hours + ":" + minutes + ":" + seconds;
     }
 
     public long getElapsed() {

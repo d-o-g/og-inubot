@@ -20,11 +20,6 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>pircbot</groupId>
-            <artifactId>pircbot</artifactId>
-            <version>1.5.0</version>
-        </dependency>
     </dependencies>
 
     <build>

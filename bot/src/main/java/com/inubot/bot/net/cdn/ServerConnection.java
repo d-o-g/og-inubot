@@ -6,7 +6,6 @@
  */
 package com.inubot.bot.net.cdn;
 
-import com.inubot.bot.net.cdn.packet.LoginPacket;
 import com.inubot.bot.net.cdn.packet.Packet;
 import com.inubot.bot.ui.Login;
 import com.inubot.script.loader.RemoteScriptDefinition;
@@ -56,24 +55,25 @@ public class ServerConnection implements Runnable {
 				this.output = new DataOutputStream(connection.getOutputStream());
 			} catch (IOException ignored) {}
 		try {
-			send(new LoginPacket(Login.getUsername(), Login.getPassword()));
-		} catch (IOException ignored) {}
-	}
 
-	public void send(Packet packet) throws IOException {
-		if (packet == null)
-			throw new IllegalArgumentException("malformed_packet");
-		output.writeByte(packet.getOpcode());
-		packet.encode(output);
+			output.writeInt(Packet.LOGIN);
+
+			byte[] username = Login.getUsername().getBytes("UTF-8");
+			output.writeInt(username.length);
+			output.write(username);
+
+			byte[] password = Login.getPassword().getBytes("UTF-8");
+			output.writeInt(password.length);
+			output.write(password);
+
+			output.flush();
+	} catch (IOException ignored) {}
 	}
 
 	@Override
 	public void run() {
-		reconnect();
 		while (true) {
 			try {
-				if (!connection.isConnected())
-					System.out.println("Ayyy");
 				int value = input.read();
 				switch (value) {
 					case Packet.AUTH_SUCCESS: {
@@ -86,13 +86,14 @@ public class ServerConnection implements Runnable {
 					case Packet.REQUEST_SCRIPTS: {
 						System.out.println("Receiving Script...");
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();
-						while (input.available() > 0) {
-							byte[] data = new byte[1024];
-							int count = input.read(data);
+						byte[] data = new byte[1024];
+						while (input.read(data) > -1) {
 							baos.write(data);
+							data = new byte[1024];
 						}
-						byte[] data = baos.toByteArray();
-						RemoteScriptDefinition.addNetworkedDefinition(data);
+						byte[] D2 = baos.toByteArray();
+						System.out.println("Read " + D2.length);
+						RemoteScriptDefinition.addNetworkedDefinition(D2);
 						break;
 					}
 					case Packet.INSTANCE_COUNT: {
