@@ -225,7 +225,7 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         int index = Action.indexOf(getActions(), action) + 1;
         if (index == -1)
             return false;
-        Client.processAction(new WidgetAction(index > 4, index, getParentHash() == -1 ? this.index : -1, getId()), action, "");
+        Client.processAction(new WidgetAction(index > 4, index, getParentHash() == -1 ? this.index : raw.getIndex(), getId()), action, "");
         return true;
     }
 
@@ -233,7 +233,7 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         int index = Action.indexOf(getActions(), action) + 1;
         if (index == -1)
             return false;
-        Client.processAction(new WidgetAction(index > 4, index, getParentHash() == -1 ? this.index : -1, getId()), action, "");
+        Client.processAction(new WidgetAction(index > 4, index, getParentHash() == -1 ? this.index : raw.getIndex(), getId()), action, "");
         return true;
     }
 

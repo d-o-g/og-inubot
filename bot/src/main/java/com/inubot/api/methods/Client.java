@@ -7,7 +7,10 @@
 package com.inubot.api.methods;
 
 import com.inubot.Inubot;
-import com.inubot.api.oldschool.action.tree.Action;
+import com.inubot.api.oldschool.GameObject;
+import com.inubot.api.oldschool.Npc;
+import com.inubot.api.oldschool.action.ActionOpcodes;
+import com.inubot.api.oldschool.action.tree.*;
 
 import java.util.Iterator;
 import java.util.Queue;
@@ -118,6 +121,15 @@ public class Client {
 
     public static void processAction(Action action, String actionText, String targetText) {
         processAction(action.arg0, action.arg1, action.arg2, action.opcode, actionText, targetText, 50, 50);
+    }
+
+    public static void forceAction(Npc npc, int actionArrayIndex, String action) {
+        processAction(new NpcAction(ActionOpcodes.NPC_ACTION_0 + actionArrayIndex, npc.getArrayIndex()), action, "");
+    }
+
+    public static void forceAction(GameObject obj, int actionArrayIndex, String action) {
+        processAction(new ObjectAction(ActionOpcodes.OBJECT_ACTION_0 + actionArrayIndex,
+                obj.getRaw().getId(), obj.getRegionX(), obj.getRegionY()), action, "");
     }
 
     public static void processAction(int arg0, int arg1, int arg2, int opcode, String actionText, String targetText, int x, int y) {
