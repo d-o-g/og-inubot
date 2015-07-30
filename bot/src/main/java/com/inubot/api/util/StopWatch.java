@@ -50,7 +50,11 @@ public class StopWatch {
         int hours = (int) hoursLong % 60;
         int days = (int) daysLong % 24;
 
-        return String.format("%05d", days).concat(":").concat(String.format("%05d", hours)).concat(":").concat(String.format("%05d", minutes)).concat(":").concat(String.format("%05d", seconds));
+        return padding(days) + ":" + padding(hours) + ":" + padding(minutes) + ":" + padding(seconds);
+    }
+
+    public static String padding(int i) {
+        return String.format("%05d", i);
     }
 
     public long getElapsed() {
