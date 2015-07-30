@@ -53,7 +53,7 @@ public class StopWatch {
         return padding(days) + ":" + padding(hours) + ":" + padding(minutes) + ":" + padding(seconds);
     }
 
-    public static String padding(int i) {
+    private static String padding(int i) {
         return String.format("%05d", i);
     }
 
