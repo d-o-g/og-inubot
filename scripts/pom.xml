@@ -12,7 +12,6 @@
     <artifactId>scripts</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>../ProFramework</module>
     </modules>
 
     <dependencies>

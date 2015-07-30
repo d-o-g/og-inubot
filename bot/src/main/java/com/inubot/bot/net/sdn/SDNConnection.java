@@ -2,7 +2,6 @@ package com.inubot.bot.net.sdn;
 
 import com.inubot.script.loader.RemoteScriptDefinition;
 
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -50,47 +49,31 @@ public class SDNConnection implements Runnable {
 		while (true) {
 			try {
 				int opcode = dis.read();
+				System.out.println("opcode: " + opcode);
 				switch (opcode) {
 					case 0: { // REQUEST LOGIN
 						dos.write(0);
-						dos.writeUTF("Testing");
-						dos.writeUTF("penis");
-						dos.flush();
+						dos.writeUTF("testing");
+						dos.writeUTF("penis123");
 					}
 					case 1: { // LOGIN RESULT
-						boolean authenticated = dis.readBoolean();
-						if (!authenticated) {
-							System.out.println("Failed to authenticate.");
-							//TODO: add login popup?
-						} else {
-							System.out.println("Successfully authenticated.");
-							dos.write(1); // REQUEST SCRIPTS
-							dos.flush();
-						}
+						int a = dis.read();
+						System.out.println(a);
+						System.out.println("Successfully authenticated.");
+						dos.write(1); // REQUEST SCRIPTS
 					}
 					case 2: { // RECEIVE SCRIPT
-						System.out.println("Ayyyy");
 						int size = dis.readInt();
-						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
 						byte[] data = new byte[size];
-						int n;
-						while ((n = dis.read(data)) != -1) {
-							baos.write(data, 0, n);
-							data = new byte[size];
+						for (int i = 0; i < size; i++) {
+							data[i] = (byte) dis.read();
 						}
-						byte[] D2 = baos.toByteArray();
-
-						System.out.println(D2.length);
-						System.out.println(size);
-
-						if (D2.length != size) {
-							System.out.println("Fuck");
-						} else {
-							System.out.println("\tReceived Script...");
-							RemoteScriptDefinition.create(data);
-						}
+						System.out.println("\tReceived Script...");
+						RemoteScriptDefinition.create(data);
 					}
 					case 3: { // SHUT DOWN
+						System.out.println("Exiting...");
 						System.exit(0);
 					}
 				}

@@ -1,9 +1,12 @@
-package com.inubot.bundledscripts.mad.modules;
+package me.mad.modules;
 
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.Tile;
 import com.inubot.api.util.Time;
-import com.inubot.bundledscripts.mad.util.interfaces.Module;
+import me.mad.Tutorial;
+import me.mad.util.interfaces.Module;
+
+import static me.mad.Tutorial.*;
 
 
 /**

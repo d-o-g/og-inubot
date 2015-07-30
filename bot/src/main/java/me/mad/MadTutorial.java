@@ -1,13 +1,13 @@
-package com.inubot.bundledscripts.mad;
+package me.mad;
 
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Varps;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Random;
-import com.inubot.bundledscripts.mad.modules.*;
-import com.inubot.bundledscripts.mad.util.wrappers.ModuleWrapper;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
+import me.mad.modules.*;
+import me.mad.util.wrappers.ModuleWrapper;
 
 import java.awt.*;
 

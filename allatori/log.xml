@@ -15,7 +15,7 @@
   </class>
   <class old="com.inubot.client.natives.oldschool.RSAnimationSequence" new="com.inubot.client.natives.oldschool.RSAnimationSequence">
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.services.FieldGetterFactory" new="com.inubot.a.b.a.a.a.a.f">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.services.FieldGetterFactory" new="com.inubot.a.b.a.a.a.a.f">
    <method old="lambda$0(ILjdk/internal/org/objectweb/asm/tree/FieldInsnNode;Ljava/lang/String;Ljdk/internal/org/objectweb/asm/tree/MethodNode;)Ljdk/internal/org/objectweb/asm/tree/MethodNode;" new="ALLATORIxDEMO"/>
    <method old="supply(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Lcom/inubot/bot/modscript/transform/util/factory/FieldInsnFactory;)Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;" new="ALLATORIxDEMO"/>
    <method old="supply(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljdk/internal/org/objectweb/asm/tree/FieldInsnNode;)Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;" new="ALLATORIxDEMO"/>
@@ -175,7 +175,7 @@
    <method old="select(Lcom/inubot/api/oldschool/Spell;)Z" new="select"/>
    <field old="$assertionsDisabled Z" new="$assertionsDisabled"/>
   </class>
-  <class old="com.inubot.bot.util.io.Internet" new="com.inubot.a.c.a.G">
+  <class old="com.inubot.bot.me.mad.util.io.Internet" new="com.inubot.a.c.a.G">
    <method old="download(Ljava/lang/String;Ljava/lang/String;Lcom/inubot/bot/util/io/InternetCallback;)Ljava/io/File;" new="ALLATORIxDEMO"/>
    <method old="download(Ljava/lang/String;Ljava/lang/String;Lcom/inubot/bot/util/io/InternetCallback;Z)Ljava/io/File;" new="ALLATORIxDEMO"/>
    <method old="downloadBinary(Ljava/io/InputStream;Lcom/inubot/bot/util/io/InternetCallback;)[B" new="ALLATORIxDEMO"/>
@@ -191,7 +191,7 @@
    <field old="DEFAULT_USER_AGENT Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <field old="timeout I" new="F"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.services.StackBuilder" new="com.inubot.a.b.a.a.a.a.i">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.services.StackBuilder" new="com.inubot.a.b.a.a.a.a.i">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="append(ILjdk/internal/org/objectweb/asm/tree/MethodNode;)Lcom/inubot/bot/modscript/transform/util/factory/services/StackBuilder;" new="ALLATORIxDEMO"/>
    <method old="append(Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;)Lcom/inubot/bot/modscript/transform/util/factory/services/StackBuilder;" new="ALLATORIxDEMO"/>
@@ -290,7 +290,7 @@
    <method old="getX()I" new="getX"/>
    <method old="getY()I" new="getY"/>
   </class>
-  <class old="com.inubot.api.util.AWTUtil" new="com.inubot.api.util.AWTUtil">
+  <class old="com.inubot.api.me.mad.util.AWTUtil" new="com.inubot.api.me.mad.util.AWTUtil">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="drawBoldedString(Ljava/awt/Graphics;Ljava/lang/String;II)V" new="drawBoldedString"/>
    <method old="drawBoldedString(Ljava/awt/Graphics;Ljava/lang/String;IILjava/awt/Color;)V" new="drawBoldedString"/>
@@ -324,7 +324,7 @@
    <method old="getZVertices()[I" new="getZVertices"/>
    <method old="setModel(Lcom/inubot/client/natives/oldschool/RSModel;)V" new="setModel"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.RIS" new="com.inubot.a.b.a.a.f">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.RIS" new="com.inubot.a.b.a.a.f">
    <method old="getCurrentIndex()I" new="ALLATORIxDEMO"/>
    <method old="getKey(Ljava/lang/Integer;)Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
    <method old="getMatchFromRange(II)[Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
@@ -393,7 +393,7 @@
    <field old="arg2 I" new="arg2"/>
    <field old="opcode I" new="opcode"/>
   </class>
-  <class old="com.inubot.bot.util.ProxyUtils$ProxyEntry" new="com.inubot.a.c.G">
+  <class old="com.inubot.bot.me.mad.util.ProxyUtils$ProxyEntry" new="com.inubot.a.c.G">
    <method old="isAlive()Z" new="ALLATORIxDEMO"/>
    <method old="toString()Ljava/lang/String;" new="toString"/>
    <field old="address Ljava/lang/String;" new="F"/>
@@ -417,7 +417,7 @@
    <method old="getX()I" new="getX"/>
    <method old="getY()I" new="getY"/>
   </class>
-  <class old="com.inubot.bot.util.CachedClassLoader" new="com.inubot.a.c.D">
+  <class old="com.inubot.bot.me.mad.util.CachedClassLoader" new="com.inubot.a.c.D">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="loadClass(Ljava/lang/String;)Ljava/lang/Class;" new="loadClass"/>
    <field old="classes Ljava/util/Map;" new="F"/>
@@ -531,7 +531,7 @@
    <field old="BUTTON_VAR_SET I" new="BUTTON_VAR_SET"/>
    <field old="continueDialogId I" new="continueDialogId"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.ASMFactory" new="com.inubot.a.b.a.a.D">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.ASMFactory" new="com.inubot.a.b.a.a.D">
    <method old="createGetter(Lcom/inubot/bot/modscript/hooks/FieldHook;)Ljdk/internal/org/objectweb/asm/tree/MethodNode;" new="ALLATORIxDEMO"/>
    <method old="createGetter(Lcom/inubot/bot/modscript/hooks/FieldHook;Ljava/lang/String;)Ljdk/internal/org/objectweb/asm/tree/MethodNode;" new="ALLATORIxDEMO"/>
    <method old="createGetter(ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljdk/internal/org/objectweb/asm/tree/MethodNode;" new="ALLATORIxDEMO"/>
@@ -549,7 +549,7 @@
    <method old="inject(Ljava/util/Map;)V" new="ALLATORIxDEMO"/>
    <field old="PACKAGE Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.RIS$Constraint" new="com.inubot.a.b.a.a.i">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.RIS$Constraint" new="com.inubot.a.b.a.a.i">
    <method old="accept([Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;)Z" new="ALLATORIxDEMO"/>
   </class>
   <class old="com.inubot.client.natives.oldschool.RSPlayer" new="com.inubot.client.natives.oldschool.RSPlayer">
@@ -789,7 +789,7 @@
    <field old="opcode I" new="opcode"/>
    <field old="type Lcom/inubot/api/oldschool/EntityType;" new="type"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.services.MethodInvokerFactory" new="com.inubot.a.b.a.a.a.a.G">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.services.MethodInvokerFactory" new="com.inubot.a.b.a.a.a.a.G">
    <method old="lambda$0(I[Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;Ljdk/internal/org/objectweb/asm/tree/MethodInsnNode;Ljava/lang/String;Ljdk/internal/org/objectweb/asm/tree/MethodNode;)Ljdk/internal/org/objectweb/asm/tree/MethodNode;" new="ALLATORIxDEMO"/>
    <method old="supply(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Lcom/inubot/bot/modscript/transform/util/factory/MethodInsnFactory;[Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;)Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;" new="ALLATORIxDEMO"/>
    <method old="supply(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljdk/internal/org/objectweb/asm/tree/MethodInsnNode;[Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;)Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;" new="ALLATORIxDEMO"/>
@@ -829,7 +829,7 @@
    <method old="getCaret()I" new="getCaret"/>
    <method old="getPayload()[B" new="getPayload"/>
   </class>
-  <class old="com.inubot.api.util.Random" new="com.inubot.api.util.Random">
+  <class old="com.inubot.api.me.mad.util.Random" new="com.inubot.api.me.mad.util.Random">
    <method old="nextBoolean()Z" new="nextBoolean"/>
    <method old="nextDouble()D" new="nextDouble"/>
    <method old="nextElement(Ljava/util/Collection;)Ljava/lang/Object;" new="nextElement"/>
@@ -1349,7 +1349,7 @@
   </class>
   <class old="com.inubot.client.Artificial" new="com.inubot.client.Artificial">
   </class>
-  <class old="com.inubot.api.util.Paintable" new="com.inubot.api.util.Paintable">
+  <class old="com.inubot.api.me.mad.util.Paintable" new="com.inubot.api.me.mad.util.Paintable">
    <method old="render(Ljava/awt/Graphics2D;)V" new="render"/>
   </class>
   <class old="com.inubot.script.loader.ScriptLoader" new="com.inubot.script.a.b">
@@ -1482,7 +1482,7 @@
   </class>
   <class old="com.inubot.bot.net.push.Push" new="com.inubot.a.a.b.i">
   </class>
-  <class old="com.inubot.api.util.CacheLoader" new="com.inubot.api.util.CacheLoader">
+  <class old="com.inubot.api.me.mad.util.CacheLoader" new="com.inubot.api.me.mad.util.CacheLoader">
    <method old="findItemDefinition(I)Lcom/inubot/client/natives/oldschool/RSItemDefinition;" new="findItemDefinition"/>
    <method old="findNpcDefinition(I)Lcom/inubot/client/natives/oldschool/RSNpcDefinition;" new="findNpcDefinition"/>
    <method old="findObjectDefinition(I)Lcom/inubot/client/natives/oldschool/RSObjectDefinition;" new="findObjectDefinition"/>
@@ -1605,7 +1605,7 @@
    <method old="lambda$0(Ljdk/internal/org/objectweb/asm/tree/MethodNode;)Z" new="ALLATORIxDEMO"/>
    <field old="PACKAGE Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.api.util.StopWatch" new="com.inubot.api.util.StopWatch">
+  <class old="com.inubot.api.me.mad.util.StopWatch" new="com.inubot.api.me.mad.util.StopWatch">
    <method old="format(J)Ljava/lang/String;" new="format"/>
    <method old="getElapsed()J" new="getElapsed"/>
    <method old="getElapsed(Ljava/util/concurrent/TimeUnit;)J" new="getElapsed"/>
@@ -1896,7 +1896,7 @@
    <field old="arg2 I" new="arg2"/>
    <field old="opcode I" new="opcode"/>
   </class>
-  <class old="com.inubot.api.util.filter.Filter" new="com.inubot.api.util.filter.Filter">
+  <class old="com.inubot.api.me.mad.util.filter.Filter" new="com.inubot.api.me.mad.util.filter.Filter">
    <method old="accept(Ljava/lang/Object;)Z" new="accept"/>
    <method old="always()Lcom/inubot/api/util/filter/Filter;" new="always"/>
    <method old="lambda$0(Ljava/lang/Object;)Z" new="lambda$0"/>
@@ -2021,7 +2021,7 @@
    <method old="next()Ljava/lang/Object;" new="next"/>
    <field old="this$0 Lcom/inubot/api/oldschool/NodeDeque;" new="this$0"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.IntInsnFactory" new="com.inubot.a.b.a.a.a.D">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.IntInsnFactory" new="com.inubot.a.b.a.a.a.D">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="e"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="getInstruction()Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
@@ -2506,7 +2506,7 @@
    <field old="TRADE_SENT Lcom/inubot/api/oldschool/event/MessageEvent$Type;" new="TRADE_SENT"/>
    <field old="typeId I" new="typeId"/>
   </class>
-  <class old="com.inubot.bot.util.OS" new="com.inubot.a.c.b">
+  <class old="com.inubot.bot.me.mad.util.OS" new="com.inubot.a.c.b">
    <method old="$SWITCH_TABLE$com$inubot$bot$util$OS()[I" new="ALLATORIxDEMO"/>
    <method old="get()Lcom/inubot/bot/util/OS;" new="ALLATORIxDEMO"/>
    <method old="getHomeDirectory()Ljava/lang/String;" new="ALLATORIxDEMO"/>
@@ -2650,7 +2650,7 @@
   </class>
   <class old="com.inubot.client.natives.oldschool.RSCache" new="com.inubot.client.natives.oldschool.RSCache">
   </class>
-  <class old="com.inubot.bot.util.io.Crawler$GameType" new="com.inubot.a.c.a.f">
+  <class old="com.inubot.bot.me.mad.util.io.Crawler$GameType" new="com.inubot.a.c.a.f">
    <method old="valueOf(Ljava/lang/String;)Lcom/inubot/bot/util/io/Crawler$GameType;" new="valueOf"/>
    <method old="values()[Lcom/inubot/bot/util/io/Crawler$GameType;" new="values"/>
    <field old="ENUM$VALUES [Lcom/inubot/bot/util/io/Crawler$GameType;" new="j"/>
@@ -2692,7 +2692,7 @@
    <field old="definition Lcom/inubot/client/natives/oldschool/RSNpcDefinition;" new="definition"/>
    <field old="raw Lcom/inubot/client/natives/ClientNative;" new="raw"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.MethodInsnFactory" new="com.inubot.a.b.a.a.a.b">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.MethodInsnFactory" new="com.inubot.a.b.a.a.a.b">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="e"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="desc(Ljava/lang/String;)Lcom/inubot/bot/modscript/transform/util/factory/MethodInsnFactory;" new="ALLATORIxDEMO"/>
@@ -2884,7 +2884,7 @@
    <method old="lambda$1(Ljava/awt/event/ActionEvent;)V" new="ALLATORIxDEMO"/>
    <field old="condition Ljava/util/function/BooleanSupplier;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.api.util.filter.NameFilter" new="com.inubot.api.util.filter.NameFilter">
+  <class old="com.inubot.api.me.mad.util.filter.NameFilter" new="com.inubot.api.me.mad.util.filter.NameFilter">
    <method old="accept(Lcom/inubot/api/util/Identifiable;)Z" new="accept"/>
    <method old="accept(Ljava/lang/Object;)Z" new="accept"/>
    <method old="always()Lcom/inubot/api/util/filter/Filter;" new="always"/>
@@ -2912,11 +2912,11 @@
    <field old="TYPE_PLAYER I" new="TYPE_PLAYER"/>
    <field old="uid I" new="uid"/>
   </class>
-  <class old="com.inubot.bot.util.io.InternetCallback" new="com.inubot.a.c.a.b">
+  <class old="com.inubot.bot.me.mad.util.io.InternetCallback" new="com.inubot.a.c.a.b">
    <method old="onDownload(I)V" new="ALLATORIxDEMO"/>
    <field old="length I" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.io.Crawler$1" new="com.inubot.a.c.a.D">
+  <class old="com.inubot.bot.me.mad.util.io.Crawler$1" new="com.inubot.a.c.a.D">
    <method old="appletResize(II)V" new="appletResize"/>
    <method old="getAppletContext()Ljava/applet/AppletContext;" new="getAppletContext"/>
    <method old="getCodeBase()Ljava/net/URL;" new="getCodeBase"/>
@@ -2926,7 +2926,7 @@
    <field old="this$0 Lcom/inubot/bot/util/io/Crawler;" new="j"/>
    <field old="val$applet Ljava/applet/Applet;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.io.Crawler$2" new="com.inubot.a.c.a.I">
+  <class old="com.inubot.bot.me.mad.util.io.Crawler$2" new="com.inubot.a.c.a.I">
    <method old="onDownload(I)V" new="ALLATORIxDEMO"/>
    <field old="length I" new="ALLATORIxDEMO"/>
    <field old="this$0 Lcom/inubot/bot/util/io/Crawler;" new="ALLATORIxDEMO"/>
@@ -3062,7 +3062,7 @@
    <method old="getOpen()Lcom/inubot/api/oldschool/Tab;" new="getOpen"/>
    <method old="open(Lcom/inubot/api/oldschool/Tab;)Z" new="open"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.FactoryAgent" new="com.inubot.a.b.a.a.a.i">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.FactoryAgent" new="com.inubot.a.b.a.a.a.i">
    <method old="supply()Ljava/lang/Object;" new="ALLATORIxDEMO"/>
   </class>
   <class old="com.inubot.Hotkey$10" new="com.inubot.M">
@@ -3181,7 +3181,7 @@
    <field old="OPAQUE Lcom/inubot/api/methods/InterfaceOptions$SidePanelMode;" new="OPAQUE"/>
    <field old="TRANSPARENT Lcom/inubot/api/methods/InterfaceOptions$SidePanelMode;" new="TRANSPARENT"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.VarInsnFactory" new="com.inubot.a.b.a.a.a.f">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.VarInsnFactory" new="com.inubot.a.b.a.a.a.f">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="e"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="getInstruction()Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
@@ -3511,7 +3511,7 @@
   <class old="com.inubot.api.event.EventListener" new="com.inubot.api.event.EventListener">
    <method old="onEvent(Lcom/inubot/api/event/Event;)V" new="onEvent"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.RIS$Node" new="com.inubot.a.b.a.a.G">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.RIS$Node" new="com.inubot.a.b.a.a.G">
    <field old="ain Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="j"/>
    <field old="prev Lcom/inubot/bot/modscript/transform/util/RIS$Node;" new="F"/>
    <field old="this$0 Lcom/inubot/bot/modscript/transform/util/RIS;" new="ALLATORIxDEMO"/>
@@ -3680,7 +3680,7 @@
    <field old="arg2 I" new="arg2"/>
    <field old="opcode I" new="opcode"/>
   </class>
-  <class old="com.inubot.api.util.Digraph" new="com.inubot.api.util.Digraph">
+  <class old="com.inubot.api.me.mad.util.Digraph" new="com.inubot.api.me.mad.util.Digraph">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="addEdge(Ljava/lang/Object;Ljava/lang/Object;)V" new="addEdge"/>
    <method old="addVertex(Ljava/lang/Object;)Z" new="addVertex"/>
@@ -3698,7 +3698,7 @@
    <field old="ENUM$VALUES [Lcom/inubot/api/methods/traversal/Path$Option;" new="ENUM$VALUES"/>
    <field old="TOGGLE_RUN Lcom/inubot/api/methods/traversal/Path$Option;" new="TOGGLE_RUN"/>
   </class>
-  <class old="com.inubot.bot.util.Configuration" new="com.inubot.a.c.I">
+  <class old="com.inubot.bot.me.mad.util.Configuration" new="com.inubot.a.c.I">
    <method old="getSystemHome()Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="isLocal()Z" new="ALLATORIxDEMO"/>
    <field old="APPLICATION_NAME Ljava/lang/String;" new="m"/>
@@ -3831,7 +3831,7 @@
    <method old="inject(Ljava/util/Map;)V" new="ALLATORIxDEMO"/>
    <field old="PACKAGE Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.LdcInsnFactory" new="com.inubot.a.b.a.a.a.I">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.LdcInsnFactory" new="com.inubot.a.b.a.a.a.I">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="e"/>
    <method old="constant(Ljava/lang/Object;)Lcom/inubot/bot/modscript/transform/util/factory/LdcInsnFactory;" new="e"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
@@ -3887,7 +3887,7 @@
    <method old="inject(Ljava/util/Map;)V" new="ALLATORIxDEMO"/>
    <field old="PACKAGE Ljava/lang/String;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.Unpacker" new="com.inubot.a.c.i">
+  <class old="com.inubot.bot.me.mad.util.Unpacker" new="com.inubot.a.c.i">
    <method old="binary(Ljava/io/File;)[B" new="ALLATORIxDEMO"/>
    <method old="charIndex(C)I" new="ALLATORIxDEMO"/>
    <method old="dump(Ljava/io/File;)Ljava/util/Map;" new="ALLATORIxDEMO"/>
@@ -3995,13 +3995,13 @@
    <field old="OPAQUE Lcom/inubot/api/methods/InterfaceOptions$ChatboxMode;" new="OPAQUE"/>
    <field old="TRANSPARENT Lcom/inubot/api/methods/InterfaceOptions$ChatboxMode;" new="TRANSPARENT"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.MethodIterator" new="com.inubot.a.b.a.a.b">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.MethodIterator" new="com.inubot.a.b.a.a.b">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="accept(Ljava/util/function/Predicate;Ljava/util/function/Consumer;)V" new="ALLATORIxDEMO"/>
    <field old="classes Ljava/util/Collection;" new="j"/>
    <field old="currentOwner Ljdk/internal/org/objectweb/asm/tree/ClassNode;" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.FieldInsnFactory" new="com.inubot.a.b.a.a.a.C">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.FieldInsnFactory" new="com.inubot.a.b.a.a.a.C">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="e"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="desc(Ljava/lang/String;)Lcom/inubot/bot/modscript/transform/util/factory/FieldInsnFactory;" new="e"/>
@@ -4115,7 +4115,7 @@
    <field old="PACKAGE Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <field old="catchblockkills I" new="ALLATORIxDEMO"/>
   </class>
-  <class old="com.inubot.bot.util.io.JarNode" new="com.inubot.a.c.a.i">
+  <class old="com.inubot.bot.me.mad.util.io.JarNode" new="com.inubot.a.c.a.i">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="get()Ljava/util/Map;" new="ALLATORIxDEMO"/>
    <method old="getManifest()Ljava/util/jar/Manifest;" new="ALLATORIxDEMO"/>
@@ -4124,7 +4124,7 @@
    <field old="manifest Ljava/util/jar/Manifest;" new="j"/>
    <field old="nodes Ljava/util/Map;" new="l"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.InstructionIterator" new="com.inubot.a.b.a.a.I">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.InstructionIterator" new="com.inubot.a.b.a.a.I">
    <method old="accept(Ljava/util/function/Predicate;Ljava/util/function/Consumer;)V" new="ALLATORIxDEMO"/>
    <field old="stack Ljdk/internal/org/objectweb/asm/tree/InsnList;" new="ALLATORIxDEMO"/>
   </class>
@@ -4351,7 +4351,7 @@
    <field old="paused Z" new="paused"/>
    <field old="running Z" new="running"/>
   </class>
-  <class old="com.inubot.api.util.Time" new="com.inubot.api.util.Time">
+  <class old="com.inubot.api.me.mad.util.Time" new="com.inubot.api.me.mad.util.Time">
    <method old="await(Ljava/util/function/BooleanSupplier;I)Z" new="await"/>
    <method old="sleep(I)Z" new="sleep"/>
    <method old="sleep(II)Z" new="sleep"/>
@@ -4412,7 +4412,7 @@
    <field old="WALK_SOUTH Lcom/inubot/Hotkey;" new="c"/>
    <field old="WALK_WEST Lcom/inubot/Hotkey;" new="l"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.InsnFactory" new="com.inubot.a.b.a.a.a.A">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.InsnFactory" new="com.inubot.a.b.a.a.a.A">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="e"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="getInstruction()Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
@@ -4652,7 +4652,7 @@
    <method old="getState()B" new="getState"/>
    <method old="getTransferred()I" new="getTransferred"/>
   </class>
-  <class old="com.inubot.bot.util.io.Crawler" new="com.inubot.a.c.a.A">
+  <class old="com.inubot.bot.me.mad.util.io.Crawler" new="com.inubot.a.c.a.A">
    <method old="AllatoriDecryptString(Ljava/lang/String;)Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="crawl()Z" new="e"/>
    <method old="download()Z" new="j"/>
@@ -4905,7 +4905,7 @@
    <method old="isProfanityFilterEnabled()Z" new="isProfanityFilterEnabled"/>
    <method old="isSplitPrivateChatEnabled()Z" new="isSplitPrivateChatEnabled"/>
   </class>
-  <class old="com.inubot.api.util.filter.IdFilter" new="com.inubot.api.util.filter.IdFilter">
+  <class old="com.inubot.api.me.mad.util.filter.IdFilter" new="com.inubot.api.me.mad.util.filter.IdFilter">
    <method old="accept(Lcom/inubot/api/util/Identifiable;)Z" new="accept"/>
    <method old="accept(Ljava/lang/Object;)Z" new="accept"/>
    <method old="always()Lcom/inubot/api/util/filter/Filter;" new="always"/>
@@ -4913,7 +4913,7 @@
    <method old="not(Lcom/inubot/api/util/filter/Filter;)Lcom/inubot/api/util/filter/Filter;" new="not"/>
    <field old="ids [I" new="ids"/>
   </class>
-  <class old="com.inubot.bot.modscript.transform.util.factory.AbstractInsnFactory" new="com.inubot.a.b.a.a.a.G">
+  <class old="com.inubot.bot.modscript.transform.me.mad.util.factory.AbstractInsnFactory" new="com.inubot.a.b.a.a.a.G">
    <method old="accept(Ljdk/internal/org/objectweb/asm/MethodVisitor;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="e"/>
    <method old="deploy(Lcom/inubot/bot/modscript/transform/util/factory/FactoryAgent;)Lcom/inubot/bot/modscript/transform/util/factory/AbstractInsnFactory;" new="ALLATORIxDEMO"/>
    <method old="getInstruction()Ljdk/internal/org/objectweb/asm/tree/AbstractInsnNode;" new="ALLATORIxDEMO"/>
@@ -4959,7 +4959,7 @@
    <field old="opcode I" new="opcode"/>
    <field old="type Lcom/inubot/api/oldschool/EntityType;" new="type"/>
   </class>
-  <class old="com.inubot.api.util.Identifiable" new="com.inubot.api.util.Identifiable">
+  <class old="com.inubot.api.me.mad.util.Identifiable" new="com.inubot.api.me.mad.util.Identifiable">
    <method old="getId()I" new="getId"/>
    <method old="getName()Ljava/lang/String;" new="getName"/>
   </class>
@@ -5042,7 +5042,7 @@
    <method old="within(D)Lcom/inubot/api/oldschool/collection/LocatablePool;" new="within"/>
    <method old="within(Lcom/inubot/api/oldschool/Locatable;D)Lcom/inubot/api/oldschool/collection/LocatablePool;" new="within"/>
   </class>
-  <class old="com.inubot.bot.util.ProxyUtils" new="com.inubot.a.c.f">
+  <class old="com.inubot.bot.me.mad.util.ProxyUtils" new="com.inubot.a.c.f">
    <method old="getLastIP()Ljava/lang/String;" new="e"/>
    <method old="getLastPort()Ljava/lang/String;" new="ALLATORIxDEMO"/>
    <method old="getProxyEntries()[Lcom/inubot/bot/util/ProxyUtils$ProxyEntry;" new="ALLATORIxDEMO"/>

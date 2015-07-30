@@ -1,4 +1,4 @@
-package com.inubot.bundledscripts.mad.util.interfaces;
+package me.mad.util.interfaces;
 
 /**
  * Created by mad on 7/25/15.

@@ -1,4 +1,4 @@
-package com.inubot.bundledscripts.mad.modules;
+package me.mad.modules;
 
 import com.inubot.api.methods.GameObjects;
 import com.inubot.api.methods.Inventory;
@@ -7,7 +7,8 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.Tab;
 import com.inubot.api.util.Time;
-import com.inubot.bundledscripts.mad.util.interfaces.Module;
+import me.mad.Tutorial;
+import me.mad.util.interfaces.Module;
 
 /**
  * Created by mad on 7/25/15.

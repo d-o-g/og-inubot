@@ -1,7 +1,7 @@
-package com.inubot.bundledscripts.mad.util.wrappers;
+package me.mad.util.wrappers;
 
-import com.inubot.bundledscripts.mad.util.interfaces.Condition;
-import com.inubot.bundledscripts.mad.util.interfaces.Module;
+import me.mad.util.interfaces.Condition;
+import me.mad.util.interfaces.Module;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

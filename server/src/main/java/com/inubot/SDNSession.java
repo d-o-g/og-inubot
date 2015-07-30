@@ -43,6 +43,15 @@ public class SDNSession implements Runnable {
 		return String.format("%0" + (digest.length << 1) + "x", new BigInteger(1, digest));
 	}
 
+	private void result(boolean a) throws IOException {
+		dos.write(1);
+		if (a) {
+			dos.write(0);
+		} else {
+			dos.write(1);
+		}
+	}
+
 	@Override
 	public void run() {
 		System.out.println("New session started!");
@@ -50,6 +59,7 @@ public class SDNSession implements Runnable {
 				dos.write(0);
 				while (true) {
 					int opcode = dis.read();
+					System.out.println(opcode);
 					switch (opcode) {
 						case 0: {
 							String username = dis.readUTF();
@@ -60,28 +70,26 @@ public class SDNSession implements Runnable {
 
 							if (account == null) {
 								System.out.println("Failed to log user " + username + " into account...");
-								dos.write(1);
-								dos.writeBoolean(false);
-								dos.flush();
+								result(false);
 								connection.close();
 								return;
 							} else {
 								String hash = getMD5(getMD5(account.getSalt()) + getMD5(password));
-
 								if (hash.equals(account.getPassword())) {
 									System.out.println("Successfully logged user " + username + " into account.");
-									dos.write(1);
-									dos.writeBoolean(true);
-									dos.flush();
+									result(true);
+								} else {
+									System.out.println("Bad password for user " + username + " password!");
+									result(false);
+									connection.close();
+									return;
 								}
 							}
+							break;
 						}
 						case 1: {
 							if (account == null) {
 								System.out.println("Account is null!");
-								dos.write(1);
-								dos.writeBoolean(false);
-								dos.flush();
 								return;
 							}
 							List owneds = SDNServer.factory.openSession().createQuery("from Owned where uid=:uid")
@@ -97,7 +105,6 @@ public class SDNSession implements Runnable {
 								dos.write(2);
 								dos.writeInt(data.length);
 								dos.write(data);
-								dos.flush();
 								System.out.println("Sent: " + script.getName());
 							}
 							break;
