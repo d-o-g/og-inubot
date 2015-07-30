@@ -73,6 +73,5 @@ public class ProAlcher extends ProScript implements AlcherConstants {
     @Override
     public void onFinish() {
         Client.setWidgetRendering(true);
-        System.out.println("CALLED");
     }
 }

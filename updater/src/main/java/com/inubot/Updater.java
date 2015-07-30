@@ -41,7 +41,7 @@ public abstract class Updater extends Thread implements Runnable {
     public String callbacks, classes, hooks;
     protected Map<ClassNode, Map<MethodNode, FlowGraph>> graphs = new HashMap<>();
     private boolean updated = false;
-    private boolean removeUnusedMethods = false;
+    private boolean removeUnusedMethods = true;
 
     protected final void setRemoveUnusedMethods(boolean yes) {
         this.removeUnusedMethods = yes;
