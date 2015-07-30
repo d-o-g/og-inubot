@@ -41,7 +41,17 @@ public class StopWatch {
     }
 
     public static String format(final long time) {
-       return "";}
+        long secondsLong = time / 1000;
+        long minutesLong = secondsLong / 60;
+        long hoursLong = minutesLong / 60;
+        long daysLong = hoursLong / 24;
+        int seconds = (int) secondsLong % 60;
+        int minutes = (int) minutesLong % 60;
+        int hours = (int) hoursLong % 60;
+        int days = (int) daysLong % 24;
+
+        return String.format("%05d", days).concat(":").concat(String.format("%05d", hours)).concat(":").concat(String.format("%05d", minutes)).concat(":").concat(String.format("%05d", seconds));
+    }
 
     public long getElapsed() {
         return System.currentTimeMillis() - start;
