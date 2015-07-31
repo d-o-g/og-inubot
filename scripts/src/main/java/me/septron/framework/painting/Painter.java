@@ -43,16 +43,15 @@ public class Painter {
 
 		g.setColor(Color.BLACK);
 		g.setComposite(background);
-		g.fillRect(5, 5, 180, 50 + (trackers.size() * 20));
+		g.fillRect(2, 25, 180, 50 + (trackers.size() * 5));
 
 		g.setComposite(foreground);
 		g.setColor(Color.GREEN);
-		g.drawRect(5, 5, 180, 50 + (trackers.size() * 20));
+		g.drawRect(5, 25, 180, 50 + (trackers.size() * 5));
 
-		final int w2 = fm.stringWidth(name);
-
-		g.drawString(name, (180 / 2) + 5 - ((w2 / 2)), 40);
-		g.drawLine(15, 45, 175, 45);
+		final int width = fm.stringWidth(name);
+		g.drawString(name, 95 - ((width / 2)), 45);
+		g.drawLine(15, 50, 175, 50);
 
 		g.setFont(stats);
 
