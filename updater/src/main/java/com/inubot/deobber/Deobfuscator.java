@@ -49,7 +49,7 @@ public class Deobfuscator {
                 factories.size(), System.currentTimeMillis() - time);
         time = System.currentTimeMillis();
         Transform[] transforms = {
-                new DummyMethodVisitor(factories),// new OpaquePredicateVisitor() /* <- isnt 100% yet */
+                new DummyMethodVisitor(factories), new OpaquePredicateVisitor()
         };
         Arrays.asList(transforms).forEach(t -> {
             t.transform(nodes);

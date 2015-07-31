@@ -206,7 +206,7 @@ public class OpaquePredicateVisitor extends Transform {
                 }
 
                 /** Remove the predicate from the callers, and fix the method descriptor **/
-                String dec0 = Type.getMethodDescriptor(Type.getReturnType(mn.desc),
+                /*String dec0 = Type.getMethodDescriptor(Type.getReturnType(mn.desc),
                         Arrays.copyOf(args, args.length - 1));
                 mn.desc = dec0;
                 Deque<Caller> callers = call_tree.get(mk);
@@ -214,7 +214,7 @@ public class OpaquePredicateVisitor extends Transform {
                     caller.call.desc = dec0;
                     caller.caller.instructions.remove(caller.call.previous()); //Remove the passed constant
                 }
-                callers.clear();
+                callers.clear();*/
                 preds.clear();
             } else {
                 undetermined++;
