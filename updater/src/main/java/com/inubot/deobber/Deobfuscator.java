@@ -46,7 +46,7 @@ public class Deobfuscator {
                 factories.size(), System.currentTimeMillis() - time);
         time = System.currentTimeMillis();
         Transform[] transforms = {
-                new DummyMethodVisitor(factories),
+                new DummyMethodVisitor(factories), new CatchBlockVisitor(),
         };
         Arrays.asList(transforms).forEach(t -> {
             t.transform(nodes);
