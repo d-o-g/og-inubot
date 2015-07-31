@@ -25,7 +25,7 @@ import com.renamer.util.JarLoader;
 public class Renamer {
 
 	public static void main(String... args) throws IOException {
-		new Renamer("C:\\Users\\Inspiron\\Documents\\inubot\\gamepack_deob.jar",
+		new Renamer("C:\\Users\\Inspiron\\Documents\\inubot\\cache\\gamepack_deob.jar",
 				"C:\\Users\\Inspiron\\Documents\\inubot\\cache\\gamepack_deob.jar");
 	}
 
