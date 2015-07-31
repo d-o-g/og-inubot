@@ -262,9 +262,9 @@ public class Bank {
     public static void open() {
         Processable p = null;
         if (p == null)
-            p = Npcs.getNearest(new NameFilter<>("Banker", "Emerald Benedict"));
-        if (p == null)
             p = GameObjects.getNearest(t -> t.containsAction("Bank") && "Bank booth".equals(t.getName()));
+        if (p == null)
+            p = Npcs.getNearest(new NameFilter<>("Banker", "Emerald Benedict"));
         if (p == null)
             p = GameObjects.getNearest(GameObject.Landmark.BANK);
         if (p == null)
