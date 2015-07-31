@@ -32,16 +32,27 @@ public class DummyMethodVisitor extends UnusedMethodTransform {
                     cm.method.name.length() > 2));
             entries.addAll(factory.findMethods(cm -> {
                 String superName = factory.node.superName;
-                return factories.containsKey(superName) && factories.get(superName).findMethod(icm ->
-                        icm.method.name.equals(cm.method.name) && icm.method.desc.equals(cm.method.desc)) != null;
+                while (superName != null) {
+                    if (factories.containsKey(superName) && factories.get(superName).findMethod(icm ->
+                            icm.method.name.equals(cm.method.name) && icm.method.desc.equals(cm.method.desc)) != null) {
+                        return true;
+                    }
+                    ClassFactory super_ = factories.get(superName);
+                    superName = super_ != null ? super_.superName() : null;
+                }
+                return false;
             }));
             entries.addAll(factory.findMethods(cm -> {
                 for (String iface : factory.node.interfaces) {
                     if (factories.containsKey(iface)) {
                         ClassFactory impl = factories.get(iface);
-                        if (impl.findMethod(icm -> icm.method.name.equals(cm.method.name) &&
-                                icm.method.desc.equals(cm.method.desc)) != null)
-                            return true;
+                        while (impl != null) {
+                            if (impl.findMethod(icm -> icm.method.name.equals(cm.method.name) &&
+                                    icm.method.desc.equals(cm.method.desc)) != null) {
+                                return true;
+                            }
+                            impl = factories.get(impl.superName());
+                        }
                     }
                 }
                 return false;

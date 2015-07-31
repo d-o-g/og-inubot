@@ -6,9 +6,6 @@
  */
 package com.inubot.deobber;
 
-import com.inubot.modscript.hook.FieldHook;
-import com.inubot.modscript.hook.Hook;
-import com.inubot.visitor.GraphVisitor;
 import org.objectweb.asm.commons.cfg.transform.Transform;
 import org.objectweb.asm.commons.util.Assembly;
 import org.objectweb.asm.commons.util.JarArchive;
@@ -49,31 +46,13 @@ public class Deobfuscator {
                 factories.size(), System.currentTimeMillis() - time);
         time = System.currentTimeMillis();
         Transform[] transforms = {
-                new DummyMethodVisitor(factories), new OpaquePredicateVisitor()
+                new DummyMethodVisitor(factories),
         };
         Arrays.asList(transforms).forEach(t -> {
             t.transform(nodes);
             System.out.println(t.toString());
         });
         System.out.printf("^ Executed deobfuscation transforms in %d millis%n", System.currentTimeMillis() - time);
-        //TODO add a better renamer? sedlars Assembly thing is too slow
-        for (ClassNode node : nodes.values()) {
-            for (FieldNode fn : node.fields) {
-                if (fn.name.equals("do") || fn.name.equals("if")) {
-                    Assembly.rename(nodes.values(), fn, fn.name + "_");
-                }
-            }
-            for (MethodNode mn : node.methods) {
-                if (mn.name.equals("do") || mn.name.equals("if")) {
-                    Assembly.rename(nodes.values(), mn, mn.name + "_");
-                }
-            }
-        }
-        for (ClassNode node : nodes.values()) {
-            if (node.name.equals("do") || node.name.equals("if")) {
-                Assembly.rename(nodes.values(), node, node.name + "_");
-            }
-        }
         getArchive().write(new File(output));
     }
 
