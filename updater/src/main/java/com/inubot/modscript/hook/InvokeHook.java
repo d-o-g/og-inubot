@@ -59,7 +59,7 @@ public class InvokeHook extends Hook {
             }
         }
         params += ")";
-        return "¤ " + desc0 + " " + name + " is " + clazz + "." + method + params;
+        return "¤ " + desc0 + " " + name + " is " + clazz + "." + method + params + " [" + predicate + "]";
     }
 
     @Override

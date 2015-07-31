@@ -122,17 +122,6 @@ public class OpaquePredicateVisitor extends MethodVisitor {
         }
     }
 
-    public static class OpaquePredicate {
-
-        public final int predicate;
-        public final Class<?> predicateType;
-
-        public OpaquePredicate(int predicate, Class<?> predicateType) {
-            this.predicate = predicate;
-            this.predicateType = predicateType;
-        }
-
-    }
     public OpaquePredicate get(String method) {
         return PREDICATES.get(method);
     }
@@ -144,5 +133,17 @@ public class OpaquePredicateVisitor extends MethodVisitor {
     @Override
     public String toString() {
         return Integer.toString(PREDICATES.size());
+    }
+
+    public static class OpaquePredicate {
+
+        public final int predicate;
+        public final Class<?> predicateType;
+
+        public OpaquePredicate(int predicate, Class<?> predicateType) {
+            this.predicate = predicate;
+            this.predicateType = predicateType;
+        }
+
     }
 }

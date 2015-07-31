@@ -28,7 +28,7 @@ public class ItemDefinition extends GraphVisitor {
 
     private class Actions extends BlockVisitor {
 
-        private final ArrayIterator<String> itr = new ArrayIterator<>("actions", "groundActions");
+        private final ArrayIterator<String> itr = new ArrayIterator<>("groundActions", "actions");
 
         @Override
         public boolean validate() {
@@ -39,10 +39,12 @@ public class ItemDefinition extends GraphVisitor {
         public void visit(Block block) {
             block.tree().accept(new NodeVisitor(this) {
                 public void visitField(FieldMemberNode fmn) {
-                    if (fmn.opcode() == PUTFIELD && fmn.owner().equals(cn.name) && fmn.desc().equals("[Ljava/lang/String;")) {
-                        if (fmn.layer(AASTORE, DUP, AASTORE) == null)
-                            return;
-                        addHook(new FieldHook(itr.next(), fmn.fin()));
+                    if (fmn.opcode() == PUTFIELD && fmn.owner().equals(cn.name)) {
+                        if (fmn.desc().equals("[Ljava/lang/String;")) {
+                            if (fmn.layer(AASTORE, DUP, AASTORE) != null) {
+                                addHook(new FieldHook(itr.next(), fmn.fin()));
+                            }
+                        }
                     }
                 }
             });
