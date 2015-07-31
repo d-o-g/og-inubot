@@ -8,6 +8,7 @@ package com.inubot.api.oldschool;
 
 import com.inubot.api.methods.Client;
 import com.inubot.api.oldschool.action.Processable;
+import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.client.natives.oldschool.RSNpc;
 import com.inubot.api.oldschool.action.ActionOpcodes;
@@ -57,12 +58,14 @@ public class Npc extends Character<RSNpc> implements Identifiable, Processable {
     }
 
     public boolean processAction(String action) {
-        if (definition == null)
+        if (definition == null) {
             return false;
+        }
         String[] actions = definition.getActions();
-        if (actions == null)
+        if (actions == null) {
             return false;
-        int index = Arrays.asList(actions).indexOf(action);
+        }
+        int index = Action.indexOf(actions, action);
         if (index >= 0) {
             processAction(ActionOpcodes.NPC_ACTION_0 + index, action);
             return true;

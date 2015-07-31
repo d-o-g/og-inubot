@@ -14,6 +14,8 @@ import com.inubot.api.util.Identifiable;
 import com.inubot.client.natives.oldschool.RSGameObject;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
 
+import java.util.Arrays;
+
 public class GameObject extends Wrapper<RSGameObject> implements Locatable, Processable, Identifiable {
 
     private final RSObjectDefinition definition;
@@ -73,11 +75,13 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
     @Override
     public boolean processAction(int opcode, String action) {
         RSObjectDefinition definition = getDefinition();
-        if (definition == null)
+        if (definition == null) {
             return false;
+        }
         String name = definition.getName();
-        if (name == null)
+        if (name == null) {
             return false;
+        }
         // if shit breaks look here
         //Client.processAction(Action.valueOf(opcode, raw.getId(), raw.getX(), raw.getY()), action, name);
         Client.processAction(Action.valueOf(opcode, raw.getId(), getRegionX(), getRegionY()), action, name);

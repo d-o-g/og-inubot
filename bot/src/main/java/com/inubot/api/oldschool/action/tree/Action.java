@@ -88,7 +88,14 @@ public abstract class Action implements ActionFilter {
     }
 
     public static int indexOf(String[] actions, String action) {
-        return actions == null ? -1 : Arrays.asList(actions).indexOf(action);
+        if (action == null || actions == null) return -1;
+        for (int i = 0; i < actions.length; i++) {
+            String action0 = actions[i];
+            if (action0 != null && action.equals(action0)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     ///////////////////////////////////////////////////////////////////////////////
