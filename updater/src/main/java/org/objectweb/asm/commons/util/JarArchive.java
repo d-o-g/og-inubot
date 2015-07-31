@@ -80,7 +80,7 @@ public class JarArchive {
     public void write(File target) {
         try (JarOutputStream output = new JarOutputStream(new FileOutputStream(target))) {
             for (Map.Entry<String, ClassNode> entry : build().entrySet()) {
-                output.putNextEntry(new JarEntry(entry.getKey().replaceAll("\\.", "/") + ".class"));
+                output.putNextEntry(new JarEntry(entry.getValue().name + ".class"));
                 ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
                 entry.getValue().accept(writer);
                 output.write(writer.toByteArray());
