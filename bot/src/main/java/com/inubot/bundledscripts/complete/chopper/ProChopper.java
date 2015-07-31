@@ -57,6 +57,9 @@ public class ProChopper extends ProScript {
                     try {
                         WebPath wp = Movement.getWeb().findPathToBank(b);
                         if (wp.getNext().getTile().distance() < 15) {
+                            if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 20) {
+                                Movement.toggleRun(true);
+                            }
                             Movement.walkTo(b.getLocation());
                         } else {
                             wp.step(Option.TOGGLE_RUN);
