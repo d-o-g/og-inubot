@@ -2,7 +2,6 @@ package com.inubot;
 
 import com.inubot.constraint.InverseVisitor;
 import com.inubot.constraint.OpaquePredicateVisitor;
-import com.inubot.live.RS3Updater;
 import com.inubot.modscript.ModScript;
 import com.inubot.modscript.hook.*;
 import com.inubot.util.io.Crawler;
@@ -120,7 +119,7 @@ public abstract class Updater extends Thread implements Runnable {
             public void populateEntryPoints(List<ClassMethod> entries) {
                 for (ClassFactory factory : factories.values()) {
                     entries.addAll(factory.findMethods(cm ->
-                            cm.method.name.length() > (Updater.this instanceof RS3Updater ? 3 : 2)));
+                            cm.method.name.length() > 2));
                     entries.addAll(factory.findMethods(cm -> {
                         String superName = factory.node.superName;
                         return factories.containsKey(superName) && factories.get(superName).findMethod(icm ->

@@ -69,7 +69,7 @@ public abstract class UnusedMethodTransform extends Transform {
     @Override
     public String toString() {
         int removed = totalMethods - validMethods.size();
-        return removed + "/" + totalMethods + " [V: " + validMethods.size() + "]";
+        return String.format("^ Removed %d/%d dummy methods", removed, totalMethods);
     }
 
     public int getRemoved() {

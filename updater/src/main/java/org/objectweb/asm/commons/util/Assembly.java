@@ -242,6 +242,21 @@ public class Assembly {
         fn.name = newName;
     }
 
+    public static void rename(Collection<ClassNode> classes, MethodNode fn, String newName) {
+        for (ClassNode node : classes) {
+            for (MethodNode mn : node.methods) {
+                for (AbstractInsnNode ain : mn.instructions.toArray()) {
+                    if (ain instanceof MethodInsnNode) {
+                        MethodInsnNode fin = (MethodInsnNode) ain;
+                        if (fin.owner.equals(fn.owner.name) && fin.name.equals(fn.name))
+                            fin.name = newName;
+                    }
+                }
+            }
+        }
+        fn.name = newName;
+    }
+
     public static void rename(Collection<ClassNode> classes, ClassNode cn, String newName) {
         for (ClassNode node : classes) {
             if (node.superName.equals(cn.name))

@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
-import java.util.jar.Manifest;
 
 /**
  * @author Tyler Sedlar
@@ -26,7 +25,6 @@ public class JarArchive {
     private final Map<String, byte[]> resources = new HashMap<>();
 
     private final File file;
-    private Manifest manifest;
 
     public JarArchive(File file) {
         this.file = file;
@@ -58,7 +56,6 @@ public class JarArchive {
             return nodes;
         try {
             JarFile jar = new JarFile(file);
-            manifest = jar.getManifest();
             Enumeration<JarEntry> entries = jar.entries();
             while (entries.hasMoreElements()) {
                 JarEntry entry = entries.nextElement();
@@ -81,8 +78,7 @@ public class JarArchive {
     }
 
     public void write(File target) {
-        try (JarOutputStream output = (manifest != null ? new JarOutputStream(new FileOutputStream(target), manifest) :
-                new JarOutputStream(new FileOutputStream(target)))) {
+        try (JarOutputStream output = new JarOutputStream(new FileOutputStream(target))) {
             for (Map.Entry<String, ClassNode> entry : build().entrySet()) {
                 output.putNextEntry(new JarEntry(entry.getKey().replaceAll("\\.", "/") + ".class"));
                 ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
