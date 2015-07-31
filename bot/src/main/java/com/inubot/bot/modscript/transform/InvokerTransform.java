@@ -95,8 +95,9 @@ public class InvokerTransform implements Transform {
         mn.instructions.add(new VarInsnNode(ALOAD, 1));
         mn.instructions.add(new VarInsnNode(ILOAD, 2));
         mn.instructions.add(new VarInsnNode(ILOAD, 3));
-        if (ih.predicate != Integer.MAX_VALUE)
+        if (ih.predicate != Integer.MAX_VALUE) {
             mn.instructions.add(new LdcInsnNode(ih.predicate));
+        }
         mn.instructions.add(new MethodInsnNode(INVOKEVIRTUAL, ih.clazz, ih.method, ih.desc, false));
         mn.instructions.add(new InsnNode(RETURN));
         target.methods.add(mn);
