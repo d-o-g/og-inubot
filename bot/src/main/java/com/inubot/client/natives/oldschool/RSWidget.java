@@ -24,6 +24,7 @@ public interface RSWidget extends ClientNative {
     String[] getActions();
     String getText();
     boolean isHidden();
+    String[] getTableActions();
 
     @Artificial
     int getContainerX();

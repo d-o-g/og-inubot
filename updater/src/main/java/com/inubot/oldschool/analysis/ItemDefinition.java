@@ -28,7 +28,7 @@ public class ItemDefinition extends GraphVisitor {
 
     private class Actions extends BlockVisitor {
 
-        private final ArrayIterator<String> itr = new ArrayIterator<>("groundActions", "actions");
+        private final ArrayIterator<String> itr = new ArrayIterator<>("actions", "groundActions");
 
         @Override
         public boolean validate() {

@@ -11,6 +11,7 @@ import org.objectweb.asm.commons.cfg.tree.NodeTree;
 import org.objectweb.asm.commons.cfg.tree.NodeVisitor;
 import org.objectweb.asm.commons.cfg.tree.node.*;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldNode;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,7 +20,7 @@ import java.util.Set;
 
 @VisitorInfo(hooks = {"owner", "children", "x", "y", "width", "height", "itemId", "itemAmount",
         "id", "type", "itemIds", "stackSizes", "scrollX", "scrollY", "textureId", "index",
-        "text", "ownerId", "hidden", "boundsIndex", "actions"})
+        "text", "ownerId", "hidden", "boundsIndex", "actions", "tableActions"})
 public class Widget extends GraphVisitor {
 
     @Override
@@ -45,6 +46,14 @@ public class Widget extends GraphVisitor {
         visitAll(new Hidden());
         visitAll(new BoundsIndex());
         visitAll(new Actions());
+        for (FieldNode fn : cn.fields) {
+            if ((fn.access & ACC_STATIC) == 0 && fn.desc.equals("[Ljava/lang/String;")) {
+                FieldHook h = getFieldHook("actions");
+                if (h != null && !h.field.equals(fn.name)) {
+                    addHook(new FieldHook("tableActions", fn));
+                }
+            }
+        }
     }
 
     private class Actions extends BlockVisitor {
