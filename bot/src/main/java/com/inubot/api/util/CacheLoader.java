@@ -51,9 +51,6 @@ public class CacheLoader {
         loadObjectDefinitions(client);
         loadNpcDefinitions(client);
         loadItemDefinitions(client);
-        System.out.println("Loaded " + OBJECT_DEFINITIONS.size() + " objdefs");
-        System.out.println("Loaded " + NPC_DEFINITIONS.size() + " npcdefs");
-        System.out.println("Loaded " + ITEM_DEFINITIONS.size() + " itmdefs");
     }
 
     private static boolean loadObjectDefinitions(RSClient client) {
