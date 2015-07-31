@@ -15,29 +15,13 @@ import java.util.Map;
 @Manifest(name = "Combot", developer = "Septron", desc = "Fights various monsters and switches combat styles", version = 1.0)
 public class Combot extends ProScript {
 
+    private static final Tile GATE_TILE = new Tile(3031, 3313, 0);
+    private boolean bones = false;
+
     @Override
     public void getPaintData(Map<String, Object> data) {
 
     }
-
-    private enum Monster {
-        SEAGULL     (new Tile(3030, 3236), 25),
-        //GOBLIN      (new Tile(3183, 3246), 25),
-        COWS        (new Tile(3031, 3315), 99);
-        //MONK        (new Tile(0, 0), 99);
-
-        private final Tile tile;
-        private final int max;
-
-        Monster(Tile tile, int max) {
-            this.tile = tile;
-            this.max = max;
-        }
-    }
-
-    private static Tile GATE_TILE = new Tile(3031, 3313, 0);
-
-    private boolean bones = false;
 
     private void switchStyles() {
         switch (Combat.getStyle()) {
@@ -65,9 +49,10 @@ public class Combot extends ProScript {
         return Monster.SEAGULL;
     }
 
-    public boolean attack(Monster monster) {
-        Npc npc = Npcs.getNearest(target -> target.getTarget() == null && !target.isHealthBarVisible() && Movement.isReachable(target)
-                    && target.getName().toLowerCase().equals(monster.name().toLowerCase()));
+    private boolean attack(Monster monster) {
+        Npc npc = Npcs.getNearest(target -> target.getTarget() == null && !target.isHealthBarVisible()
+                && Movement.isReachable(target) && target.getName() != null
+                && target.getName().toLowerCase().equals(monster.name().toLowerCase()));
         if (npc != null) {
             npc.processAction("Attack");
             return true;
@@ -130,5 +115,20 @@ public class Combot extends ProScript {
                 }
         }
         return 600;
+    }
+
+    private enum Monster {
+        SEAGULL(new Tile(3030, 3236), 25),
+        //GOBLIN      (new Tile(3183, 3246), 25),
+        COWS(new Tile(3031, 3315), 99);
+        //MONK        (new Tile(0, 0), 99);
+
+        private final Tile tile;
+        private final int max;
+
+        Monster(Tile tile, int max) {
+            this.tile = tile;
+            this.max = max;
+        }
     }
 }

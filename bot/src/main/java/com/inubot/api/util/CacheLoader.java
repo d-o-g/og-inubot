@@ -48,9 +48,9 @@ public class CacheLoader {
      * @param client the {@link com.inubot.client.natives.oldschool.RSClient} native instance
      */
     public static void load(RSClient client) {
-      /* loadObjectDefinitions(client);
+        loadObjectDefinitions(client);
         loadNpcDefinitions(client);
-        loadItemDefinitions(client);*/
+        loadItemDefinitions(client);
     }
 
     private static boolean loadObjectDefinitions(RSClient client) {

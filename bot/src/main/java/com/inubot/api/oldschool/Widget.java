@@ -166,6 +166,10 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         return raw.getActions();
     }
 
+    public String[] getTableActions() {
+        return raw.getTableActions();
+    }
+
     public Rectangle getBounds() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
