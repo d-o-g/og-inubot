@@ -6,20 +6,13 @@
  */
 package com.inubot.api.oldschool;
 
-import com.inubot.api.methods.Client;
-import com.inubot.api.methods.Game;
-import com.inubot.api.methods.Players;
-import com.inubot.api.methods.Projection;
-import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.oldschool.action.Processable;
-import com.inubot.api.oldschool.action.UID;
+import com.inubot.api.methods.*;
+import com.inubot.api.oldschool.action.*;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Identifiable;
 import com.inubot.client.natives.oldschool.RSGameObject;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
-
-import java.util.Arrays;
 
 public class GameObject extends Wrapper<RSGameObject> implements Locatable, Processable, Identifiable {
 
@@ -93,12 +86,14 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
 
     public boolean processAction(String action) {
         RSObjectDefinition definition = getDefinition();
-        if (definition == null)
+        if (definition == null) {
             return false;
+        }
         String[] actions = definition.getActions();
-        if (actions == null)
+        if (actions == null) {
             return false;
-        int index = Arrays.asList(actions).indexOf(action);
+        }
+        int index = Action.indexOf(actions, action);
         if (index >= 0) {
             processAction(ActionOpcodes.OBJECT_ACTION_0 + index, action);
             return true;
@@ -123,6 +118,16 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
 
     public String[] getActions() {
         return getDefinition() == null ? new String[0] : getDefinition().getActions();
+    }
+
+    public Landmark getLandmark() {
+        if (definition == null)
+            return null;
+        for (Landmark landmark : Landmark.values()) {
+            if (landmark.id == definition.getMapFunction())
+                return landmark;
+        }
+        return null;
     }
 
     public enum Landmark {
@@ -206,15 +211,5 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
         public int getId() {
             return id;
         }
-    }
-
-    public Landmark getLandmark() {
-        if (definition == null)
-            return null;
-        for (Landmark landmark : Landmark.values()) {
-            if (landmark.id == definition.getMapFunction())
-                return landmark;
-        }
-        return null;
     }
 }

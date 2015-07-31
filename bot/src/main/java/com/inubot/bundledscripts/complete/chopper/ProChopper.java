@@ -53,19 +53,26 @@ public class ProChopper extends ProScript {
             Location location = Location.getClosestWithTree(p.next);
             if (Inventory.isFull()) {
                 WebBank b = Movement.getWeb().getNearestBank(t -> t.getType() != WebBank.Type.DEPOSIT_BOX);
-                if (b.getLocation().distance() > 50) {
-                    try {
-                        WebPath wp = Movement.getWeb().findPathToBank(b);
-                        if (wp.getNext().getTile().distance() < 15) {
-                            if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 20) {
-                                Movement.toggleRun(true);
-                            }
-                            Movement.walkTo(b.getLocation());
-                        } else {
-                            wp.step(Option.TOGGLE_RUN);
+                if (b.getLocation().distance() > 15) {
+                    if (b.getLocation().distance() < 35) {
+                        if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 20) {
+                            Movement.toggleRun(true);
                         }
-                    } catch (Exception e) {
                         Movement.walkTo(b.getLocation());
+                    } else {
+                        try {
+                            WebPath wp = Movement.getWeb().findPathToBank(b);
+                            if (wp.getNext().getTile().distance() < 15) {
+                                if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 20) {
+                                    Movement.toggleRun(true);
+                                }
+                                Movement.walkTo(b.getLocation());
+                            } else {
+                                wp.step(Option.TOGGLE_RUN);
+                            }
+                        } catch (Exception e) {
+                            Movement.walkTo(b.getLocation());
+                        }
                     }
                 } else if (!Bank.isOpen()) {
                     Bank.open();
@@ -80,15 +87,25 @@ public class ProChopper extends ProScript {
                     }
                 } else {
                     Tile dest = location.getTreeArea().getCenter();
-                    try {
-                        WebPath wp = WebPath.build(dest);
-                        if (wp.getNext().getTile().distance() < 15) {
-                            Movement.walkTo(dest);
-                        } else {
-                            wp.step(Option.TOGGLE_RUN);
+                    if (dest.distance() < 35) {
+                        if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 20) {
+                            Movement.toggleRun(true);
                         }
-                    } catch (Exception e) {
                         Movement.walkTo(dest);
+                    } else {
+                        try {
+                            WebPath wp = WebPath.build(dest);
+                            if (wp.getNext().getTile().distance() < 15) {
+                                if (!Movement.isRunEnabled() && Movement.getRunEnergy() > 20) {
+                                    Movement.toggleRun(true);
+                                }
+                                Movement.walkTo(dest);
+                            } else {
+                                wp.step(Option.TOGGLE_RUN);
+                            }
+                        } catch (Exception e) {
+                            Movement.walkTo(dest);
+                        }
                     }
                 }
             }
