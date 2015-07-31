@@ -106,8 +106,9 @@ public class InvokerTransform implements Transform {
         MethodNode mn = new MethodNode(ACC_PUBLIC, "transform", "()L" + PACKAGE + "RS" + defined + ";", null, null);
         InvokeHook ih = ModScript.getInvoke(defined + "#transform");
         mn.instructions.add(new VarInsnNode(ALOAD, 0));
-        if (ih.predicate != Integer.MAX_VALUE && !mn.desc.contains("()"))
+        if (ih.predicate != Integer.MAX_VALUE && !mn.desc.contains("()")) {
             mn.instructions.add(new LdcInsnNode(ih.predicate));
+        }
         mn.instructions.add(new MethodInsnNode(INVOKEVIRTUAL, ih.clazz, ih.method, ih.desc, false));
         mn.instructions.add(new InsnNode(ARETURN));
         node.methods.add(mn);

@@ -5,26 +5,19 @@ import org.objectweb.asm.commons.cfg.query.InsnQuery;
 import org.objectweb.asm.commons.cfg.tree.NodeTree;
 import org.objectweb.asm.commons.cfg.tree.util.TreeBuilder;
 import org.objectweb.asm.commons.util.Assembly;
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.LabelNode;
-import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.*;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author Tyler Sedlar
  */
 public class Block implements Comparable<Block> {
 
-    public MethodNode owner = null;
-
     public final Label label;
     public final List<AbstractInsnNode> instructions = new LinkedList<>();
     public final List<Block> preds = new ArrayList<>();
-
+    public MethodNode owner = null;
     public Block next, target;
 
     public Stack<AbstractInsnNode> stack = new Stack<>();
@@ -116,7 +109,7 @@ public class Block implements Comparable<Block> {
      * Gets the matched instruction at the given index
      *
      * @param opcode The opcode of the instruction to match
-     * @param index The index to match at
+     * @param index  The index to match at
      * @return The matched instruction at the given index
      */
     public AbstractInsnNode get(int opcode, int index) {
@@ -168,5 +161,27 @@ public class Block implements Comparable<Block> {
      */
     public AbstractInsnNode get(InsnQuery query) {
         return get(query, 0);
+    }
+
+    public Block follow() {
+        Block block = new Block(null);
+        block.instructions.addAll(instructions);
+        List<Block> followed = new ArrayList<>();
+        Block next = this;
+        followed.add(next);
+        while (next.next != null) {
+            next = next.next;
+            if (followed.contains(next)) {
+                break;
+            }
+            followed.add(next);
+            for (AbstractInsnNode ain : next.instructions) {
+                if (ain instanceof LabelNode) {
+                    continue;
+                }
+                block.instructions.add(ain);
+            }
+        }
+        return block;
     }
 }

@@ -1,4 +1,4 @@
-package com.inubot.incomplete.bone;
+package com.inubot.bot;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Character;
