@@ -53,7 +53,7 @@ public class ProChopper extends ProScript {
             Location location = Location.getClosestWithTree(p.next);
             if (Inventory.isFull()) {
                 WebBank b = Movement.getWeb().getNearestBank(t -> t.getType() != WebBank.Type.DEPOSIT_BOX);
-                if (b.getLocation().distance() > 15) {
+                if (b.getLocation().distance() > 50) {
                     try {
                         WebPath wp = Movement.getWeb().findPathToBank(b);
                         if (wp.getNext().getTile().distance() < 15) {
