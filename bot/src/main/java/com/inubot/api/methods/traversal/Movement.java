@@ -15,6 +15,7 @@ import com.inubot.api.methods.traversal.graph.Web;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Player;
 import com.inubot.api.oldschool.Tile;
+import com.inubot.api.util.Random;
 import com.inubot.api.util.Time;
 
 public class Movement {
@@ -39,7 +40,7 @@ public class Movement {
     public static void toggleRun(boolean on) {
         if (isRunEnabled() == on)
             return;
-        Client.processAction(1, -1, 10485781, 57, "Toggle Run", "", 50, 50);
+        Client.processAction(1, -1, 10485781, 57, "Toggle Run", "", Random.nextInt(10, 250), Random.nextInt(10, 250));
     }
 
     /**

@@ -7,10 +7,9 @@
 package com.inubot.deobber;
 
 import org.objectweb.asm.commons.cfg.transform.Transform;
-import org.objectweb.asm.commons.util.Assembly;
 import org.objectweb.asm.commons.util.JarArchive;
 import org.objectweb.asm.commons.wrapper.ClassFactory;
-import org.objectweb.asm.tree.*;
+import org.objectweb.asm.tree.ClassNode;
 
 import java.io.File;
 import java.util.*;
@@ -46,7 +45,7 @@ public class Deobfuscator {
                 factories.size(), System.currentTimeMillis() - time);
         time = System.currentTimeMillis();
         Transform[] transforms = {
-                new DummyMethodVisitor(factories), new CatchBlockVisitor(),
+                new DummyMethodVisitor(factories), new CatchBlockVisitor()
         };
         Arrays.asList(transforms).forEach(t -> {
             t.transform(nodes);

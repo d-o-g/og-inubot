@@ -55,7 +55,7 @@ public final class RuneMateInjector implements Opcodes {
     }
 
     private void loadJar(Map<String, byte[]> classes) {
-        CachedClassLoader classLoader = new CachedClassLoader(classes);
+        //CachedClassLoader classLoader = new CachedClassLoader(classes);
         //try {
             //Class<?> entryClass = classLoader.loadClass("com.runemate.Boot");
             //entryClass.newInstance();
@@ -158,33 +158,4 @@ public final class RuneMateInjector implements Opcodes {
             return new byte[0];
         }
     }
-
-    private class CachedClassLoader extends ClassLoader {
-
-        private final Map<String, byte[]> classes;
-        private final Map<String, Class<?>> loaded;
-        private final Map<String, Class<?>> defined;
-
-        public CachedClassLoader(Map<String, byte[]> classes) {
-            this.classes = classes;
-            this.defined = this.loaded = new HashMap<>();
-        }
-
-        @Override
-        public Class<?> loadClass(String name) throws ClassNotFoundException {
-            if (loaded.containsKey(name)) {
-                return loaded.get(name);
-            } else if (!classes.containsKey(name)) {
-                return super.loadClass(name);
-            } else if (defined.containsKey(name)) {
-                return defined.get(name);
-            }
-            byte[] def = classes.get(name);
-            Class<?> clazz = super.defineClass(name, def, 0, def.length);
-            loaded.put(name, clazz);
-            defined.put(name, clazz);
-            return clazz;
-        }
-    }
-
 }

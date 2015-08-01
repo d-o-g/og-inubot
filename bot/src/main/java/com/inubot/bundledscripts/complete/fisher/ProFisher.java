@@ -12,6 +12,7 @@ import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Tile;
 import com.inubot.api.oldschool.event.MessageEvent;
+import com.inubot.api.oldschool.event.MessageEvent.Type;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.IdFilter;
 import com.inubot.bundledscripts.proframework.ProScript;
@@ -78,7 +79,7 @@ public class ProFisher extends ProScript {
 
     @Override
     public void messageReceived(MessageEvent e) {
-        if (e.getType() == MessageEvent.Type.SERVER && e.getText().contains("You catch")) {
+        if (e.getType() != Type.PLAYER && e.getText().contains("You catch")) {
             caught++;
         }
     }

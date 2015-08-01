@@ -79,6 +79,8 @@ public abstract class Script extends LoopTask {
             }
         }
         Inubot.getInstance().getClient().resetMouseIdleTime();
+        Mouse.setLocation(750, 15);
+        Mouse.click(true);
     }
 
     public void onLogout() {

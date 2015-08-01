@@ -162,7 +162,7 @@ public class Renamer {
 			boolean cont;
 			do {
 				cont = false;
-				if (node.rename("Nigger" + classPostfix) && !node.external) {
+				if (node.rename("_" + node.name) && !node.external) {
 					++classPostfix;
 					cont = true;
 				}
@@ -175,14 +175,13 @@ public class Renamer {
 			}
 			if (!node.external) {
 				for (MemberNode field : node.getFields()) {
-					if (node.renameField(field, getFieldName(remapper,
-							field.desc, fieldPostfix))) {
+					if (node.renameField(field, "__" + field.name)) {
 						++fieldPostfix;
 					}
 				}
 				for (MemberNode method : node.getMethods()) {
 					if(method.name.length() < 3) {
-						if (node.renameMethod(method, "method" + methodPostfix)) {
+						if (node.renameMethod(method, "__" + method.name)) {
 							++methodPostfix;
 						}
 					}

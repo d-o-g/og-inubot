@@ -11,6 +11,7 @@ import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.tree.*;
+import com.inubot.api.util.Random;
 
 import java.util.Iterator;
 import java.util.Queue;
@@ -120,7 +121,8 @@ public class Client {
     }
 
     public static void processAction(Action action, String actionText, String targetText) {
-        processAction(action.arg0, action.arg1, action.arg2, action.opcode, actionText, targetText, 50, 50);
+        processAction(action.arg0, action.arg1, action.arg2, action.opcode, actionText, targetText,
+                Random.nextInt(10, 250), Random.nextInt(10, 250));
     }
 
     /**
@@ -162,7 +164,8 @@ public class Client {
         private String targetText;
 
         private void fire() {
-            Inubot.getInstance().getClient().processAction(arg1, arg2, opcode, arg0, actionText, targetText, 50, 50);
+            Inubot.getInstance().getClient().processAction(arg1, arg2, opcode, arg0, actionText, targetText,
+                    Random.nextInt(10, 250), Random.nextInt(10, 250));
         }
     }
 }
