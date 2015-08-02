@@ -40,7 +40,7 @@ public final class RuneMateInjector implements Opcodes {
      * This method gets called by RuneMate
      */
     public static void fieldcallback(String var0, String var1, String var2, long var5) {
-        StringBuilder sb = new StringBuilder("[FIELD] ").append(var0).append(" is ").append(var1).append(".").append(var2);
+        StringBuilder sb = new StringBuilder("^ ").append(var0).append(" is ").append(var1).append(".").append(var2);
         if (var5 != 1) {
             sb.append(" * ").append(var5);
         }
@@ -51,7 +51,22 @@ public final class RuneMateInjector implements Opcodes {
      * This method gets called by RuneMate
      */
     public static void methodcallback(String var0, String var1, String var2, String var3) {
-        System.out.println("[METHOD] " + var0 + " " + var1 + "." + var2 + var3);
+        String desc0 = org.objectweb.asm.Type.getType(var3).getReturnType().getClassName();
+        org.objectweb.asm.Type[] args = org.objectweb.asm.Type.getArgumentTypes(var3);
+        String params = "(";
+        int i = 0;
+        for (org.objectweb.asm.Type arg : args) {
+            String ok = arg.getClassName();
+            if (ok.lastIndexOf('.') != -1) {
+                ok = ok.substring(ok.lastIndexOf('.') + 1);
+            }
+            params += ok;
+            if (++i != args.length) {
+                params += ", ";
+            }
+        }
+        params += ")";
+        System.out.println("¤ " + desc0 + " " + var0 + " is " + var1 + "#" + var2 + params);
     }
 
     private void loadJar(Map<String, byte[]> classes) {

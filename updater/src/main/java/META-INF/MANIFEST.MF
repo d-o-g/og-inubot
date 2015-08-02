@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: com.inubot.oldschool.OSUpdater
+Main-Class: com.inubot.oldschool.OSUpdater
+
