@@ -9,6 +9,7 @@ import java.util.Map;
 public interface Transform extends Opcodes {
 
     String PACKAGE = "com/inubot/client/natives/" + ModScript.getType() + "/";
+    String WRAPPER_PACKAGE = "com/inubot/api/" + ModScript.getType() + "/";
 
     void inject(Map<String, ClassStructure> classes);
 }

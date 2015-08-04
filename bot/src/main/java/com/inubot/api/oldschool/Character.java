@@ -129,4 +129,8 @@ public abstract class Character<T extends RSCharacter> extends Wrapper<T> implem
     public boolean isDying() {
         return isHealthBarVisible() && getHealth() == 0;
     }
+
+    public int getOrientation() {
+        return raw.getOrientation();
+    }
 }

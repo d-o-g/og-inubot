@@ -19,6 +19,7 @@ import org.objectweb.asm.tree.FieldInsnNode;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author unsigned
@@ -78,6 +79,7 @@ public class ItemTable extends GraphVisitor {
         public void visitEnd() {
             if (vars.size() < 2)
                 return;
+            vars.sort((o1, o2) -> Integer.compare(o1.var, o2.var));
             addHook(new FieldHook("ids", vars.get(0).ref));
             addHook(new FieldHook("stackSizes", vars.get(1).ref));
         }

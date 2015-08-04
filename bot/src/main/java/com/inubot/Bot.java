@@ -76,8 +76,9 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         if (forceInject = crawler.isOutdated())
             crawler.download();
         try {
-            //Files.readAllBytes(Paths.get(Configuration.CACHE + "oldschool.dat"))
-            ModScript.load(Internet.downloadBinary(new URL(crawler.modscript).openStream(), null), Integer.toString(crawler.getHash()));
+            byte[] modscript = Files.readAllBytes(Paths.get(Configuration.CACHE + "oldschool.dat"));
+            //byte[] modscript = Internet.downloadBinary(new URL(crawler.modscript).openStream(), null)
+            ModScript.load(modscript, Integer.toString(crawler.getHash()));
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse modscript", e);
         }

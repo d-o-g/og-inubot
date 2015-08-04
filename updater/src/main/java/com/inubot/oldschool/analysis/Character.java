@@ -11,7 +11,7 @@ import org.objectweb.asm.commons.cfg.tree.node.*;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
-@VisitorInfo(hooks = {"x", "y", "health", "maxHealth", "interactingIndex", "animation", "healthBarCycle", "queueSize"})
+@VisitorInfo(hooks = {"x", "y", "health", "maxHealth", "interactingIndex", "animation", "healthBarCycle", "queueSize", "orientation"})
 public class Character extends GraphVisitor {
 
     @Override
@@ -28,6 +28,29 @@ public class Character extends GraphVisitor {
         visitAll(new InteractingIndex());
         visitAll(new Animation());
         visitAll(new CombatCycle());
+        visitAll(new Orientation());
+    }
+
+    private class Orientation extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor(this) {
+                public void visitField(FieldMemberNode fmn) {
+                    if (fmn.opcode() == PUTFIELD && fmn.owner().equals(clazz("Character")) && fmn.desc().equals("I")) {
+                        if (fmn.layer(IMUL, IAND, D2I, DMUL, INVOKESTATIC) != null) {
+                            hooks.put("orientation", new FieldHook("orientation", fmn.fin()));
+                            lock.set(true);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private class QueueSize extends BlockVisitor {

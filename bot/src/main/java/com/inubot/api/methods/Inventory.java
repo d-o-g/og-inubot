@@ -66,7 +66,7 @@ public class Inventory {
 
     public static boolean contains(String s) {
         for (ItemTables.Entry widgetItem : ItemTables.getInventory()) {
-            if (widgetItem.getName().equals(s)) {
+            if (widgetItem.getName() != null && widgetItem.getName().equals(s)) {
                 return true;
             }
         }

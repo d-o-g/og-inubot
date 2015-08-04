@@ -71,8 +71,9 @@ public class ItemTables {
         for (int i = 0; i < len; i++) {
             int id = table.getIds()[i];
             int amt = table.getStackSizes()[i];
-            if (id > 0 && amt > 0)
+            if (id > 0 && amt > 0) {
                 entries.add(new Entry(i, id, amt));
+            }
         }
         return entries.toArray(new Entry[entries.size()]);
     }

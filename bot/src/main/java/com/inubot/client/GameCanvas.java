@@ -1,7 +1,8 @@
 package com.inubot.client;
 
-import com.inubot.api.methods.Client;
-import com.inubot.api.methods.Game;
+import com.inubot.api.methods.*;
+import com.inubot.api.oldschool.Model;
+import com.inubot.api.oldschool.Player;
 import com.inubot.api.util.*;
 
 import java.awt.*;
@@ -55,8 +56,20 @@ public class GameCanvas extends Canvas {
         Graphics g = super.getGraphics();
         Graphics2D paint = backBuffer.createGraphics();
         paint.drawImage(raw, 0, 0, null);
-        if (!Client.PAINTING)
+        if (!Client.PAINTING) {
             return raw.createGraphics();
+        }
+        if (Game.isLoggedIn()) {
+            Player player = Players.getLocal();
+            if (player != null) {
+                Model model = player.getRaw().getModel();
+                if (model != null) {
+                    System.out.println("RENDER");
+                    model.setReferent(player);
+                    model.render(paint);
+                }
+            }
+        }
         paintables.forEach(p -> p.render(paint));
         paint.dispose();
         g.drawImage(backBuffer, 0, 0, null);
@@ -130,8 +143,9 @@ public class GameCanvas extends Canvas {
     public synchronized void sendKey(char c, int delay) {
         AWTKeyStroke keystroke = AWTKeyStroke.getAWTKeyStroke(c);
         int keycode = keystroke.getKeyCode();
-        if (c >= 'a' && c <= 'z')
+        if (c >= 'a' && c <= 'z') {
             keycode -= 32;
+        }
         dispatch(new KeyEvent(this, KeyEvent.KEY_PRESSED, System.currentTimeMillis() + delay, 0, keycode, c, KeyEvent.KEY_LOCATION_STANDARD));
         dispatch(new KeyEvent(this, KeyEvent.KEY_RELEASED, System.currentTimeMillis() + 10, 0, keycode, c, KeyEvent.KEY_LOCATION_STANDARD));
         dispatch(new KeyEvent(this, KeyEvent.KEY_TYPED, System.currentTimeMillis() + 10, 0, KeyEvent.VK_UNDEFINED, c, KeyEvent.KEY_LOCATION_UNKNOWN));
@@ -140,8 +154,9 @@ public class GameCanvas extends Canvas {
     private KeyEvent generateKeyEvent(char key, int type, int wait) {
         AWTKeyStroke ks = AWTKeyStroke.getAWTKeyStroke(key);
         int code = ks.getKeyCode();
-        if (key >= 'a' && key <= 'z')
+        if (key >= 'a' && key <= 'z') {
             code -= 32;
+        }
         return new KeyEvent(this, type, System.currentTimeMillis() + wait, ks.getModifiers(), code, key, KeyEvent.KEY_LOCATION_STANDARD);
     }
 
@@ -155,22 +170,22 @@ public class GameCanvas extends Canvas {
         }
     }
 
-    public synchronized void sendKeys(final char[] chars) {
-        for (final char _char : chars) {
+    public synchronized void sendKeys(char[] chars) {
+        for (char _char : chars) {
             sendKey(_char, 30);
         }
     }
 
-    public synchronized void pressEventKey(final int eventKey, final int millis) {
+    public synchronized void pressEventKey(int eventKey, int millis) {
         dispatch(new KeyEvent(this, KeyEvent.KEY_PRESSED, System.currentTimeMillis() + millis, 0, eventKey, (char) eventKey, KeyEvent.KEY_LOCATION_STANDARD));
         dispatch(new KeyEvent(this, KeyEvent.KEY_RELEASED, System.currentTimeMillis() + millis, 0, eventKey, (char) eventKey, KeyEvent.KEY_LOCATION_STANDARD));
     }
 
-    public synchronized void pressKey(final int keycode) {
+    public synchronized void pressKey(int keycode) {
         pressKey(keycode, 0);
     }
 
-    public synchronized void pressKey(final int keycode, final int delay) {
+    public synchronized void pressKey(int keycode, int delay) {
         int mask = 0;
         switch (keycode) {
             case KeyEvent.VK_SHIFT: {
@@ -200,33 +215,34 @@ public class GameCanvas extends Canvas {
      * @param minDelay   The minimum time in milliseconds to wait between sending a character
      * @param maxDelay   The maximum time in milliseconds to wait before sending a character
      */
-    public synchronized void sendText(final String text, final boolean pressEnter, final int minDelay, final int maxDelay) {
-        final char[] chars = text.toCharArray();
-        for (final char element : chars) {
-            final int delay = Random.nextInt(minDelay, maxDelay);
+    public synchronized void sendText(String text, boolean pressEnter, int minDelay, int maxDelay) {
+        char[] chars = text.toCharArray();
+        for (char element : chars) {
+            int delay = Random.nextInt(minDelay, maxDelay);
             sendKey(element, delay > 0 ? delay : 1);
         }
-        if (pressEnter)
+        if (pressEnter) {
             pressEnter();
+        }
     }
 
     /**
      * @param text       The text to send.
      * @param pressEnter <tt>true</tt> to press enter
      */
-    public synchronized void sendText(final String text, final boolean pressEnter) {
+    public synchronized void sendText(String text, boolean pressEnter) {
         sendText(text, pressEnter, 30, 80);
     }
 
-    public synchronized void releaseKey(final char c) {
+    public synchronized void releaseKey(char c) {
         releaseKey(c, 0, 0);
     }
 
-    public synchronized void releaseKey(final char ch, final int delay, final int mask) {
+    public synchronized void releaseKey(char ch, int delay, int mask) {
         releaseKey(ch, ch, delay, mask);
     }
 
-    public synchronized void releaseKey(final int keycode) {
+    public synchronized void releaseKey(int keycode) {
         int mod = 0;
         switch (keycode) {
             case KeyEvent.VK_SHIFT: {
@@ -246,7 +262,7 @@ public class GameCanvas extends Canvas {
         dispatch(event);
     }
 
-    public synchronized void releaseKey(final char ch, final int code, final int delay, final int mask) {
+    public synchronized void releaseKey(char ch, int code, int delay, int mask) {
         dispatch(new KeyEvent(this, KeyEvent.KEY_RELEASED, System.currentTimeMillis() + delay, mask, code, getKeyChar(ch), getLocation(ch)));
     }
 
@@ -295,7 +311,7 @@ final class FocusProxy implements FocusListener {
      *
      * @param e The {@link java.awt.event.FocusEvent} to dispatch
      */
-    public void loseFocus(final FocusEvent e) {
+    public void loseFocus(FocusEvent e) {
         getOriginal().focusLost(e);
     }
 
@@ -305,7 +321,7 @@ final class FocusProxy implements FocusListener {
      * @param src The source component
      * @param id  The id of the {@link java.awt.event.FocusEvent}
      */
-    public void loseFocus(final Component src, final int id) {
+    public void loseFocus(Component src, int id) {
         loseFocus(new FocusEvent(src, id));
     }
 
@@ -314,7 +330,7 @@ final class FocusProxy implements FocusListener {
      *
      * @param id The id of the {@link java.awt.event.FocusEvent}
      */
-    public void loseFocus(final int id) {
+    public void loseFocus(int id) {
         loseFocus(new FocusEvent(Game.getCanvas(), id));
     }
 
@@ -323,7 +339,7 @@ final class FocusProxy implements FocusListener {
      *
      * @param e The {@link java.awt.event.FocusEvent} to dispatch
      */
-    public void gainFocus(final FocusEvent e) {
+    public void gainFocus(FocusEvent e) {
         getOriginal().focusGained(e);
     }
 
@@ -333,7 +349,7 @@ final class FocusProxy implements FocusListener {
      * @param src The source component
      * @param id  The id of the {@link java.awt.event.FocusEvent}
      */
-    public void gainFocus(final Component src, final int id) {
+    public void gainFocus(Component src, int id) {
         gainFocus(new FocusEvent(src, id));
     }
 
@@ -342,7 +358,7 @@ final class FocusProxy implements FocusListener {
      *
      * @param id The id of the {@link java.awt.event.FocusEvent}
      */
-    public void gainFocus(final int id) {
+    public void gainFocus(int id) {
         gainFocus(new FocusEvent(Game.getCanvas(), id));
     }
 }
