@@ -6,6 +6,7 @@
  */
 package com.inubot.api.oldschool;
 
+import com.inubot.Inubot;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Npcs;
 import com.inubot.api.methods.Players;
@@ -71,7 +72,7 @@ public abstract class Character<T extends RSCharacter> extends Wrapper<T> implem
 
     public boolean isHealthBarVisible() {
         for (int cycle : raw.getHitsplatCycles()) {
-            if (cycle > Game.getEngineCycle()) {
+            if (cycle + 70 > Inubot.getInstance().getClient().getEngineCycle()) {
                 return true;
             }
         }

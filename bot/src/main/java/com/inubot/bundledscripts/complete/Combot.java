@@ -3,6 +3,7 @@ package com.inubot.bundledscripts.complete;
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
+import com.inubot.api.oldschool.Character;
 import com.inubot.bundledscripts.proframework.ProScript;
 import com.inubot.script.Manifest;
 
@@ -70,6 +71,16 @@ public class Combot extends ProScript {
         }
         switchStyles();
 
+        Character character = Players.getLocal().getTarget();
+        if (character != null && character instanceof Npc) {
+            Npc npc = (Npc) character;
+            System.out.println(npc.getHealthPercent());
+            if (npc.isHealthBarVisible())
+                System.out.println("hp bar vis");
+            else
+                System.out.println("no hp bar");
+        }
+
         if (Players.getLocal().getTarget() != null) {
             return 600;
         }
@@ -93,6 +104,7 @@ public class Combot extends ProScript {
         }
 
         Monster monster = getCurrent();
+
         switch (monster) {
             case SEAGULL:
                 if (Players.getLocal().getTarget() == null || Players.getLocal().getTarget().getTarget() == null) {
