@@ -78,7 +78,7 @@ public class CharacterPool<T extends com.inubot.api.oldschool.Character, K exten
         return include(new Filter<T>() {
             @Override
             public boolean accept(T t) {
-                return t.isHealthBarVisible();
+                return visible == t.isHealthBarVisible();
             }
         });
     }

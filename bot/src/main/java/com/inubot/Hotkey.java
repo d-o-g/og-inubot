@@ -61,16 +61,7 @@ public enum Hotkey {
     }, DROP_INV(KeyEvent.VK_V) {
         @Override
         public void onActivation() {
-            //Inventory.dropAllExcept(new NameFilter<>("Coins"));
-            int onCursorCount = Game.getClient().getOnCursorCount();
-            GameObject tree = GameObjects.getNearest("Tree");
-            if (tree != null) {
-                int uid = tree.getRaw().getId();
-                System.out.printf("Tree uid: %d%n", uid);
-                Game.getClient().setOnCursorCount(onCursorCount + 1);
-                Game.getClient().getOnCursorUids()[onCursorCount] = uid;
-                Mouse.click(false, 200, 200);
-            }
+            Inventory.dropAllExcept(new NameFilter<>("Coins"));
         }
     }, POSITION(KeyEvent.VK_E) {
         @Override
