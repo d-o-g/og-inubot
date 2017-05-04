@@ -33,9 +33,11 @@ import java.io.*;
 import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarInputStream;
+import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -83,11 +85,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
             throw new RuntimeException("Failed to parse modscript", e);
         }
 
-        File randomDat = new File(System.getProperty("user.home") + "/random.dat");
-        if (randomDat.exists()) {
-            randomDat.setReadOnly();
-        }
-
+        deleteRandom();
         File pack = new File(crawler.pack);
         File injectCache = new File(Configuration.INJECT_CACHE);
         int hash = -1;
@@ -171,6 +169,44 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         });
         if (instance == null) {
             instance = this;
+        }
+    }
+
+    private void deleteRandom() {
+        File f = new File(System.getProperty("user.home"),"random.dat");
+        if(f.exists()) {
+            try {
+                f.setWritable(true);
+                RandomAccessFile raf = new RandomAccessFile(f,"rw");
+                {
+                    byte[] bytes = new byte[24];
+                    raf.seek(0);
+                    raf.read(bytes);
+                    CRC32 crc = new CRC32();
+                    crc.update(bytes);
+                    long val = crc.getValue();
+                    System.out.println("Random:" + val + ":" + Arrays.toString(bytes));
+                }
+                {
+                    raf.seek(0);
+                    raf.write(new byte[24]);
+                    raf.getChannel().force(true);
+                    raf.close();
+                    System.out.println("KILLED RANDOM.DAT");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            //We will ensure random.dat is created under user.home and does not end up somewhere else....
+            System.out.println("No random.dat");
+            try {
+                if(!f.createNewFile()) {
+                    throw new RuntimeException();
+                }
+            } catch (IOException ignored) {
+                throw new RuntimeException("Failed to generate random.dat",ignored);
+            }
         }
     }
 
