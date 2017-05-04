@@ -11,13 +11,6 @@ import com.inubot.api.oldschool.Skill;
 public class Health {
 
     /**
-     * @return The local health bar cycle
-     */
-    public static int getCycle() {
-        return Players.getLocal().getHealthBarCycle();
-    }
-
-    /**
      * @return The current health of the local player
      */
     public static int getCurrent() {

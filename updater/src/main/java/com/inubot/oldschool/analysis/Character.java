@@ -11,7 +11,7 @@ import org.objectweb.asm.commons.cfg.tree.node.*;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
-@VisitorInfo(hooks = {"x", "y", "health", "maxHealth", "interactingIndex", "animation", "healthBarCycle", "queueSize", "orientation", "hitsplatCycles"})
+@VisitorInfo(hooks = {"x", "y", "healthBars", "interactingIndex", "animation", "queueSize", "orientation", "hitsplatCycles"})
 public class Character extends GraphVisitor {
 
     @Override
@@ -22,9 +22,9 @@ public class Character extends GraphVisitor {
 
     @Override
     public void visit() {
+        add("healthBars", cn.getField(null, desc("NodeIterable")));
         visitIfM(new QueueSize(), m -> (m.access & ACC_STATIC) == 0 && m.desc.startsWith("(IIB"));
         visitAll(new PositionHooks());
-        visitAll(new HealthHooks());
         visitAll(new InteractingIndex());
         visitAll(new Animation());
         visitAll(new CombatCycle());

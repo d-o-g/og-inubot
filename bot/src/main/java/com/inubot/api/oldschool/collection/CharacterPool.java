@@ -78,16 +78,16 @@ public class CharacterPool<T extends com.inubot.api.oldschool.Character, K exten
         return include(new Filter<T>() {
             @Override
             public boolean accept(T t) {
-                return (t.getHealthBarCycle() + 20 > Game.getEngineCycle()) == visible;
+                return t.isHealthBarVisible();
             }
         });
     }
 
-    public K health(Filter<Integer> hpFilter) {
+    public K healthPercent(Filter<Integer> hpFilter) {
         return include(new Filter<T>() {
             @Override
             public boolean accept(T t) {
-                return hpFilter.accept(t.getHealth());
+                return hpFilter.accept(t.getHealthPercent());
             }
         });
     }

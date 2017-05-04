@@ -7,5 +7,14 @@
 package com.inubot.client.natives.oldschool;
 
 public interface RSCollisionMap {
+
     int[][] getFlags();
+
+    int getWidth();
+
+    int getHeight();
+
+    int getInsetX();
+
+    int getInsetY();
 }

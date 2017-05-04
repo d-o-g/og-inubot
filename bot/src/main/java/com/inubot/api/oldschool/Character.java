@@ -10,9 +10,7 @@ import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Npcs;
 import com.inubot.api.methods.Players;
 import com.inubot.api.methods.Projection;
-import com.inubot.client.natives.oldschool.RSCharacter;
-import com.inubot.client.natives.oldschool.RSNpc;
-import com.inubot.client.natives.oldschool.RSPlayer;
+import com.inubot.client.natives.oldschool.*;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.util.Identifiable;
 
@@ -54,30 +52,34 @@ public abstract class Character<T extends RSCharacter> extends Wrapper<T> implem
         return Game.getRegionBaseY() + getRegionY();
     }
 
-    public int getHealth() {
-        return raw.getHealth();
+    public RSNodeIterable<RSHealthBar> getHealthBars() {
+        return raw.getHealthBars();
     }
 
-    public int getMaxHealth() {
-        return raw.getMaxHealth();
-    }
-
-    public int getHealthBarCycle() {
-        return raw.getHealthBarCycle();
-    }
-
-    public int getTargetIndex() {
-        return raw.getInteractingIndex();
+    public int getHealthPercent() {
+        for (RSHealthBar bar : getHealthBars()) {
+            if (bar != null) {
+                for (RSHitbar bar0 : bar.getHitsplats()) {
+                    if (bar0 != null) {
+                        return bar0.getHealthPercent();
+                    }
+                }
+            }
+        }
+        return 0;
     }
 
     public boolean isHealthBarVisible() {
         for (int cycle : raw.getHitsplatCycles()) {
-            if (cycle + 70 > Game.getClient().getEngineCycle()) {
+            if (cycle > Game.getEngineCycle()) {
                 return true;
             }
         }
         return false;
-        //return getHealthBarCycle() > Game.getEngineCycle();
+    }
+
+    public int getTargetIndex() {
+        return raw.getInteractingIndex();
     }
 
     public int getQueueSize() {
@@ -133,7 +135,7 @@ public abstract class Character<T extends RSCharacter> extends Wrapper<T> implem
     }
 
     public boolean isDying() {
-        return isHealthBarVisible() && getHealth() == 0;
+        return isHealthBarVisible() && getHealthPercent() == 0;
     }
 
     public int getOrientation() {
