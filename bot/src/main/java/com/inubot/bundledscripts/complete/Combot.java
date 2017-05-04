@@ -71,16 +71,6 @@ public class Combot extends ProScript {
         }
         switchStyles();
 
-        Character character = Players.getLocal().getTarget();
-        if (character != null && character instanceof Npc) {
-            Npc npc = (Npc) character;
-            System.out.println(npc.getHealthPercent());
-            if (npc.isHealthBarVisible())
-                System.out.println("hp bar vis");
-            else
-                System.out.println("no hp bar");
-        }
-
         if (Players.getLocal().getTarget() != null) {
             return 600;
         }
