@@ -32,6 +32,19 @@ public class Mouse {
         return Inubot.getInstance().getClient().getMouseIdleTime();
     }
 
+    public static void click(boolean left, int x, int y) {
+        setLocation(x, y);
+        click(left);
+    }
+
+    public static void click(int x, int y) {
+        click(true, x, y);
+    }
+
+    public static void click() {
+        click(true);
+    }
+
     public static void click(boolean left) {
         Inubot.getInstance().getCanvas().clickMouse(left);
     }

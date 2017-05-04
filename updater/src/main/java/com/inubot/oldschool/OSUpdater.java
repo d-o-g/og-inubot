@@ -71,6 +71,9 @@ public class OSUpdater extends Updater {
     @Override
     public int getRevision(Map<ClassNode, Map<MethodNode, FlowGraph>> graphs) {
         ClassNode client = classnodes.get("client");
+        if (client == null) {
+            return 0;
+        }
         MethodNode init = client.getMethodByName("init");
         FlowGraph graph = graphs.get(client).get(init);
         final AtomicInteger revision = new AtomicInteger(0);

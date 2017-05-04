@@ -8,10 +8,6 @@ package com.inubot.bundledscripts.proframework;
 
 import com.inubot.bundledscripts.proframework.ProModel.Listener;
 
-/**
- * @author Dogerina
- * @since 15-07-2015
- */
 public abstract class ProController<T extends ProView, K extends ProModel> implements Listener {
 
     private final T view;

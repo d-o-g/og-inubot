@@ -25,7 +25,7 @@ public class UID { // 31 bit value
         regionY &= 127;    // Maximum value of 127
         entityId &= 32767;  // Maximum value of 32767
         entityType &= 3;      // Maximum value of 3
-        int uid = (entityType << 29) + (entityId << 14) + (regionY << 7) + (regionX); //brackets for clarity
+        int uid = (entityType << 29) + (entityId << 14) + (regionY << 7) + (regionX); //parenthesis for clarity
         if (!intractable)
             uid -= Integer.MIN_VALUE; //Set the sign bit to 1
         return uid;

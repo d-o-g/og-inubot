@@ -15,20 +15,20 @@ import java.lang.Character;
 
 public enum Tab {
 
-    CLAN_CHAT(23, 22, 25),
-    FRIENDS_LIST(24, 23, 26),
-    IGNORE_LIST(25, 24, 27),
-    LOGOUT(26, 17, 28), //not an actual tab for line layout mode, but a button next to minimap
-    OPTIONS(27, 25, 29),
-    EMOTES(28, 26, 30),
-    MUSIC_PLAYER(29, 27, 31),
-    COMBAT(39, 36, 42),
-    STATS(40, 37, 43),
-    QUEST_LIST(41, 38, 44),
-    INVENTORY(42, 39, 45),
-    EQUIPMENT(43, 40, 46),
-    PRAYER(44, 41, 47),
-    MAGIC(45, 42, 48);
+    CLAN_CHAT(28, 27, 28),
+    FRIENDS_LIST(29, 28, 29),
+    IGNORE_LIST(30, 29, 30),
+    LOGOUT(31, 17, 31), //not an actual tab for line layout mode, but a button next to minimap
+    OPTIONS(32, 30, 32),
+    EMOTES(33, 31, 33),
+    MUSIC_PLAYER(34, 32, 34),
+    COMBAT(44, 41, 45),
+    STATS(45, 42, 46),
+    QUEST_LIST(46, 43, 47),
+    INVENTORY(47, 44, 48),
+    EQUIPMENT(48, 45, 49),
+    PRAYER(49, 46, 50),
+    MAGIC(50, 47, 51);
 
     private static final int BOX_LAYOUT_TABS = 161;
     private static final int LINE_LAYOUT_TABS = 164;

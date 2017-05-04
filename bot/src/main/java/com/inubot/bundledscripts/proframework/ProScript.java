@@ -20,10 +20,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * @author Dogerina
- * @since 16-07-2015
- */
 public abstract class ProScript extends Script implements Paintable, ExperienceListener {
 
     private static final int BASE_PAINT = 6;

@@ -24,8 +24,8 @@ public class InvokerTransform implements Transform {
     public void inject(Map<String, ClassStructure> classes) {
         String obj = ModScript.getClass("ObjectDefinition");
         String npc = ModScript.getClass("NpcDefinition");
-        addTransformInvoker("NpcDefinition", classes.get(npc));
-        addTransformInvoker("ObjectDefinition", classes.get(obj));
+       // addTransformInvoker("NpcDefinition", classes.get(npc));
+      //  addTransformInvoker("ObjectDefinition", classes.get(obj));
         addGetInvoker("ObjectDefinition", classes.get("client"));
         addGetInvoker("NpcDefinition", classes.get("client"));
         addGetInvoker("ItemDefinition", classes.get("client"));

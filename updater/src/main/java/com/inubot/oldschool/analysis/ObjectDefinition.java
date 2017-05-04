@@ -12,12 +12,12 @@ import org.objectweb.asm.tree.*;
 
 import java.lang.reflect.Modifier;
 
-@VisitorInfo(hooks = {"name", "actions", "id", "transformIds", "varpIndex", "transform", "mapFunction", "colors", "newColors"})
+@VisitorInfo(hooks = {"name", "actions", "id", "transformIds", "varpIndex", "varpBitIndex", "transform", "mapFunction", "colors", "newColors"})
 public class ObjectDefinition extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.getFieldTypeCount() == 6 && cn.fieldCount("[S") == 4 && cn.fieldCount("[I") == 4;
+        return cn.getFieldTypeCount() == 7 && cn.fieldCount("[S") == 4 && cn.fieldCount("[I") == 4;
     }
 
     @Override
@@ -25,8 +25,9 @@ public class ObjectDefinition extends GraphVisitor {
         add("name", cn.getField(null, "Ljava/lang/String;"), "Ljava/lang/String;");
         add("actions", cn.getField(null, "[Ljava/lang/String;"), "[Ljava/lang/String;");
         visit(new Id());
-        visit(new TransformIds());
-        visit(new TransformIndex());
+        visitLocalIfM(new TransformIds(), m -> !Modifier.isStatic(m.access) && m.desc.endsWith("L" + cn.name + ";"));
+        visit(new VarpbitIndex());
+        visit(new VarpIndex());
         visitAll(new MapFunction());
         visitAll(new Colors());
         for (MethodNode mn : cn.methods) {
@@ -141,10 +142,10 @@ public class ObjectDefinition extends GraphVisitor {
         public void visit(Block block) {
             block.tree().accept(new NodeVisitor(this) {
                 public void visit(AbstractNode n) {
-                    if (n.opcode() == ARETURN) {
-                        FieldMemberNode fmn = (FieldMemberNode) n.layer(INVOKESTATIC, IALOAD, GETFIELD);
-                        if (fmn != null && fmn.owner().equals(cn.name) && fmn.desc().equals("[I")) {
-                            hooks.put("transformIds", new FieldHook("transformIds", fmn.fin()));
+                    if (n.opcode() == IALOAD) {
+                        FieldMemberNode fmn = (FieldMemberNode) n.layer(ISUB, ARRAYLENGTH, GETFIELD);
+                        if (fmn != null && fmn.owner().equals(cn.name)) {
+                            addHook(new FieldHook("transformIds", fmn.fin()));
                             lock.set(true);
                         }
                     }
@@ -153,7 +154,7 @@ public class ObjectDefinition extends GraphVisitor {
         }
     }
 
-    private class TransformIndex extends BlockVisitor {
+    private class VarpbitIndex extends BlockVisitor {
 
         @Override
         public boolean validate() {
@@ -166,6 +167,29 @@ public class ObjectDefinition extends GraphVisitor {
                 public void visitVariable(VariableNode vn) {
                     if (vn.opcode() == ISTORE && vn.var() == 2) {
                         FieldMemberNode fmn = (FieldMemberNode) vn.layer(INVOKESTATIC, IMUL, GETFIELD);
+                        if (fmn != null && fmn.owner().equals(cn.name) && fmn.first(ALOAD) != null) {
+                            addHook(new FieldHook("varpBitIndex", fmn.fin()));
+                            lock.set(true);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private class VarpIndex extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(final Block block) {
+            block.tree().accept(new NodeVisitor() {
+                public void visitVariable(VariableNode vn) {
+                    if (vn.opcode() == ISTORE && vn.var() == 2) {
+                        FieldMemberNode fmn = (FieldMemberNode) vn.layer(IALOAD, IMUL, GETFIELD);
                         if (fmn != null && fmn.owner().equals(cn.name) && fmn.first(ALOAD) != null) {
                             addHook(new FieldHook("varpIndex", fmn.fin()));
                             lock.set(true);

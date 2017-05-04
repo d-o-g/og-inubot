@@ -11,8 +11,7 @@ import com.inubot.api.oldschool.action.*;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Identifiable;
-import com.inubot.client.natives.oldschool.RSGameObject;
-import com.inubot.client.natives.oldschool.RSObjectDefinition;
+import com.inubot.client.natives.oldschool.*;
 
 import java.util.Arrays;
 
@@ -63,6 +62,20 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
     }
 
     @Override
+    public Model getModel() {
+        RSRenderable renderable = getEntity();
+        if (renderable != null) {
+            Model model = renderable.getModel();
+            if (model != null) {
+                return model;
+            } else if (renderable instanceof RSModel) {
+                return new Model(renderable, (RSModel) renderable);
+            }
+        }
+        return null;
+    }
+
+    @Override
     public int distance(Locatable locatable) {
         return (int) Projection.distance(this, locatable);
     }
@@ -74,35 +87,11 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
 
     @Override
     public boolean processAction(int opcode, String action) {
-        RSObjectDefinition definition = getDefinition();
-        if (definition == null) {
-            return false;
-        }
-        String name = definition.getName();
-        if (name == null) {
-            return false;
-        }
-        // if shit breaks look here
-        //Client.processAction(Action.valueOf(opcode, raw.getId(), raw.getX(), raw.getY()), action, name);
-        Client.processAction(Action.valueOf(opcode, raw.getId(), getRegionX(), getRegionY()), action, name);
-        return true;
+        return Menu.processAction(this, opcode, action);
     }
 
     public boolean processAction(String action) {
-        RSObjectDefinition definition = getDefinition();
-        if (definition == null) {
-            return false;
-        }
-        String[] actions = definition.getActions();
-        if (actions == null) {
-            return false;
-        }
-        int index = Action.indexOf(actions, action);
-        if (index >= 0) {
-            processAction(ActionOpcodes.OBJECT_ACTION_0 + index, action);
-            return true;
-        }
-        return false;
+        return Menu.processAction(this, action);
     }
 
     public String getName() {
@@ -112,8 +101,7 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
 
     public boolean containsAction(String act) {
         for (String action : getActions()) {
-            if (action == null) continue;
-            if (action.equals(act)) {
+            if (action != null && action.equals(act)) {
                 return true;
             }
         }
@@ -125,13 +113,19 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
     }
 
     public Landmark getLandmark() {
-        if (definition == null)
+        if (definition == null) {
             return null;
+        }
         for (Landmark landmark : Landmark.values()) {
-            if (landmark.id == definition.getMapFunction())
+            if (landmark.id == definition.getMapFunction()) {
                 return landmark;
+            }
         }
         return null;
+    }
+
+    public RSRenderable getEntity() {
+        return raw.getRenderable();
     }
 
     public enum Landmark {

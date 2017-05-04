@@ -18,10 +18,6 @@ import com.inubot.script.Script;
 
 import java.awt.*;
 
-/**
- * @author unsigned
- * @since 17-05-2015
- */
 @Manifest(
         name = "RedChins PRO",
         developer = "septron",
@@ -39,7 +35,7 @@ public class RedChinsPRO extends Script implements Paintable {
 
     public boolean setup() {
         if (!Game.isLoggedIn()) {
-            System.err.println("Start logged in!"); //need 2 get base tile. cud do something like setup(String... args) and hardcode start tile
+            System.err.println("Start logged in!");
             return false;
         }
         startExp = Skills.getExperience(Skill.HUNTER);

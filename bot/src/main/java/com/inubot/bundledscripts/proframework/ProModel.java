@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
 
-/**
- * @author Dogerina
- * @since 15-07-2015
- */
 public abstract class ProModel {
 
     private final List<Listener> listeners;

@@ -22,6 +22,7 @@ import java.util.Arrays;
  * Created by luckruns0ut on 03/05/15.
  */
 public class WidgetExplorer extends JFrame implements Paintable {
+
     private JPanel treePanel;
     private JPanel infoPanel;
     private JPanel searchPanel;

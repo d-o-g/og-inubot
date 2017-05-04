@@ -6,10 +6,7 @@
  */
 package com.inubot.api.oldschool;
 
-import com.inubot.api.methods.Client;
-import com.inubot.api.methods.Game;
-import com.inubot.api.methods.Players;
-import com.inubot.api.methods.Projection;
+import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.oldschool.action.tree.GroundItemAction;
 import com.inubot.api.util.CacheLoader;
@@ -43,6 +40,11 @@ public class GroundItem extends Wrapper<RSItem> implements Locatable, Identifiab
     }
 
     @Override
+    public Model getModel() {
+        return raw.getModel();
+    }
+
+    @Override
     public int distance(Locatable locatable) {
         return (int) Projection.distance(this, locatable);
     }
@@ -63,27 +65,19 @@ public class GroundItem extends Wrapper<RSItem> implements Locatable, Identifiab
 
     @Override
     public boolean processAction(int opcode, String action) {
-        String name = getName();
-        if (name == null)
-            return false;
-        Client.processAction(new GroundItemAction(opcode, getId(), raw.getRegionX(), raw.getRegionY()), action, name);
-        return true;
+        return Menu.processAction(this, opcode, action);
     }
 
     public boolean processAction(String action) {
+        return Menu.processAction(this, action);
+    }
+
+    @Override
+    public String[] getActions() {
         RSItemDefinition definition = getDefinition();
-        if (definition == null)
-            return false;
-        String[] actions = definition.getGroundActions();
-        if (actions == null)
-            return false;
-        int index = Arrays.asList(actions).indexOf(action);
-        if (index == -1 && (actions[2] == null || actions[2].equals("null")) && action.equals("Take")) {
-            processAction(ActionOpcodes.GROUND_ITEM_ACTION_2, action);
-            return true;
-        } else {
-            processAction(ActionOpcodes.GROUND_ITEM_ACTION_0 + index, action);
-            return true;
+        if (definition != null) {
+            return definition.getGroundActions();
         }
+        return new String[0];
     }
 }

@@ -25,8 +25,8 @@ import com.renamer.util.JarLoader;
 public class Renamer {
 
 	public static void main(String... args) throws IOException {
-		new Renamer("C:\\Users\\Inspiron\\Documents\\inubot\\cache\\gamepack_deob.jar",
-				"C:\\Users\\Inspiron\\Documents\\inubot\\cache\\gamepack_deob.jar");
+		new Renamer("C:\\Users\\Inspiron\\Documents\\IDEAProjects\\rs3-bot\\osrs88.jar",
+				"C:\\Users\\Inspiron\\Documents\\IDEAProjects\\rs3-bot\\osrs88-ren.jar");
 	}
 
 	public Renamer(String in, String out) throws IOException {
@@ -162,7 +162,7 @@ public class Renamer {
 			boolean cont;
 			do {
 				cont = false;
-				if (node.rename("_" + node.name) && !node.external) {
+				if (node.rename("Class" + classPostfix) && !node.external) {
 					++classPostfix;
 					cont = true;
 				}
@@ -175,13 +175,14 @@ public class Renamer {
 			}
 			if (!node.external) {
 				for (MemberNode field : node.getFields()) {
-					if (node.renameField(field, "__" + field.name)) {
+					if (node.renameField(field, getFieldName(remapper,
+							field.desc, fieldPostfix))) {
 						++fieldPostfix;
 					}
 				}
 				for (MemberNode method : node.getMethods()) {
 					if(method.name.length() < 3) {
-						if (node.renameMethod(method, "__" + method.name)) {
+						if (node.renameMethod(method, "method" + methodPostfix)) {
 							++methodPostfix;
 						}
 					}

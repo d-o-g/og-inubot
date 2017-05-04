@@ -1,9 +1,3 @@
-/*
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the license, or (at your option) any later version.
- */
 package com.inubot.incomplete.workinprogress;
 
 import com.inubot.api.methods.Inventory;
@@ -16,7 +10,7 @@ import com.inubot.api.util.filter.IdFilter;
 import java.util.EnumSet;
 
 /**
- * @author unsigned
+ * @author blitz
  * @since 01-06-2015
  */
 public class Runecrafter extends Script {

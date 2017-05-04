@@ -9,9 +9,6 @@ import java.io.FileOutputStream;
 import java.util.Collection;
 import java.util.Map;
 
-/**
- * @author Tyler Sedlar
- */
 public class ModScript {
 
     private static final int MAGIC = 0xFADFAD;
@@ -25,20 +22,19 @@ public class ModScript {
             for (GraphVisitor gv : visitors) {
                 ClassNode cn = gv.cn;
                 out.writeBoolean(cn != null);
-                if (cn == null)
+                if (cn == null) {
                     continue;
+                }
                 out.writeUTF(Crypto.encrypt(cn.name));
                 out.writeUTF(Crypto.encrypt(gv.id()));
                 out.writeInt(gv.hooks.size());
-                for (Map.Entry<String, Hook> entry : gv.hooks.entrySet()) {
-                    Hook hook = entry.getValue();
+                for (Hook hook : gv.hooks.values()) {
                     hook.writeToEncryptedStream(out);
                 }
             }
             out.flush();
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("ERROR WRITING MODSCRIPT");
+            throw new IllegalArgumentException("Failed to write modscript", e);
         }
     }
 }

@@ -1,9 +1,10 @@
 package com.inubot.client;
 
 import com.inubot.api.methods.*;
-import com.inubot.api.oldschool.Model;
-import com.inubot.api.oldschool.Player;
+import com.inubot.api.oldschool.*;
 import com.inubot.api.util.*;
+import com.inubot.client.natives.oldschool.RSModel;
+import com.inubot.client.natives.oldschool.RSRenderable;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -29,11 +30,6 @@ public class GameCanvas extends Canvas {
         requestFocusInWindow();
     }
 
-    @Override
-    public void addFocusListener(FocusListener listener) {
-        super.addFocusListener(new FocusProxy(listener));
-    }
-
     private static int getLocation(final char ch) {
         if (ch >= KeyEvent.VK_SHIFT && ch <= KeyEvent.VK_ALT) {
             return Random.nextInt(KeyEvent.KEY_LOCATION_LEFT,
@@ -44,6 +40,11 @@ public class GameCanvas extends Canvas {
 
     private static synchronized char getKeyChar(final char c) {
         return c >= 36 && c <= 40 ? KeyEvent.VK_UNDEFINED : c;
+    }
+
+    @Override
+    public void addFocusListener(FocusListener listener) {
+        super.addFocusListener(new FocusProxy(listener));
     }
 
     @Override
@@ -58,17 +59,6 @@ public class GameCanvas extends Canvas {
         paint.drawImage(raw, 0, 0, null);
         if (!Client.PAINTING) {
             return raw.createGraphics();
-        }
-        if (Game.isLoggedIn()) {
-            Player player = Players.getLocal();
-            if (player != null) {
-                Model model = player.getRaw().getModel();
-                if (model != null) {
-                    System.out.println("RENDER");
-                    model.setReferent(player);
-                    model.render(paint);
-                }
-            }
         }
         paintables.forEach(p -> p.render(paint));
         paint.dispose();

@@ -71,7 +71,13 @@ public abstract class Character<T extends RSCharacter> extends Wrapper<T> implem
     }
 
     public boolean isHealthBarVisible() {
-        return getHealthBarCycle() > Game.getEngineCycle();
+        for (int cycle : raw.getHitsplatCycles()) {
+            if (cycle + 70 > Game.getClient().getEngineCycle()) {
+                return true;
+            }
+        }
+        return false;
+        //return getHealthBarCycle() > Game.getEngineCycle();
     }
 
     public int getQueueSize() {
@@ -132,5 +138,9 @@ public abstract class Character<T extends RSCharacter> extends Wrapper<T> implem
 
     public int getOrientation() {
         return raw.getOrientation();
+    }
+
+    public Model getModel() {
+        return raw.getModel();
     }
 }

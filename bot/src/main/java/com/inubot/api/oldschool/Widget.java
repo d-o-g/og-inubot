@@ -7,8 +7,7 @@
 package com.inubot.api.oldschool;
 
 import com.inubot.Inubot;
-import com.inubot.api.methods.Client;
-import com.inubot.api.methods.Interfaces;
+import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.oldschool.action.tree.WidgetAction;
@@ -146,6 +145,10 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         return raw.getIndex();
     }
 
+    public int getIndex_() {
+        return index;
+    }
+
     public int[] getItemIds() {
         return raw.getItemIds();
     }
@@ -222,31 +225,16 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         return ownerIndex;
     }
 
-    /**
-     * Use #processAction(String) instead
-     */
     public boolean processAction(int opcode, String action) {
-        int index = Action.indexOf(getActions(), action) + 1;
-        if (index == -1)
-            return false;
-        Client.processAction(new WidgetAction(index > 4, index, getParentHash() == -1 ? this.index : raw.getIndex(), getId()), action, "");
-        return true;
+        return com.inubot.api.methods.Menu.processAction(this, action);
     }
 
     public boolean processAction(String action) {
-        int index = Action.indexOf(getActions(), action) + 1;
-        if (index == -1)
-            return false;
-        Client.processAction(new WidgetAction(index > 4, index, getParentHash() == -1 ? this.index : raw.getIndex(), getId()), action, "");
-        return true;
+        return com.inubot.api.methods.Menu.processAction(this, action);
     }
 
     public boolean processAction(String action, String target) {
-        int index = Action.indexOf(getActions(), action) + 1;
-        if (index == -1)
-            return false;
-        Client.processAction(new WidgetAction(index > 4, index, getParentHash() == -1 ? this.index : -1, getId()), action, target);
-        return true;
+        return com.inubot.api.methods.Menu.processAction(this, action, target);
     }
 
     public int getArea() {
@@ -255,8 +243,9 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
 
     public boolean containsAction(String action) {
         String[] actions = getActions();
-        if (actions == null)
+        if (actions == null) {
             return false;
+        }
         for (String action0 : actions) {
             if (action0.equals(action))
                 return true;

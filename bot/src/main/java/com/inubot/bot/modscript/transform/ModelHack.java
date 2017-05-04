@@ -15,7 +15,7 @@ public class ModelHack implements Transform {
     @Override
     public void inject(Map<String, ClassStructure> classes) {
         ClassNode model = classes.get(ModScript.getClass("Model"));
-        List<String> badKeys = new ArrayList<>(); //TODO identify the method in updater module
+        List<String> badKeys = new ArrayList<>();
         for (MethodNode mn : model.methods) {
             for (AbstractInsnNode ain : mn.instructions.toArray()) {
                 //onCursorUids[onCursorCount++] = ...;
@@ -37,6 +37,7 @@ public class ModelHack implements Transform {
                         LabelNode ln = new LabelNode(label);
                         mn.visitLabel(label);
                         setStack.add(new InsnNode(ICONST_0));
+                        //if (Client.MODEL_RENDERING_ENABLED)
                         setStack.add(new FieldInsnNode(GETSTATIC, Client.class.getName().replace('.', '/'), "MODEL_RENDERING_ENABLED", "Z"));
                         setStack.add(new JumpInsnNode(IFNE, ln));
                         setStack.add(new InsnNode(RETURN));

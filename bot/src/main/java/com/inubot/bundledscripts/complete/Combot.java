@@ -62,19 +62,21 @@ public class Combot extends ProScript {
 
     @Override
     public int loop() {
-        if (!Game.isLoggedIn())
+        if (!Game.isLoggedIn()) {
             return 1500;
-
-        if (Interfaces.canContinue())
-            Interfaces.processContinue();
+        }
+        if (Interfaces.canContinue()) {
+            Mouse.click(298, 446);
+        }
         switchStyles();
 
         if (Players.getLocal().getTarget() != null) {
             return 600;
         }
 
-        if (Movement.getRunEnergy() > 10 && !Movement.isRunEnabled())
+        if (Movement.getRunEnergy() > 10 && !Movement.isRunEnabled()) {
             Movement.toggleRun(true);
+        }
 
         if (bones) {
             GroundItem gi = GroundItems.getNearest(a -> a.getName().toLowerCase().contains("bone") && a.distance() < 8);
@@ -93,10 +95,11 @@ public class Combot extends ProScript {
         Monster monster = getCurrent();
         switch (monster) {
             case SEAGULL:
-                if (Players.getLocal().getTarget() == null || Players.getLocal().getTarget().getTarget() == null)
-                    if (!attack(monster))
-                        if (monster.tile.distance() > 15)
-                            Movement.walkTo(monster.tile);
+                if (Players.getLocal().getTarget() == null || Players.getLocal().getTarget().getTarget() == null) {
+                    if (!attack(monster) && monster.tile.distance() > 15) {
+                        Movement.walkTo(monster.tile);
+                    }
+                }
                 break;
             case COWS:
                 Npc npc = Npcs.getNearest(n -> n.getName() != null && (n.getName().equals("Cow") || n.getName().equals("Cow calf")) && n.getTargetIndex() == -1 && n.getAnimation() == -1);

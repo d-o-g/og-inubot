@@ -10,9 +10,6 @@ import java.io.IOException;
 
 import static org.objectweb.asm.Opcodes.*;
 
-/**
- * @author Tyler Sedlar
- */
 public class FieldHook extends Hook {
 
     public String clazz;

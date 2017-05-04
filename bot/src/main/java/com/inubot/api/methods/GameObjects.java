@@ -7,9 +7,8 @@
 package com.inubot.api.methods;
 
 import com.inubot.Inubot;
-import com.inubot.api.oldschool.GameObject;
+import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.GameObject.Landmark;
-import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.collection.GameObjectPool;
 import com.inubot.api.util.filter.*;
 import com.inubot.client.natives.oldschool.*;
@@ -44,33 +43,44 @@ public class GameObjects {
      * @return An array of {@link com.inubot.api.oldschool.GameObject}'s at the specified position
      */
     public static GameObject[] getLoadedAt(int rx, int ry, int z) {
-        if (rx > 104 || rx < 0 || ry > 104 || ry < 0 || z < 0 || z > 3)
+        if (rx > 104 || rx < 0 || ry > 104 || ry < 0 || z < 0 || z > 3) {
             return new GameObject[0];
+        }
         List<GameObject> objs = new ArrayList<>();
         RSTile[][][] tiles = Inubot.getInstance().getClient().getRegion().getTiles();
-        if (tiles == null)
+        if (tiles == null) {
             return new GameObject[0];
+        }
         RSTile tile = tiles[z][rx][ry];
-        if (tile == null)
+        if (tile == null) {
             return new GameObject[0];
-        RSFloorDecoration deco = tile.getDecoration();
-        RSBoundaryDecoration boundaryDeco = tile.getBoundaryDecoration();
-        RSBoundary boundary = tile.getBoundary();
-        if (deco != null)
-            objs.add(new GameObject(deco));
-        if (boundary != null)
-            objs.add(new GameObject(boundary));
-        if (boundaryDeco != null)
-            objs.add(new GameObject(boundaryDeco));
-        RSInteractableEntity[] entities = tile.getObjects();
-        if (entities != null && entities.length > 0) {
-            for (RSInteractableEntity entity : entities) {
-                if (entity == null)
-                    continue;
-                objs.add(new GameObject(entity));
+        }
+        for (RSTileComponent component : tile.getComponents()) {
+            if (component instanceof RSGameObject) {
+                objs.add(new GameObject((RSGameObject) component));
             }
         }
         return objs.toArray(new GameObject[objs.size()]);
+    }
+
+    public static GameObject getTopOn(Tile tile) {
+        int rx = tile.getRegionX();
+        int ry = tile.getRegionY();
+        int z = Game.getPlane();
+        RSTile[][][] tiles = Inubot.getInstance().getClient().getRegion().getTiles();
+        if (tiles == null) {
+            return null;
+        }
+        RSTile _tile = tiles[z][rx][ry];
+        if (_tile == null) {
+            return null;
+        }
+        for (RSTileComponent tc : _tile.getComponents()) {
+            if (tc instanceof RSGameObject) {
+                return new GameObject((RSGameObject) tc);
+            }
+        }
+        return null;
     }
 
     /**
@@ -84,8 +94,9 @@ public class GameObjects {
         for (int x = 0; x < 104; x++) {
             for (int y = 0; y < 104; y++) {
                 for (GameObject obj : getLoadedAt(x, y, z)) {
-                    if (!filter.accept(obj))
+                    if (!filter.accept(obj)) {
                         continue;
+                    }
                     objs.add(obj);
                 }
             }

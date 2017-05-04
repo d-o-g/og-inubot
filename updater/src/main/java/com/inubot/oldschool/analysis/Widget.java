@@ -215,12 +215,13 @@ public class Widget extends GraphVisitor {
 
         @Override
         public void visit(final Block block) {
-            if (block.count(AASTORE) == 1 && block.count(DUP_X1) == 1) {
+            if (block.count(AALOAD) == 2) {
                 block.tree().accept(new NodeVisitor() {
+                    @Override
                     public void visitField(FieldMemberNode fmn) {
-                        if (fmn.owner().equals(cn.name) && fmn.desc().equals("I")) {
-                            VariableNode vn = (VariableNode) fmn.layer(IMUL, ILOAD);
-                            if (vn != null && vn.var() == 17) {
+                        if (fmn.owner().equals(cn.name) && fmn.desc().equals("I") && fmn.opcode() == GETFIELD) {
+                            FieldMemberNode vn = (FieldMemberNode) fmn.layer(AALOAD, AALOAD, GETSTATIC);
+                            if (vn != null) {
                                 addHook(new FieldHook("type", fmn.fin()));
                                 lock.set(true);
                             }

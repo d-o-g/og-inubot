@@ -1,1 +1,0 @@
-java -jar inubot.jar -login blitz dogsrcool1

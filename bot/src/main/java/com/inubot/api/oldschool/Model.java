@@ -7,6 +7,8 @@
 package com.inubot.api.oldschool;
 
 import com.inubot.api.methods.Projection;
+import com.inubot.api.util.Random;
+import com.inubot.api.util.filter.Filter;
 import com.inubot.client.ClientInvoked;
 import com.inubot.client.natives.oldschool.*;
 
@@ -139,20 +141,66 @@ public class Model extends Wrapper<RSModel> implements RSModel {
         }
     }
 
-    public Polygon[] getPolygons() {
+    public Point[] getPoints() {
         if (referent == null) {
-            return new Polygon[0];
+            return new Point[0];
         }
         if (referent instanceof Character) {
             setOrientation(((Character) referent).getOrientation());
             rotate();
         }
-        return new Polygon[0]; //TODO
+        List<Point> points = new ArrayList<>();
+        for (int i = 0; i < getTriangleCount(); i++) {
+            if (xTriangles[i] >= xVertices.length || yTriangles[i] >= xVertices.length || zTriangles[i] >= xVertices.length) {
+                break;
+            }
+            Point x = Projection.groundToViewport(referent.getLocation().getStrictX() + 64 + xVertices[xTriangles[i]],
+                    referent.getLocation().getStrictY() + 64 + zVertices[xTriangles[i]], -yVertices[xTriangles[i]]);
+            Point y = Projection.groundToViewport(referent.getLocation().getStrictX() + 64 + xVertices[yTriangles[i]],
+                    referent.getLocation().getStrictY() + 64 + zVertices[yTriangles[i]], -yVertices[yTriangles[i]]);
+            Point z = Projection.groundToViewport(referent.getLocation().getStrictX() + 64 + xVertices[zTriangles[i]],
+                    referent.getLocation().getStrictY() + 64 + zVertices[zTriangles[i]], -yVertices[zTriangles[i]]);
+            if (x != null && y != null && z != null
+                    && x.x > 0 && x.y > 0
+                    && y.x > 0 && y.y > 0
+                    && z.x > 0 && z.y > 0) {
+                y.x += 4;
+                y.y += 4;
+                points.add(x);
+                points.add(y);
+                points.add(z);
+            }
+        }
+        return points.toArray(new Point[points.size()]);
+    }
+
+    /**
+     * @return A random {@link java.awt.Point} within the Model.
+     * null if no point is available
+     */
+    public Point getRandomPoint() {
+        Point[] points = getPoints();
+        return points.length > 0 ? points[Random.nextInt(points.length - 1)] : null;
+    }
+
+    /**
+     * @return A random {@link java.awt.Point} within the Model
+     * accepted by the filter.
+     * null if no point is available
+     */
+    public Point getRandomPoint(Filter<Point> filter) {
+        Point[] points = getPoints();
+        if (points.length > 0) {
+            List<Point> list = Arrays.asList(points);
+            Collections.shuffle(list);
+            return list.stream().filter(filter::accept).findFirst().orElse(null);
+        }
+        return null;
     }
 
     public void render(Graphics g) {
-        for (Polygon p : getPolygons()) {
-            g.drawPolygon(p);
+        for (Point p : getPoints()) {
+            g.drawOval(p.x, p.y, 3, 3);
         }
     }
 }

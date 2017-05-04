@@ -20,7 +20,7 @@ import org.objectweb.asm.tree.ClassNode;
  * @author unsigned
  * @since 26-04-2015
  */
-@VisitorInfo(hooks = {"plane", "x", "y", "id"})
+@VisitorInfo(hooks = {"plane", "x", "y", "id", "renderable"})
 public class BoundaryDecoration extends GraphVisitor {
 
     @Override
@@ -39,7 +39,7 @@ public class BoundaryDecoration extends GraphVisitor {
 
         @Override
         public boolean validate() {
-            return added < 4;
+            return added < 5;
         }
 
         @Override
@@ -49,8 +49,9 @@ public class BoundaryDecoration extends GraphVisitor {
                     if (fmn.opcode() == PUTFIELD && fmn.owner().equals(cn.name)) {
                         if (fmn.desc().equals("I")) {
                             VariableNode vn = (VariableNode) fmn.layer(IMUL, ILOAD);
-                            if (vn == null)
+                            if (vn == null) {
                                 vn = (VariableNode) fmn.layer(IADD, IMUL, ILOAD);
+                            }
                             if (vn != null) {
                                 String name = null;
                                 if (vn.var() == 2) {
@@ -63,6 +64,23 @@ public class BoundaryDecoration extends GraphVisitor {
                                     name = "id";
                                 }
                                 if (name == null) return;
+                                hooks.put(name, new FieldHook(name, fmn.fin()));
+                                added++;
+                            }
+                        } else if (fmn.desc().equals(desc("Renderable"))) {
+                            VariableNode vn = fmn.firstVariable();
+                            if (vn != null) {
+                                vn = vn.nextVariable();
+                            }
+                            if (vn != null) {
+                                String name = null;
+                                if (vn.var() == 5) {
+                                    name = "renderable";
+                                }
+                                if (name == null) {
+                                    return;
+                                }
+                                addHook(new FieldHook(name, fmn.fin()));
                                 hooks.put(name, new FieldHook(name, fmn.fin()));
                                 added++;
                             }

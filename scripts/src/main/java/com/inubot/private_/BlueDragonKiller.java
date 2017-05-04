@@ -1,9 +1,3 @@
-/*
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the license, or (at your option) any later version.
- */
 package com.inubot.private_;
 
 import com.inubot.api.methods.*;
@@ -21,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Dogerina
+ * @author blitz
  * @since 11-07-2015
  */
 @Manifest(name = "BlueDragonKiller", developer = "blitz", desc = "Kills blue dragons using safe spots. Keep lobsters and falador teleport tablets in your bank")

@@ -94,13 +94,13 @@ public class BranchedClassNode {
 				newName = this.name;
 				name = this.name.substring(this.name.lastIndexOf("/") + 1);
 			}
-			/*int idx = 0;
+			int idx = 0;
 			for (BranchedClassNode child : children) {
 				if (child.superName.equals(this.name)) {
 					child.renameSub(name.substring(
 							name.lastIndexOf('/') + 1) + "_Sub" + ++idx);
 				}
-			}*/
+			}
 			return true;
 		}
 		return false;

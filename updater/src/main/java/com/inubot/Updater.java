@@ -11,6 +11,7 @@ import org.objectweb.asm.commons.cfg.Block;
 import org.objectweb.asm.commons.cfg.FlowVisitor;
 import org.objectweb.asm.commons.cfg.graph.FlowGraph;
 import org.objectweb.asm.commons.cfg.transform.UnusedMethodTransform;
+import org.objectweb.asm.commons.cfg.tree.node.MethodMemberNode;
 import org.objectweb.asm.commons.util.Assembly;
 import org.objectweb.asm.commons.util.JarArchive;
 import org.objectweb.asm.commons.wrapper.ClassFactory;
@@ -345,5 +346,10 @@ public abstract class Updater extends Thread implements Runnable {
             Assembly.rename(classnodes.values(), visitor.cn, visitor.id());
         }
         archive.write(target);
+    }
+
+    public FlowGraph getGraph(MethodMemberNode mmn) {
+        ClassNode cn = classnodes.get(mmn.owner());
+        return graphs.get(cn).get(cn.getMethod(mmn.name(), mmn.desc()));
     }
 }

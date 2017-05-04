@@ -36,12 +36,14 @@ public class Players {
     public static Player[] getLoaded() {
         List<Player> players = new ArrayList<>();
         RSPlayer[] raws = internal();
-        if (raws == null || raws.length == 0)
+        if (raws == null || raws.length == 0) {
             return new Player[0];
+        }
         for (int i = 0; i < raws.length; i++) {
             RSPlayer player = raws[i];
-            if (player == null)
+            if (player == null) {
                 continue;
+            }
             players.add(new Player(player, i));
         }
         return players.toArray(new Player[players.size()]);

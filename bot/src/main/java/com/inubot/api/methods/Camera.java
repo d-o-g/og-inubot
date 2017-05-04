@@ -36,7 +36,7 @@ public class Camera {
     /**
      * @return The current altitude, or pitch of the camera
      */
-    public static int getAltitude() {
+    public static int getPitch() {
         return Inubot.getInstance().getClient().getCameraPitch();
     }
 

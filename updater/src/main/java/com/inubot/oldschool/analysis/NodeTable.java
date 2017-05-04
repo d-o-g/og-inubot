@@ -17,7 +17,8 @@ public class NodeTable extends GraphVisitor {
     @Override
     public boolean validate(ClassNode cn) {
         String desc = desc("Node");
-        return cn.ownerless() && cn.fieldCount(desc) == 2 && cn.fieldCount("[" + desc) == 1;
+        return cn.ownerless() && cn.fieldCount(desc) == 2 && cn.fieldCount("[" + desc) == 1
+                && cn.interfaces.size() == 0;
     }
 
     @Override

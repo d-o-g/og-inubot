@@ -57,7 +57,7 @@ public class BirdSnarePRO extends Script implements Paintable {
         if (Players.getLocal().getAnimation() != -1) {
             return 400;
         }
-        if (Inventory.getCount() > 25)
+        if (Inventory.getItems().length > 25)
             Inventory.dropAll(item -> (item.getName().equals("Raw bird meat") || item.getName().equals("Bones")));
         Tile next = getNextLocation();
         if (next != null) {

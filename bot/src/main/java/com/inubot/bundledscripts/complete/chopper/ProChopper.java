@@ -79,11 +79,17 @@ public class ProChopper extends ProScript {
                 } else {
                     Bank.depositAllExcept(new IdFilter<>(Axe.getIds()));
                 }
-            } else if (Players.getLocal().getAnimation() == -1 && !Players.getLocal().isMoving()) {
+            } else if (Players.getLocal().getAnimation() == -1) {
                 if (location.getTreeArea().contains(Players.getLocal())) {
                     GameObject tree = GameObjects.getNearest(p.next.getName());
                     if (tree != null) {
-                        tree.processAction("Chop down");
+                        int onCursorCount = Game.getClient().getOnCursorCount();
+                        int uid = tree.getRaw().getId();
+                        Game.getClient().setOnCursorCount(onCursorCount + 1);
+                        Game.getClient().getOnCursorUids()[onCursorCount] = uid;
+                        Mouse.click(false, 200, 200);
+                        Time.sleep(650, 850); //TODO menu open hook
+                        Mouse.click(230, 230);
                     }
                 } else {
                     Tile dest = location.getTreeArea().getCenter();

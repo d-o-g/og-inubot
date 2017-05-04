@@ -20,4 +20,5 @@ public interface RSCharacter extends RSRenderable {
 
     int getOrientation();
 
+    int[] getHitsplatCycles();
 }

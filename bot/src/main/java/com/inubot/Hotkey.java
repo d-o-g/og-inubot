@@ -9,17 +9,13 @@ package com.inubot;
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
-import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.bot.ui.CreaterGUI;
 import com.inubot.bot.ui.WidgetExplorer;
-import com.inubot.client.natives.oldschool.RSModel;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.*;
-import java.util.List;
 
 public enum Hotkey {
 
@@ -48,7 +44,7 @@ public enum Hotkey {
                                 copy[i] = vars[i];
                                 continue;
                             }
-                            for (VarpBit v : varps) {
+                             for (VarpBit v : varps) {
                                 int old = v.getValue(copy[i]);
                                 int now = v.getValue(vars[i]);
                                 if (old != now)
@@ -65,7 +61,16 @@ public enum Hotkey {
     }, DROP_INV(KeyEvent.VK_V) {
         @Override
         public void onActivation() {
-            Inventory.dropAllExcept(new NameFilter<>("Coins"));
+            //Inventory.dropAllExcept(new NameFilter<>("Coins"));
+            int onCursorCount = Game.getClient().getOnCursorCount();
+            GameObject tree = GameObjects.getNearest("Tree");
+            if (tree != null) {
+                int uid = tree.getRaw().getId();
+                System.out.printf("Tree uid: %d%n", uid);
+                Game.getClient().setOnCursorCount(onCursorCount + 1);
+                Game.getClient().getOnCursorUids()[onCursorCount] = uid;
+                Mouse.click(false, 200, 200);
+            }
         }
     }, POSITION(KeyEvent.VK_E) {
         @Override
@@ -107,52 +112,6 @@ public enum Hotkey {
         public void onActivation() {
             new WidgetExplorer().setVisible(true);
         }
-    }, MELEE_SWITCH(KeyEvent.VK_C) {
-        @Override
-        public void onActivation() {
-            for (String e : MELEE_EQUIPMENT) {
-                WidgetItem item = Inventory.getFirst(t -> t.getName().startsWith(e));
-                if (item != null) {
-                    item.processAction(ActionOpcodes.ITEM_ACTION_1, "Wear");
-                    item = Inventory.getFirst(e);
-                    if (item != null)
-                        item.processAction(ActionOpcodes.ITEM_ACTION_1, "Wield");
-                }
-            }
-        }
-    }, MAGE_SWITCH(KeyEvent.VK_X) {
-        @Override
-        public void onActivation() {
-            for (int i = 0; i != 4; i++) {
-                WidgetItem item = Inventory.getItems()[i];
-                if (item.getIndex() == i)
-                    item.processAction(ActionOpcodes.ITEM_ACTION_1, "Wear");
-            }
-            for (String e : MAGIC_EQUIPMENT) {
-                WidgetItem item = Inventory.getFirst(e);
-                if (item != null) {
-                    item.processAction(ActionOpcodes.ITEM_ACTION_1, "Wear");
-                    item = Inventory.getFirst(e);
-                    if (item != null)
-                        item.processAction(ActionOpcodes.ITEM_ACTION_1, "Wield");
-                }
-            }
-        }
-    }, SELECT_ICE_BARRAGE(KeyEvent.VK_Z) {
-        @Override
-        public void onActivation() {
-            Client.processAction(0, -1, 14286917, 25, "Cast", "Ice Barrage", 50, 50);
-        }
-    };
-
-    private static final String[] MELEE_EQUIPMENT = {
-            "Bandos chestplate", "Bandos tassets", "Amulet of fury", "Serpentine helm", "Bandos boots",
-            "Berserker ring (i)", "Dragonfire shield", "Abyssal tentacle", "Barrows gloves", "Fire cape"
-    };
-
-    private static final String[] MAGIC_EQUIPMENT = {
-            "Ahrim's hood", "Ahrim's robetop", "Ahrim's robeskirt", "Seers ring (i)", "Infinity boots",
-            "Barrows gloves", "Arcane spirit shield", "Toxic staff of the dead", "Occult necklace", "Zamorak cape"
     };
 
     private final int key;

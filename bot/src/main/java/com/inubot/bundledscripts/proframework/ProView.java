@@ -6,10 +6,6 @@
  */
 package com.inubot.bundledscripts.proframework;
 
-/**
- * @author Dogerina
- * @since 15-07-2015
- */
 public abstract class ProView<T extends ProController> {
 
     private T controller;

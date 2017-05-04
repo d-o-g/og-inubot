@@ -7,6 +7,7 @@ import com.inubot.modscript.hook.InvokeHook;
 import org.objectweb.asm.commons.cfg.Block;
 import org.objectweb.asm.commons.cfg.BlockVisitor;
 import org.objectweb.asm.commons.cfg.tree.NodeVisitor;
+import org.objectweb.asm.commons.cfg.tree.node.AbstractNode;
 import org.objectweb.asm.commons.cfg.tree.node.FieldMemberNode;
 import org.objectweb.asm.commons.cfg.tree.node.MethodMemberNode;
 import org.objectweb.asm.commons.cfg.tree.node.VariableNode;
@@ -15,7 +16,7 @@ import org.objectweb.asm.tree.MethodNode;
 
 import java.lang.reflect.Modifier;
 
-@VisitorInfo(hooks = {"name", "actions", "id", "transformIds", "varpIndex", "transform"})
+@VisitorInfo(hooks = {"name", "actions", "id", "transformIds", "varpIndex", "varpBitIndex", "transform"})
 public class NpcDefinition extends GraphVisitor {
 
     @Override
@@ -28,8 +29,9 @@ public class NpcDefinition extends GraphVisitor {
         add("name", cn.getField(null, "Ljava/lang/String;"), "Ljava/lang/String;");
         add("actions", cn.getField(null, "[Ljava/lang/String;"), "[Ljava/lang/String;");
         visitAll(new Id());
-        visitAll(new TransformIds());
-        visitAll(new TransformIndex());
+        visit(new VarpbitIndex());
+        visit(new VarpIndex());
+        visitLocalIfM(new TransformIds(), m -> !Modifier.isStatic(m.access) && m.desc.endsWith("L" + cn.name + ";"));
         for (MethodNode mn : cn.methods) {
             if (!Modifier.isStatic(mn.access) && mn.desc.endsWith("L" + cn.name + ";")) {
                 addHook(new InvokeHook("transform", mn));
@@ -71,14 +73,12 @@ public class NpcDefinition extends GraphVisitor {
         @Override
         public void visit(Block block) {
             block.tree().accept(new NodeVisitor(this) {
-                public void visitMethod(MethodMemberNode mmn) {
-                    if (mmn.opcode() == INVOKESTATIC && mmn.desc().startsWith("(I")) {
-                        FieldMemberNode fmn = (FieldMemberNode) mmn.layer(IALOAD, GETFIELD);
-                        if (fmn != null && fmn.owner().equals(cn.name) && fmn.desc().equals("[I")) {
-                            if (fmn.first(ALOAD) != null) {
-                                hooks.put("transformIds", new FieldHook("transformIds", fmn.fin()));
-                                lock.set(true);
-                            }
+                public void visit(AbstractNode n) {
+                    if (n.opcode() == IALOAD) {
+                        FieldMemberNode fmn = (FieldMemberNode) n.layer(ISUB, ARRAYLENGTH, GETFIELD);
+                        if (fmn != null && fmn.owner().equals(cn.name)) {
+                            addHook(new FieldHook("transformIds", fmn.fin()));
+                            lock.set(true);
                         }
                     }
                 }
@@ -86,7 +86,30 @@ public class NpcDefinition extends GraphVisitor {
         }
     }
 
-    private class TransformIndex extends BlockVisitor {
+    private class VarpIndex extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(final Block block) {
+            block.tree().accept(new NodeVisitor() {
+                public void visitVariable(VariableNode vn) {
+                    if (vn.opcode() == ISTORE && vn.var() == 2) {
+                        FieldMemberNode fmn = (FieldMemberNode) vn.layer(IALOAD, IMUL, GETFIELD);
+                        if (fmn != null && fmn.owner().equals(cn.name) && fmn.first(ALOAD) != null) {
+                            addHook(new FieldHook("varpIndex", fmn.fin()));
+                            lock.set(true);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private class VarpbitIndex extends BlockVisitor {
 
         @Override
         public boolean validate() {
@@ -100,7 +123,7 @@ public class NpcDefinition extends GraphVisitor {
                     if (vn.opcode() == ISTORE && vn.var() == 2) {
                         FieldMemberNode fmn = (FieldMemberNode) vn.layer(INVOKESTATIC, IMUL, GETFIELD);
                         if (fmn != null && fmn.owner().equals(cn.name) && fmn.first(ALOAD) != null) {
-                            addHook(new FieldHook("varpIndex", fmn.fin()));
+                            addHook(new FieldHook("varpBitIndex", fmn.fin()));
                             lock.set(true);
                         }
                     }

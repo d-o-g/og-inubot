@@ -7,6 +7,7 @@
 package com.inubot.api.oldschool;
 
 import com.inubot.api.methods.Client;
+import com.inubot.api.methods.Menu;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.util.CacheLoader;
@@ -49,27 +50,20 @@ public class Npc extends Character<RSNpc> implements Identifiable, Processable {
 
     @Override
     public boolean processAction(int opcode, String action) {
-        String name = getName();
-        if (name != null) {
-            Client.processAction(new NpcAction(opcode, arrayIndex), action, name);
-            return true;
-        }
-        return false;
+        return Menu.processAction(this, opcode, action);
     }
 
+    @Override
     public boolean processAction(String action) {
-        if (definition == null) {
-            return false;
+        return Menu.processAction(this, action);
+    }
+
+    @Override
+    public String[] getActions() {
+        RSNpcDefinition definition = getDefinition();
+        if (definition != null) {
+            return definition.getActions();
         }
-        String[] actions = definition.getActions();
-        if (actions == null) {
-            return false;
-        }
-        int index = Action.indexOf(actions, action);
-        if (index >= 0) {
-            processAction(ActionOpcodes.NPC_ACTION_0 + index, action);
-            return true;
-        }
-        return false;
+        return new String[0];
     }
 }

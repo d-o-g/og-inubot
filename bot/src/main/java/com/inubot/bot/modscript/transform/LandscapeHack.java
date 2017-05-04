@@ -6,7 +6,6 @@
  */
 package com.inubot.bot.modscript.transform;
 
-import com.inubot.Inubot;
 import com.inubot.api.methods.Client;
 import com.inubot.bot.modscript.ModScript;
 import com.inubot.bot.modscript.asm.ClassStructure;
@@ -24,22 +23,23 @@ public class LandscapeHack implements Transform {
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
-        ClassStructure landscape = classes.get(ModScript.getClass("Region"));
+        ClassNode landscape = classes.get(ModScript.getClass("Region"));
         if (landscape == null)
             throw new RuntimeException("wat");
-        for (MethodNode mn : landscape.getMethods(m -> m.desc.startsWith("(IIIIII")
-                && m.desc.endsWith("V")
-                && Modifier.isPublic(m.access))) {
-            InsnList setStack = new InsnList();
-            Label label = new Label();
-            LabelNode ln = new LabelNode(label);
-            mn.visitLabel(label);
-            setStack.add(new InsnNode(ICONST_0));
-            setStack.add(new FieldInsnNode(GETSTATIC, Client.class.getName().replace('.', '/'), "LANDSCAPE_RENDERING_ENABLED", "Z"));
-            setStack.add(new JumpInsnNode(IFNE, ln));
-            setStack.add(new InsnNode(RETURN));
-            setStack.add(ln);
-            mn.instructions.insert(setStack);
+        for (MethodNode mn : landscape.methods) {
+            if (mn.desc.startsWith("(IIIIII") && mn.desc.endsWith("V") && Modifier.isPublic(mn.access)) {
+                InsnList setStack = new InsnList();
+                Label label = new Label();
+                LabelNode ln = new LabelNode(label);
+                mn.visitLabel(label);
+                setStack.add(new InsnNode(ICONST_0));
+                //if (Client.LANDSCAPE_RENDEIRNG_ENABLED)
+                setStack.add(new FieldInsnNode(GETSTATIC, Client.class.getName().replace('.', '/'), "LANDSCAPE_RENDERING_ENABLED", "Z"));
+                setStack.add(new JumpInsnNode(IFNE, ln));
+                setStack.add(new InsnNode(RETURN));
+                setStack.add(ln);
+                mn.instructions.insert(setStack);
+            }
         }
     }
 }

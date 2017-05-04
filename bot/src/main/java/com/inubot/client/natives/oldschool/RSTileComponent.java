@@ -4,15 +4,16 @@
  * License as published by the Free Software Foundation; either
  * version 2 of the license, or (at your option) any later version.
  */
+package com.inubot.client.natives.oldschool;
 
-/**
- * @author Dogerina
- * @since 22-07-2015
- */
-public class test {
+import com.inubot.client.Artificial;
+import com.inubot.client.natives.ClientNative;
 
-    public static void main(String... args) {
-        //mmi testing
-        System.out.println(-1736546706 * -1871915115);
-    }
+@Artificial
+public interface RSTileComponent extends ClientNative {
+    int getX();
+
+    int getY();
+
+    int getPlane();
 }

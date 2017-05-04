@@ -1,9 +1,3 @@
-/*
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the license, or (at your option) any later version.
- */
 package com.inubot.bundledscripts.complete;
 
 import com.inubot.Hotkey;
@@ -20,10 +14,6 @@ import com.inubot.script.Script;
 
 import java.awt.*;
 
-/**
- * @author unsigned
- * @since 26-05-2015
- */
 @Manifest(name = "WineMaker", developer = "", desc = "Makes wine for over 450k cooking experience per hour!")
 public class WineMaker extends Script implements Paintable {
 

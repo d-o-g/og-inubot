@@ -3,15 +3,11 @@ package com.inubot.modscript.hook;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-/**
- * @author Tyler Sedlar
- */
 public abstract class Hook {
 
-    protected class Type {
-
-        public static final byte FIELD = 0;
-        public static final byte INVOKE = 1;
+    protected interface Type {
+        byte FIELD = 0;
+        byte INVOKE = 1;
     }
 
     public final String name;

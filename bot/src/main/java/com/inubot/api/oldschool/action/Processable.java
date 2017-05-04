@@ -9,4 +9,5 @@ package com.inubot.api.oldschool.action;
 public interface Processable {
     boolean processAction(int opcode, String action);
     boolean processAction(String action);
+    String[] getActions();
 }

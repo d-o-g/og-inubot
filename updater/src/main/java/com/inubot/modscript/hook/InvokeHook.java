@@ -8,9 +8,6 @@ import org.objectweb.asm.tree.MethodNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-/**
- * @author Tyler Sedlar
- */
 public class InvokeHook extends Hook {
 
     public String clazz, method, desc;
@@ -59,7 +56,12 @@ public class InvokeHook extends Hook {
             }
         }
         params += ")";
-        return "¤ " + desc0 + " " + name + " is " + clazz + "." + method + params + " [" + predicate + "]";
+        StringBuilder sb = new StringBuilder().append("¤ ").append(desc0).append(" ").append(name).append(" is ")
+                .append(clazz).append(".").append(method).append(params);
+        if (predicate != Integer.MAX_VALUE) {
+            sb.append(" [").append(predicate).append("]");
+        }
+        return sb.toString();
     }
 
     @Override

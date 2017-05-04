@@ -16,8 +16,10 @@ import org.objectweb.asm.commons.cfg.tree.node.*;
 import org.objectweb.asm.commons.cfg.tree.util.TreeBuilder;
 import org.objectweb.asm.tree.*;
 
+import java.lang.reflect.Modifier;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.function.Predicate;
 
 @VisitorInfo(hooks = {"processAction", "players", "npcs", "canvas", "player", "region", "widgets", "objects",
         "groundItems", "cameraX", "cameraY", "cameraZ", "cameraPitch", "cameraYaw", "mapScale", "mapOffset",
@@ -29,7 +31,7 @@ import java.util.*;
         "username", "password", "getVarpBit", "hintArrowX", "hintArrowY", "hintArrowType", "loginState",
         "itemTables", "lowMemory", "hintArrowNpcIndex", "hintArrowPlayerIndex", "loadItemSprite", "engineCycle",
         "screenWidth", "screenHeight", "screenZoom", "screenState", "font_p12full", "grandExchangeOffers",
-        "currentWorld", "membersWorld"})
+        "currentWorld", "membersWorld", "onCursorUids", "onCursorCount", "menuX", "menuY", "menuWidth", "menuHeight", "viewportWalking"})
 public class Client extends GraphVisitor {
 
     private final Map<String, String> profiledStrings = new HashMap<>();
@@ -57,13 +59,14 @@ public class Client extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.name.equals("client");
+        return cn.name.equals("client") || cn.getMethodByName("init") != null;
     }
 
     @Override
     public void visit() {
         profileStrings();
         visitProcessAction();
+        visit("Region", new ViewportWalking());
         visitMouseIdleTime();
         visitDefLoader("loadObjectDefinition", "ObjectDefinition", false);
         visitDefLoader("loadNpcDefinition", "NpcDefinition", false);
@@ -98,7 +101,24 @@ public class Client extends GraphVisitor {
         visitAll(new ScreenSizes());
         visitIfM(new ScreenState(), t -> t.desc.startsWith("([L") && t.desc.contains(";IIIIII"));
         visitAll(new HoveredTile());
-
+        visitAll(new MenuPositionHooks());
+        visitIfM(new CursorUids(), mn -> {
+            if (Modifier.isStatic(mn.access) || !mn.desc.endsWith("V") || !mn.desc.startsWith("(IIIIIIIII")) {
+                return false;
+            }
+            ClassNode r = updater.classnodes.get(clazz("Renderable"));
+            if (r != null) {
+                if (mn.owner.name.equals(r.name)) {
+                    return true;
+                }
+                for (MethodNode rmn : r.methods) {
+                    if (rmn.name.equals(mn.name) && rmn.desc.equals(mn.desc)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
         for (ClassNode cn : updater.classnodes.values()) {
             for (MethodNode mn : cn.methods) {
                 if (mn.desc.startsWith("(L")) {
@@ -110,7 +130,7 @@ public class Client extends GraphVisitor {
                                 if (fin != null) {
                                     addHook(new FieldHook("membersWorld", fin));
                                 }
-                            } else if (oper == 3918) {
+                            } else if (oper == 3918) { //TODO FIXME
                                 FieldInsnNode fin = next(ain, GETSTATIC, "I", null, 0);
                                 if (fin != null) {
                                     addHook(new FieldHook("currentWorld", fin));
@@ -212,8 +232,7 @@ public class Client extends GraphVisitor {
     }
 
     private void visitStaticFields() {
-        add("players", cn.getField(null, "[" + desc("Player"), false));
-        add("npcs", cn.getField(null, "[" + desc("Npc"), false));
+
         String playerDesc = desc("Player");
         String regionDesc = desc("Region");
         String widgetDesc = desc("Widget");
@@ -239,7 +258,108 @@ public class Client extends GraphVisitor {
                     add("collisionMaps", fn);
                 } else if (fn.desc.equals("[" + desc("GrandExchangeOffer"))) {
                     add("grandExchangeOffers", fn);
+                } else if (fn.desc.equals("[" + desc("Player"))) {
+                    add("players", fn);
+                } else if (fn.desc.equals("[" + desc("Npc"))) {
+                    add("npcs", fn);
                 }
+            }
+        }
+    }
+
+    private class ViewportWalking extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            if (((block.owner.access & ACC_STATIC) == 0) //method = non-static
+                    && block.owner.desc.startsWith("(IIIZ")) {
+                block.tree().accept(new NodeVisitor() {
+
+                    //return bool && int != -1, visit call
+                    public void visitMethod(MethodMemberNode mmn) {
+                        if (mmn.desc().endsWith("Z") && mmn.opcode() == INVOKESTATIC) {
+                            updater.getGraph(mmn).forEach(block -> block.tree().accept(this));
+                        }
+                    }
+
+                    //method got inlined, code is changed to boolean x = bool && int != -1
+                    public void visitField(FieldMemberNode fmn) {
+                        if (fmn.desc().equals("Z") && fmn.opcode() == GETSTATIC) { //booleans
+                            addHook(new FieldHook("viewportWalking", fmn.fin()));
+                            lock.set(true);
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    private class MenuPositionHooks extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor(this) {
+                public void visitMethod(MethodMemberNode mmn) {
+                    if (mmn.opcode() == INVOKESTATIC && mmn.desc().matches("\\(IIII(I|B|S|^)\\)V")) {
+                        AbstractNode xmul = mmn.find(IMUL, 0);
+                        if (xmul == null) return;
+                        FieldMemberNode x = xmul.firstField();
+                        if (x == null || x.opcode() != GETSTATIC) return;
+                        AbstractNode ymul = mmn.find(IMUL, 1);
+                        if (ymul == null) return;
+                        FieldMemberNode y = ymul.firstField();
+                        if (y == null || y.opcode() != GETSTATIC) return;
+                        AbstractNode wmul = mmn.find(IMUL, 2);
+                        if (wmul == null) return;
+                        FieldMemberNode w = wmul.firstField();
+                        if (w == null || w.opcode() != GETSTATIC) return;
+                        AbstractNode hmul = mmn.find(IMUL, 3);
+                        if (hmul == null) return;
+                        FieldMemberNode h = hmul.firstField();
+                        if (h == null || h.opcode() != GETSTATIC) return;
+                        addHook(new FieldHook("menuX", x.fin()));
+                        addHook(new FieldHook("menuY", y.fin()));
+                        addHook(new FieldHook("menuWidth", w.fin()));
+                        addHook(new FieldHook("menuHeight", h.fin()));
+                    }
+                }
+            });
+        }
+    }
+
+    private class CursorUids extends BlockVisitor {
+
+        private int added = 0;
+
+        @Override
+        public boolean validate() {
+            return added < 2;
+        }
+
+        @Override
+        public void visit(Block block) {
+            if (block.count(new MemberQuery(GETSTATIC, "[I")) == 1 && block.count(new MemberQuery(PUTSTATIC, "I")) == 1
+                    && block.count(ICONST_1) == 1 && block.count(IASTORE) == 1) {
+                block.tree().accept(new NodeVisitor() {
+                    @Override
+                    public void visitField(FieldMemberNode fmn) {
+                        if (fmn.desc().equals("[I")) {
+                            addHook(new FieldHook("onCursorUids", fmn.fin()));
+                        } else if (fmn.desc().equals("I")) {
+                            addHook(new FieldHook("onCursorCount", fmn.fin()));
+                        }
+                    }
+                });
             }
         }
     }
@@ -682,7 +802,7 @@ public class Client extends GraphVisitor {
         @Override
         public void visitEnd() {
             Iterator<Block> itr = blocks.iterator();
-            for (int i = 0; i < names.size(); i++)
+            for (int i = 0; i < names.size() && itr.hasNext(); i++)
                 addHook(new FieldHook(names.next(), (FieldInsnNode) itr.next().get(GETSTATIC)));
         }
     }

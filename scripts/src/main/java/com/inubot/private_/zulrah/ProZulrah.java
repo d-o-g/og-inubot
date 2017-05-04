@@ -1,9 +1,3 @@
-/*
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the license, or (at your option) any later version.
- */
 package com.inubot.private_.zulrah;
 
 import com.inubot.api.methods.Npcs;
@@ -15,14 +9,10 @@ import com.inubot.bundledscripts.proframework.ProScript;
 
 import java.util.Map;
 
-/**
- * @author Dogerina
- * @since 17-07-2015
- */
 @Manifest(
         name = "Pro Zulrah",
         developer = "blitz",
-        desc = "Kills Zulrah for good cash money"
+        desc = "Kills Zulrah for good cash"
 )
 public class ProZulrah extends ProScript implements ZulrahConstants {
 

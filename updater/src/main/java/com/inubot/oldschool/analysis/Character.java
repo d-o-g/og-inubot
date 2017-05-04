@@ -11,24 +11,51 @@ import org.objectweb.asm.commons.cfg.tree.node.*;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
-@VisitorInfo(hooks = {"x", "y", "health", "maxHealth", "interactingIndex", "animation", "healthBarCycle", "queueSize", "orientation"})
+@VisitorInfo(hooks = {"x", "y", "health", "maxHealth", "interactingIndex", "animation", "healthBarCycle", "queueSize", "orientation", "hitsplatCycles"})
 public class Character extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.superName.equals(clazz("Renderable")) && cn.fieldCount("[I") == 5 && cn.fieldCount("Z") >= 1 &&
-                cn.fieldCount("Ljava/lang/String;") == 1;
+        return cn.superName.equals(clazz("Renderable")) && cn.fieldCount("[I") >= 5 && cn.fieldCount("Z") >= 1 &&
+                cn.fieldCount("Ljava/lang/String;") >= 1;
     }
 
     @Override
     public void visit() {
-        visit(new QueueSize());
+        visitIfM(new QueueSize(), m -> (m.access & ACC_STATIC) == 0 && m.desc.startsWith("(IIB"));
         visitAll(new PositionHooks());
         visitAll(new HealthHooks());
         visitAll(new InteractingIndex());
         visitAll(new Animation());
         visitAll(new CombatCycle());
         visitAll(new Orientation());
+        visitIfM(new HitCycles(), m -> m.desc.startsWith("(L" + cn.name + ";II"));
+    }
+
+    private class HitCycles extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor() {
+                @Override
+                public void visitOperation(ArithmeticNode an) {
+                    if (an.opcode() == ISUB) {
+                        FieldMemberNode cyc = (FieldMemberNode) an.layer(IALOAD, GETFIELD);
+                        FieldMemberNode engcyc = (FieldMemberNode) an.layer(IMUL, GETSTATIC);
+                        if (cyc != null && engcyc != null) {
+                            addHook(new FieldHook("hitsplatCycles", cyc.fin()));
+                            updater.visitor("Client").addHook(new FieldHook("engineCycle", engcyc.fin()));
+                            lock.set(true);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private class Orientation extends BlockVisitor {
@@ -63,13 +90,18 @@ public class Character extends GraphVisitor {
         @Override
         public void visit(Block block) {
             block.tree().accept(new NodeVisitor(this) {
-                public void visitField(FieldMemberNode fmn) {
-                    if (fmn.opcode() == PUTFIELD && fmn.owner().equals(cn.name) && fmn.desc().equals("I")) {
-                        fmn = (FieldMemberNode) fmn.layer(IADD, GETFIELD);
-                        if (fmn == null || !fmn.owner().equals(cn.name) || !fmn.desc().equals("I") || fmn.first(DUP) == null)
-                            return;
-                        hooks.put("queueSize", new FieldHook("queueSize", fmn.fin()));
-                        lock.set(true);
+                @Override
+                public void visitNumber(final NumberNode nn) {
+                    if (nn.hasParent() && nn.parent() instanceof JumpNode) {
+                        FieldMemberNode fmn = (FieldMemberNode) nn.parent().layer(IMUL, GETFIELD);
+                        if (fmn != null && nn.number() == 9) {
+                            ClassNode c = updater.classnodes.get(fmn.owner());
+                            if (c != null && c.superName.equals(cn.name)) {
+                                FieldHook hook = new FieldHook("queueSize", fmn.fin());
+                                hook.clazz = cn.name;
+                                addHook(hook);
+                            }
+                        }
                     }
                 }
             });

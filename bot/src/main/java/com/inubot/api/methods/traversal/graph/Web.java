@@ -6,6 +6,7 @@ import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.util.Digraph;
 import com.inubot.api.util.filter.Filter;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -15,7 +16,7 @@ public class Web extends Digraph<WebVertex, WebVertex> {
 
     public Web() {
         try {
-            InputStream in = Web.class.getResourceAsStream("/com/inubot/api/methods/traversal/graph/data/web.txt");
+            InputStream in = new FileInputStream("./web.txt");
             Scanner s = new Scanner(in);
             while (s.hasNextLine()) {
                 String line = s.nextLine();

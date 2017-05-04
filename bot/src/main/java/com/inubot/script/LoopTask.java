@@ -12,7 +12,7 @@ public abstract class LoopTask implements Task {
 
     private volatile boolean running = true;
     private volatile boolean paused = false;
-    private volatile int cycles = 0;
+    private volatile long cycles = 0;
 
     public abstract int loop();
 
@@ -70,7 +70,7 @@ public abstract class LoopTask implements Task {
 
     public abstract void handleEvents();
 
-    public final int getCycles() {
+    public final long getCycles() {
         return cycles;
     }
 }

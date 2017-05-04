@@ -20,8 +20,7 @@ import java.util.List;
 
 /**
  * This class should be used rather than the respective provider class (e.g. Bank, Equipment) in situations where you
- * do not need to interact with the item (counting number of items, getting cached item values etc). There is a huge
- * overhead when working with item tables, as this is a faster lookup and it is more efficient.
+ * do not need to interact with the item (counting number of items, getting cached item values etc).
  */
 public class ItemTables {
 
@@ -54,19 +53,22 @@ public class ItemTables {
      */
     private static RSItemTable lookup(int tableKey) {
         NodeTable store = getStorage();
-        if (store == null)
+        if (store == null) {
             return null;
+        }
         RSNode node = store.lookup(tableKey);
         return node != null && node instanceof RSItemTable ? (RSItemTable) node : null;
     }
 
     public static Entry[] getEntriesIn(int tableKey) {
         RSItemTable table = lookup(tableKey);
-        if (table == null)
+        if (table == null) {
             return new Entry[0];
+        }
         int len = table.getIds().length;
-        if (len != table.getStackSizes().length)
+        if (len != table.getStackSizes().length) {
             return new Entry[0];
+        }
         List<Entry> entries = new ArrayList<>();
         for (int i = 0; i < len; i++) {
             int id = table.getIds()[i];
@@ -80,61 +82,73 @@ public class ItemTables {
 
     public static int[] getIdsIn(int tableKey) {
         RSItemTable table = lookup(tableKey);
-        if (table == null)
+        if (table == null) {
             return new int[0];
+        }
         int len = table.getIds().length;
-        if (len != table.getStackSizes().length)
+        if (len != table.getStackSizes().length) {
             return new int[0];
+        }
         List<Integer> values = new ArrayList<>();
         for (int value : table.getIds()) {
-            if (value > 0)
+            if (value > 0) {
                 values.add(value);
+            }
         }
         int[] valuesNew = new int[values.size()];
-        for (int i = 0; i < valuesNew.length; i++)
+        for (int i = 0; i < valuesNew.length; i++) {
             valuesNew[i] = values.get(i);
+        }
         return valuesNew;
     }
 
     public static int getIdAt(int tableKey, int index) {
         int[] ids = getIdsIn(tableKey);
-        if (ids.length > index)
+        if (ids.length > index) {
             return ids[index];
+        }
         return -1;
     }
 
     public static int getQuantityAt(int tableKey, int index) {
         int[] qtys = getQuantitiesIn(tableKey);
-        if (qtys.length > index)
+        if (qtys.length > index) {
             return qtys[index];
+        }
         return -1;
     }
 
     public static Entry getEntryAt(int tableKey, int index) {
         RSItemTable table = lookup(tableKey);
-        if (table == null)
+        if (table == null) {
             return null;
+        }
         int len = table.getIds().length;
-        if (len != table.getStackSizes().length)
+        if (len != table.getStackSizes().length) {
             return null;
+        }
         return len > index ? new Entry(index, table.getIds()[index], table.getStackSizes()[index]) : null;
     }
 
     public static int[] getQuantitiesIn(int tableKey) {
         RSItemTable table = lookup(tableKey);
-        if (table == null)
+        if (table == null) {
             return new int[0];
+        }
         int len = table.getStackSizes().length;
-        if (len != table.getIds().length)
+        if (len != table.getIds().length) {
             return new int[0];
+        }
         List<Integer> values = new ArrayList<>();
         for (int value : table.getStackSizes()) {
-            if (value > 0)
+            if (value > 0) {
                 values.add(value);
+            }
         }
         int[] valuesNew = new int[values.size()];
-        for (int i = 0; i < valuesNew.length; i++)
+        for (int i = 0; i < valuesNew.length; i++) {
             valuesNew[i] = values.get(i);
+        }
         return valuesNew;
     }
 

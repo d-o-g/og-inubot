@@ -1,9 +1,5 @@
 package com.inubot.private_.zulrah;
 
-/**
- * @author Dogerina
- * @since 17-07-2015
- */
 public class ZulrahPhase {
 
     private final ZulrahStyle style;

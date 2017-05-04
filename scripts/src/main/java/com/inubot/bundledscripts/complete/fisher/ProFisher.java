@@ -1,9 +1,3 @@
-/*
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the license, or (at your option) any later version.
- */
 package com.inubot.bundledscripts.complete.fisher;
 
 import com.inubot.api.methods.*;
@@ -23,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-@Manifest(name = "ProFisher", developer = "", desc = "Fishes almost anything, almost anywhere")
+@Manifest(name = "ProFisher", developer = "blitz", desc = "Fishes almost anything, almost anywhere")
 public class ProFisher extends ProScript {
 
     private static final int[] EQUIPMENT_IDS = {305, 303, 301, 307, 309, 311};

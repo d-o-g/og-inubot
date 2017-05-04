@@ -18,14 +18,73 @@ import java.util.List;
 
 public class Projection {
 
-    public static final int[] SIN_TABLE = new int[2048];
-    public static final int[] COS_TABLE = new int[2048];
+    public static final int JAGEX_CIRCULAR_ANGLE = 2048;
+    public static final double ANGULAR_RATIO = 360D / JAGEX_CIRCULAR_ANGLE;
+    public static final double JAGEX_RADIAN = Math.toRadians(ANGULAR_RATIO);
+
+    public static final int[] SIN_TABLE = new int[JAGEX_CIRCULAR_ANGLE];
+    public static final int[] COS_TABLE = new int[JAGEX_CIRCULAR_ANGLE];
 
     static {
-        for (int i = 0; i < SIN_TABLE.length; i++) {
-            SIN_TABLE[i] = (int) (65536.0D * Math.sin((double) i * 0.0030679615D));
-            COS_TABLE[i] = (int) (65536.0D * Math.cos((double) i * 0.0030679615D));
+        for (int i = 0; i < JAGEX_CIRCULAR_ANGLE; i++) {
+            SIN_TABLE[i] = (int) (65536.0D * Math.sin((double) i * JAGEX_RADIAN));
+            COS_TABLE[i] = (int) (65536.0D * Math.cos((double) i * JAGEX_RADIAN));
         }
+    }
+
+    public static Point groundToViewport(int strictX, int strictY, int height) {
+        if (strictX >= 128 && strictX <= 13056 && strictY >= 128 && strictY <= 13056) {
+            int alt = Camera.getPitch();
+            if (alt < 0) {
+                return null;
+            }
+            int yaw = Camera.getYaw();
+            if (yaw < 0) {
+                return null;
+            }
+            int elevation = getGroundHeight(strictX, strictY) - height;
+            strictX -= Camera.getX();
+            strictY -= Camera.getY();
+            elevation -= Camera.getZ();
+            int altSin = SIN_TABLE[alt];
+            int altCos = COS_TABLE[alt];
+            int yawSin = SIN_TABLE[yaw];
+            int yawCos = COS_TABLE[yaw];
+            int angle = strictY * yawSin + strictX * yawCos >> 16;
+            strictY = strictY * yawCos - strictX * yawSin >> 16;
+            strictX = angle;
+            angle = elevation * altCos - strictY * altSin >> 16;
+            strictY = elevation * altSin + strictY * altCos >> 16;
+            if (strictY == 0) {
+                return null;
+            }
+            elevation = angle;
+            int xView = strictX * Projection.getZoom() / strictY + Projection.getWidth() / 2;
+            int yView = elevation * Projection.getZoom() / strictY + Projection.getHeight() / 2;
+            return new Point(xView, yView);
+        }
+        return null;
+    }
+
+    public static int getGroundHeight(int x, int y) {
+        int x1 = x >> 7;
+        int y1 = y >> 7;
+        if (x1 < 0 || x1 > 103 || y1 < 0 || y1 > 103)
+            return 0;
+        byte[][][] rules = getRenderRules();
+        if (rules == null)
+            return 0;
+        int[][][] heights = getTileHeights();
+        if (heights == null)
+            return 0;
+        int plane = Game.getPlane();
+        if (plane < 3 && (rules[1][x1][y1] & 0x2) == 2)
+            plane++;
+        int x2 = x & 0x7F;
+        int y2 = y & 0x7F;
+        int h1 = heights[plane][x1][y1] * (128 - x2) + heights[plane][x1 + 1][y1] * x2 >> 7;
+        int h2 = heights[plane][x1][y1 + 1] * (128 - x2) + heights[plane][x1 + 1][y1 + 1] * x2 >> 7;
+        return h1 * (128 - y2) + h2 * y2 >> 7;
     }
 
     public static boolean isOnViewport(int x, int y) {
@@ -50,37 +109,6 @@ public class Projection {
         return distance(t1.getX(), t1.getY(), t2.getX(), t2.getY());
     }
 
-    public static Point groundToViewport(int strictX, int strictY, int height) {
-        if (strictX >= 128 && strictX <= 13056 && strictY >= 128 && strictY <= 13056) {
-            int alt = Camera.getAltitude();
-            if (alt < 0)
-                return null;
-            int yaw = Camera.getYaw();
-            if (yaw < 0)
-                return null;
-            int elevation = getGroundHeight(strictX, strictY) - height;
-            strictX -= Camera.getX();
-            strictY -= Camera.getY();
-            elevation -= Camera.getZ();
-            int altSin = SIN_TABLE[alt];
-            int altCos = COS_TABLE[alt];
-            int yawSin = SIN_TABLE[yaw];
-            int yawCos = COS_TABLE[yaw];
-            int angle = strictY * yawSin + strictX * yawCos >> 16;
-            strictY = strictY * yawCos - strictX * yawSin >> 16;
-            strictX = angle;
-            angle = elevation * altCos - strictY * altSin >> 16;
-            strictY = elevation * altSin + strictY * altCos >> 16;
-            if (strictY == 0)
-                return null;
-            elevation = angle;
-            int xView = strictX * Projection.getZoom() / strictY + Projection.getWidth() / 2;
-            int yView = elevation * Projection.getZoom() / strictY + Projection.getHeight() / 2;
-            return new Point(xView, yView);
-        }
-        return null;
-    }
-
     public static Point locatableToMap(Locatable locatable) {
         return groundToMap(locatable.getLocation().getX(), locatable.getLocation().getY());
     }
@@ -92,8 +120,8 @@ public class Projection {
                 strictX -= Camera.getX();
                 strictY -= Camera.getY();
                 elevation -= Camera.getZ();
-                int altSin = SIN_TABLE[Camera.getAltitude()];
-                int altCos = COS_TABLE[Camera.getAltitude()];
+                int altSin = SIN_TABLE[Camera.getPitch()];
+                int altCos = COS_TABLE[Camera.getPitch()];
                 int yawSin = SIN_TABLE[Camera.getYaw()];
                 int yawCos = COS_TABLE[Camera.getYaw()];
                 int angle = strictY * yawSin + strictX * yawCos >> 16;
@@ -153,27 +181,6 @@ public class Projection {
 
     public static Point groundToMap(int x, int y) {
         return groundToMap(x, y, false);
-    }
-
-    public static int getGroundHeight(int x, int y) {
-        int x1 = x >> 7;
-        int y1 = y >> 7;
-        if (x1 < 0 || x1 > 103 || y1 < 0 || y1 > 103)
-            return 0;
-        byte[][][] rules = getRenderRules();
-        if (rules == null)
-            return 0;
-        int[][][] heights = getTileHeights();
-        if (heights == null)
-            return 0;
-        int plane = Game.getPlane();
-        if (plane < 3 && (rules[1][x1][y1] & 0x2) == 2)
-            plane++;
-        int x2 = x & 0x7F;
-        int y2 = y & 0x7F;
-        int h1 = heights[plane][x1][y1] * (128 - x2) + heights[plane][x1 + 1][y1] * x2 >> 7;
-        int h2 = heights[plane][x1][y1 + 1] * (128 - x2) + heights[plane][x1 + 1][y1 + 1] * x2 >> 7;
-        return h1 * (128 - y2) + h2 * y2 >> 7;
     }
 
     public static Point locatableToViewport(Locatable locatable) {

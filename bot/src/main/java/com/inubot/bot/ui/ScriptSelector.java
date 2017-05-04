@@ -31,17 +31,9 @@ import java.util.List;
 public class ScriptSelector extends JFrame {
 
     private static final Class[] SCRIPT_CLASSES = {
-            PerfectAgility.class,
-            MadTutorial.class,
-            ProAlcher.class,
-            RedChinsPRO.class,
-            FalconryPRO.class,
-            BirdSnarePRO.class,
-            RangeGuild.class,
-            ProFisher.class,
-            WineMaker.class,
-            Combot.class,
             ProChopper.class,
+            MadTutorial.class,
+            Combot.class
     };
 
     public ScriptSelector() {

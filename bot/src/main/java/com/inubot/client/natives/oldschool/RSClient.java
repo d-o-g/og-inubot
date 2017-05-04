@@ -10,51 +10,117 @@ import java.util.List;
 public interface RSClient extends ClientNative {
 
     int getCameraX();
+
     int getCameraY();
+
     int getCameraZ();
+
     int getCameraYaw();
+
     int getCameraPitch();
+
     int getMapScale();
+
     int getMapRotation();
-    int getMapOffset();
-    int[][][] getTileHeights();
-    byte[][][] getRenderRules();
-    int getGameState();
-    int getBaseX();
-    int getBaseY();
-    int getPlane();
-    int[] getTempVarps();
-    int[] getVarps();
-    int getMouseIdleTime();
-    int[] getNpcIndices();
-    RSNodeDeque[][][] getGroundItems();
-    RSNpc[] getNpcs();
-    RSPlayer[] getPlayers();
-    RSPlayer getPlayer();
-    RSCollisionMap[] getCollisionMaps();
-    RSWidget[][] getWidgets();
-    RSRegion getRegion();
-    int[] getWidgetPositionsX();
-    int[] getWidgetPositionsY();
-    int[] getWidgetHeights();
-    int[] getWidgetWidths();
-    int[] getExperiences();
-    int[] getLevels();  //current levels (can boost/drain)
-    int[] getRealLevels(); //'base' levels
-    int getWeight();
-    int getEnergy();
-    String[] getPlayerActions(); //default player actions for the current region - max array size = 8
-    RSNodeTable getItemTables();
-    boolean isLowMemory();
-    int getEngineCycle();
-    int getScreenWidth();
-    int getScreenHeight();
-    int getScreenState();
-    int getScreenZoom();
-    int getCurrentWorld();
-    boolean isMembersWorld();
-    RSGrandExchangeOffer[] getGrandExchangeOffers();
+
+    boolean isViewportWalking();
+
+    void setViewportWalking(boolean viewportWalking);
+
     void setMapRotation(int newRotation);
+
+    int getMapOffset();
+
+    int[][][] getTileHeights();
+
+    byte[][][] getRenderRules();
+
+    int getGameState();
+
+    int getBaseX();
+
+    int getBaseY();
+
+    int getPlane();
+
+    int[] getTempVarps();
+
+    int[] getVarps();
+
+    int getMouseIdleTime();
+
+    int[] getNpcIndices();
+
+    RSNodeDeque[][][] getGroundItems();
+
+    RSNpc[] getNpcs();
+
+    RSPlayer[] getPlayers();
+
+    RSPlayer getPlayer();
+
+    RSCollisionMap[] getCollisionMaps();
+
+    RSWidget[][] getWidgets();
+
+    RSRegion getRegion();
+
+    int[] getWidgetPositionsX();
+
+    int[] getWidgetPositionsY();
+
+    int[] getWidgetHeights();
+
+    int[] getWidgetWidths();
+
+    int[] getExperiences();
+
+    int[] getLevels();  //current levels (can boost/drain)
+
+    int[] getRealLevels(); //'base' levels
+
+    int getWeight();
+
+    int getEnergy();
+
+    String[] getPlayerActions(); //default player actions for the current region - max array size = 8
+
+    RSNodeTable getItemTables();
+
+    boolean isLowMemory();
+
+    @Artificial
+    void setLowMemory(boolean lowMemory);
+
+    int getEngineCycle();
+
+    int getScreenWidth();
+
+    int getScreenHeight();
+
+    int getScreenState();
+
+    int getScreenZoom();
+
+    int getCurrentWorld();
+
+    boolean isMembersWorld();
+
+    RSGrandExchangeOffer[] getGrandExchangeOffers();
+
+    int getMenuX();
+
+    int getMenuY();
+
+    int getMenuWidth();
+
+    int getMenuHeight();
+
+    int[] getOnCursorUids();
+
+    int getOnCursorCount();
+
+    void setOnCursorCount(int onCursorCount);
 
     RSFont getFont_p12full();
 
@@ -62,40 +128,49 @@ public interface RSClient extends ClientNative {
     void drawRectangle(int x, int y, int width, int height, int color);
 
     @Artificial
-    void setLowMemory(boolean lowMemory);
-
-    @Artificial
     void resetMouseIdleTime();
 
     int getHintArrowX();
+
     int getHintArrowY();
+
     int getHintArrowType();
 
     int getHoveredRegionTileX();
-    int getHoveredRegionTileY();
 
     @Artificial
     void setHoveredRegionTileX(int newRegionX);
+
+    int getHoveredRegionTileY();
 
     @Artificial
     void setHoveredRegionTileY(int newRegionY);
 
     int[] getMenuOpcodes();
+
     int[] getMenuArg0();
+
     int[] getMenuArg1();
+
     int[] getMenuArg2();
 
     String getUsername();
-    String getPassword();
-    int getLoginState();
-    int getHintArrowNpcIndex();
-    int getHintArrowPlayerIndex();
 
     @Artificial
     void setUsername(String user);
 
+    RSInteractableEntity[] getObjects();
+
+    String getPassword();
+
     @Artificial
     void setPassword(String pass);
+
+    int getLoginState();
+
+    int getHintArrowNpcIndex();
+
+    int getHintArrowPlayerIndex();
 
     @Artificial
     RSVarpBit getVarpBit(int id);

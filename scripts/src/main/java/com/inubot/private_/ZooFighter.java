@@ -13,10 +13,6 @@ import com.inubot.script.Script;
 
 import java.awt.event.KeyEvent;
 
-/**
- * @author Dogerina
- * @since 14-07-2015
- */
 public class ZooFighter extends Script {
 
     private static final String[] names = new String[]{"Cyclops", "Jogre", "Wolf"};

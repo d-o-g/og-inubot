@@ -40,21 +40,15 @@ public class StopWatch {
         }
     }
 
-    public static String format(final long time) {
-        long secondsLong = time / 1000;
-        long minutesLong = secondsLong / 60;
-        long hoursLong = minutesLong / 60;
-        long daysLong = hoursLong / 24;
-        int seconds = (int) secondsLong % 60;
-        int minutes = (int) minutesLong % 60;
-        int hours = (int) hoursLong % 60;
-        int days = (int) daysLong % 24;
-
-        return padding(days) + ":" + padding(hours) + ":" + padding(minutes) + ":" + padding(seconds);
+    public static String format(long time) {
+        long hrs = TimeUnit.MILLISECONDS.toHours(time);
+        long mins = TimeUnit.MILLISECONDS.toMinutes(time) % 60;
+        long secs = TimeUnit.MILLISECONDS.toSeconds(time) % 60;
+        return String.format("%02d:%02d:%02d", hrs, mins, secs);
     }
 
     private static String padding(int i) {
-        return String.format("%05d", i);
+        return String.format("%02d", i);
     }
 
     public long getElapsed() {

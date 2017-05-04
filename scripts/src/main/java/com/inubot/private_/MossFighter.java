@@ -16,10 +16,6 @@ import com.inubot.script.Manifest;
 
 import java.util.Map;
 
-/**
- * @author Dogerina
- * @since 18-07-2015
- */
 @Manifest(name = "MossFighter", developer = "", desc = "")
 public class MossFighter extends ProScript {
 

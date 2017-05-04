@@ -65,7 +65,7 @@ public class CacheLoader {
                     RSObjectDefinition transformed = raw.transform();
                     if (transformed != null) {
                         data.put(i, transformed);
-                    } else {
+                    } else if (!raw.getName().equals(NULL)) {
                         data.put(i, raw);
                     }
                 }
@@ -91,7 +91,7 @@ public class CacheLoader {
                     RSNpcDefinition transformed = raw.transform();
                     if (transformed != null) {
                         data.put(i, transformed);
-                    } else {
+                    } else if (!raw.getName().equals(NULL)) {
                         data.put(i, raw);
                     }
                 }

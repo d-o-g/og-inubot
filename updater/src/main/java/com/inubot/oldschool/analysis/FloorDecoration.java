@@ -20,7 +20,7 @@ import org.objectweb.asm.tree.ClassNode;
  * @author unsigned
  * @since 26-04-2015
  */
-@VisitorInfo(hooks = {"plane", "x", "y", "id"})
+@VisitorInfo(hooks = {"plane", "x", "y", "id", "renderable"})
 public class FloorDecoration extends GraphVisitor {
 
     @Override
@@ -31,6 +31,7 @@ public class FloorDecoration extends GraphVisitor {
     @Override
     public void visit() {
         visit("Region", new Hooks());
+        add("renderable", cn.getField(null, desc("Renderable")), literalDesc("Renderable"));
     }
 
     private class Hooks extends BlockVisitor {

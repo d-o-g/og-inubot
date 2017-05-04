@@ -10,7 +10,7 @@ import org.objectweb.asm.commons.cfg.tree.node.FieldMemberNode;
 import org.objectweb.asm.commons.cfg.tree.node.VariableNode;
 import org.objectweb.asm.tree.ClassNode;
 
-@VisitorInfo(hooks = {"plane", "x", "y", "worldX", "worldY", "height", "id"})
+@VisitorInfo(hooks = {"plane", "x", "y", "worldX", "worldY", "height", "id", "renderable"})
 public class InteractableEntity extends GraphVisitor {
 
     @Override
@@ -22,6 +22,7 @@ public class InteractableEntity extends GraphVisitor {
     @Override
     public void visit() {
         visit("Region", new ObjectHooks());
+        add("renderable", cn.getField(null, desc("Renderable")), literalDesc("Renderable"));
     }
 
     private class ObjectHooks extends BlockVisitor {

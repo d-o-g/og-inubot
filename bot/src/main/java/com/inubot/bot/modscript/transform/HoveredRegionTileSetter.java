@@ -23,8 +23,10 @@ public class HoveredRegionTileSetter implements Transform {
     public void inject(Map<String, ClassStructure> classes) {
         FieldHook xHook = ModScript.getFieldHook("Client#hoveredRegionTileX");
         FieldHook yHook = ModScript.getFieldHook("Client#hoveredRegionTileY");
-        if (xHook == null || yHook == null)
+        FieldHook wHook = ModScript.getFieldHook("Client#viewportWalking");
+        if (xHook == null || yHook == null || wHook == null) {
             throw new RuntimeException("hook broke?");
+        }
 
         MethodNode xSetter = new MethodNode(ACC_PUBLIC, "setHoveredRegionTileX", "(I)V", null, null);
         xSetter.instructions.add(new VarInsnNode(ILOAD, 1));
@@ -37,5 +39,11 @@ public class HoveredRegionTileSetter implements Transform {
         ySetter.instructions.add(new FieldInsnNode(PUTSTATIC, yHook.clazz, yHook.field, yHook.fieldDesc));
         ySetter.instructions.add(new InsnNode(RETURN));
         classes.get("client").methods.add(ySetter);
+
+        MethodNode mn = new MethodNode(ACC_PUBLIC, "setViewportWalking", "(Z)V", null, null);
+        mn.instructions.add(new VarInsnNode(ILOAD, 1));
+        mn.instructions.add(new FieldInsnNode(PUTSTATIC, wHook.clazz, wHook.field, wHook.fieldDesc));
+        mn.instructions.add(new InsnNode(RETURN));
+        classes.get("client").methods.add(mn);
     }
 }

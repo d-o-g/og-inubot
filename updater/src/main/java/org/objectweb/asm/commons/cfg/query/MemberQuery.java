@@ -53,7 +53,7 @@ public class MemberQuery extends InsnQuery {
         if (this.opcode == -1 || this.opcode == opcode) {
             if (this.owner == null || this.owner.equals(owner)) {
                 if (this.name == null || this.name.equals(name)) {
-                    if (this.desc == null || this.desc.equals(desc) || desc.matches(this.desc)) {
+                    if (this.desc == null || this.desc.equals(desc)) {
                         return true;
                     }
                 }

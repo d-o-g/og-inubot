@@ -40,7 +40,7 @@ public class Movement {
     public static void toggleRun(boolean on) {
         if (isRunEnabled() == on)
             return;
-        Client.processAction(1, -1, 10485781, 57, "Toggle Run", "", Random.nextInt(10, 250), Random.nextInt(10, 250));
+        Client.processAction(1, -1, 10485782, 57, "Toggle Run", "", Random.nextInt(10, 250), Random.nextInt(10, 250));
     }
 
     /**
@@ -80,6 +80,7 @@ public class Movement {
         if (y < 0)  y = 0;
         if (y > 104) y = 104;
 
+        Inubot.getInstance().getClient().setViewportWalking(true);
         Inubot.getInstance().getClient().setHoveredRegionTileX(x);
         Inubot.getInstance().getClient().setHoveredRegionTileY(y);
     }
