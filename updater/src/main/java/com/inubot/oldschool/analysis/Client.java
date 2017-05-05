@@ -1227,9 +1227,9 @@ public class Client extends GraphVisitor {
                         FieldMemberNode fmn = (FieldMemberNode) jn.layer(IMUL, GETSTATIC);
                         if (fmn != null && fmn.opcode() == GETSTATIC && fmn.owner().equals("client")) {
                             FieldMemberNode array = (FieldMemberNode) jn.layer(IALOAD, GETSTATIC);
-                            if (array != null && array.desc().equals("[I")) {
+                            if (array != null && array.desc().equals("[I") && getHookKey("npcIndices").equals(array.key())) {
                                 AbstractNode an = array.next(ISUB);
-                                if (an != null && an.layer(IMUL, GETSTATIC) != null) {
+                                if (an != null && an.layer(ILOAD) != null) {
                                     addHook(new FieldHook("hintArrowNpcIndex", fmn.fin()));
                                     lock.set(true);
                                 }
