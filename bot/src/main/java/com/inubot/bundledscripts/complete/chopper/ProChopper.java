@@ -83,13 +83,8 @@ public class ProChopper extends ProScript {
                 if (location.getTreeArea().contains(Players.getLocal())) {
                     GameObject tree = GameObjects.getNearest(p.next.getName());
                     if (tree != null) {
-                        int onCursorCount = Game.getClient().getOnCursorCount();
-                        int uid = tree.getRaw().getId();
-                        Game.getClient().setOnCursorCount(onCursorCount + 1);
-                        Game.getClient().getOnCursorUids()[onCursorCount] = uid;
-                        Mouse.click(false, 200, 200);
-                        Time.sleep(650, 850); //TODO menu open hook
-                        Mouse.click(230, 230);
+                        tree.processAction(3, "Chop-down");
+                        return 2000;
                     }
                 } else {
                     Tile dest = location.getTreeArea().getCenter();

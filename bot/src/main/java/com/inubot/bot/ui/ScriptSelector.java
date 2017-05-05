@@ -33,7 +33,12 @@ public class ScriptSelector extends JFrame {
     private static final Class[] SCRIPT_CLASSES = {
             ProChopper.class,
             MadTutorial.class,
-            Combot.class
+            Combot.class,
+            ProAlcher.class,
+            BirdSnarePRO.class,
+            FalconryPRO.class,
+            RedChinsPRO.class,
+            ProFisher.class
     };
 
     public ScriptSelector() {

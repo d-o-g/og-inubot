@@ -243,9 +243,9 @@ public class Bank {
      */
     public static void depositInventory() {
         Widget[] children = Interfaces.widgetsFor(BANK_PARENT);
-        Widget button = children[27];
+        Widget button = children[29];
         if (button != null)
-            button.processAction("Deposit inventory");
+            button.processAction(57, "Deposit inventory");
     }
 
     /**
@@ -265,13 +265,7 @@ public class Bank {
             p = GameObjects.getNearest(GameObject.Landmark.BANK);
         if (p == null)
             return;
-        int onCursorCount = Game.getClient().getOnCursorCount();
-        int uid = p.getRaw().getId();
-        Game.getClient().setOnCursorCount(onCursorCount + 1);
-        Game.getClient().getOnCursorUids()[onCursorCount] = uid;
-        Mouse.click(false, 200, 200);
-        Time.sleep(800, 1200);
-        Mouse.click(true, 230, 230);
+        p.processAction(4, "Bank");
     }
 
     /**
@@ -308,7 +302,7 @@ public class Bank {
         }
         for (WidgetItem item : items) {
             if (item != null && item.getDefinition() != null) {
-                item.processAction("Deposit-All");
+                item.processAction(57, "Deposit-All");
             }
         }
     }
