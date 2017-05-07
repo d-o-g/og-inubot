@@ -72,7 +72,7 @@ public class Interfaces {
     public static Widget[] widgetsFor(int index) {
         RSWidget[][] accessor = Inubot.getInstance().getClient().getWidgets();
         if (accessor == null)
-            return null;
+            return new Widget[0];
         if (accessor.length < index)
             return new Widget[0];
         RSWidget[] container = accessor[index];

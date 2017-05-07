@@ -194,6 +194,9 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
                     raf.close();
                     System.out.println("KILLED RANDOM.DAT");
                 }
+                if (!f.setReadOnly()) {
+                    System.out.println("FAILED TO SET RANDOM.DAT READ ONLY");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
