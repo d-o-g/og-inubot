@@ -8,6 +8,7 @@ package com.inubot.api.methods;
 
 import com.inubot.Inubot;
 import com.inubot.api.oldschool.Widget;
+import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.tree.DialogButtonAction;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.Filter;
@@ -180,9 +181,18 @@ public class Interfaces {
         return widgets != null && widgets.length >= parent && widgets[parent] != null;
     }
 
+    public static Widget getContinue() {
+        Widget w = Interfaces.getWidgetByText("Click here to continue");
+        if (w != null && !w.isHidden() && w.isInteractable()) {
+            continueDialogId = w.getId();
+            return w;
+        }
+        return null;
+    }
+
     public static boolean canContinue() {
         Widget w = Interfaces.getWidgetByText("Click here to continue");
-        if (w != null && !w.isHidden()) {
+        if (w != null && !w.isHidden() && w.isInteractable()) {
             continueDialogId = w.getId();
             return true;
         }
@@ -192,10 +202,16 @@ public class Interfaces {
     //Action<BUTTON_DIALOG>(id=30,args=[ 0 | -1 | 15007745 ])
 
     public static boolean processContinue() {
-        if (canContinue()) {
-            Time.sleep(600);
-            Client.processAction(new DialogButtonAction(continueDialogId, -1), "Continue", "");
-            Time.sleep(600);
+        Widget w = getContinue();
+        if (w != null) {
+            if (Varps.get(281) >= 1000) {
+                Game.getCanvas().pressKey(KeyEvent.VK_SPACE, 200);
+                Game.getCanvas().releaseKey(KeyEvent.VK_SPACE);
+            } else {
+                Client.processAction(1, -1, 10485761, ActionOpcodes.WIDGET_ACTION, "", "", 50, 50);
+                Time.sleep(300);
+                Client.processAction(new DialogButtonAction(continueDialogId, -1), "Continue", "");
+            }
             return true;
         }
         return false;

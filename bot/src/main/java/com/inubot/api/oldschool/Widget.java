@@ -252,4 +252,8 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         }
         return false;
     }
+
+    public boolean isInteractable() {
+        return raw.isInteractable();
+    }
 }

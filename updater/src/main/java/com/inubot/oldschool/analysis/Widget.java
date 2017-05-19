@@ -13,6 +13,7 @@ import org.objectweb.asm.commons.cfg.tree.node.*;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldNode;
 
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -20,7 +21,7 @@ import java.util.Set;
 
 @VisitorInfo(hooks = {"owner", "children", "x", "y", "width", "height", "itemId", "itemAmount",
         "id", "type", "itemIds", "stackSizes", "scrollX", "scrollY", "textureId", "index",
-        "text", "ownerId", "hidden", "boundsIndex", "actions", "tableActions"})
+        "text", "ownerId", "hidden", "boundsIndex", "actions", "tableActions", "interactable"})
 public class Widget extends GraphVisitor {
 
     @Override
@@ -46,6 +47,7 @@ public class Widget extends GraphVisitor {
         visitAll(new Hidden());
         visitAll(new BoundsIndex());
         visitAll(new Actions());
+        visitIfM(new Interactable(), m -> m.desc.startsWith("(IIIILjava/lang/String;Ljava/lang/String;II"));
         for (FieldNode fn : cn.fields) {
             if ((fn.access & ACC_STATIC) == 0 && fn.desc.equals("[Ljava/lang/String;")) {
                 FieldHook h = getFieldHook("actions");
@@ -456,6 +458,26 @@ public class Widget extends GraphVisitor {
                                 lock.set(true);
                             }
                         }
+                    }
+                }
+            });
+        }
+    }
+
+    private class Interactable extends BlockVisitor {
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor() {
+                @Override
+                public void visitField(FieldMemberNode fmn) {
+                    if (fmn.owner().equals(cn.name) && fmn.desc().equals("Z")) {
+                        addHook(new FieldHook("interactable", fmn.fin()));
+                        lock.set(true);
                     }
                 }
             });

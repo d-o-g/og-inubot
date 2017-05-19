@@ -31,4 +31,6 @@ public interface RSWidget extends ClientNative {
 
     @Artificial
     int getContainerY();
+
+    boolean isInteractable();
 }

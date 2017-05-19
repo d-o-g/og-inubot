@@ -69,6 +69,10 @@ public class MadTutorial extends Script implements Paintable {
             e.printStackTrace();
         }
 
+        accs.pop();
+        accs.pop();
+        accs.pop();
+        accs.pop();
         nextAcc();
         return true;
     }
@@ -79,6 +83,9 @@ public class MadTutorial extends Script implements Paintable {
 
     @Override
     public int loop() {
+        if (accs.size() == 0) {
+            stop();
+        }
         int var = setting();
 
         if (var > 0 && !Movement.isRunEnabled() && Movement.getRunEnergy() > 1) {
