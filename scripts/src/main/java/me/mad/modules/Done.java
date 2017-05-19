@@ -22,7 +22,7 @@ public class Done implements Module {
             MadTutorial.nextAcc();
             while (Game.isLoggedIn()) {
                 LogoutTab.logout();
-                Time.sleep(5000);
+                Time.sleep(3000);
             }
         }
     }

@@ -182,7 +182,7 @@ public class Interfaces {
 
     public static boolean canContinue() {
         Widget w = Interfaces.getWidgetByText("Click here to continue");
-        if (w != null && w.isVisible() && !w.isHidden()) {
+        if (w != null && !w.isHidden()) {
             continueDialogId = w.getId();
             return true;
         }
