@@ -223,9 +223,9 @@ public class Interfaces {
 
     public static void processDialogOption(int optionIndex) {
         if (isViewingOptionDialog()) {
-            Client.processAction(1, -1, 10485761, ActionOpcodes.WIDGET_ACTION, "", "", 50, 50);
-            Time.sleep(300);
             Client.processAction(new DialogButtonAction(14352384, optionIndex + 1), "", "");
+            Time.sleep(300);
+            Client.processAction(1, -1, 10485761, ActionOpcodes.WIDGET_ACTION, "", "", 50, 50);
         }
     }
 }
