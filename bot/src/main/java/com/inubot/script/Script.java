@@ -12,7 +12,9 @@ import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
+import com.inubot.bot.account.Account;
 import com.inubot.bot.account.AccountManager;
+import com.inubot.client.natives.oldschool.RSClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,6 @@ public abstract class Script extends LoopTask {
     private final List<Task> shutdownTasks = new ArrayList<>();
     private final List<Task> tickTasks = new ArrayList<>();
     private boolean started = false;
-    private String username = null, password = null;
 
     public boolean setup() {
         return true;
@@ -32,11 +33,8 @@ public abstract class Script extends LoopTask {
         if (!started) {
             if (started = setup()) {
                 if (AccountManager.getCurrentAccount() == null) {
-                    username = Inubot.getInstance().getClient().getUsername();
-                    password = Inubot.getInstance().getClient().getPassword();
-                } else {
-                    username = AccountManager.getCurrentAccount().getUsername();
-                    password = AccountManager.getCurrentAccount().getPassword();
+                    RSClient c = Inubot.getInstance().getClient();
+                    AccountManager.setCurrentAccount(new Account(c.getUsername(), c.getPassword()));
                 }
                 if (this instanceof Paintable) {
                     Bot.getInstance().getCanvas().paintables.add((Paintable) this);
@@ -71,8 +69,7 @@ public abstract class Script extends LoopTask {
                 Mouse.click(true);
                 Time.sleep(600, 700);
             } else if (Login.getState() == Login.STATE_CREDENTIALS) {
-                Login.setUsername(username);
-                Login.setPassword(password);
+                AccountManager.getCurrentAccount().enterCredentials();
                 Mouse.setLocation(Login.LOGIN.x, Login.LOGIN.y);
                 Mouse.click(true);
                 Time.sleep(600, 700);

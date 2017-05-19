@@ -23,4 +23,8 @@ public class LogoutTab {
         Client.processAction(0, 1, 14352384, ActionOpcodes.BUTTON_DIALOG, "Continue", "", 50, 50);
         //^ may not be needed if u chose not to ask again
     }
+
+    public static void logout() {
+        Client.processAction(1, -1, 11927558, ActionOpcodes.WIDGET_ACTION, "", "", 50, 50);
+    }
 }

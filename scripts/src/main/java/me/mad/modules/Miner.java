@@ -3,6 +3,7 @@ package me.mad.modules;
 import com.inubot.api.methods.GameObjects;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.methods.Inventory;
+import com.inubot.api.methods.Mouse;
 import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.Tile;
 import com.inubot.api.oldschool.Widget;
@@ -15,7 +16,7 @@ import static me.mad.Tutorial.*;
 
 
 /**
- * Created by mad on 7/25/15.
+ * Created by me.mad on 7/25/15.
  */
 public class Miner implements Module, Tutorial {
 
@@ -30,8 +31,8 @@ public class Miner implements Module, Tutorial {
             switch (setting()) {
 
                 case 260:
-                    interact("Mining Instructor", "Talk-to", new Tile(3081, 9506).derive(1,2));
-                    Time.await(Tutorial::isChatOpen, Random.nextInt(1850,2800));
+                    interact("Mining Instructor", "Talk-to", new Tile(3081, 9506).derive(1, 2));
+                    Time.await(Tutorial::isChatOpen, Random.nextInt(1850, 2800));
                     break;
                 case 270:
                     interactGB("Rocks", "Prospect", new Tile(3076, 9504, 0));
@@ -40,8 +41,8 @@ public class Miner implements Module, Tutorial {
                     interactGB("Rocks", "Prospect", new Tile(3086, 9501, 0));
                     break;
                 case 290:
-                    interact("Mining Instructor", "Talk-to", new Tile(3081, 9506).derive(1,2));
-                    Time.await(Tutorial::isChatOpen, Random.nextInt(1850,2800));
+                    interact("Mining Instructor", "Talk-to", new Tile(3081, 9506).derive(1, 2));
+                    Time.await(Tutorial::isChatOpen, Random.nextInt(1850, 2800));
                     break;
                 case 300:
                     interactGB("Rocks", "Mine", new Tile(3076, 9504, 0));
@@ -61,7 +62,7 @@ public class Miner implements Module, Tutorial {
                     break;
                 case 330:
                     interact("Mining Instructor", "Talk-to");
-                    Time.await(Tutorial::isChatOpen, Random.nextInt(1850,2800));
+                    Time.await(Tutorial::isChatOpen, Random.nextInt(1850, 2800));
                     break;
                 case 340:
                     GameObject anvil = GameObjects.getNearest("Anvil");

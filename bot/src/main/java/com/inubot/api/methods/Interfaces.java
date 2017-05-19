@@ -181,23 +181,21 @@ public class Interfaces {
     }
 
     public static boolean canContinue() {
-        //int[] idces = {229, 231, 217};
-        //for (int idx : idces) {
         Widget w = Interfaces.getWidgetByText("Click here to continue");
-        if (w != null) {
+        if (w != null && w.isVisible() && !w.isHidden()) {
             continueDialogId = w.getId();
             return true;
         }
-        //}
         return false;
     }
+    //Action<BUTTON_DIALOG>(id=30,args=[ 0 | -1 | 14221314 ])
+    //Action<BUTTON_DIALOG>(id=30,args=[ 0 | -1 | 15007745 ])
 
     public static boolean processContinue() {
         if (canContinue()) {
-            Time.sleep(300);
-            Game.getCanvas().pressKey(KeyEvent.VK_SPACE, 200);
-            Game.getCanvas().releaseKey(KeyEvent.VK_SPACE);
-            //Client.processAction(new DialogButtonAction(continueDialogId, -1), "Continue", "");
+            Time.sleep(600);
+            Client.processAction(new DialogButtonAction(continueDialogId, -1), "Continue", "");
+            Time.sleep(600);
             return true;
         }
         return false;

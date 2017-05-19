@@ -1,5 +1,6 @@
 package me.mad.modules;
 
+import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.Tab;
 import com.inubot.api.util.Time;
 import me.mad.Tutorial;
@@ -7,7 +8,7 @@ import me.mad.util.interfaces.Module;
 
 
 /**
- * Created by mad on 7/25/15.
+ * Created by me.mad on 7/25/15.
  */
 public class RSGuide implements Module {
     @Override
@@ -20,8 +21,16 @@ public class RSGuide implements Module {
         if (!Tutorial.isChatOpen()) {
             switch (Tutorial.setting()) {
                 case 0:
-                    Tutorial.interact("RuneScape Guide", "Talk-to");
-                    Time.await(Tutorial::isChatOpen, 1200);
+                    if (Tutorial.isChatOpen()) {
+                        Tutorial.continueChat();
+                        Time.await(Tutorial::isChatOpen, 1200);
+                    } else if (Interfaces.isViewingOptionDialog()) {
+                        Interfaces.processDialogOption(1);
+                        Time.await(Tutorial::isChatOpen, 1200);
+                    } else {
+                        Tutorial.interact("RuneScape Guide", "Talk-to");
+                        Time.await(Tutorial::isChatOpen, 1200);
+                    }
                     break;
 
                 case 3:

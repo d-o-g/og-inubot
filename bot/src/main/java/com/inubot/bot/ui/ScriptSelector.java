@@ -3,20 +3,15 @@ package com.inubot.bot.ui;
 import com.inubot.Bot;
 import com.inubot.bot.util.CachedClassLoader;
 import com.inubot.bot.util.Configuration;
-import com.inubot.bundledscripts.complete.Combot;
-import com.inubot.bundledscripts.complete.WineMaker;
-import com.inubot.bundledscripts.complete.agility.PerfectAgility;
 import com.inubot.bundledscripts.complete.alcher.ProAlcher;
 import com.inubot.bundledscripts.complete.chopper.ProChopper;
 import com.inubot.bundledscripts.complete.fisher.ProFisher;
 import com.inubot.bundledscripts.complete.hunter.BirdSnarePRO;
 import com.inubot.bundledscripts.complete.hunter.FalconryPRO;
 import com.inubot.bundledscripts.complete.hunter.RedChinsPRO;
-import com.inubot.bundledscripts.complete.rangeguild.RangeGuild;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 import com.inubot.script.loader.*;
-import me.mad.MadTutorial;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,8 +27,6 @@ public class ScriptSelector extends JFrame {
 
     private static final Class[] SCRIPT_CLASSES = {
             ProChopper.class,
-            MadTutorial.class,
-            Combot.class,
             ProAlcher.class,
             BirdSnarePRO.class,
             FalconryPRO.class,

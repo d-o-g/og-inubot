@@ -142,7 +142,7 @@ public class Inventory {
         return null;
     }
 
-    public static WidgetItem getFirst(String name) {
+    public static WidgetItem getFirst(String... name) {
         return getFirst(new NameFilter<>(false, name));
     }
 

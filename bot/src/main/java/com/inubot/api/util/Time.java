@@ -12,8 +12,9 @@ public class Time {
 
     public static boolean sleep(int millis) {
         try {
-            if (millis < 0)
+            if (millis < 0) {
                 throw new IllegalArgumentException("millis must be positive!");
+            }
             Thread.sleep(millis);
             return true;
         } catch (InterruptedException ignored) {
@@ -28,8 +29,9 @@ public class Time {
     public static boolean await(BooleanSupplier condition, int timeout) {
         long start = System.nanoTime() / 1000000;
         while (System.nanoTime() / 1000000 - start < timeout) {
-            if (condition.getAsBoolean())
+            if (condition.getAsBoolean()) {
                 return true;
+            }
             Time.sleep(10, 20);
         }
         return false;

@@ -11,7 +11,7 @@ import me.mad.Tutorial;
 import me.mad.util.interfaces.Module;
 
 /**
- * Created by mad on 7/25/15.
+ * Created by me.mad on 7/25/15.
  */
 public class SurvivalExpert implements Module {
 

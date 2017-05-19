@@ -7,7 +7,7 @@ import com.inubot.api.util.Random;
 import com.inubot.api.util.Time;
 
 /**
- * Created by mad on 7/25/15.
+ * Created by me.mad on 7/25/15.
  */
 public interface Tutorial {
 
@@ -21,7 +21,7 @@ public interface Tutorial {
             npc.processAction(action);
 
         } else {
-            if (tiles.length < 0) return false;
+            if (tiles.length <= 0) return false;
 
             if (Movement.getRunEnergy() > Random.nextInt(40, 50) && !Movement.isRunEnabled()) {
                 Movement.toggleRun(true);

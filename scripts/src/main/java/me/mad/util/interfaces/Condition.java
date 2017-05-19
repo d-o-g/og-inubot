@@ -1,7 +1,7 @@
 package me.mad.util.interfaces;
 
 /**
- * Created by mad on 7/25/15.
+ * Created by me.mad on 7/25/15.
  */
 public interface Condition {
 

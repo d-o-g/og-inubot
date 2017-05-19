@@ -10,12 +10,13 @@ import com.inubot.api.oldschool.Tile;
 import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.Time;
+import com.inubot.bundledscripts.complete.Combot;
 import me.mad.Tutorial;
 import me.mad.util.interfaces.Module;
 
 
 /**
- * Created by mad on 7/25/15.
+ * Created by me.mad on 7/25/15.
  */
 public class Combat implements Module {
 
@@ -103,7 +104,7 @@ public class Combat implements Module {
                     }
                     break;
                 case 490:
-
+                    com.inubot.api.methods.Combat.setStyle(1);
                     Tutorial.interact("Giant rat", "Attack");
                     break;
                 case 500:

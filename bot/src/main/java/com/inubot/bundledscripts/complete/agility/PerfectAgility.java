@@ -38,7 +38,7 @@ public class PerfectAgility extends ProScript implements Paintable {
     public boolean setup() {
         setLineColor(Color.RED.darker());
         setTextColor(Color.WHITE);
-        Client.setWidgetRendering(false);
+       // Client.setWidgetRendering(false);
         //JFrame frame = new JFrame();
         //frame.setLayout(new FlowLayout());
         //JComboBox<Course> courses = new JComboBox<>(Course.values());
@@ -58,7 +58,7 @@ public class PerfectAgility extends ProScript implements Paintable {
 
     @Override
     public void onFinish() {
-        Client.setWidgetRendering(true);
+        //Client.setWidgetRendering(true);
     }
 
     @Override
@@ -91,8 +91,14 @@ public class PerfectAgility extends ProScript implements Paintable {
             Movement.toggleRun(true);
             Time.sleep(600);
         }
-        if (Skills.getCurrentLevel(Skill.HITPOINTS) < 10)
+        if (Skills.getCurrentLevel(Skill.HITPOINTS) < 10) {
+            WidgetItem food = Inventory.getFirst(item -> item.containsAction("Eat"));
+            if (food != null) {
+                food.processAction("Eat");
+                return 1000;
+            }
             return 5000;
+        }
 
         if (Interfaces.getWidgets(LOBBY_FILTER).length > 0) {
             for (Widget widget : Interfaces.getWidgets(DIALOGUE_FILTER)) {
@@ -102,9 +108,11 @@ public class PerfectAgility extends ProScript implements Paintable {
             }
         }
         GroundItem mark = GroundItems.getNearest("Mark of grace");
-        if (mark != null && Movement.isObjectReachable(mark) && mark.getLocation().getPlane() == Players.getLocal().getLocation().getPlane()) {
-            mark.processAction("Take");
-            return 400;
+        if (mark != null) {
+            if (Movement.isObjectReachable(mark) && mark.getLocation().getPlane() == Players.getLocal().getLocation().getPlane()) {
+                mark.processAction("Take");
+                return 400;
+            }
         }
 
         Obstacle obstacle = course.getNext();

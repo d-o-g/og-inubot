@@ -15,25 +15,23 @@ import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.IdFilter;
+import com.inubot.bundledscripts.proframework.ProScript;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
 import java.awt.*;
+import java.util.Map;
 
 /**
  * @author unsigned
  * @since 26-05-2015
  */
-@Manifest(name = "WineMaker", developer = "", desc = "Makes wine for over 450k cooking experience per hour!")
-public class WineMaker extends Script implements Paintable {
-
-    private final StopWatch stopWatch = new StopWatch(0);
-    private int xp;
+@Manifest(name = "PerfectCooker", developer = "", desc = "Makes wine for over 450k cooking experience per hour!")
+public class WineMaker extends ProScript implements Paintable {
 
     @Override
     public boolean setup() {
         super.getTickTasks().add(Interfaces::processContinue);
-        this.xp = Skills.getExperience(Skill.COOKING);
         return true;
     }
 
@@ -56,15 +54,14 @@ public class WineMaker extends Script implements Paintable {
                 Bank.close();
                 return 600;
             }
-            WidgetItem src = Inventory.getFirst("Grapes");
-            WidgetItem dst = Inventory.getFirst("Jug of water");
-            if (src != null && dst != null) {
-                src.use(dst);
-                if (Time.await(() -> Interfaces.getWidget(t -> t.getId() == 20250627) != null, 1500)) {
-                    Client.processAction(0, -1, 20250627, 30, "Make All", "", 50, 50);
-                    //lame hack, interaction never fails so no fucks given anyway
-                    if (Time.await(() -> Inventory.getCount() == 14, 17000)) {
-                        return 500;
+            if (!isAnimating()) {
+                WidgetItem src = Inventory.getFirst("Grapes");
+                WidgetItem dst = Inventory.getFirst("Jug of water");
+                if (src != null && dst != null) {
+                    src.use(dst);
+                    if (Time.await(() -> Interfaces.getWidget(t -> t.getId() == 20250627) != null, 1500)) {
+                        Client.processAction(0, -1, 20250627, 30, "Make All", "", 50, 50);
+                        Time.sleep(2000);
                     }
                 }
             }
@@ -72,7 +69,7 @@ public class WineMaker extends Script implements Paintable {
         return 700;
     }
 
-    private boolean isInidle() {
+    private boolean isAnimating() {
         for (int i = 0; i < 15; i++) {
             if (Players.getLocal().getAnimation() != -1)
                 return true;
@@ -82,9 +79,7 @@ public class WineMaker extends Script implements Paintable {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        AWTUtil.drawBoldedString(g, "PerfectCooker PRO", 20, 40, Color.YELLOW);
-        AWTUtil.drawBoldedString(g, "Runtime: " + stopWatch.toElapsedString(), 20, 60, Color.YELLOW);
-        AWTUtil.drawBoldedString(g, "Exp: " + (Skills.getExperience(Skill.COOKING) - xp), 20, 80, Color.YELLOW);
+    public void getPaintData(Map<String, Object> data) {
+
     }
 }

@@ -16,7 +16,7 @@ import me.mad.util.interfaces.Module;
 import static me.mad.Tutorial.*;
 
 /**
- * Created by mad on 7/25/15.
+ * Created by me.mad on 7/25/15.
  */
 public class Magic implements Module, Tutorial {
 
