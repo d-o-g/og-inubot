@@ -68,11 +68,6 @@ public class MadTutorial extends Script implements Paintable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        accs.pop();
-        accs.pop();
-        accs.pop();
-        accs.pop();
         nextAcc();
         return true;
     }
