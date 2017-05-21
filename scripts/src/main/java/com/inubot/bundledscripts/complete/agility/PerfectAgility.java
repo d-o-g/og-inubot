@@ -3,7 +3,10 @@ package com.inubot.bundledscripts.complete.agility;
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
+import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.tree.InputButtonAction;
+import com.inubot.api.oldschool.action.tree.SelectableSpellButtonAction;
+import com.inubot.api.oldschool.action.tree.TableAction;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
@@ -28,11 +31,18 @@ public class PerfectAgility extends ProScript implements Paintable {
     private int stuck = 0;
     private boolean loggedInLast = false;
 
+    //713 = high alch anim
+    //712 = low alch anim
+
+    private static final boolean ALCHING = false;
+    private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));
+    private static final Filter<WidgetItem> OTHER_FILTER = (i -> i.getName().contains("Gold brace"));
+
     @Override
     public boolean setup() {
         setLineColor(Color.RED.darker());
         setTextColor(Color.WHITE);
-        Client.setWidgetRendering(false);
+        //  Client.setWidgetRendering(false);
         //JFrame frame = new JFrame();
         //frame.setLayout(new FlowLayout());
         //JComboBox<Course> courses = new JComboBox<>(Course.values());
@@ -55,6 +65,21 @@ public class PerfectAgility extends ProScript implements Paintable {
         Client.setWidgetRendering(true);
     }
 
+    private void alch() {
+        if (!ALCHING) {
+            return;
+        }
+        WidgetItem runes = Inventory.getFirst(NATURE_FILTER);
+        WidgetItem other = Inventory.getFirst(OTHER_FILTER);
+        if (runes != null && other != null) {
+            // low alch
+            //Client.processAction(new SelectableSpellButtonAction(14286862), "", "");
+            // high alch
+            Client.processAction(new SelectableSpellButtonAction(14286883), "", "");
+            Client.processAction(new TableAction(ActionOpcodes.SPELL_ON_ITEM, other.getId(), other.getIndex(), 9764864), "", "");
+        }
+    }
+
     @Override
     public int loop() {
         if (!Game.isLoggedIn()) {
@@ -62,7 +87,7 @@ public class PerfectAgility extends ProScript implements Paintable {
             return 100;
         }
 
-        if (Players.getLocal().getAnimation() != -1)
+        if (Players.getLocal().getAnimation() != -1 && Players.getLocal().getAnimation() != 713)
             return 100;
 
         if (!loggedInLast) { // if the bot has just logged in, or has just been ran
@@ -85,8 +110,14 @@ public class PerfectAgility extends ProScript implements Paintable {
             Movement.toggleRun(true);
             Time.sleep(600);
         }
-        if (Skills.getCurrentLevel(Skill.HITPOINTS) < 10)
-            return 5000;
+        if (Skills.getCurrentLevel(Skill.HITPOINTS) < 10) {
+            WidgetItem food = Inventory.getFirst(item -> item.containsAction("Eat"));
+            if (food != null) {
+                food.processAction("Eat");
+            } else {
+                return 5000;
+            }
+        }
 
         if (Interfaces.getWidgets(LOBBY_FILTER).length > 0) {
             for (Widget widget : Interfaces.getWidgets(DIALOGUE_FILTER)) {
@@ -131,8 +162,12 @@ public class PerfectAgility extends ProScript implements Paintable {
             });
         } else
             obj = GameObjects.getNearest(obstacle.name);
-        if (obj != null)
+        if (obj != null) {
+            if (obj.distance() > 4 && Players.getLocal().getAnimation() != 713) { //not sure how close u have to be for alch to slow u down
+                alch();
+            }
             obj.processAction(obstacle.action);
+        }
         return 600;
     }
 

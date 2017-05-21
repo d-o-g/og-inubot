@@ -68,8 +68,32 @@ public class MadTutorial extends Script implements Paintable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
         nextAcc();
         return true;
+    }
+
+    public static void main(String[] args) {
+
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(Configuration.CACHE + "accs.txt"));
+            for (String line : lines) {
+                String[] split = line.split("\\|");
+                for (String acc : split) {
+                    String[] details = acc.split(":");
+                    if (details.length != 2) {
+                        continue;
+                    }
+                    System.out.println(details[0] + ":" + details[1]);
+                    accs.add(new Account(details[0], details[1]));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(accs.size());
     }
 
     public static void nextAcc() {

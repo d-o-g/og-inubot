@@ -56,7 +56,7 @@ public class ProAlcher extends ProScript implements AlcherConstants {
 
     @Override
     public boolean setup() {
-        Client.setWidgetRendering(false);
+        //Client.setWidgetRendering(false);
         return true;
     }
 
