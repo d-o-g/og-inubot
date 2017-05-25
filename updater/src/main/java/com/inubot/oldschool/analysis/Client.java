@@ -59,7 +59,7 @@ public class Client extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.name.equals("client") || cn.getMethodByName("init") != null;
+        return cn.name.equals("client");
     }
 
     @Override
@@ -241,27 +241,28 @@ public class Client extends GraphVisitor {
         String collisionDesc = desc("CollisionMap");
         for (ClassNode node : updater.classnodes.values()) {
             for (FieldNode fn : node.fields) {
-                if ((fn.access & Opcodes.ACC_STATIC) == 0) continue;
-                if (fn.desc.equals("Ljava/awt/Canvas;")) {
+                if ((fn.access & Opcodes.ACC_STATIC) != 0) {
+                    if (playerDesc != null && fn.desc.equals(playerDesc)) {
+                        add("player", fn);
+                    } else if (regionDesc != null && fn.desc.equals(regionDesc)) {
+                        add("region", fn);
+                    } else if (widgetDesc != null && fn.desc.equals("[[" + widgetDesc)) {
+                        add("widgets", fn);
+                    } else if (objectDesc != null && fn.desc.equals("[" + objectDesc)) {
+                        add("objects", fn);
+                    } else if (dequeDesc != null && fn.desc.equals("[[[" + dequeDesc)) {
+                        add("groundItems", fn);
+                    } else if (collisionDesc != null && fn.desc.equals("[" + collisionDesc)) {
+                        add("collisionMaps", fn);
+                    } else if (fn.desc.equals("[" + desc("GrandExchangeOffer"))) {
+                        add("grandExchangeOffers", fn);
+                    } else if (fn.desc.equals("[" + desc("Player"))) {
+                        add("players", fn);
+                    } else if (fn.desc.equals("[" + desc("Npc"))) {
+                        add("npcs", fn);
+                    }
+                } else if (fn.desc.equals("Ljava/awt/Canvas;")) {
                     add("canvas", fn);
-                } else if (playerDesc != null && fn.desc.equals(playerDesc)) {
-                    add("player", fn);
-                } else if (regionDesc != null && fn.desc.equals(regionDesc)) {
-                    add("region", fn);
-                } else if (widgetDesc != null && fn.desc.equals("[[" + widgetDesc)) {
-                    add("widgets", fn);
-                } else if (objectDesc != null && fn.desc.equals("[" + objectDesc)) {
-                    add("objects", fn);
-                } else if (dequeDesc != null && fn.desc.equals("[[[" + dequeDesc)) {
-                    add("groundItems", fn);
-                } else if (collisionDesc != null && fn.desc.equals("[" + collisionDesc)) {
-                    add("collisionMaps", fn);
-                } else if (fn.desc.equals("[" + desc("GrandExchangeOffer"))) {
-                    add("grandExchangeOffers", fn);
-                } else if (fn.desc.equals("[" + desc("Player"))) {
-                    add("players", fn);
-                } else if (fn.desc.equals("[" + desc("Npc"))) {
-                    add("npcs", fn);
                 }
             }
         }

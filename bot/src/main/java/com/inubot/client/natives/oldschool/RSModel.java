@@ -2,11 +2,11 @@ package com.inubot.client.natives.oldschool;
 
 public interface RSModel extends RSRenderable {
 
-    int[] getXVertices();
+    //int[] getXVertices();
 
-    int[] getYVertices();
+  //  int[] getYVertices();
 
-    int[] getZVertices();
+  //  int[] getZVertices();
 
     int[] getXTriangles();
 

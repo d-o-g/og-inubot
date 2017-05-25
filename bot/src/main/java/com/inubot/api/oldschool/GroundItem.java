@@ -40,11 +40,6 @@ public class GroundItem extends Wrapper<RSItem> implements Locatable, Identifiab
     }
 
     @Override
-    public Model getModel() {
-        return raw.getModel();
-    }
-
-    @Override
     public int distance(Locatable locatable) {
         return (int) Projection.distance(this, locatable);
     }

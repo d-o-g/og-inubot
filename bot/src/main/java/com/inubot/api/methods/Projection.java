@@ -59,9 +59,11 @@ public class Projection {
                 return null;
             }
             elevation = angle;
-            int xView = strictX * Projection.getZoom() / strictY + Projection.getWidth() / 2;
-            int yView = elevation * Projection.getZoom() / strictY + Projection.getHeight() / 2;
-            return new Point(xView, yView);
+            //int xView = strictX * Projection.getZoom() / strictY + Projection.getWidth() / 2;
+            //int yView = elevation * Projection.getZoom() / strictY + Projection.getHeight() / 2;
+            //return new Point(xView, yView);
+            return new Point(0,0);
+            //if u need this just change it to use hardcoded zoom for now
         }
         return null;
     }
@@ -132,9 +134,11 @@ public class Projection {
                 if (strictY == 0)
                     return new Point(-1, -1);
                 elevation = angle;
-                int xView = strictX * Projection.getZoom() / strictY + Projection.getWidth() / 2;
-                int yView = elevation * Projection.getZoom() / strictY + Projection.getHeight() / 2;
-                return new Point(xView, yView);
+              //  int xView = strictX * Projection.getZoom() / strictY + Projection.getWidth() / 2;
+             //   int yView = elevation * Projection.getZoom() / strictY + Projection.getHeight() / 2;
+              //  return new Point(xView, yView);
+                return new Point(0,0);
+                //if u need this just change it to use hardcoded zoom for now
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
@@ -142,9 +146,9 @@ public class Projection {
         return null;
     }
 
-    public static int getZoom() {
-        return Inubot.getInstance().getClient().getScreenZoom();
-    }
+  //  public static int getZoom() {
+    //    return Inubot.getInstance().getClient().getScreenZoom();
+ //   }
 
     public static int getWidth() {
         return Inubot.getInstance().getClient().getScreenWidth();

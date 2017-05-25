@@ -47,9 +47,9 @@ public class HintArrow {
         RSNpc npc = Npcs.internal()[index];
         if (npc != null)
             return new Npc(npc, index);
-        RSPlayer player = Players.internal()[index = Inubot.getInstance().getClient().getHintArrowPlayerIndex()];
-        if (player != null)
-            return new Player(player, index);
+      //  RSPlayer player = Players.internal()[index = Inubot.getInstance().getClient().getHintArrowPlayerIndex()];
+      //  if (player != null)
+     //       return new Player(player, index);
         return null;
     }
 

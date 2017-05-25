@@ -118,7 +118,6 @@ public class VarpBit extends GraphVisitor {
                             MethodMemberNode invokestadik = sn.firstMethod();
                             if (invokestadik != null && invokestadik.desc().contains("I")) {
                                 updater.visitor("Client").addHook(new InvokeHook("getVarpBit", invokestadik.min()));
-                                System.out.println(invokestadik.key() + " VPB");
                             }
                         }
                     });

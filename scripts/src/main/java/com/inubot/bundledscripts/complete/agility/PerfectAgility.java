@@ -34,7 +34,7 @@ public class PerfectAgility extends ProScript implements Paintable {
     //713 = high alch anim
     //712 = low alch anim
 
-    private static final boolean ALCHING = false;
+    private static final boolean ALCHING = true;
     private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));
     private static final Filter<WidgetItem> OTHER_FILTER = (i -> i.getName().contains("Gold brace"));
 
@@ -110,7 +110,9 @@ public class PerfectAgility extends ProScript implements Paintable {
             Movement.toggleRun(true);
             Time.sleep(600);
         }
-        if (Skills.getCurrentLevel(Skill.HITPOINTS) < 10) {
+        if (Skills.getCurrentLevel(Skill.HITPOINTS) < 10
+                || (course == Course.ARDY_COURSE && Skills.getCurrentLevel(Skill.AGILITY) < 90)) {
+            //use summer pie if ardy course
             WidgetItem food = Inventory.getFirst(item -> item.containsAction("Eat"));
             if (food != null) {
                 food.processAction("Eat");
@@ -126,11 +128,11 @@ public class PerfectAgility extends ProScript implements Paintable {
                 Client.processAction(new InputButtonAction(widget.getId()), "Play RuneScape", "");
             }
         }
-        GroundItem mark = GroundItems.getNearest("Mark of grace");
+        /*GroundItem mark = GroundItems.getNearest("Mark of grace");
         if (mark != null && Movement.isObjectReachable(mark) && mark.getLocation().getPlane() == Players.getLocal().getLocation().getPlane()) {
             mark.processAction("Take");
             return 400;
-        }
+        }*/
 
         Obstacle obstacle = course.getNext();
 
@@ -141,7 +143,7 @@ public class PerfectAgility extends ProScript implements Paintable {
         }
 
         if (obstacle == null)
-            return 400;
+            return 300;
 
 
         GameObject obj;
@@ -149,7 +151,7 @@ public class PerfectAgility extends ProScript implements Paintable {
         if (obstacle.getTile() != null) {
             if (obstacle.getTile().getPlane() == Players.getLocal().getLocation().getPlane() && obstacle.getTile().distance() > 15) {
                 Movement.walkTo(obstacle.getTile());
-                return 400;
+                return 300;
             }
 
             final Obstacle finalObstacle = obstacle;
@@ -168,7 +170,7 @@ public class PerfectAgility extends ProScript implements Paintable {
             }
             obj.processAction(obstacle.action);
         }
-        return 600;
+        return 300;
     }
 
     @Override

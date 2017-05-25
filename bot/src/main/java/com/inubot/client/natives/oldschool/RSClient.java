@@ -100,11 +100,11 @@ public interface RSClient extends ClientNative {
 
     int getScreenState();
 
-    int getScreenZoom();
+    //int getScreenZoom();
 
     int getCurrentWorld();
 
-    boolean isMembersWorld();
+    //boolean isMembersWorld();
 
     RSGrandExchangeOffer[] getGrandExchangeOffers();
 
@@ -115,12 +115,6 @@ public interface RSClient extends ClientNative {
     int getMenuWidth();
 
     int getMenuHeight();
-
-    int[] getOnCursorUids();
-
-    int getOnCursorCount();
-
-    void setOnCursorCount(int onCursorCount);
 
     RSFont getFont_p12full();
 
@@ -170,7 +164,7 @@ public interface RSClient extends ClientNative {
 
     int getHintArrowNpcIndex();
 
-    int getHintArrowPlayerIndex();
+    //int getHintArrowPlayerIndex();
 
     @Artificial
     RSVarpBit getVarpBit(int id);

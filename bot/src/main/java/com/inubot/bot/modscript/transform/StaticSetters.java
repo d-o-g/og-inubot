@@ -25,8 +25,8 @@ public class StaticSetters implements Transform {
     @Override
     public void inject(Map<String, ClassStructure> classes) {
         ClassStructure struc = classes.get("client");
-        struc.methods.add(makeIntegerSetter(ModScript.getFieldHook("Client#mapRotation"), "setMapRotation"));
-        struc.methods.add(makeIntegerSetter(ModScript.getFieldHook("Client#onCursorCount"), "setOnCursorCount"));
+        //struc.methods.add(makeIntegerSetter(ModScript.getFieldHook("Client#mapRotation"), "setMapRotation"));
+        //struc.methods.add(makeIntegerSetter(ModScript.getFieldHook("Client#onCursorCount"), "setOnCursorCount"));
     }
 
     private MethodNode makeIntegerSetter(FieldHook hook, String setterName) {

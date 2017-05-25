@@ -13,16 +13,6 @@ public interface Locatable {
 
     Tile getLocation();
 
-    /**
-     * Throws an {@link java.lang.UnsupportedOperationException} if this {@link com.inubot.api.oldschool.Locatable}
-     * cannot have a {@link com.inubot.api.oldschool.Model}
-     *
-     * @return The {@link com.inubot.api.oldschool.Model} for this {@link com.inubot.api.oldschool.Locatable}
-     */
-    default Model getModel() {
-        throw new UnsupportedOperationException(String.format("Models unsupported for %s!", getClass().getSimpleName()));
-    }
-
     default int distance(Locatable locatable) {
         return (int) Projection.distance(this, locatable);
     }

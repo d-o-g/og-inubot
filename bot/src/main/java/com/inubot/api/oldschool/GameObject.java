@@ -62,20 +62,6 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
     }
 
     @Override
-    public Model getModel() {
-        RSRenderable renderable = getEntity();
-        if (renderable != null) {
-            Model model = renderable.getModel();
-            if (model != null) {
-                return model;
-            } else if (renderable instanceof RSModel) {
-                return new Model(renderable, (RSModel) renderable);
-            }
-        }
-        return null;
-    }
-
-    @Override
     public int distance(Locatable locatable) {
         return (int) Projection.distance(this, locatable);
     }

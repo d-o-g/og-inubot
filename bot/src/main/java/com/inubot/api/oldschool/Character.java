@@ -142,8 +142,4 @@ public abstract class Character<T extends RSCharacter> extends Wrapper<T> implem
     public int getOrientation() {
         return raw.getOrientation();
     }
-
-    public Model getModel() {
-        return raw.getModel();
-    }
 }
