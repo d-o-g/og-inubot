@@ -142,6 +142,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         container.add(panel);
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.BLACK);
+        panel.setMinimumSize(new Dimension(765, 503));
         this.client = (Client) crawler.start(classloader);
         panel.add(((Applet) client), BorderLayout.CENTER);
         pack();
