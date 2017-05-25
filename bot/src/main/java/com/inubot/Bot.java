@@ -138,13 +138,10 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
             setTitle(Configuration.APPLICATION_NAME + " - Proxy [" + ProxyUtils.getLastIP() + ":" + ProxyUtils.getLastPort() + "]");
 
         Container container = getContentPane();
-        JPanel panel = new JPanel();
-        container.add(panel);
-        panel.setLayout(new BorderLayout());
-        panel.setBackground(Color.BLACK);
-        panel.setMinimumSize(new Dimension(765, 503));
+        container.setLayout(new BorderLayout());
+        container.setBackground(Color.BLACK);
         this.client = (Client) crawler.start(classloader);
-        panel.add(((Applet) client), BorderLayout.CENTER);
+        container.add(((Applet) client), BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);

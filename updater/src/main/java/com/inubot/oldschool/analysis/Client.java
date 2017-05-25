@@ -262,7 +262,9 @@ public class Client extends GraphVisitor {
                         add("npcs", fn);
                     }
                 } else if (fn.desc.equals("Ljava/awt/Canvas;")) {
-                    add("canvas", fn);
+                    FieldHook fh = new FieldHook("canvas", node.name, fn.name, fn.desc);
+                    fh.forceOwner = false;
+                    addHook(fh);
                 }
             }
         }

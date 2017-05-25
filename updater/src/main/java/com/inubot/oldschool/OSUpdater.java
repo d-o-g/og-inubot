@@ -34,7 +34,7 @@ public class OSUpdater extends Updater {
                 new Player(), new Item(), new ItemDefinition(), new InteractableEntity(),
                 new FloorDecoration(), new Boundary(), new BoundaryDecoration(),
                 new ObjectDefinition(), new Region(), new Canvas(), new WidgetNode(),
-                new ItemTable(), new CollisionMap(), new Buffer(), new Widget(),
+                new ItemTable(), new CollisionMap(), new Buffer(), new Widget(), new Producer(),
                 new HealthBarDefinition(), new Hitbar(), new NodeIterable(), new HealthBar(),
                 new Sprite(), new Varps(), new VarpBit(), new Font(), new GrandExchangeOffer(), new Client()
         };

@@ -18,6 +18,7 @@ public class FieldHook extends Hook {
     public boolean isStatic;
 
     public int multiplier = 0;
+    public boolean forceOwner = true;
 
     public FieldHook(String name, String clazz, String field, String fieldDesc, boolean isStatic) {
         super(name);

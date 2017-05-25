@@ -259,7 +259,7 @@ public abstract class Updater extends Thread implements Runnable {
                             }
                         }
                     }
-                    if (!fh.isStatic) {
+                    if (!fh.isStatic && fh.forceOwner) {
                         fh.clazz = gv.cn.name;
                     }
                 } else if (hook instanceof InvokeHook) {

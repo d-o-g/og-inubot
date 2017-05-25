@@ -164,7 +164,7 @@ public interface RSClient extends ClientNative {
 
     int getHintArrowNpcIndex();
 
-    //int getHintArrowPlayerIndex();
+    int getHintArrowPlayerIndex();
 
     @Artificial
     RSVarpBit getVarpBit(int id);
