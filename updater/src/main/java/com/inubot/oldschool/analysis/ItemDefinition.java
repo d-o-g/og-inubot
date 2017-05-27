@@ -1,13 +1,14 @@
 package com.inubot.oldschool.analysis;
 
+import com.inubot.modscript.hook.FieldHook;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
-import com.inubot.modscript.hook.FieldHook;
-import com.inubot.util.ArrayIterator;
 import org.objectweb.asm.commons.cfg.Block;
 import org.objectweb.asm.commons.cfg.BlockVisitor;
 import org.objectweb.asm.commons.cfg.tree.NodeVisitor;
-import org.objectweb.asm.commons.cfg.tree.node.*;
+import org.objectweb.asm.commons.cfg.tree.node.FieldMemberNode;
+import org.objectweb.asm.commons.cfg.tree.node.MethodMemberNode;
+import org.objectweb.asm.commons.cfg.tree.node.NumberNode;
 import org.objectweb.asm.tree.ClassNode;
 
 @VisitorInfo(hooks = {"name", "id", "actions", "groundActions"})
@@ -23,32 +24,6 @@ public class ItemDefinition extends GraphVisitor {
     public void visit() {
         add("name", cn.getField(null, "Ljava/lang/String;"), "Ljava/lang/String;");
         visitAll(new Id());
-        visit(new Actions());
-    }
-
-    private class Actions extends BlockVisitor {
-
-        private final ArrayIterator<String> itr = new ArrayIterator<>("actions", "groundActions");
-
-        @Override
-        public boolean validate() {
-            return itr.hasNext();
-        }
-
-        @Override
-        public void visit(Block block) {
-            block.tree().accept(new NodeVisitor(this) {
-                public void visitField(FieldMemberNode fmn) {
-                    if (fmn.opcode() == PUTFIELD && fmn.owner().equals(cn.name)) {
-                        if (fmn.desc().equals("[Ljava/lang/String;")) {
-                            if (fmn.layer(AASTORE, DUP, AASTORE) != null) {
-                                addHook(new FieldHook(itr.next(), fmn.fin()));
-                            }
-                        }
-                    }
-                }
-            });
-        }
     }
 
     private class Id extends BlockVisitor {

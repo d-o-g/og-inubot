@@ -87,8 +87,9 @@ public class WidgetItem implements Identifiable, Processable {
 
     public boolean processAction(int opcode, String action) {
         String itemName = getName();
-        if (itemName == null)
+        if (itemName == null) {
             return false;
+        }
         if (isInTable()) {
             Client.processAction(new TableItemAction(opcode, getId(), getIndex(), getOwner().getRaw().getId()), action, action);
             return true;

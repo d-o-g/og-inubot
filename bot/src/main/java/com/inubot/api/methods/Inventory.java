@@ -146,6 +146,19 @@ public class Inventory {
         return getFirst(new NameFilter<>(false, name));
     }
 
+    public static WidgetItem getLast(Filter<WidgetItem> filter) {
+        WidgetItem last = null;
+        for (WidgetItem item : getItems()) {
+            if (item != null && filter.accept(item))
+                last = item;
+        }
+        return last;
+    }
+
+    public static WidgetItem getLast(String... name) {
+        return getLast(new NameFilter<>(false, name));
+    }
+
     public static boolean dropAll(Filter<WidgetItem> filter) {
         for (WidgetItem item : Inventory.getItems(filter))
             item.processAction(ActionOpcodes.ITEM_ACTION_4, "Drop");

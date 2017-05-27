@@ -14,6 +14,8 @@ import com.inubot.bundledscripts.complete.Combot;
 import me.mad.Tutorial;
 import me.mad.util.interfaces.Module;
 
+import java.util.Arrays;
+
 
 /**
  * Created by me.mad on 7/25/15.
@@ -44,6 +46,7 @@ public class Combat implements Module {
                 case 405:
                     WidgetItem dagger = Inventory.getFirst("Bronze dagger");
                     if(dagger !=null) {
+                        System.out.println(Arrays.toString(dagger.getActions()));
                         dagger.processAction("Wield");
                         Time.await(() -> Tutorial.setting() != 405, 1200);
                     }
@@ -57,11 +60,9 @@ public class Combat implements Module {
                     WidgetItem sword = Inventory.getFirst("Bronze sword");
                     if(shield !=null) {
                         shield.processAction("Wield");
-                        Time.await(() -> shield == null, 1200);
                     }
                     if(sword !=null) {
                         sword.processAction("Wield");
-                        Time.await(() -> sword == null, 1200);
                     }
                     break;
                 case 430:

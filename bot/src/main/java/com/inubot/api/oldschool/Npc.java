@@ -66,4 +66,17 @@ public class Npc extends Character<RSNpc> implements Identifiable, Processable {
         }
         return new String[0];
     }
+
+    public boolean containsAction(String action) {
+        String[] actions = getActions();
+        if (actions == null) {
+            return false;
+        }
+        for (String a : actions) {
+            if (a != null && a.equalsIgnoreCase(action)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

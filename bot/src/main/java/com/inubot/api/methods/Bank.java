@@ -260,12 +260,14 @@ public class Bank {
      * to access the {@link com.inubot.api.methods.traversal.graph.Web}
      */
     public static void open() {
-        GameObject p = GameObjects.getNearest(t -> t.containsAction("Bank") && "Bank booth".equals(t.getName()));
+        Processable p = GameObjects.getNearest(t -> t.containsAction("Bank") && "Bank booth".equals(t.getName()));
         if (p == null)
             p = GameObjects.getNearest(GameObject.Landmark.BANK);
         if (p == null)
+            p = Npcs.getNearest(n -> n.containsAction("Bank"));
+        if (p == null)
             return;
-        p.processAction(4, "Bank");
+        p.processAction("Bank");
     }
 
     /**

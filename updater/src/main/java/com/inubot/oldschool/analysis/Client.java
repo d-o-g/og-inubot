@@ -102,6 +102,7 @@ public class Client extends GraphVisitor {
         visitIfM(new ScreenState(), t -> t.desc.startsWith("([L") && t.desc.contains(";IIIIII"));
         visitAll(new HoveredTile());
         visitAll(new MenuPositionHooks());
+        visitIf("ItemDefinition", new ItemDefActions(), m -> m.name.equals("<init>"));
         visitIfM(new CursorUids(), mn -> {
             if (Modifier.isStatic(mn.access) || !mn.desc.endsWith("V") || !mn.desc.startsWith("(IIIIIIIII")) {
                 return false;
@@ -267,6 +268,39 @@ public class Client extends GraphVisitor {
                     addHook(fh);
                 }
             }
+        }
+    }
+
+    private class ItemDefActions extends BlockVisitor {
+
+        private final GraphVisitor itemdef = updater.visitor("ItemDefinition");
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor() {
+                @Override
+                public void visitField(FieldMemberNode fmn) {
+                    FieldMemberNode actions = (FieldMemberNode) fmn.tree().first(f -> f.opcode() == PUTFIELD
+                            && ((FieldMemberNode) f).desc().equals("[Ljava/lang/String;")
+                            && itemdef.resolve(((FieldMemberNode) f).key()) == null);
+                    if (actions != null) {
+                        String ye = profiledStrings.get(fmn.key());
+                        if (ye == null) {
+                            return;
+                        }
+                        if (ye.equals("Drop")) {
+                            itemdef.addHook(new FieldHook("actions", actions.fin()));
+                        } else if (ye.equals("Take")) {
+                            itemdef.addHook(new FieldHook("groundActions", actions.fin()));
+                        }
+                    }
+                }
+            });
         }
     }
 

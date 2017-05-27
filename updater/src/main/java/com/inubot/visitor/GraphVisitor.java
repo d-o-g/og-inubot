@@ -126,6 +126,23 @@ public abstract class GraphVisitor implements Opcodes {
             b.visitEnd();
     }
 
+    public final void visitIf(String visitor, BlockVisitor bv, Predicate<MethodNode> predicate) {
+        ClassNode cn = updater.visitor(visitor).cn;
+        if (cn == null)
+            return;
+        for (FlowGraph graph : updater.graphs().get(cn).values()) {
+            if (!predicate.test(graph.method())) {
+                continue;
+            }
+            this.graph = graph;
+            for (Block block : graph) {
+                if (bv.validate()) {
+                    bv.visit(block);
+                }
+            }
+        }
+    }
+
     public final void visitIf(BlockVisitor bv, Predicate<Block> blockPredicate) {
         for (Map<MethodNode, FlowGraph> map : updater.graphs().values()) {
             for (FlowGraph graph : map.values()) {
@@ -191,6 +208,15 @@ public abstract class GraphVisitor implements Opcodes {
         Hook h = hooks.get(hook);
         if (h != null && h instanceof FieldHook) {
             return (FieldHook) h;
+        }
+        return null;
+    }
+
+    public FieldHook resolve(String field) {
+        for (Hook hook : hooks.values()) {
+            if (hook instanceof FieldHook && ((FieldHook) hook).key().equals(field)) {
+                return (FieldHook) hook;
+            }
         }
         return null;
     }

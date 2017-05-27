@@ -21,7 +21,7 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
 
     private final Map<Skill, TrackedSkill> trackedSkills;
     private final Map<String, Object> paintData;
-    private final StopWatch stopWatch;
+    protected final StopWatch stopWatch;
     private boolean paintHidden = false;
 
     private Color textColor = Color.WHITE.darker(), lineColor = Color.GREEN;
