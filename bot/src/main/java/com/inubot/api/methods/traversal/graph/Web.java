@@ -16,7 +16,7 @@ public class Web extends Digraph<WebVertex, WebVertex> {
 
     public Web() {
         try {
-            InputStream in = new FileInputStream("./web.txt");
+            InputStream in = Web.class.getClassLoader().getResourceAsStream("web.txt");
             Scanner s = new Scanner(in);
             while (s.hasNextLine()) {
                 String line = s.nextLine();

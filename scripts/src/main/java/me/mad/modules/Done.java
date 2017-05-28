@@ -19,7 +19,6 @@ public class Done implements Module {
     @Override
     public void execute() {
         if (Game.isLoggedIn()) {
-            MadTutorial.nextAcc();
             while (Game.isLoggedIn()) {
                 LogoutTab.logout();
                 Time.sleep(3000);

@@ -1,6 +1,7 @@
 package com.inubot.bundledscripts.complete.alcher;
 
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.Inventory;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.oldschool.action.ActionOpcodes;

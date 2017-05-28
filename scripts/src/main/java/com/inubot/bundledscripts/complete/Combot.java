@@ -1,8 +1,11 @@
 package com.inubot.bundledscripts.complete;
 
+import com.inubot.Inubot;
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.Inventory;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
+import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.bundledscripts.proframework.ProScript;
 import com.inubot.script.Manifest;
 
@@ -66,13 +69,20 @@ public class Combot extends ProScript {
     }
 
     public boolean attack(Monster monster) {
-        Npc npc = Npcs.getNearest(target -> target.getTarget() == null && !target.isHealthBarVisible() && Movement.isReachable(target)
-                    && target.getName().toLowerCase().equals(monster.name().toLowerCase()));
+        Npc npc = Npcs.getNearest(target -> target != null && target.getTarget() == null && !target.isHealthBarVisible()
+                && Movement.isReachable(target) && target.getName().toLowerCase().equals(monster.name().toLowerCase()));
         if (npc != null) {
             npc.processAction("Attack");
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void messageReceived(MessageEvent e) {
+        if (e.getType() == MessageEvent.Type.PLAYER) {
+            Inubot.getInstance().sendNotification("Player message", e.getText());
+        }
     }
 
     @Override

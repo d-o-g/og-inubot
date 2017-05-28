@@ -6,14 +6,16 @@
  */
 package com.inubot;
 
+import com.inubot.api.methods.Login;
 import com.inubot.api.util.CacheLoader;
+import com.inubot.api.util.Time;
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.transform.*;
-import com.inubot.bot.ui.Login;
 import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.Crawler.GameType;
 import com.inubot.bot.util.io.JarNode;
 import com.inubot.client.natives.oldschool.RSClient;
+import jdk.nashorn.internal.runtime.ECMAException;
 
 import javax.swing.*;
 import java.io.File;
@@ -27,8 +29,22 @@ public class Inubot extends Bot<RSClient> {
                 for (int i = 0; i < args.length; i++) {
                     String arg = args[i];
                     if (arg.equals("-login")) {
-                        Login.setUsername(args[i + 1]);
-                        Login.setPassword(args[i + 2]);
+                        String username = args[i + 1];
+                        String password = args[i + 2];
+                        new Thread(() -> {
+                            while (true) {
+                                Time.sleep(100);
+                                if (getInstance() == null || getInstance().getClient() == null)
+                                    continue;
+                                if (Login.getState() != Login.STATE_CREDENTIALS)
+                                    continue;
+                                break;
+                            }
+                            System.out.println("Setting username and password.");
+                            Login.setUsername(username);
+                            Login.setPassword(password);
+                        }).start();
+
                     }
                 }
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

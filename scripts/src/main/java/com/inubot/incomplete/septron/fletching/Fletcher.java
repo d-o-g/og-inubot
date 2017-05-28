@@ -2,6 +2,8 @@ package com.inubot.incomplete.septron.fletching;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.exchange.ExchangePricing;
+import com.inubot.api.methods.Bank;
+import com.inubot.api.methods.Inventory;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.filter.NameFilter;

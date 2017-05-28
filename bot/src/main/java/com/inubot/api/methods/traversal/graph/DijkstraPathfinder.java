@@ -57,7 +57,7 @@ public class DijkstraPathfinder implements Pathfinder<WebVertex> {
             path.add(step);
         }
         Collections.reverse(path);
-        System.out.println((System.currentTimeMillis() - time) + "ms to generate path");
+        //System.out.println((System.currentTimeMillis() - time) + "ms to generate path");
         return path.toArray(new WebVertex[path.size()]);
     }
 

@@ -7,11 +7,12 @@
 package com.inubot;
 
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.Bank;
+import com.inubot.api.methods.Inventory;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
-import com.inubot.bot.ui.CreaterGUI;
 import com.inubot.bot.ui.WidgetExplorer;
 
 import java.awt.event.KeyEvent;
@@ -92,11 +93,6 @@ public enum Hotkey {
         @Override
         public void onActivation() {
             Bank.open();
-        }
-    }, CREATE_ACCOUNT(KeyEvent.VK_N) {
-        @Override
-        public void onActivation() {
-            new CreaterGUI().setVisible(true);
         }
     }, SHOW_WIDGET(KeyEvent.VK_G) {
         @Override

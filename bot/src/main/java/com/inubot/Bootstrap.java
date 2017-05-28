@@ -6,8 +6,6 @@
  */
 package com.inubot;
 
-import com.inubot.bot.ui.Login;
-
 import java.io.IOException;
 import java.util.Arrays;
 

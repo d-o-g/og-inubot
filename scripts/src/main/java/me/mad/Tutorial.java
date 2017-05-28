@@ -1,6 +1,7 @@
 package me.mad;
 
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.Inventory;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Random;

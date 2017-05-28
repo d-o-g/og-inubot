@@ -1,6 +1,8 @@
 package com.inubot.bundledscripts.complete.fisher;
 
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.Bank;
+import com.inubot.api.methods.Inventory;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.Npc;

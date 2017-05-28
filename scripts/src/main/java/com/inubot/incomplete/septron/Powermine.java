@@ -2,10 +2,12 @@ package com.inubot.incomplete.septron;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.exchange.ExchangePricing;
+import com.inubot.api.methods.Inventory;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.*;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
+import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
 import java.awt.*;
@@ -14,9 +16,10 @@ import java.awt.*;
  * @author Dank Memes
  * @since June 18, 2015
  */
+@Manifest(name = "Powermin", developer = "a", desc = "a")
 public class Powermine extends Script implements Paintable {
 
-    private static final Rock SELECTED = Rock.IRON;
+    private static final Rock SELECTED = Rock.COPPER;
 
     private int price = 0, xp = 0;
 
@@ -55,13 +58,9 @@ public class Powermine extends Script implements Paintable {
             if (Inventory.isFull()) {
                 Inventory.dropAll(item -> !item.getName().contains("pickaxe"));
             }
-
-
-
             if (rock != null) {
                 rock = GameObjects.getNearest(t -> t.getLocation().equals(rock.getLocation()));
             }
-
             if (Players.getLocal().getAnimation() == -1 || rock != null && !SELECTED.accept(rock)) {
                 rock = GameObjects.getNearest(go ->
                         go.distance(Players.getLocal().getLocation()) <= 2 && SELECTED.accept(go)
@@ -75,7 +74,6 @@ public class Powermine extends Script implements Paintable {
     }
 
     private enum Rock implements Filter<GameObject> {
-
         CLAY(434, new Color(11898445)),
         COPPER(436, new Color(8145959)),
         TIN(438, new Color(8549491)),
