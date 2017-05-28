@@ -207,4 +207,8 @@ public class Inventory {
     public static void apply(Consumer<WidgetItem> application) {
         apply(Filter.always(), application);
     }
+
+    public static boolean contains(Filter<WidgetItem> filter) {
+        return getFirst(filter) != null;
+    }
 }

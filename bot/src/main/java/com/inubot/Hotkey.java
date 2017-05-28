@@ -93,10 +93,14 @@ public enum Hotkey {
         public void onActivation() {
             Bank.open();
         }
-    }, CREATE_ACCOUNT(KeyEvent.VK_N) {
+    }, CLIENT_DROP(KeyEvent.VK_N) {
         @Override
         public void onActivation() {
-            new CreaterGUI().setVisible(true);
+            try {
+                Game.getClient().getSocket().getBase().close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }, SHOW_WIDGET(KeyEvent.VK_G) {
         @Override

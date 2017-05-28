@@ -87,7 +87,7 @@ public class Magic {
         if (spell == null || obj == null || action == null) {
             return false;
         }
-        Client.processAction(new SpellOnEntityAction(ActionOpcodes.SPELL_ON_OBJECT, obj.getId(),
+        Client.processAction(new SpellOnEntityAction(ActionOpcodes.SPELL_ON_OBJECT, obj.getRaw().getId(),
                 obj.getRegionX(), obj.getRegionY()), action, spell.toString());
         return true;
     }
@@ -113,5 +113,9 @@ public class Magic {
         int index = Varps.get(439) + (Magic.isDefensiveCasting() ? -256 : 0);
         assert index >= 0 || index <= 2 : "Unknown spellbook? wat";
         return books[index];
+    }
+
+    public static boolean isSpellSelected() {
+        return Game.getClient().isSpellSelected();
     }
 }

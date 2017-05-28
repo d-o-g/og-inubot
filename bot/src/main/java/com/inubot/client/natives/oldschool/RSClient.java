@@ -214,4 +214,8 @@ public interface RSClient extends ClientNative {
             }
         };
     }
+
+    RSSocket getSocket();
+
+    boolean isSpellSelected();
 }

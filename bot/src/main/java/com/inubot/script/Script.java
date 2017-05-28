@@ -75,9 +75,11 @@ public abstract class Script extends LoopTask {
                 Time.sleep(600, 700);
             }
         }
-        Inubot.getInstance().getClient().resetMouseIdleTime();
-        Mouse.setLocation(750, 15);
-        Mouse.click(true);
+        if (!Magic.isSpellSelected()) {
+            Inubot.getInstance().getClient().resetMouseIdleTime();
+            Mouse.setLocation(750, 15);
+            Mouse.click(true);
+        }
     }
 
     public void onLogout() {

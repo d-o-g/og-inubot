@@ -1,6 +1,7 @@
 package com.inubot.bundledscripts.complete;
 
 import com.inubot.api.methods.Game;
+import com.inubot.api.methods.Magic;
 import com.inubot.api.methods.Players;
 import com.inubot.bundledscripts.proframework.ProScript;
 import com.inubot.script.Manifest;
@@ -22,5 +23,6 @@ public class Dogbugger extends ProScript {
         data.put("Animation", Players.getLocal().getAnimation());
         data.put("Position", Players.getLocal().getLocation());
         data.put("Connection state", Game.getState());
+        data.put("Spell selected", Magic.isSpellSelected());
     }
 }

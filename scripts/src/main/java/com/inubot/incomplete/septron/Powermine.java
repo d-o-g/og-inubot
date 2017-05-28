@@ -1,52 +1,43 @@
 package com.inubot.incomplete.septron;
 
-import com.inubot.api.methods.*;
+import com.inubot.api.methods.Game;
+import com.inubot.api.methods.GameObjects;
+import com.inubot.api.methods.Inventory;
+import com.inubot.api.methods.Players;
 import com.inubot.api.methods.exchange.ExchangePricing;
-import com.inubot.api.oldschool.*;
-import com.inubot.api.util.*;
+import com.inubot.api.oldschool.GameObject;
+import com.inubot.api.oldschool.Skill;
+import com.inubot.api.util.CacheLoader;
+import com.inubot.api.util.Paintable;
+import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.filter.Filter;
+import com.inubot.bundledscripts.proframework.ProScript;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
-import com.inubot.script.Script;
+import com.inubot.script.Manifest;
 
 import java.awt.*;
+import java.util.Map;
 
 /**
  * @author Dank Memes
  * @since June 18, 2015
  */
-public class Powermine extends Script implements Paintable {
+@Manifest(name = "PRO Rock Destruction", developer = "Septron", desc = "Powermines")
+public class Powermine extends ProScript implements Paintable {
 
     private static final Rock SELECTED = Rock.IRON;
-
-    private int price = 0, xp = 0;
-
-    private StopWatch runtime;
 
     private GameObject rock;
 
     @Override
-    public void render(Graphics2D graphics) {
-        graphics.setFont(new Font("Dialog", Font.BOLD, 12));
-        graphics.setColor(Color.YELLOW);
-        graphics.drawString("PRO Rock Destruction", 10, 40);
-        graphics.drawString("Runtime: " + runtime.toElapsedString(), 10, 55);
-
-        int gain = Skills.getExperience(Skill.MINING) - xp;
-        int mined = gain / 35;
-        graphics.drawString("Mined " + mined + " ore", 10, 70);
-        graphics.drawString("XP Gained: " + gain, 10, 85);
-        graphics.drawString("Lost: " + (mined * price) + "gp", 10, 100);
+    public void getPaintData(Map<String, Object> data) {
+        int mined = getTrackedSkill(Skill.MINING).getGainedExperience() / 35;
+        data.put("Mined", mined);
     }
 
     @Override
     public boolean setup() {
-        if (!Game.isLoggedIn()) {
-            return false;
-        }
-        xp = Skills.getExperience(Skill.MINING);
-        price = ExchangePricing.get(440);
-        runtime = new StopWatch(0);
-        return true;
+        return Game.isLoggedIn();
     }
 
     @Override
@@ -55,7 +46,6 @@ public class Powermine extends Script implements Paintable {
             if (Inventory.isFull()) {
                 Inventory.dropAll(item -> !item.getName().contains("pickaxe"));
             }
-
 
 
             if (rock != null) {
@@ -207,15 +197,15 @@ public class Powermine extends Script implements Paintable {
         }
 
         private static int u(int var0, double var1) {
-            double var3 = (double)(var0 >> 16) / 256.0D;
-            double var5 = (double)(var0 >> 8 & 255) / 256.0D;
-            double var7 = (double)(var0 & 255) / 256.0D;
+            double var3 = (double) (var0 >> 16) / 256.0D;
+            double var5 = (double) (var0 >> 8 & 255) / 256.0D;
+            double var7 = (double) (var0 & 255) / 256.0D;
             var3 = Math.pow(var3, var1);
             var5 = Math.pow(var5, var1);
             var7 = Math.pow(var7, var1);
-            int var9 = (int)(var3 * 256.0D);
-            int var10 = (int)(var5 * 256.0D);
-            int var11 = (int)(var7 * 256.0D);
+            int var9 = (int) (var3 * 256.0D);
+            int var10 = (int) (var5 * 256.0D);
+            int var11 = (int) (var7 * 256.0D);
             return (var9 << 16) + (var10 << 8) + var11;
         }
 

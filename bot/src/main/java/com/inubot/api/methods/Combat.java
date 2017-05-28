@@ -60,4 +60,8 @@ public class Combat {
         }
         Client.processAction(1, -1, hash, 57, "", "", 50, 50);
     }
+
+    public static boolean isPoisoned() {
+        return Varps.get(102) > 0;
+    }
 }

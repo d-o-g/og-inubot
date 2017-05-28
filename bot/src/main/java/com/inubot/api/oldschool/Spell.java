@@ -119,7 +119,7 @@ public interface Spell {
 
         @Override
         public final int getWidgetIndex() {
-            return this.ordinal();
+            return this.ordinal() + 1;
         }
 
         @Override

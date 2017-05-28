@@ -32,7 +32,7 @@ public class OSUpdater extends Updater {
                 new Cache(), new NodeDeque(), new Queue(), new Tile(), new Model(),
                 new AnimationSequence(), new Character(), new NpcDefinition(), new Npc(),
                 new Player(), new Item(), new ItemDefinition(), new InteractableEntity(),
-                new FloorDecoration(), new Boundary(), new BoundaryDecoration(),
+                new FloorDecoration(), new Boundary(), new BoundaryDecoration(), new Socket(),
                 new ObjectDefinition(), new Region(), new Canvas(), new WidgetNode(),
                 new ItemTable(), new CollisionMap(), new Buffer(), new Widget(), new Producer(),
                 new HealthBarDefinition(), new Hitbar(), new NodeIterable(), new HealthBar(),

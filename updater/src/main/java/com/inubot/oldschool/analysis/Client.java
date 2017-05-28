@@ -31,7 +31,8 @@ import java.util.function.Predicate;
         "username", "password", "getVarpBit", "hintArrowX", "hintArrowY", "hintArrowType", "loginState",
         "itemTables", "lowMemory", "hintArrowNpcIndex", "hintArrowPlayerIndex", "loadItemSprite", "engineCycle",
         "screenWidth", "screenHeight", "screenZoom", "screenState", "font_p12full", "grandExchangeOffers",
-        "currentWorld", "membersWorld", "onCursorUids", "onCursorCount", "menuX", "menuY", "menuWidth", "menuHeight", "viewportWalking"})
+        "currentWorld", "membersWorld", "onCursorUids", "onCursorCount", "menuX", "menuY", "menuWidth", "menuHeight",
+        "viewportWalking", "socket", "spellTargetFlags", "spellSelected"})
 public class Client extends GraphVisitor {
 
     private final Map<String, String> profiledStrings = new HashMap<>();
@@ -95,6 +96,7 @@ public class Client extends GraphVisitor {
         visitAll(new LoginState());
         visitAll(new LowMemory());
         visitAll(new HintPlayerIndex());
+        visitAll(new SpellTargetFlags());
         visitAll(new HintNpcIndex());
         visitAll(new Cycle());
         visitAll(new BufferBaseRead());
@@ -102,6 +104,7 @@ public class Client extends GraphVisitor {
         visitIfM(new ScreenState(), t -> t.desc.startsWith("([L") && t.desc.contains(";IIIIII"));
         visitAll(new HoveredTile());
         visitAll(new MenuPositionHooks());
+        visitAll(new Socket());
         visitIf("ItemDefinition", new ItemDefActions(), m -> m.name.equals("<init>"));
         visitIfM(new CursorUids(), mn -> {
             if (Modifier.isStatic(mn.access) || !mn.desc.endsWith("V") || !mn.desc.startsWith("(IIIIIIIII")) {
@@ -371,6 +374,90 @@ public class Client extends GraphVisitor {
                     }
                 }
             });
+        }
+    }
+
+    private class SpellTargetFlags extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            if (block.count(ICONST_4) == 2 && block.count(IAND) == 1 && block.count(GETSTATIC) == 1 && block.count(GETFIELD) == 0) {
+                block.follow().tree().accept(new NodeVisitor() {
+                    @Override
+                    public void visitField(FieldMemberNode fmn) {
+                        if (fmn.desc().equals("I")) {
+                            addHook(new FieldHook("spellTargetFlags", fmn.fin()));
+                            for (Block b : updater.graphs().get(block.owner.owner).get(block.owner)) { //ew
+                                b.tree().accept(new NodeVisitor() {
+                                    @Override
+                                    public void visitJump(JumpNode jn) {
+                                        FieldMemberNode fmn = jn.firstField();
+                                        if (fmn != null && fmn.opcode() == GETSTATIC && fmn.desc().equals("Z")
+                                                && fmn.owner().equals("client")
+                                                && resolve(fmn.owner() + "." + fmn.name()) == null
+                                                && fmn.name().startsWith("k")) { //half hardcoded because bitch hook
+                                            addHook(new FieldHook("spellSelected", fmn.fin()));
+                                        }
+                                    }
+                                });
+                            }
+                            lock.set(true);
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    private class Socket extends BlockVisitor {
+
+        private final List<FieldMemberNode> fields = new ArrayList<>();
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor() {
+                public void visitField(FieldMemberNode fmn) {
+                    if (fmn.desc().equals(desc("Socket")) && fmn.hasParent() && fmn.parent().hasParent() && fmn.parent().opcode() == INVOKEVIRTUAL && fmn.parent().parent().opcode() == ISTORE) {
+                        MethodMemberNode mmn = (MethodMemberNode) fmn.parent();
+                        if (mmn.owner().equals(clazz("Socket"))) {
+                            fields.add(fmn);
+                        }
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void visitEnd() {
+            addHook(new FieldHook("socket", mostCommon(fields).fin()));
+        }
+
+        public <T> T mostCommon(List<T> list) {
+            Map<T, Integer> map = new HashMap<>();
+
+            for (T t : list) {
+                Integer val = map.get(t);
+                map.put(t, val == null ? 1 : val + 1);
+            }
+
+            Map.Entry<T, Integer> max = null;
+
+            for (Map.Entry<T, Integer> e : map.entrySet()) {
+                if (max == null || e.getValue() > max.getValue())
+                    max = e;
+            }
+
+            return max != null ? max.getKey() : null;
         }
     }
 

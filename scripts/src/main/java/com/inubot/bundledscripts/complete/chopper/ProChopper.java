@@ -52,22 +52,26 @@ public class ProChopper extends ProScript {
         if (p.canProgress()) {
             Location location = Location.getClosestWithTree(p.next);
             if (Inventory.isFull()) {
-                WebBank b = Movement.getWeb().getNearestBank(t -> t.getType() != WebBank.Type.DEPOSIT_BOX);
-                if (b.getLocation().distance() > 15) {
-                    try {
-                        WebPath wp = Movement.getWeb().findPathToBank(b);
-                        if (wp.getNext().getTile().distance() < 15) {
-                            Movement.walkTo(b.getLocation());
-                        } else {
-                            wp.step(Option.TOGGLE_RUN);
-                        }
-                    } catch (Exception e) {
-                        Movement.walkTo(b.getLocation());
-                    }
-                } else if (!Bank.isOpen()) {
-                    Bank.open();
+                if (p.next.ordinal() <= Tree.MAPLE.ordinal()) {
+                    Inventory.dropAllExcept(new IdFilter<>(Axe.getIds()));
                 } else {
-                    Bank.depositAllExcept(new IdFilter<>(Axe.getIds()));
+                    WebBank b = Movement.getWeb().getNearestBank(t -> t.getType() != WebBank.Type.DEPOSIT_BOX);
+                    if (b.getLocation().distance() > 15) {
+                        try {
+                            WebPath wp = Movement.getWeb().findPathToBank(b);
+                            if (wp.getNext().getTile().distance() < 15) {
+                                Movement.walkTo(b.getLocation());
+                            } else {
+                                wp.step(Option.TOGGLE_RUN);
+                            }
+                        } catch (Exception e) {
+                            Movement.walkTo(b.getLocation());
+                        }
+                    } else if (!Bank.isOpen()) {
+                        Bank.open();
+                    } else {
+                        Bank.depositAllExcept(new IdFilter<>(Axe.getIds()));
+                    }
                 }
             } else if (Players.getLocal().getAnimation() == -1 && !Players.getLocal().isMoving()) {
                 if (location.getTreeArea().contains(Players.getLocal())) {

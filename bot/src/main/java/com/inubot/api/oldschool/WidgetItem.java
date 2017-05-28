@@ -64,25 +64,29 @@ public class WidgetItem implements Identifiable, Processable {
         return CacheLoader.findItemDefinition(id);
     }
 
-    public void processFirst() {
+    public boolean processFirst() {
         if (isInTable()) {
             RSItemDefinition def = getDefinition();
-            if (def == null)
-                return;
+            if (def == null) {
+                return false;
+            }
             for (String action : def.getActions()) {
                 if (action != null && !action.equals("null")) {
-                    processAction(action);
-                    return;
+                    if (processAction(action)) {
+                        return true;
+                    }
                 }
             }
         } else {
             for (String action : owner.getActions()) {
                 if (action != null && !action.equals("null")) {
-                    processAction(action);
-                    return;
+                    if (processAction(action)) {
+                        return true;
+                    }
                 }
             }
         }
+        return false;
     }
 
     public boolean processAction(int opcode, String action) {

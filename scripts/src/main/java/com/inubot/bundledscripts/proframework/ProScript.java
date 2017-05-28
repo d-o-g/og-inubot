@@ -99,7 +99,9 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
         if (trackedSkills.containsKey(skill)) {
             return trackedSkills.get(skill);
         }
-        return trackedSkills.put(skill, new TrackedSkill(skill));
+        TrackedSkill ts = new TrackedSkill(skill);
+        trackedSkills.put(skill, ts);
+        return ts;
     }
 
     public boolean isPaintHidden() {
