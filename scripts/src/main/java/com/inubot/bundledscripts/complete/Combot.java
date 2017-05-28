@@ -81,7 +81,6 @@ public class Combot extends ProScript {
     @Override
     public void messageReceived(MessageEvent e) {
         if (e.getType() == MessageEvent.Type.PLAYER) {
-
             Inubot.getInstance().sendNotification("Player message", e.getText());
         }
     }
