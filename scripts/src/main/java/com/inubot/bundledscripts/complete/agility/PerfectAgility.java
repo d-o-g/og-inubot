@@ -255,6 +255,26 @@ public class PerfectAgility extends ProScript implements Paintable {
                 .array()
         ),
 
+        CANFIS_COURSE(ObstacleFactory.newInstance(true)
+                .append(new Area(new Tile(3465, 3470, 0), new Tile(3522, 3518, 0), 0),
+                        "Tall tree", "Climb")
+                .append(new Area(new Tile(3502, 3491, 2), new Tile(3511, 3498, 2), 2),
+                        "Gap", "Jump", new Tile(3505, 3498, 2))
+                .append(new Area(new Tile(3496, 3503, 2), new Tile(3504, 3507, 2), 2),
+                        "Gap", "Jump", new Tile(3496, 3504, 2))
+                .append(new Area(new Tile(3485, 3498, 2), new Tile(3493, 3505, 2), 2),
+                        "Gap", "Jump", new Tile(3485, 3499, 2))//
+                .append(new Area(new Tile(3474, 3491, 3), new Tile(3480, 3500, 3), 3),
+                        "Gap", "Jump", new Tile(3478, 3491, 3))//
+                .append(new Area(new Tile(3476, 3480, 2), new Tile(3484, 3487, 2), 2),
+                        "Pole-vault", "Vault")
+                .append(new Area(new Tile(3486, 3468, 3), new Tile(3504, 3479, 3), 3),
+                        "Gap", "Jump", new Tile(3503, 3476, 3))
+                .append(new Area(new Tile(3509, 3474, 2), new Tile(3516, 3483, 2), 2),
+                        "Gap", "Jump",  new Tile(3510, 3483, 2))
+                .array()
+        ),
+
         FALADOR_COURSE(ObstacleFactory.newInstance(true)
                 .append(new Area(new Tile(3003, 3363, 0), new Tile(3059, 3328, 0), 0),
                         "Rough wall", "Climb")
