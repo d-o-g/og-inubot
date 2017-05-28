@@ -128,11 +128,12 @@ public class PerfectAgility extends ProScript implements Paintable {
                 Client.processAction(new InputButtonAction(widget.getId()), "Play RuneScape", "");
             }
         }
-        /*GroundItem mark = GroundItems.getNearest("Mark of grace");
+
+        GroundItem mark = GroundItems.getNearest("Mark of grace");
         if (mark != null && Movement.isObjectReachable(mark) && mark.getLocation().getPlane() == Players.getLocal().getLocation().getPlane()) {
             mark.processAction("Take");
             return 400;
-        }*/
+        }
 
         Obstacle obstacle = course.getNext();
 
