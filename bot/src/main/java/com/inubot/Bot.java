@@ -15,11 +15,9 @@ import com.inubot.bot.account.Account;
 import com.inubot.bot.account.AccountManager;
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.ModScript;
-import com.inubot.bot.net.cdn.ServerConnection;
 import com.inubot.bot.ui.BotMenuBar;
 import com.inubot.bot.util.*;
 import com.inubot.bot.util.io.Crawler;
-import com.inubot.bot.util.io.Internet;
 import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.ClientNative;
 import com.inubot.script.ScriptFlux;
@@ -34,6 +32,7 @@ import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarInputStream;
@@ -52,10 +51,31 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
     private EventBus syncEventBus;
     private Client client;
 
+    private TrayIcon tray = null;
+
     public Bot() {
         super(Configuration.APPLICATION_NAME);
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
         setBackground(Color.BLACK);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        Image image16 = toolkit.getImage(Bot.class.getClassLoader().getResource("icon16.png"));
+        Image image32 = toolkit.getImage(Bot.class.getClassLoader().getResource("icon32.png"));
+        Image image64 = toolkit.getImage(Bot.class.getClassLoader().getResource("icon64.png"));
+        Image image128 = toolkit.getImage(Bot.class.getClassLoader().getResource("icon128.png"));
+        setIconImages(Arrays.asList(image16, image32, image64, image128));
+
+        if (SystemTray.isSupported()) {
+            SystemTray tray = SystemTray.getSystemTray();
+            this.tray = new TrayIcon(image16, "Inubot");
+            this.tray.setImageAutoSize(true);
+            try {
+                tray.add(this.tray);
+            } catch (AWTException e) {
+                System.err.println("TrayIcon could not be added.");
+            }
+        }
+
         this.scriptFlux = new ScriptFlux();
         this.crawler = createCrawler();
         this.asyncEventBus = new AsynchronousEventBus();
@@ -219,6 +239,10 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
 
     public GameCanvas getCanvas() {
         return ((Applet) client).getComponentCount() > 0 ? (GameCanvas) ((Applet) client).getComponent(0) : null;
+    }
+
+    public void sendNotification(String title, String message) {
+        tray.displayMessage(title, message, TrayIcon.MessageType.INFO);
     }
 
     @Override

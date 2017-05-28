@@ -53,24 +53,24 @@ public class MadTutorial extends Script implements Paintable {
         mw.submit(new Monk(), 0);
         mw.submit(new Magic(), 0);
 
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(Configuration.CACHE + "accs.txt"));
-            for (String line : lines) {
-                String[] split = line.split("\\|");
-                for (String acc : split) {
-                    String[] details = acc.split(":");
-                    if (details.length != 2) {
-                        continue;
-                    }
-                    accs.add(new Account(details[0], details[1]));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            List<String> lines = Files.readAllLines(Paths.get(Configuration.CACHE + "accs.txt"));
+//            for (String line : lines) {
+//                String[] split = line.split("\\|");
+//                for (String acc : split) {
+//                    String[] details = acc.split(":");
+//                    if (details.length != 2) {
+//                        continue;
+//                    }
+//                    accs.add(new Account(details[0], details[1]));
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
-        nextAcc();
+//        nextAcc();
         return true;
     }
 
@@ -102,9 +102,9 @@ public class MadTutorial extends Script implements Paintable {
 
     @Override
     public int loop() {
-        if (accs.size() == 0) {
-            stop();
-        }
+//        if (accs.size() == 0) {
+//            stop();
+//        }
         int var = setting();
 
         if (var > 0 && !Movement.isRunEnabled() && Movement.getRunEnergy() > 1) {

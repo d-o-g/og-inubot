@@ -2,6 +2,7 @@ package com.inubot.incomplete.septron;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.exchange.ExchangePricing;
+import com.inubot.api.methods.Inventory;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Random;

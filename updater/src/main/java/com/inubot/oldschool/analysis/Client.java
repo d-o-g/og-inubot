@@ -236,7 +236,6 @@ public class Client extends GraphVisitor {
     }
 
     private void visitStaticFields() {
-
         String playerDesc = desc("Player");
         String regionDesc = desc("Region");
         String widgetDesc = desc("Widget");

@@ -7,6 +7,7 @@
 package com.inubot.bundledscripts.complete.hunter;
 
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.Inventory;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.util.Paintable;

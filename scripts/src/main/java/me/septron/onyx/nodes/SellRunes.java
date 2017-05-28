@@ -3,7 +3,6 @@ package me.septron.onyx.nodes;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Inventory;
 import com.inubot.api.methods.Players;
-import com.inubot.api.oldschool.Tile;
 import me.septron.framework.Node;
 import me.septron.onyx.Pepperjack;
 

@@ -2,6 +2,8 @@ package com.inubot.bundledscripts.complete;
 
 import com.inubot.Hotkey;
 import com.inubot.api.methods.*;
+import com.inubot.api.methods.Bank;
+import com.inubot.api.methods.Inventory;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.AWTUtil;

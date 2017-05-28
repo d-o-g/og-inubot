@@ -36,7 +36,7 @@ public class PerfectAgility extends ProScript implements Paintable {
 
     private static final boolean ALCHING = true;
     private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));
-    private static final Filter<WidgetItem> OTHER_FILTER = (i -> i.getName().contains("Gold brace"));
+    private static final Filter<WidgetItem> OTHER_FILTER = (i -> i.getName().contains("Rune arrow"));
 
     @Override
     public boolean setup() {
@@ -73,9 +73,9 @@ public class PerfectAgility extends ProScript implements Paintable {
         WidgetItem other = Inventory.getFirst(OTHER_FILTER);
         if (runes != null && other != null) {
             // low alch
-            //Client.processAction(new SelectableSpellButtonAction(14286862), "", "");
+            Client.processAction(new SelectableSpellButtonAction(14286862), "", "");
             // high alch
-            Client.processAction(new SelectableSpellButtonAction(14286883), "", "");
+            //Client.processAction(new SelectableSpellButtonAction(14286883), "", "");
             Client.processAction(new TableAction(ActionOpcodes.SPELL_ON_ITEM, other.getId(), other.getIndex(), 9764864), "", "");
         }
     }
