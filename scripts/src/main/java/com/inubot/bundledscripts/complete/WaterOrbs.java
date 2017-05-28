@@ -90,6 +90,7 @@ public final class WaterOrbs extends ProScript {
                 Bank.close();
                 return 420;
             }
+
             GameObject wall = GameObjects.getNearest("Crumbling wall");
             if (wall != null && wall.processAction("Climb-over")) {
                 Time.await(() -> !Players.getLocal().isMoving(), 12000);
