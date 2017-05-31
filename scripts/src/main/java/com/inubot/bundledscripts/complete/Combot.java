@@ -27,7 +27,6 @@ public class Combot extends ProScript {
         SEAGULL     (new Tile(3030, 3236), 25),
         //GOBLIN      (new Tile(3183, 3246), 25),
         COWS        (new Tile(3031, 3315), 99);
-        //MONK        (new Tile(0, 0), 99);
 
         private final Tile tile;
         private final int max;
