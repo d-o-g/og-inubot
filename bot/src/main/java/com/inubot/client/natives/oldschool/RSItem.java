@@ -2,7 +2,7 @@ package com.inubot.client.natives.oldschool;
 
 import com.inubot.client.Artificial;
 
-public interface RSItem extends RSRenderable {
+public interface RSItem extends RSEntity {
 
     int getId();
     int getStackSize();

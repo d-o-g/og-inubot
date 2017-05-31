@@ -15,7 +15,7 @@ public class Item extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.superName.equals(clazz("Renderable")) && cn.getFieldTypeCount() == 1 && cn.fieldCount("I") == 2;
+        return cn.superName.equals(clazz("Entity")) && cn.getFieldTypeCount() == 1 && cn.fieldCount("I") == 2;
     }
 
     @Override

@@ -7,7 +7,7 @@
 package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.methods.Interfaces;
-import com.inubot.api.oldschool.Widget;
+import com.inubot.api.oldschool.InterfaceComponent;
 
 /**
  * Named abstract since TableAction can not be named
@@ -48,10 +48,10 @@ public abstract class AbstractTableAction extends Action {
         return -1;
     }
 
-    public Widget getTable() {
+    public InterfaceComponent getTable() {
         final int parent = getParent();
         final int child = getChild();
-        return Interfaces.getWidget(parent, child);
+        return Interfaces.getComponent(parent, child);
     }
 
     @Override

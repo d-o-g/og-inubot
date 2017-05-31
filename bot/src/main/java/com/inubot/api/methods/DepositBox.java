@@ -1,15 +1,14 @@
 package com.inubot.api.methods;
 
 import com.inubot.api.oldschool.GameObject;
-import com.inubot.api.oldschool.Widget;
-import com.inubot.api.oldschool.WidgetItem;
+import com.inubot.api.oldschool.InterfaceComponent;
+import com.inubot.api.oldschool.Item;
 import com.inubot.api.util.filter.Filter;
 import com.inubot.api.util.filter.IdFilter;
 import com.inubot.api.util.filter.NameFilter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * @author Septron
@@ -27,7 +26,7 @@ public class DepositBox {
      * @return {@code true} if the deposit box is open, {@code false} otherwise
      */
     public static boolean isOpen() {
-        Widget component = Interfaces.get(INTERFACE, 0);
+        InterfaceComponent component = Interfaces.get(INTERFACE, 0);
         return component != null && component.isVisible();
     }
 
@@ -40,7 +39,7 @@ public class DepositBox {
     }
 
     public static boolean depositInventory() {
-        Widget component = Interfaces.get(INTERFACE, 3);
+        InterfaceComponent component = Interfaces.get(INTERFACE, 3);
         if (component != null) {
             component.processAction("Deposit inventory");
             return true;
@@ -48,8 +47,8 @@ public class DepositBox {
         return false;
     }
 
-    public static boolean depositAll(Filter<WidgetItem> predicate) {
-        WidgetItem[] items = getItems(predicate);
+    public static boolean depositAll(Filter<Item> predicate) {
+        Item[] items = getItems(predicate);
         boolean success = false;
         outer:
         for (int i = 0; i < items.length; i++) {
@@ -71,7 +70,7 @@ public class DepositBox {
         return depositAll(new IdFilter<>(ids));
     }
 
-    public static boolean depositAllExcept(Filter<WidgetItem> filter) {
+    public static boolean depositAllExcept(Filter<Item> filter) {
         return depositAll(Filter.not(filter));
     }
 
@@ -83,22 +82,22 @@ public class DepositBox {
         return depositAllExcept(new NameFilter<>(names));
     }
 
-    public static WidgetItem[] getItems(Filter<WidgetItem> filter) {
-        Widget parent = Interfaces.getWidget(INTERFACE, 2);
+    public static Item[] getItems(Filter<Item> filter) {
+        InterfaceComponent parent = Interfaces.getComponent(INTERFACE, 2);
         if (parent != null) {
-            List<WidgetItem> items = new ArrayList<>();
+            List<Item> items = new ArrayList<>();
             int i = 0;
-            for (Widget child : parent.getChildren()) {
+            for (InterfaceComponent child : parent.getComponents()) {
                 i++;
                 if (child.getItemId() != 6512) {
-                    WidgetItem item = new WidgetItem(child, i);
+                    Item item = new Item(child, i);
                     if (!filter.accept(item))
                         continue;
                     items.add(item);
                 }
             }
-            return items.toArray(new WidgetItem[items.size()]);
+            return items.toArray(new Item[items.size()]);
         }
-        return new WidgetItem[0];
+        return new Item[0];
     }
 }

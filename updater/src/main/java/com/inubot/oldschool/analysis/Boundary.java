@@ -20,12 +20,12 @@ import org.objectweb.asm.tree.ClassNode;
  * @author unsigned
  * @since 26-04-2015
  */
-@VisitorInfo(hooks = {"x", "y", "plane", "id", "renderable"})
+@VisitorInfo(hooks = {"x", "y", "plane", "id", "entity"})
 public class Boundary extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.ownerless() && cn.getFieldTypeCount() == 2 && cn.fieldCount("I") == 7 && cn.fieldCount(desc("Renderable")) == 2;
+        return cn.ownerless() && cn.getFieldTypeCount() == 2 && cn.fieldCount("I") == 7 && cn.fieldCount(desc("Entity")) == 2;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Boundary extends GraphVisitor {
                                 addHook(new FieldHook(name, fmn.fin()));
                                 added++;
                             }
-                        } else if (fmn.desc().equals(desc("Renderable"))) {
+                        } else if (fmn.desc().equals(desc("Entity"))) {
                             VariableNode vn = fmn.firstVariable();
                             if (vn != null) {
                                 vn = vn.nextVariable();
@@ -75,7 +75,7 @@ public class Boundary extends GraphVisitor {
                             if (vn != null) {
                                 String name = null;
                                 if (vn.var() == 5) {
-                                    name = "renderable";
+                                    name = "entity";
                                 }
                                 if (name == null) {
                                     return;

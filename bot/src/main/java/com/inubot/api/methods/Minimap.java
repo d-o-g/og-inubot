@@ -7,7 +7,7 @@
 package com.inubot.api.methods;
 
 import com.inubot.Inubot;
-import com.inubot.api.oldschool.Widget;
+import com.inubot.api.oldschool.InterfaceComponent;
 
 public class Minimap {
 
@@ -23,9 +23,9 @@ public class Minimap {
         return Inubot.getInstance().getClient().getMapOffset();
     }
 
-    public static Widget getWidget() {
-        Widget[] children = Interfaces.widgetsFor(164);
-        for (Widget wc : children) {
+    public static InterfaceComponent getComponent() {
+        InterfaceComponent[] children = Interfaces.componentsFor(164);
+        for (InterfaceComponent wc : children) {
             if (wc == null || wc.getWidth() != 172)
                 continue;
             return wc;

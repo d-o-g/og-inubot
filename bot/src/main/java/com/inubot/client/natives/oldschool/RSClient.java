@@ -61,17 +61,17 @@ public interface RSClient extends ClientNative {
 
     RSCollisionMap[] getCollisionMaps();
 
-    RSWidget[][] getWidgets();
+    RSInterfaceComponent[][] getInterfaceComponents();
 
     RSRegion getRegion();
 
-    int[] getWidgetPositionsX();
+    int[] getInterfacePositionsX();
 
-    int[] getWidgetPositionsY();
+    int[] getInterfacePositionsY();
 
-    int[] getWidgetHeights();
+    int[] getInterfaceHeights();
 
-    int[] getWidgetWidths();
+    int[] getInterfaceWidths();
 
     int[] getExperiences();
 
@@ -86,6 +86,8 @@ public interface RSClient extends ClientNative {
     String[] getPlayerActions(); //default player actions for the current region - max array size = 8
 
     RSNodeTable getItemTables();
+
+    RSNodeTable getInterfaceConfigs();
 
     boolean isLowMemory();
 
@@ -153,7 +155,7 @@ public interface RSClient extends ClientNative {
     @Artificial
     void setUsername(String user);
 
-    RSInteractableEntity[] getObjects();
+    RSEntityMarker[] getObjects();
 
     String getPassword();
 
@@ -191,7 +193,7 @@ public interface RSClient extends ClientNative {
 
     @Artificial
     default RSInterface[] getInterfaces() {
-        RSWidget[][] raw = getWidgets();
+        RSInterfaceComponent[][] raw = getInterfaceComponents();
         if (raw == null || raw.length == 0)
             return new RSInterface[0];
         List<RSInterface> containers = new ArrayList<>();
@@ -201,7 +203,7 @@ public interface RSClient extends ClientNative {
     }
 
     @Artificial
-    default RSInterface createInterface(int index, RSWidget[] widgets) {
+    default RSInterface createInterface(int index, RSInterfaceComponent[] components) {
         return new RSInterface() {
             @Override
             public int getIndex() {
@@ -209,8 +211,8 @@ public interface RSClient extends ClientNative {
             }
 
             @Override
-            public RSWidget[] getWidgets() {
-                return widgets == null ? new RSWidget[0] : widgets;
+            public RSInterfaceComponent[] getComponents() {
+                return components == null ? new RSInterfaceComponent[0] : components;
             }
         };
     }

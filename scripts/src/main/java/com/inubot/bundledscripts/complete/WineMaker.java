@@ -4,8 +4,8 @@ import com.inubot.Hotkey;
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.Bank;
 import com.inubot.api.methods.Inventory;
+import com.inubot.api.oldschool.Item;
 import com.inubot.api.oldschool.Skill;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.StopWatch;
@@ -37,8 +37,8 @@ public class WineMaker extends Script implements Paintable {
                 return 800;
             }
             Bank.depositInventory();
-            WidgetItem a = Bank.getFirst(new IdFilter<>(1937));
-            WidgetItem b = Bank.getFirst(new IdFilter<>(1987));
+            Item a = Bank.getFirst(new IdFilter<>(1937));
+            Item b = Bank.getFirst(new IdFilter<>(1987));
             if (a != null && b != null) {
                 a.processAction("Withdraw-14");
                 b.processAction("Withdraw-14");
@@ -48,11 +48,11 @@ public class WineMaker extends Script implements Paintable {
                 Bank.close();
                 return 600;
             }
-            WidgetItem src = Inventory.getFirst("Grapes");
-            WidgetItem dst = Inventory.getFirst("Jug of water");
+            Item src = Inventory.getFirst("Grapes");
+            Item dst = Inventory.getFirst("Jug of water");
             if (src != null && dst != null) {
                 src.use(dst);
-                if (Time.await(() -> Interfaces.getWidget(t -> t.getId() == 20250627) != null, 1500)) {
+                if (Time.await(() -> Interfaces.getComponent(t -> t.getId() == 20250627) != null, 1500)) {
                     Client.processAction(0, -1, 20250627, 30, "Make All", "", 50, 50);
                     //lame hack, interaction never fails so no fucks given anyway
                     if (Time.await(() -> Inventory.getCount() == 14, 17000)) {

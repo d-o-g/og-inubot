@@ -7,10 +7,10 @@
 package com.inubot.api.methods;
 
 import com.inubot.Inubot;
+import com.inubot.api.oldschool.InterfaceComponent;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Player;
 import com.inubot.api.oldschool.Tile;
-import com.inubot.api.oldschool.Widget;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -159,7 +159,7 @@ public class Projection {
     }
 
     public static Point groundToMap(int x, int y, boolean ignoreDist) {
-        Widget minimap = Minimap.getWidget();
+        InterfaceComponent minimap = Minimap.getComponent();
         if (minimap == null)
             return null;
         Player local = Players.getLocal();

@@ -6,11 +6,11 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 
 @VisitorInfo(hooks = {"height"})
-public class Renderable extends GraphVisitor {
+public class Entity extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return (cn.access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT && cn.superName.equals(clazz("CacheNode"));
+        return (cn.access & Opcodes.ACC_ABSTRACT) == Opcodes.ACC_ABSTRACT && cn.superName.equals(clazz("DoublyLinkedNode"));
     }
 
     @Override

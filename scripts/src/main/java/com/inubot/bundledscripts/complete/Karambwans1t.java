@@ -2,7 +2,7 @@ package com.inubot.bundledscripts.complete;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.GameObject;
-import com.inubot.api.oldschool.WidgetItem;
+import com.inubot.api.oldschool.Item;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.bundledscripts.proframework.ProScript;
@@ -30,7 +30,7 @@ public class Karambwans1t extends ProScript {
             //
             if (++cycle >= 18) {
                 cycle = 0; //if we dont reset, cycle will go > max int
-                WidgetItem karambwan = Inventory.getLast("Raw karambwan");
+                Item karambwan = Inventory.getLast("Raw karambwan");
                 if (karambwan == null) {
                     if (!Bank.isOpen()) {
                         Bank.open();

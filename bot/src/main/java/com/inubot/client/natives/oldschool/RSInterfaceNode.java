@@ -1,5 +1,5 @@
 package com.inubot.client.natives.oldschool;
 
-public interface RSWidgetNode extends RSNode {
+public interface RSInterfaceNode extends RSNode {
     int getId();
 }

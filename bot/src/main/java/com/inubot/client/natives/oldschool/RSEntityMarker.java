@@ -1,6 +1,6 @@
 package com.inubot.client.natives.oldschool;
 
-public interface RSInteractableEntity extends RSGameObject {
+public interface RSEntityMarker extends RSGameObject {
     int getPlane();
 
     int getX();
@@ -9,5 +9,5 @@ public interface RSInteractableEntity extends RSGameObject {
 
     int getId();
 
-    RSRenderable getRenderable();
+    RSEntity getEntity();
 }

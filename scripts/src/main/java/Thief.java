@@ -1,10 +1,7 @@
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.GameObject;
-import com.inubot.api.oldschool.Npc;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.bundledscripts.proframework.ProScript;
 import com.inubot.script.Manifest;
-import com.inubot.script.Script;
 
 import java.awt.*;
 import java.util.Map;

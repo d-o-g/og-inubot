@@ -11,7 +11,7 @@ public class HealthBarDefinition extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.superName.equals(clazz("CacheNode")) && cn.fieldCount() == 10 && cn.fieldCount(int.class) == 10;
+        return cn.superName.equals(clazz("DoublyLinkedNode")) && cn.fieldCount() == 10 && cn.fieldCount(int.class) == 10;
     }
 
     @Override

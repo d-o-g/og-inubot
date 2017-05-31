@@ -15,11 +15,11 @@ import com.inubot.client.natives.oldschool.*;
 import com.inubot.api.oldschool.action.Processable;
 import com.inubot.api.util.Identifiable;
 
-public abstract class Character<T extends RSCharacter> extends Wrapper<T> implements Locatable, Processable, Identifiable {
+public abstract class PathingEntity<T extends RSPathingEntity> extends Wrapper<T> implements Locatable, Processable, Identifiable {
 
     protected final int arrayIndex;
 
-    public Character(T raw, int index) {
+    public PathingEntity(T raw, int index) {
         super(raw);
         this.arrayIndex = index;
     }
@@ -91,7 +91,7 @@ public abstract class Character<T extends RSCharacter> extends Wrapper<T> implem
         return getQueueSize() != 0;
     }
 
-    public Character<?> getTarget() {
+    public PathingEntity<?> getTarget() {
         int index = getTargetIndex();
         if (index == -1)
             return null;

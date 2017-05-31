@@ -1,6 +1,6 @@
 package com.inubot.client.natives.oldschool;
 
-public interface RSItemDefinition extends RSCacheNode {
+public interface RSItemDefinition extends RSDoublyLinkedNode {
     String getName();
     int getId();
     String[] getActions();

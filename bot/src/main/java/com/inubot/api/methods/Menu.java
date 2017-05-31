@@ -95,29 +95,29 @@ public class Menu {
         return index >= 0 && processAction(object, ActionOpcodes.OBJECT_ACTION_0 + index, action);
     }
 
-    public static boolean processAction(Widget widget, String action) {
-        if (widget == null) {
+    public static boolean processAction(InterfaceComponent interfaceComponent, String action) {
+        if (interfaceComponent == null) {
             return false;
         }
-        int index = Action.indexOf(widget.getActions(), action) + 1;
+        int index = Action.indexOf(interfaceComponent.getActions(), action) + 1;
         if (index == -1) {
             return false;
         }
-        Client.processAction(new WidgetAction(index > 4, index,
-                widget.getParentHash() == -1 ? widget.getIndex_() : widget.getIndex(), widget.getId()), action, "");
+        Client.processAction(new InterfaceComponentAction(index > 4, index,
+                interfaceComponent.getParentHash() == -1 ? interfaceComponent.getIndex_() : interfaceComponent.getIndex(), interfaceComponent.getId()), action, "");
         return true;
     }
 
-    public static boolean processAction(Widget widget, String action, String target) {
-        if (widget == null) {
+    public static boolean processAction(InterfaceComponent interfaceComponent, String action, String target) {
+        if (interfaceComponent == null) {
             return false;
         }
-        int index = Action.indexOf(widget.getActions(), action) + 1;
+        int index = Action.indexOf(interfaceComponent.getActions(), action) + 1;
         if (index == -1) {
             return false;
         }
-        Client.processAction(new WidgetAction(index > 4, index,
-                widget.getParentHash() == -1 ? widget.getIndex_() : -1, widget.getId()), action, target);
+        Client.processAction(new InterfaceComponentAction(index > 4, index,
+                interfaceComponent.getParentHash() == -1 ? interfaceComponent.getIndex_() : -1, interfaceComponent.getId()), action, target);
         return true;
     }
 

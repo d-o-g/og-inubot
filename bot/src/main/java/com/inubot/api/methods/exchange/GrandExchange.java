@@ -46,11 +46,11 @@ public class GrandExchange {
     }
 
     public static boolean isMainScreenOpen() {
-        Widget c = Interfaces.getWidget(465, 2);
+        InterfaceComponent c = Interfaces.getComponent(465, 2);
         if (c == null) {
             return false;
         }
-        Widget child = c.getChild(widget -> widget.getIndex() == 1);
+        InterfaceComponent child = c.getComponent(widget -> widget.getIndex() == 1);
         return child != null && child.getText() != null && child.getText().equals("Grand Exchange");
     }
 
@@ -154,54 +154,54 @@ public class GrandExchange {
     }
 
     public static enum Slot {
-        ONE(Interfaces.getWidget(465, 6),
+        ONE(Interfaces.getComponent(465, 6),
                 Action.valueOf(57, 1, 3, 30474246), //Buy Action
                 Action.valueOf(57, 1, 2, 30474246), //Open offer action
                 16, false),
 
-        TWO(Interfaces.getWidget(465, 7),
+        TWO(Interfaces.getComponent(465, 7),
                 Action.valueOf(57, 1, 3, 30474247),
                 Action.valueOf(57, 1, 2, 30474247), //Open offer action
                 32, false),
 
 
-        THREE(Interfaces.getWidget(465, 8),
+        THREE(Interfaces.getComponent(465, 8),
                 Action.valueOf(57, 1, 3, 30474248),
                 Action.valueOf(57, 1, 2, 30474248), //Open offer action
                 48, false),
 
-        FOUR(Interfaces.getWidget(465, 9),
+        FOUR(Interfaces.getComponent(465, 9),
                 Action.valueOf(57, 1, 3, 30474249),
                 Action.valueOf(57, 1, 2, 30474249), //Open offer action
                 64, true),
 
-        FIVE(Interfaces.getWidget(465, 10),
+        FIVE(Interfaces.getComponent(465, 10),
                 Action.valueOf(57, 1, 3, 30474250),
                 Action.valueOf(57, 1, 2, 30474250), //Open offer action
                 80, true),
 
-        SIX(Interfaces.getWidget(465, 11),
+        SIX(Interfaces.getComponent(465, 11),
                 Action.valueOf(57, 1, 3, 30474251),
                 Action.valueOf(57, 1, 2, 30474251), //Open offer action
                 96, true),
 
-        SEVEN(Interfaces.getWidget(465, 12),
+        SEVEN(Interfaces.getComponent(465, 12),
                 Action.valueOf(57, 1, 3, 30474252),
                 Action.valueOf(57, 1, 2, 30474252), //Open offer action
                 112, true),
 
-        EIGHT(Interfaces.getWidget(465, 13),
+        EIGHT(Interfaces.getComponent(465, 13),
                 Action.valueOf(57, 1, 3, 30474253),
                 Action.valueOf(57, 1, 2, 30474253), //Open offer action
                 128, true);
 
-        private final Widget parent;
+        private final InterfaceComponent parent;
         private final Action buyAction;
         private final Action openAction;
         private final int openVarp;
         private final boolean members;
 
-        Slot(Widget parent, Action buyAction, Action openAction, int openVarp, boolean members) {
+        Slot(InterfaceComponent parent, Action buyAction, Action openAction, int openVarp, boolean members) {
             this.parent = parent;
             this.buyAction = buyAction;
             this.openAction = openAction;
@@ -233,7 +233,7 @@ public class GrandExchange {
             return null;
         }
 
-        public Widget getParent() {
+        public InterfaceComponent getParent() {
             return parent;
         }
 

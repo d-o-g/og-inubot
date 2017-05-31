@@ -6,25 +6,24 @@
  */
 package com.inubot.api.oldschool.collection;
 
-import com.inubot.api.methods.Game;
-import com.inubot.api.oldschool.Character;
+import com.inubot.api.oldschool.PathingEntity;
 import com.inubot.api.util.filter.Filter;
 
-public class CharacterPool<T extends com.inubot.api.oldschool.Character, K extends CharacterPool<T, K>> extends IdentifiableEntityPool<T, K> {
+public class PathingEntityPool<T extends PathingEntity, K extends PathingEntityPool<T, K>> extends IdentifiableEntityPool<T, K> {
 
-    public CharacterPool(final Iterable<T>... elements) {
+    public PathingEntityPool(final Iterable<T>... elements) {
         super(elements);
     }
 
-    public CharacterPool(final T... elements) {
+    public PathingEntityPool(final T... elements) {
         super(elements);
     }
 
-    public K targeting(final Character<?>... targets) {
+    public K targeting(final PathingEntity<?>... targets) {
         return include(new Filter<T>() {
             @Override
             public boolean accept(T character) {
-                for (final Character c : targets) {
+                for (final PathingEntity c : targets) {
                     if (c.equals(character.getTarget())) {
                         return true;
                     }

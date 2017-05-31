@@ -7,10 +7,9 @@
 package com.inubot.api.methods;
 
 import com.inubot.Inubot;
+import com.inubot.api.oldschool.PathingEntity;
 import com.inubot.api.oldschool.Npc;
-import com.inubot.api.oldschool.Player;
 import com.inubot.client.natives.oldschool.RSNpc;
-import com.inubot.client.natives.oldschool.RSPlayer;
 
 public class HintArrow {
 
@@ -40,7 +39,7 @@ public class HintArrow {
      *
      * @return the target character of the current HintArrow
      */
-    public static com.inubot.api.oldschool.Character<?> getTarget() {
+    public static PathingEntity<?> getTarget() {
         int index = Inubot.getInstance().getClient().getHintArrowNpcIndex();
         if (index < 0)
             return null;

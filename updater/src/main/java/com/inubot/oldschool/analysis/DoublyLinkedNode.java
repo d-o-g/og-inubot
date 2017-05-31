@@ -12,7 +12,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldNode;
 
 @VisitorInfo(hooks = {"previous", "next"})
-public class CacheNode extends GraphVisitor {
+public class DoublyLinkedNode extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {

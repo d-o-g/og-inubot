@@ -9,5 +9,5 @@ public interface RSBoundaryDecoration extends RSGameObject {
 
     int getId();
 
-    RSRenderable getRenderable();
+    RSEntity getEntity();
 }

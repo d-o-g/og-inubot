@@ -4,8 +4,8 @@ import com.inubot.api.methods.*;
 import com.inubot.api.methods.exchange.ExchangePricing;
 import com.inubot.api.methods.Bank;
 import com.inubot.api.methods.Inventory;
+import com.inubot.api.oldschool.Item;
 import com.inubot.api.oldschool.Skill;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.StopWatch;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
@@ -56,8 +56,8 @@ public class Stringer extends ProScript {
                 return 600;
             }
             Bank.depositInventory();
-            WidgetItem a = Bank.getFirst(new NameFilter<>(bow()));
-            WidgetItem b = Bank.getFirst(new NameFilter<>("Bow string"));
+            Item a = Bank.getFirst(new NameFilter<>(bow()));
+            Item b = Bank.getFirst(new NameFilter<>("Bow string"));
             if (a != null && b != null) {
                 a.processAction("Withdraw-14");
                 b.processAction("Withdraw-14");
@@ -68,11 +68,11 @@ public class Stringer extends ProScript {
                 Bank.close();
                 return 300;
             }
-            WidgetItem a = Inventory.getFirst(bow());
-            WidgetItem b = Inventory.getFirst("Bow string");
+            Item a = Inventory.getFirst(bow());
+            Item b = Inventory.getFirst("Bow string");
             if (a != null && b != null) {
                 a.use(b);
-                if (Time.await(() -> Interfaces.getWidget(t -> t.getId() == 20250627) != null, 1500)) {
+                if (Time.await(() -> Interfaces.getComponent(t -> t.getId() == 20250627) != null, 1500)) {
                     Client.processAction(0, -1, 20250627, 30, "Make All", "", 50, 50);
                     return 1200;
                 }

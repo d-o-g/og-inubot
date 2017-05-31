@@ -6,14 +6,12 @@
  */
 package com.inubot.api.oldschool;
 
+import com.inubot.api.util.UID;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.action.*;
-import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Identifiable;
 import com.inubot.client.natives.oldschool.*;
-
-import java.util.Arrays;
 
 public class GameObject extends Wrapper<RSGameObject> implements Locatable, Processable, Identifiable {
 
@@ -110,8 +108,8 @@ public class GameObject extends Wrapper<RSGameObject> implements Locatable, Proc
         return null;
     }
 
-    public RSRenderable getEntity() {
-        return raw.getRenderable();
+    public RSEntity getEntity() {
+        return raw.getEntity();
     }
 
     public enum Landmark {

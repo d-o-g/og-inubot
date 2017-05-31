@@ -11,7 +11,7 @@ import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.client.natives.oldschool.RSPlayer;
 import com.inubot.api.oldschool.Player;
 
-public class PlayerAction extends CharacterAction {
+public class PlayerAction extends PathingEntityAction {
 
     public PlayerAction(int opcode, int player_index) {
         super(opcode, player_index);

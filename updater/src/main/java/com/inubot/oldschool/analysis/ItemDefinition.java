@@ -16,7 +16,7 @@ public class ItemDefinition extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.superName.equals(clazz("CacheNode")) && cn.getFieldTypeCount() == 7 &&
+        return cn.superName.equals(clazz("DoublyLinkedNode")) && cn.getFieldTypeCount() == 7 &&
                 cn.fieldCount("[Ljava/lang/String;") == 2;
     }
 

@@ -10,7 +10,7 @@ import com.inubot.client.natives.oldschool.RSNpc;
 import com.inubot.api.methods.Npcs;
 import com.inubot.api.oldschool.Npc;
 
-public class SpellOnNpc extends CharacterAction {
+public class SpellOnNpc extends PathingEntityAction {
 
     public SpellOnNpc(int opcode, int npcIndex) {
         super(opcode, npcIndex);

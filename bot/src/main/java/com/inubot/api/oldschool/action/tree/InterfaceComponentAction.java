@@ -8,20 +8,20 @@ package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
-public class WidgetAction extends Action {
+public class InterfaceComponentAction extends Action {
 
-    public WidgetAction(int opcode, int actionIndex, int widgetIndex, int widgetId) {
+    public InterfaceComponentAction(int opcode, int actionIndex, int widgetIndex, int widgetId) {
         super(opcode, actionIndex, widgetIndex, widgetId);
     }
 
-    public WidgetAction(boolean type2, int actionIndex, int widgetIndex, int widgetId) {
-        super(type2 ? ActionOpcodes.WIDGET_ACTION_2 : ActionOpcodes.WIDGET_ACTION,
+    public InterfaceComponentAction(boolean type2, int actionIndex, int widgetIndex, int widgetId) {
+        super(type2 ? ActionOpcodes.COMPONENT_ACTION_2 : ActionOpcodes.COMPONENT_ACTION,
                 actionIndex, widgetIndex, widgetId);
     }
 
     public static boolean isInstance(int opcode) {
         opcode = pruneOpcode(opcode);
-        return opcode == ActionOpcodes.WIDGET_ACTION || opcode == ActionOpcodes.WIDGET_ACTION_2;
+        return opcode == ActionOpcodes.COMPONENT_ACTION || opcode == ActionOpcodes.COMPONENT_ACTION_2;
     }
 
     @Override
@@ -38,15 +38,15 @@ public class WidgetAction extends Action {
         return arg1;
     }
 
-    public int getWidgetUid() {
+    public int getComponentUid() {
         return arg2;
     }
 
     public boolean isType2() {
-        return opcode == ActionOpcodes.WIDGET_ACTION_2;
+        return opcode == ActionOpcodes.COMPONENT_ACTION_2;
     }
 
-   /* public Widget get() {
+   /* public InterfaceComponent get() {
         final int UID = getParentUID();
         final int parent0 = Interface.getParentIndex(UID);
         final int child0  = Interface.getChildIndex(UID);
@@ -54,7 +54,7 @@ public class WidgetAction extends Action {
         RSClient client = Game.getClient();
         RSInterface parent = client.getInterfaces()[parent0][child0];
         if(parent == null) return null;
-        RSInterface[] children = parent.getChildren();
+        RSInterface[] children = parent.getComponents();
         if(children != null && index0 > 0 && index0 < children.length)
             return children[index0];
         return parent;
@@ -68,13 +68,13 @@ public class WidgetAction extends Action {
 
     @Override
     public String toString() {
-        final int uid = getWidgetUid();
+        final int uid = getComponentUid();
         final int parent = getInterfaceIndex();
         final int child = uid & 0xffff;
         final int index = child & 0xffff;
         final int action = getActionIndex();
         final int type = isType2() ? 2 : 1;
-        return "WidgetAction:[Address=<" + parent + "#" + child + "#" + index + "> | ActionIndex=" + action +
+        return "InterfaceComponentAction:[Address=<" + parent + "#" + child + "#" + index + "> | ActionIndex=" + action +
                 " | ActionType=" + type + "]" /*+ get()*/;
     }
 }

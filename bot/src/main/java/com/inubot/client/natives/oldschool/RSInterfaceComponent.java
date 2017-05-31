@@ -3,8 +3,8 @@ package com.inubot.client.natives.oldschool;
 import com.inubot.client.Artificial;
 import com.inubot.client.natives.ClientNative;
 
-public interface RSWidget extends ClientNative {
-    RSWidget[] getChildren();
+public interface RSInterfaceComponent extends ClientNative {
+    RSInterfaceComponent[] getChildren();
     int getId();
     int getOwnerId();
     int getBoundsIndex();
@@ -20,11 +20,13 @@ public interface RSWidget extends ClientNative {
     int getIndex();
     int[] getItemIds();
     int[] getStackSizes();
-    int getTextureId();
+    int getMaterialId();
     String[] getActions();
     String getText();
     boolean isHidden();
     String[] getTableActions();
+
+    int getConfig();
 
     @Artificial
     int getContainerX();

@@ -5,7 +5,7 @@ import com.inubot.api.methods.Interfaces;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.Tab;
 import com.inubot.api.oldschool.Tile;
-import com.inubot.api.oldschool.Widget;
+import com.inubot.api.oldschool.InterfaceComponent;
 import com.inubot.api.util.Time;
 import me.mad.Tutorial;
 import me.mad.util.interfaces.Module;
@@ -29,7 +29,7 @@ public class QuestGuide implements Module {
                     Tutorial.openTab(Tab.EMOTES);
                     break;
                 case 187:
-                    Widget emoteTab = Interfaces.getWidget(216,1);
+                    InterfaceComponent emoteTab = Interfaces.getComponent(216,1);
                     if(emoteTab.isVisible()) {
                         Client.processAction(1, 0, 14155777, 57, "Yes", "", 50, 50);
                     }

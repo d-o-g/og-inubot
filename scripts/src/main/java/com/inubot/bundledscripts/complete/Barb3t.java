@@ -4,8 +4,8 @@ import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Inventory;
 import com.inubot.api.methods.Npcs;
 import com.inubot.api.methods.Players;
+import com.inubot.api.oldschool.Item;
 import com.inubot.api.oldschool.Npc;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.Random;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
@@ -23,11 +23,11 @@ public class Barb3t extends ProScript {
     @Override
     public int loop() {
         if (Game.isLoggedIn()) {
-            WidgetItem claws = Inventory.getFirst("Guam leaf", "Marrentill");
-            WidgetItem vambs = Inventory.getFirst("Swamp tar");
+            Item claws = Inventory.getFirst("Guam leaf", "Marrentill");
+            Item vambs = Inventory.getFirst("Swamp tar");
             Npc spot = Npcs.getNearest("Fishing spot");
-            WidgetItem extra = Inventory.getFirst(new NameFilter<>(true, "Grimy"));
-            WidgetItem fish = Inventory.getFirst(new NameFilter<>(true, "Leap"));
+            Item extra = Inventory.getFirst(new NameFilter<>(true, "Grimy"));
+            Item fish = Inventory.getFirst(new NameFilter<>(true, "Leap"));
             if (fish != null) {
                 fish.drop();
             }

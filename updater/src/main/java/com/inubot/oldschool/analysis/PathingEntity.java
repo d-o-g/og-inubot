@@ -12,11 +12,11 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
 @VisitorInfo(hooks = {"x", "y", "healthBars", "interactingIndex", "animation", "queueSize", "orientation", "hitsplatCycles"})
-public class Character extends GraphVisitor {
+public class PathingEntity extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.superName.equals(clazz("Renderable")) && cn.fieldCount("[I") >= 5 && cn.fieldCount("Z") >= 1 &&
+        return cn.superName.equals(clazz("Entity")) && cn.fieldCount("[I") >= 5 && cn.fieldCount("Z") >= 1 &&
                 cn.fieldCount("Ljava/lang/String;") >= 1;
     }
 
@@ -69,7 +69,7 @@ public class Character extends GraphVisitor {
         public void visit(Block block) {
             block.tree().accept(new NodeVisitor(this) {
                 public void visitField(FieldMemberNode fmn) {
-                    if (fmn.opcode() == PUTFIELD && fmn.owner().equals(clazz("Character")) && fmn.desc().equals("I")) {
+                    if (fmn.opcode() == PUTFIELD && fmn.owner().equals(clazz("PathingEntity")) && fmn.desc().equals("I")) {
                         if (fmn.layer(IMUL, IAND, D2I, DMUL, INVOKESTATIC) != null) {
                             hooks.put("orientation", new FieldHook("orientation", fmn.fin()));
                             lock.set(true);
@@ -121,9 +121,9 @@ public class Character extends GraphVisitor {
                 public void visitJump(JumpNode jn) {
                     if (jn.opcode() == IF_ICMPLE) {
                         FieldMemberNode cycle = (FieldMemberNode) jn.layer(IMUL, GETFIELD);
-                        if (cycle == null || !cycle.owner().equals(clazz("Character")) || !cycle.desc().equals("I"))
+                        if (cycle == null || !cycle.owner().equals(clazz("PathingEntity")) || !cycle.desc().equals("I"))
                             return;
-                        MethodNode init = updater.visitor("Character").cn.getMethodByName("<init>");
+                        MethodNode init = updater.visitor("PathingEntity").cn.getMethodByName("<init>");
                         if (cycle.referenced(init)) {
                             ArithmeticNode an = cycle.parent().nextOperation();
                             if (an == null || an.opcode() != IMUL)

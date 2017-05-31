@@ -13,7 +13,7 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
-import com.inubot.bot.ui.WidgetExplorer;
+import com.inubot.bot.ui.InterfaceExplorer;
 
 import java.awt.event.KeyEvent;
 import java.util.*;
@@ -94,10 +94,10 @@ public enum Hotkey {
         public void onActivation() {
             Bank.open();
         }
-    }, SHOW_WIDGET(KeyEvent.VK_G) {
+    }, SHOW_EXPLORER(KeyEvent.VK_G) {
         @Override
         public void onActivation() {
-            new WidgetExplorer().setVisible(true);
+            new InterfaceExplorer().setVisible(true);
         }
     };
 

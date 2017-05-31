@@ -9,7 +9,7 @@ import com.inubot.api.methods.traversal.graph.WebPath;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
-import com.inubot.client.natives.oldschool.RSInteractableEntity;
+import com.inubot.client.natives.oldschool.RSEntityMarker;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
@@ -49,7 +49,7 @@ public class BlueDragonKiller extends Script {
             }
             case BANKING: {
                 if (IN_CAVE.distance() < 30) {
-                    WidgetItem item = Inventory.getFirst("Falador teleport");
+                    Item item = Inventory.getFirst("Falador teleport");
                     if (item != null) {
                         Tile last = Players.getLocal().getLocation();
                         item.processFirst();
@@ -85,7 +85,7 @@ public class BlueDragonKiller extends Script {
                 GroundItem loot = GroundItems.getNearest(new NameFilter<>(LOOT));
                 if (loot != null) {
                     if (Inventory.isFull()) {
-                        WidgetItem lob = Inventory.getFirst(new NameFilter<>(FOOD));
+                        Item lob = Inventory.getFirst(new NameFilter<>(FOOD));
                         if (lob != null) {
                             lob.processAction("Eat");
                         }
@@ -96,7 +96,7 @@ public class BlueDragonKiller extends Script {
                 break;
             }
             case EATING: {
-                WidgetItem food = Inventory.getFirst(new NameFilter<>(FOOD));
+                Item food = Inventory.getFirst(new NameFilter<>(FOOD));
                 if (food != null) {
                     food.processAction("Eat");
                 }
@@ -109,7 +109,7 @@ public class BlueDragonKiller extends Script {
     private boolean canFire(Tile dest) {
         Tile[] bresenham = bresenham(Players.getLocal().getLocation(), dest);
         for (Tile tile : bresenham) {
-            if (GameObjects.getNearest(t -> t.getRaw() instanceof RSInteractableEntity
+            if (GameObjects.getNearest(t -> t.getRaw() instanceof RSEntityMarker
                     && t.getLocation().equals(tile)) != null) {
                 return false;
             }
@@ -144,10 +144,10 @@ public class BlueDragonKiller extends Script {
 
     private void withdrawSetup() {
         Bank.depositInventory();
-        WidgetItem food = Bank.getFirst(new NameFilter<>(FOOD));
-        WidgetItem tabs = Bank.getFirst(new NameFilter<>("Falador teleport"));
-        WidgetItem air = Bank.getFirst(new NameFilter<>("Air rune"));
-        WidgetItem death = Bank.getFirst(new NameFilter<>("Death rune"));
+        Item food = Bank.getFirst(new NameFilter<>(FOOD));
+        Item tabs = Bank.getFirst(new NameFilter<>("Falador teleport"));
+        Item air = Bank.getFirst(new NameFilter<>("Air rune"));
+        Item death = Bank.getFirst(new NameFilter<>("Death rune"));
         if (food != null && tabs != null && air != null && death != null) {
             tabs.processAction("Withdraw-10");
             food.processAction("Withdraw-1");

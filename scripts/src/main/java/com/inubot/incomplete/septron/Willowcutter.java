@@ -65,7 +65,7 @@ public class Willowcutter extends Script implements Paintable {
                 tree.processAction("Chop down");
             }
         } else if (Inventory.isFull()) {
-            Widget depo = Interfaces.getWidget(192, 3);
+            InterfaceComponent depo = Interfaces.getComponent(192, 3);
             if (depo != null && depo.isVisible()) {
                 depo.processAction("Deposit inventory");
             } else {

@@ -23,7 +23,7 @@ public class Client {
     private static final Queue<Node> queue = new ArrayBlockingQueue<>(2000);
     public static boolean LANDSCAPE_RENDERING_ENABLED = true;
     public static boolean MODEL_RENDERING_ENABLED = true;
-    public static boolean WIDGET_RENDERING_ENABLED = true;
+    public static boolean INTERFACE_RENDERING_ENABLED = true;
     public static boolean PAINTING = true;
     public static int GAME_TICK_SLEEP = -1;
     private static Node last;
@@ -106,14 +106,14 @@ public class Client {
     }
 
     /**
-     * <b>WARNING: THIS MAY AFFECT SCRIPTS THAT USE WIDGETS, AS Widget#isVisible WILL
+     * <b>WARNING: THIS MAY AFFECT SCRIPTS THAT USE WIDGETS, AS InterfaceComponent#isVisible WILL
      * ALWAYS RETURN FALSE IF THIS IS SET TO TRUE - ONLY USE THIS IF YOU DO NOT
      * REQUIRE THE USE OF WIDGETS</b>
      *
      * @param value <b>true</b> to render widgets, <b>false</b> otherwise
      */
-    public static void setWidgetRendering(boolean value) {
-        Client.WIDGET_RENDERING_ENABLED = value;
+    public static void setInterfaceRendering(boolean value) {
+        Client.INTERFACE_RENDERING_ENABLED = value;
     }
 
     public static void processAction(Action action, String actionText, String targetText, int x, int y) {

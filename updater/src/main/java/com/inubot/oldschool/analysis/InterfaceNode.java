@@ -11,7 +11,7 @@ import org.objectweb.asm.commons.cfg.tree.node.JumpNode;
 import org.objectweb.asm.tree.ClassNode;
 
 @VisitorInfo(hooks = {"id"})
-public class WidgetNode extends GraphVisitor {
+public class InterfaceNode extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {

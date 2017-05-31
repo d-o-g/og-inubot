@@ -19,12 +19,11 @@ import org.objectweb.asm.tree.*;
 import java.lang.reflect.Modifier;
 import java.math.BigInteger;
 import java.util.*;
-import java.util.function.Predicate;
 
-@VisitorInfo(hooks = {"processAction", "players", "npcs", "canvas", "player", "region", "widgets", "objects",
+@VisitorInfo(hooks = {"processAction", "players", "npcs", "canvas", "player", "region", "interfaceComponents", "objects",
         "groundItems", "cameraX", "cameraY", "cameraZ", "cameraPitch", "cameraYaw", "mapScale", "mapOffset",
-        "mapRotation", "baseX", "baseY", "varps", "tempVarps", "widgetPositionsX", "widgetPositionsY",
-        "widgetWidths", "widgetHeights", "renderRules", "tileHeights", "widgetNodes", "npcIndices",
+        "mapRotation", "baseX", "baseY", "varps", "tempVarps", "interfacePositionsX", "interfacePositionsY",
+        "interfaceWidths", "interfaceHeights", "renderRules", "tileHeights", "interfaceNodes", "npcIndices",
         "loadObjectDefinition", "loadNpcDefinition", "loadItemDefinition", "plane", "gameState", "mouseIdleTime",
         "energy", "weight", "experiences", "levels", "realLevels", "playerActions", "collisionMaps",
         "hoveredRegionTileX", "hoveredRegionTileY", "socketState", "menuOpcodes", "menuArg0", "menuArg1", "menuArg2",
@@ -32,7 +31,7 @@ import java.util.function.Predicate;
         "itemTables", "lowMemory", "hintArrowNpcIndex", "hintArrowPlayerIndex", "loadItemSprite", "engineCycle",
         "screenWidth", "screenHeight", "screenZoom", "screenState", "font_p12full", "grandExchangeOffers",
         "currentWorld", "membersWorld", "onCursorUids", "onCursorCount", "menuX", "menuY", "menuWidth", "menuHeight",
-        "viewportWalking", "socket", "spellTargetFlags", "spellSelected"})
+        "viewportWalking", "socket", "spellTargetFlags", "spellSelected", "interfaceConfigs"})
 public class Client extends GraphVisitor {
 
     private final Map<String, String> profiledStrings = new HashMap<>();
@@ -79,10 +78,11 @@ public class Client extends GraphVisitor {
         visitAll(new MapHooks());
         visitAll(new MapAngle());
         visit("Varps", new SettingHooks());
-        visitAll(new WidgetPositionHooks());
+        visitAll(new InterfacePositionHooks());
         visitAll(new RenderRules());
         visitAll(new TileHeights());
-        visitAll(new WidgetNodes());
+        visitAll(new InterfaceNodes());
+        visitAll(new InterfaceConfigs());
         visitAll(new HintHooks());
         visitAll(new NpcIndices());
         visitAll(new Plane());
@@ -110,7 +110,7 @@ public class Client extends GraphVisitor {
             if (Modifier.isStatic(mn.access) || !mn.desc.endsWith("V") || !mn.desc.startsWith("(IIIIIIIII")) {
                 return false;
             }
-            ClassNode r = updater.classnodes.get(clazz("Renderable"));
+            ClassNode r = updater.classnodes.get(clazz("Entity"));
             if (r != null) {
                 if (mn.owner.name.equals(r.name)) {
                     return true;
@@ -238,8 +238,8 @@ public class Client extends GraphVisitor {
     private void visitStaticFields() {
         String playerDesc = desc("Player");
         String regionDesc = desc("Region");
-        String widgetDesc = desc("Widget");
-        String objectDesc = desc("InteractableEntity");
+        String widgetDesc = desc("InterfaceComponent");
+        String objectDesc = desc("EntityMarker");
         String dequeDesc = desc("NodeDeque");
         String collisionDesc = desc("CollisionMap");
         for (ClassNode node : updater.classnodes.values()) {
@@ -250,7 +250,7 @@ public class Client extends GraphVisitor {
                     } else if (regionDesc != null && fn.desc.equals(regionDesc)) {
                         add("region", fn);
                     } else if (widgetDesc != null && fn.desc.equals("[[" + widgetDesc)) {
-                        add("widgets", fn);
+                        add("interfaceComponents", fn);
                     } else if (objectDesc != null && fn.desc.equals("[" + objectDesc)) {
                         add("objects", fn);
                     } else if (dequeDesc != null && fn.desc.equals("[[[" + dequeDesc)) {
@@ -916,7 +916,7 @@ public class Client extends GraphVisitor {
 
         @Override
         public void visit(final Block block) {
-            if (block.owner.desc.matches("\\(" + desc("Widget") + "I(I|B|S|^)\\)I")) {
+            if (block.owner.desc.matches("\\(" + desc("InterfaceComponent") + "I(I|B|S|^)\\)I")) {
                 if (block.count(new MemberQuery(GETSTATIC, "client", "I")) > 0)
                     blocks.add(block);
             }
@@ -1121,10 +1121,11 @@ public class Client extends GraphVisitor {
         }
     }
 
-    private class WidgetPositionHooks extends BlockVisitor {
+    private class InterfacePositionHooks extends BlockVisitor {
 
-        private final ArrayIterator<String> itr = new ArrayIterator<>("widgetPositionsX", "widgetPositionsY",
-                "widgetWidths", "widgetHeights");
+        private final ArrayIterator<String> itr = new ArrayIterator<>(
+                "interfacePositionsX", "interfacePositionsY", "interfaceWidths", "interfaceHeights"
+        );
 
         @Override
         public boolean validate() {
@@ -1206,7 +1207,7 @@ public class Client extends GraphVisitor {
         }
     }
 
-    private class WidgetNodes extends BlockVisitor {
+    private class InterfaceNodes extends BlockVisitor {
 
         @Override
         public boolean validate() {
@@ -1219,10 +1220,48 @@ public class Client extends GraphVisitor {
                 public void visitVariable(VariableNode vn) {
                     if (vn.opcode() == ASTORE) {
                         TypeNode tn = vn.firstType();
-                        if (tn != null && tn.type().equals(clazz("WidgetNode"))) {
+                        if (tn != null && tn.type().equals(clazz("InterfaceNode"))) {
                             FieldMemberNode fmn = (FieldMemberNode) vn.layer(INVOKEVIRTUAL, GETSTATIC);
                             if (fmn != null && fmn.desc().equals(desc("NodeTable"))) {
-                                hooks.put("widgetNodes", new FieldHook("widgetNodes", fmn.fin()));
+                                addHook(new FieldHook("interfaceNodes", fmn.fin()));
+                                lock.set(true);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private class InterfaceConfigs extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor(this) {
+                public void visitVariable(VariableNode vn) {
+                    if (vn.opcode() == ASTORE) {
+                        TypeNode tn = vn.firstType();
+                        if (tn != null && tn.type().equals(clazz("IntegerNode"))) {
+                            FieldMemberNode fmn = (FieldMemberNode) vn.layer(INVOKEVIRTUAL, GETSTATIC);
+                            if (fmn != null && fmn.desc().equals(desc("NodeTable"))) {
+                                addHook(new FieldHook("interfaceConfigs", fmn.fin()));
+                                updater.getGraph(block.owner).forEach(b -> b.tree().accept(new NodeVisitor() {
+                                    @Override
+                                    public void visitField(FieldMemberNode fmn) {
+                                        if (fmn.owner().equals(clazz("InterfaceComponent"))) {
+                                            //System.out.println("YEEHAW " + fmn.key());
+                                            AbstractNode ireturn = fmn.preLayer(IMUL, IRETURN);
+                                            if (ireturn != null) {
+                                                updater.visitor("InterfaceComponent").addHook(new FieldHook("config", fmn.fin()));
+                                            }
+                                        }
+                                    }
+                                }));
                                 lock.set(true);
                             }
                         }

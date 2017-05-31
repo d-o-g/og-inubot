@@ -6,7 +6,7 @@
  */
 package com.inubot.api.methods;
 
-import com.inubot.api.oldschool.Character;
+import com.inubot.api.oldschool.PathingEntity;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.tree.*;
@@ -31,34 +31,34 @@ public class Magic {
 
     public static boolean select(Spell spell) {
         if (spell.toString().toLowerCase().contains("teleport")) {
-            Widget widget = spell.getWidget();
-            widget.processAction("Cast", spell.toString());
+            InterfaceComponent interfaceComponent = spell.getComponent();
+            interfaceComponent.processAction("Cast", spell.toString());
             return true;
         } else {
-            Widget widget = spell.getWidget();
-            if (widget != null) {
-                Client.processAction(new SelectableSpellButtonAction(widget.getId()), "Cast", spell.toString());
+            InterfaceComponent interfaceComponent = spell.getComponent();
+            if (interfaceComponent != null) {
+                Client.processAction(new SelectableSpellButtonAction(interfaceComponent.getId()), "Cast", spell.toString());
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean cast(Spell spell, com.inubot.api.oldschool.Character character, String action) {
-        if (spell == null || character == null || action == null) {
+    public static boolean cast(Spell spell, PathingEntity pathingEntity, String action) {
+        if (spell == null || pathingEntity == null || action == null) {
             return false;
         }
-        Client.processAction(character instanceof Npc ? new SpellOnNpc(ActionOpcodes.SPELL_ON_NPC, character.getArrayIndex())
-                        : new SpellOnPlayer(ActionOpcodes.SPELL_ON_PLAYER, character.getArrayIndex()),
+        Client.processAction(pathingEntity instanceof Npc ? new SpellOnNpc(ActionOpcodes.SPELL_ON_NPC, pathingEntity.getArrayIndex())
+                        : new SpellOnPlayer(ActionOpcodes.SPELL_ON_PLAYER, pathingEntity.getArrayIndex()),
                 action, spell.toString());
         return true;
     }
 
-    public static boolean cast(Spell spell, Character character) {
-        return cast(spell, character, "Cast");
+    public static boolean cast(Spell spell, PathingEntity pathingEntity) {
+        return cast(spell, pathingEntity, "Cast");
     }
 
-    public static boolean cast(Spell spell, WidgetItem item, String action) {
+    public static boolean cast(Spell spell, Item item, String action) {
         if (item == null || action == null) {
             return false;
         }
@@ -66,7 +66,7 @@ public class Magic {
         return true;
     }
 
-    public static boolean cast(Spell spell, WidgetItem item) {
+    public static boolean cast(Spell spell, Item item) {
         return cast(spell, item, "Cast");
     }
 
@@ -96,15 +96,15 @@ public class Magic {
         return cast(spell, obj, "Cast");
     }
 
-    public static boolean cast(Spell spell, Widget target, String action) {
+    public static boolean cast(Spell spell, InterfaceComponent target, String action) {
         if (spell == null || target == null || action == null) {
             return false;
         }
-        Client.processAction(new SpellOnWidgetAction(target.getIndex(), target.getId()), action, spell.toString());
+        Client.processAction(new SpellOnComponentAction(target.getIndex(), target.getId()), action, spell.toString());
         return true;
     }
 
-    public static boolean cast(Spell spell, Widget target) {
+    public static boolean cast(Spell spell, InterfaceComponent target) {
         return cast(spell, target, "Cast");
     }
 

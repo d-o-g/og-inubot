@@ -49,7 +49,7 @@ public class Magic implements Module, Tutorial {
                         if (npc != null) {
                             Client.processAction(1, 14286850, 25, 0, "Cast", "Wind Strike", 50, 50);
                             openTab(Tab.MAGIC);
-                            Mouse.setLocation(Interfaces.getWidget(218, 2).getBounds().getLocation().x, Interfaces.getWidget(218, 2).getBounds().getLocation().y);
+                            Mouse.setLocation(Interfaces.getComponent(218, 2).getBounds().getLocation().x, Interfaces.getComponent(218, 2).getBounds().getLocation().y);
                             Mouse.click(true);
                             com.inubot.api.methods.Magic.cast(Spell.Modern.WIND_STRIKE, npc);
                             Time.await(() -> setting() != 650, 3200);

@@ -55,7 +55,7 @@ public enum Prayer {
         return this.bits;
     }
 
-    public int getWidgetIndex() {
+    public int getComponentIndex() {
         return super.ordinal();
     }
 

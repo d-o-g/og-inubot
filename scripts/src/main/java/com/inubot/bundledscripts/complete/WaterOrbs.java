@@ -27,7 +27,7 @@ public final class WaterOrbs extends ProScript {
     private static final Area CAVE_START = new Area(new Tile(2880, 9793), new Tile(2888, 9814));
     private static final Tile UNLOADED_ENTRY = new Tile(2934, 3355), LOADED_ENTRY = new Tile(2920, 3365);
     private static final String[] ITEMS = {"Unpowered orb", "Cosmic rune", "Falador teleport", "Lobster"};
-    private final Filter<WidgetItem> ANTIPOT_PREDICATE = item -> item.getName().contains("Antipoison");
+    private final Filter<Item> ANTIPOT_PREDICATE = item -> item.getName().contains("Antipoison");
     private int orbsMade = 0;
     private int orbPrice = 0, cosmicPrice = 0, unpoweredOrbPrice = 0;
 
@@ -45,13 +45,13 @@ public final class WaterOrbs extends ProScript {
             Movement.toggleRun(true);
         }
         if (Skills.getCurrentLevel(Skill.HITPOINTS) < 25) {
-            WidgetItem food = Inventory.getFirst("Lobster");
+            Item food = Inventory.getFirst("Lobster");
             if (food != null) {
                 food.processFirst();
             }
         }
         if (Combat.isPoisoned()) {
-            WidgetItem antipot = Inventory.getFirst(ANTIPOT_PREDICATE);
+            Item antipot = Inventory.getFirst(ANTIPOT_PREDICATE);
             if (antipot != null) {
                 antipot.processFirst();
             }
@@ -60,7 +60,7 @@ public final class WaterOrbs extends ProScript {
         if (GameObjects.getNearest("Obelisk of Water") != null) {
             if (!Inventory.contains("Unpowered orb")) {
                 System.out.println("Tele 1");
-                WidgetItem tele = Inventory.getFirst("Falador teleport");
+                Item tele = Inventory.getFirst("Falador teleport");
                 if (tele != null) {
                     tele.processFirst();
                 }
@@ -73,14 +73,14 @@ public final class WaterOrbs extends ProScript {
             if (Bank.isOpen()) {
                 withdrawSetup();
             } else if (BANK.distance() < 35) {
-                WidgetItem food = Inventory.getFirst("Lobster");
+                Item food = Inventory.getFirst("Lobster");
                 if (food != null) {
                     food.processFirst();
                 }
                 GameObjects.getNearest("Bank booth").processAction("Bank");
             } else if (Skills.getCurrentLevel(Skill.HITPOINTS) < 25) {
                 System.out.println("Tele 2");
-                WidgetItem tele = Inventory.getFirst("Falador teleport");
+                Item tele = Inventory.getFirst("Falador teleport");
                 if (tele != null) {
                     tele.processFirst();
                 }
@@ -129,7 +129,7 @@ public final class WaterOrbs extends ProScript {
     private void penis() {
         GameObject obelisk = GameObjects.getNearest("Obelisk of Water");
         if (obelisk != null) {
-            Widget iface = Interfaces.get(309, 6);
+            InterfaceComponent iface = Interfaces.get(309, 6);
             if (iface != null && iface.isVisible() && !iface.isHidden()) {
                 int xp = Skills.getExperience(Skill.MAGIC);
                 Client.processAction(Action.valueOf(ActionOpcodes.BUTTON_DIALOG, 0, -1, 20250630), "Make 1", "");
@@ -165,7 +165,7 @@ public final class WaterOrbs extends ProScript {
             return;
         }
         if (Skills.getCurrentLevel(Skill.HITPOINTS) < 25) {
-            WidgetItem food;
+            Item food;
             if (Inventory.contains("Lobster") && Bank.close()) {
                 food = Inventory.getFirst("Lobster");
                 if (food != null) {
@@ -179,31 +179,31 @@ public final class WaterOrbs extends ProScript {
             }
             return;
         }
-        WidgetItem tabs = Bank.getFirst("Falador teleport");
+        Item tabs = Bank.getFirst("Falador teleport");
         if (tabs != null && !Inventory.contains("Falador teleport")) {
             if (tabs.processFirst()) {
                 Time.await(() -> Inventory.contains("Falador teleport"), 5000);
             }
         }
-        WidgetItem cosmics = Bank.getFirst("Cosmic rune");
+        Item cosmics = Bank.getFirst("Cosmic rune");
         if (cosmics != null && !Inventory.contains("Cosmic rune")) {
             if (cosmics.processAction("Withdraw-75")) {
                 Time.await(() -> Inventory.contains("Cosmic rune"), 5000);
             }
         }
-        WidgetItem food = Bank.getFirst("Lobster");
+        Item food = Bank.getFirst("Lobster");
         if (food != null && !Inventory.contains("Lobster")) {
             if (food.processFirst()) {
                 Time.await(() -> Inventory.contains("Lobster"), 5000);
             }
         }
-        WidgetItem pot = Bank.getFirst(ANTIPOT_PREDICATE);
+        Item pot = Bank.getFirst(ANTIPOT_PREDICATE);
         if (pot != null && !Inventory.contains(ANTIPOT_PREDICATE)) {
             if (pot.processFirst()) {
                 Time.await(() -> Inventory.contains(ANTIPOT_PREDICATE), 5000);
             }
         }
-        WidgetItem orbs = Bank.getFirst("Unpowered orb");
+        Item orbs = Bank.getFirst("Unpowered orb");
         if (orbs != null && !Inventory.contains("Unpowered orb")) {
             if (orbs.processAction("Withdraw-All")) {
                 Time.await(() -> Inventory.contains("Unpowered orb"), 5000);

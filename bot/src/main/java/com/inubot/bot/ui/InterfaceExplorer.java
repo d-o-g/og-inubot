@@ -1,10 +1,10 @@
 package com.inubot.bot.ui;
 
 import com.inubot.Bot;
-import com.inubot.Inubot;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Interfaces;
-import com.inubot.api.oldschool.Widget;
+import com.inubot.api.oldschool.InterfaceComponent;
+import com.inubot.api.util.InterfaceComponentConfig;
 import com.inubot.api.util.Paintable;
 
 import javax.swing.*;
@@ -15,13 +15,12 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 
 /**
  * Created by luckruns0ut on 03/05/15.
  */
-public class WidgetExplorer extends JFrame implements Paintable {
+public class InterfaceExplorer extends JFrame implements Paintable {
 
     private JPanel treePanel;
     private JPanel infoPanel;
@@ -38,8 +37,8 @@ public class WidgetExplorer extends JFrame implements Paintable {
     private long lastRefresh = 0;
     private Object selected = null;
 
-    public WidgetExplorer() {
-        super("Widget Explorer");
+    public InterfaceExplorer() {
+        super("InterfaceComponent Explorer");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setPreferredSize(new Dimension(640, 480));
         setLayout(new BorderLayout());
@@ -129,19 +128,19 @@ public class WidgetExplorer extends JFrame implements Paintable {
         if (!Game.isLoggedIn())
             return;
 
-        Widget[][] interfaces = Interfaces.getAll();
+        InterfaceComponent[][] interfaces = Interfaces.getAll();
 
         for (int i = 0; i < interfaces.length; i++) {
             if (interfaces[i] != null) {
                 DefaultMutableTreeNode node = new DefaultMutableTreeNode("Interface: " + i);
 
                 for (int j = 0; j < interfaces[i].length; j++) {
-                    Widget c = interfaces[i][j];
+                    InterfaceComponent c = interfaces[i][j];
 
                     if (c != null) {
                         DefaultMutableTreeNode subNode = new DefaultMutableTreeNode("Component: " + j);
-                        for (int k = 0; k < c.getChildren().length; k++) {
-                            Widget child = c.getChildren()[k];
+                        for (int k = 0; k < c.getComponents().length; k++) {
+                            InterfaceComponent child = c.getComponents()[k];
 
                             if (child != null) {
                                 subNode.add(new DefaultMutableTreeNode("Child: " + k));
@@ -172,15 +171,15 @@ public class WidgetExplorer extends JFrame implements Paintable {
     public void render(Graphics2D g) {
         if (selected == null || !this.isVisible())
             return;
-        if (selected instanceof Widget[]) {
-            Widget[] i = (Widget[]) selected;
+        if (selected instanceof InterfaceComponent[]) {
+            InterfaceComponent[] i = (InterfaceComponent[]) selected;
             if (i.length > 0) {
-                for (Widget c : i) {
+                for (InterfaceComponent c : i) {
                     if (c != null) {
-                        if (c.getChildren().length > 0 && drawComponentChildren) {
+                        if (c.getComponents().length > 0 && drawComponentChildren) {
                             g.setColor(Color.green);
-                            if (c.getChildren() != null) {
-                                for (Widget child : c.getChildren()) {
+                            if (c.getComponents() != null) {
+                                for (InterfaceComponent child : c.getComponents()) {
                                     if (child != null) {
                                         g.drawRect(child.getX(), child.getY(), child.getWidth(), child.getHeight());
                                     }
@@ -196,13 +195,13 @@ public class WidgetExplorer extends JFrame implements Paintable {
             }
         }
 
-        if (selected instanceof Widget) {
-            Widget c = (Widget) selected;
+        if (selected instanceof InterfaceComponent) {
+            InterfaceComponent c = (InterfaceComponent) selected;
 
             if (c != null) {
                 g.setColor(Color.green);
-                if (drawComponentChildren && c.getChildren().length > 0) {
-                    for (Widget child : c.getChildren()) {
+                if (drawComponentChildren && c.getComponents().length > 0) {
+                    for (InterfaceComponent child : c.getComponents()) {
                         if (child != null) {
                             g.drawRect(child.getX(), child.getY(), child.getWidth(), child.getHeight());
                         }
@@ -216,11 +215,11 @@ public class WidgetExplorer extends JFrame implements Paintable {
         }
 
         if (System.currentTimeMillis() - lastRefresh > 200) {
-            if (selected instanceof Widget[]) {
-                setText((Widget[]) selected);
+            if (selected instanceof InterfaceComponent[]) {
+                setText((InterfaceComponent[]) selected);
             }
-            if (selected instanceof Widget) {
-                setText((Widget) selected);
+            if (selected instanceof InterfaceComponent) {
+                setText((InterfaceComponent) selected);
             }
             lastRefresh = System.currentTimeMillis();
         }
@@ -239,7 +238,7 @@ public class WidgetExplorer extends JFrame implements Paintable {
                 if (nodeName.contains("Interface: ")) {
                     int id = Integer.parseInt(nodeName.replace("Interface: ", ""));
 
-                    Widget[] i = Interfaces.widgetsFor(id);
+                    InterfaceComponent[] i = Interfaces.componentsFor(id);
                     selected = i;
                     selectedInterface(i);
                 }
@@ -249,7 +248,7 @@ public class WidgetExplorer extends JFrame implements Paintable {
                     int parentId = Integer.parseInt(parentName.replace("Interface: ", ""));
 
                     int id = Integer.parseInt(nodeName.replace("Component: ", ""));
-                    Widget c = Interfaces.getWidget(parentId, id);
+                    InterfaceComponent c = Interfaces.getComponent(parentId, id);
                     selected = c;
                     selectedComponent(c);
                 }
@@ -261,7 +260,7 @@ public class WidgetExplorer extends JFrame implements Paintable {
                     int parentOfParentId = Integer.parseInt(parentOfParentName.replace("Interface: ", ""));
                     int parentId = Integer.parseInt(parentName.replace("Component: ", ""));
                     int id = Integer.parseInt(nodeName.replace("Child: ", ""));
-                    Widget c = Interfaces.getWidget(parentOfParentId, parentId).getChildren()[id];
+                    InterfaceComponent c = Interfaces.getComponent(parentOfParentId, parentId).getComponents()[id];
                     selected = c;
                     selectedComponent(c);
                 }
@@ -271,15 +270,15 @@ public class WidgetExplorer extends JFrame implements Paintable {
         }
     }
 
-    private void selectedInterface(Widget[] i) {
+    private void selectedInterface(InterfaceComponent[] i) {
         setText(i);
     }
 
-    private void selectedComponent(Widget c) {
+    private void selectedComponent(InterfaceComponent c) {
         setText(c);
     }
 
-    private void setText(final Widget[] i) {
+    private void setText(final InterfaceComponent[] i) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -293,7 +292,10 @@ public class WidgetExplorer extends JFrame implements Paintable {
         });
     }
 
-    private void setText(final Widget c) {
+    private void setText(final InterfaceComponent c) {
+        //231 = continue
+        //219 = options
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -301,12 +303,12 @@ public class WidgetExplorer extends JFrame implements Paintable {
                     infoPane.setText("This object is null.");
                 else {
                     infoPane.setText("<font face=\"Helvetica\" color=\"black\">"
-                            + "<b> Child count: </b>" + c.getChildren().length + "<br>"
+                            + "<b> Child count: </b>" + c.getComponents().length + "<br>"
                             + "<b> Absolute X: </b>" + c.getX() + "<br>"
                             + "<b> Absolute Y: </b>" + c.getY() + "<br>"
                             + "<b> Width: </b>" + c.getWidth() + "<br>"
                             + "<b> Height: </b>" + c.getHeight() + "<br>"
-                            + "<b> Texture Id: </b>" + c.getTextureId() + "<br>"
+                            + "<b> Material Id: </b>" + c.getMaterialId() + "<br>"
                             + "<b> Item Id: </b>" + c.getItemId() + "<br>"
                             + "<b> Item quantity: </b>" + c.getItemQuantity() + "<br>"
                             + "<b> Item Ids: </b>" + Arrays.toString(c.getItemIds()) + "<br>"
@@ -316,6 +318,10 @@ public class WidgetExplorer extends JFrame implements Paintable {
                             + "<b> Text: </b>" + c.getText() + "<br>"
                             + "<b> Id: </b>" + c.getId() + "<br>"
                             + "<b> Type: </b>" + c.getType() + "<br>"
+                            + "<b> Config: </b>" + c.getConfig() + "<br>"
+                            + "<b> Config_Application: </b>" + InterfaceComponentConfig.getApplicationTargets(c.getConfig()) + "<br>"
+                            + "<b> Script depth: </b>" + InterfaceComponentConfig.getScriptEventDepth(c.getConfig()) + "<br>"
+                            + "<b> Is dialog option: </b>" + InterfaceComponentConfig.isDialogOption(c.getConfig()) + "<br>"
                             + "<b> Hidden: </b>" + c.isHidden() + "<br>"
                             + "<b> Explicitly Hidden: </b>" + c.isExplicitlyHidden() + "<br>"
                             + "<b> Item Id: </b>" + c.getItemId() + "<br>");

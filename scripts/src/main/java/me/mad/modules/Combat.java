@@ -5,12 +5,11 @@ import
 import com.inubot.api.methods.Inventory;
 import com.inubot.api.methods.Players;
 import com.inubot.api.methods.traversal.Movement;
+import com.inubot.api.oldschool.Item;
 import com.inubot.api.oldschool.Tab;
 import com.inubot.api.oldschool.Tile;
-import com.inubot.api.oldschool.Widget;
-import com.inubot.api.oldschool.WidgetItem;
+import com.inubot.api.oldschool.InterfaceComponent;
 import com.inubot.api.util.Time;
-import com.inubot.bundledscripts.complete.Combot;
 import me.mad.Tutorial;
 import me.mad.util.interfaces.Module;
 
@@ -40,11 +39,11 @@ public class Combat implements Module {
                     Tutorial.openTab(Tab.EQUIPMENT);
                     break;
                 case 400:
-                    Widget combatStats = Interfaces.getWidget(387,17);
+                    InterfaceComponent combatStats = Interfaces.getComponent(387,17);
                     combatStats.processAction("View equipment stats");
                     break;
                 case 405:
-                    WidgetItem dagger = Inventory.getFirst("Bronze dagger");
+                    Item dagger = Inventory.getFirst("Bronze dagger");
                     if(dagger !=null) {
                         System.out.println(Arrays.toString(dagger.getActions()));
                         dagger.processAction("Wield");
@@ -56,8 +55,8 @@ public class Combat implements Module {
                     Time.await(Tutorial::isChatOpen, 1200);
                     break;
                 case 420:
-                    WidgetItem shield = Inventory.getFirst("Wooden shield");
-                    WidgetItem sword = Inventory.getFirst("Bronze sword");
+                    Item shield = Inventory.getFirst("Wooden shield");
+                    Item sword = Inventory.getFirst("Bronze sword");
                     if(shield !=null) {
                         shield.processAction("Wield");
                     }
@@ -90,8 +89,8 @@ public class Combat implements Module {
                     } else Tutorial.interactGB("Gate", "Open", new Tile(3111, 9518));
                     break;
                 case 480:
-                    WidgetItem bow = Inventory.getFirst("Shortbow");
-                    WidgetItem arrow = Inventory.getFirst("Bronze arrow");
+                    Item bow = Inventory.getFirst("Shortbow");
+                    Item arrow = Inventory.getFirst("Bronze arrow");
                     if(bow !=null) {
                         bow.processAction("Wield");
                         Time.await(() -> bow == null, 1200);

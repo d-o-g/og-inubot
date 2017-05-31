@@ -7,7 +7,7 @@ import com.inubot.api.methods.Players;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.Tile;
-import com.inubot.api.oldschool.WidgetItem;
+import com.inubot.api.oldschool.Item;
 import com.inubot.api.util.Paintable;
 import com.inubot.script.Script;
 
@@ -46,7 +46,7 @@ public class Aircrafter extends Script implements Paintable {
                     Movement.walkTo(alter);
                 } else {
                     GameObject alter = GameObjects.getNearest("Mysterious ruins");
-                    WidgetItem item = Inventory.getFirst("Air talisman");
+                    Item item = Inventory.getFirst("Air talisman");
                     if (item != null && alter != null) {
                         item.processAction("Use");
                         alter.processAction("Use");

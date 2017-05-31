@@ -20,7 +20,7 @@ public class Tile extends GraphVisitor {
 
     @Override
     public void visit() {
-        add("objects", cn.getField(null, "[" + desc("InteractableEntity")), "[" + literalDesc("InteractableEntity"));
+        add("objects", cn.getField(null, "[" + desc("EntityMarker")), "[" + literalDesc("EntityMarker"));
         add("decoration", cn.getField(null, desc("FloorDecoration")), literalDesc("FloorDecoration"));
         add("boundary", cn.getField(null, desc("Boundary")), literalDesc("Boundary"));
         add("boundaryDecoration", cn.getField(null, desc("BoundaryDecoration")), literalDesc("BoundaryDecoration"));

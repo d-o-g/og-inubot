@@ -5,5 +5,5 @@ import com.inubot.client.Artificial;
 @Artificial
 public interface RSInterface {
     int getIndex();
-    RSWidget[] getWidgets();
+    RSInterfaceComponent[] getComponents();
 }

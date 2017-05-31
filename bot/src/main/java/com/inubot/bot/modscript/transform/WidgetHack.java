@@ -15,13 +15,13 @@ public class WidgetHack implements Transform {
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
-        ClassNode widget = classes.get(ModScript.getClass("Widget"));
+        ClassNode widget = classes.get(ModScript.getClass("InterfaceComponent"));
         widget.fields.add(new FieldNode(ACC_PUBLIC, "containerX", "I", null, null));
         widget.fields.add(new FieldNode(ACC_PUBLIC, "containerY", "I", null, null));
         widget.methods.add(ASMFactory.createGetter(false, widget.name, "containerX", "I", "containerX"));
         widget.methods.add(ASMFactory.createGetter(false, widget.name, "containerY", "I", "containerY"));
-        FieldHook x = ModScript.getFieldHook("Widget#x");
-        FieldHook y = ModScript.getFieldHook("Widget#y");
+        FieldHook x = ModScript.getFieldHook("InterfaceComponent#x");
+        FieldHook y = ModScript.getFieldHook("InterfaceComponent#y");
 
         /*
            int var13 = var11.relativeX * 280533711 + var6; //absoluteX
@@ -42,7 +42,7 @@ public class WidgetHack implements Transform {
                 LabelNode ln = new LabelNode(label);
                 mn.visitLabel(label);
                 setStack.add(new InsnNode(ICONST_0));
-                setStack.add(new FieldInsnNode(GETSTATIC, Client.class.getName().replace('.', '/'), "WIDGET_RENDERING_ENABLED", "Z"));
+                setStack.add(new FieldInsnNode(GETSTATIC, Client.class.getName().replace('.', '/'), "INTERFACE_RENDERING_ENABLED", "Z"));
                 setStack.add(new JumpInsnNode(IFNE, ln));
                 setStack.add(new InsnNode(RETURN));
                 setStack.add(ln);

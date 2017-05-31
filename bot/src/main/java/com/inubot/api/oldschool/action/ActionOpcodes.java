@@ -137,15 +137,15 @@ public interface ActionOpcodes {
     // though a action may be disabled it still enabled if the
     // widget has a actionListener (its non-null).
 
-    // Note: WIDGET_ACTION is ONLY for actions between indexes [0, 4]
+    // Note: COMPONENT_ACTION is ONLY for actions between indexes [0, 4]
 
-    int WIDGET_ACTION = 57;
+    int COMPONENT_ACTION = 57;
 
 
-    int SPELL_ON_WIDGET = 58; // 'Selected Spell' -> Widget
+    int SPELL_ON_COMPONENT = 58; // 'Selected Spell' -> InterfaceComponent
 
-    // Note: WIDGET_ACTION_2 is ONLY for actions between indexes [5, 9]
-    int WIDGET_ACTION_2 = 1007; //TODO look into this more...
+    // Note: COMPONENT_ACTION_2 is ONLY for actions between indexes [5, 9]
+    int COMPONENT_ACTION_2 = 1007; //TODO look into this more...
 
     int CANCEL = 1006;
 }

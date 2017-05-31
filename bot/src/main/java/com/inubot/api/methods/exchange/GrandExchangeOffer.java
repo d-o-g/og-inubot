@@ -3,7 +3,7 @@ package com.inubot.api.methods.exchange;
 import com.inubot.api.exceptions.GrandExchangeClosedException;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.methods.Mouse;
-import com.inubot.api.oldschool.Widget;
+import com.inubot.api.oldschool.InterfaceComponent;
 import com.inubot.client.natives.oldschool.RSGrandExchangeOffer;
 import com.inubot.api.methods.exchange.GrandExchange.Slot;
 
@@ -92,11 +92,11 @@ public class GrandExchangeOffer {
         if (!exists() || exists() && !GrandExchange.isSlotOpen(getSlot())) {
             return false;
         }
-        Widget c = Interfaces.getWidget(465, 21);
+        InterfaceComponent c = Interfaces.getComponent(465, 21);
         if (c == null) {
             return false;
         }
-        Widget child = c.getChild(w -> w.getIndex() == 0);
+        InterfaceComponent child = c.getComponent(w -> w.getIndex() == 0);
         if (child != null && !child.isHidden()) {
             Mouse.setLocation((int) child.getBounds().getCenterX(), (int) child.getBounds().getCenterY());
             Mouse.click(true);
@@ -105,7 +105,7 @@ public class GrandExchangeOffer {
     }
 
 
-    private boolean hasAction(Widget child, String action) {
+    private boolean hasAction(InterfaceComponent child, String action) {
         if (child == null || child.getActions() == null) {
             return false;
         }
@@ -121,13 +121,13 @@ public class GrandExchangeOffer {
         if (!isOpen()) {
             return false;
         }
-        Widget c = Interfaces.getWidget(465, 22);
+        InterfaceComponent c = Interfaces.getComponent(465, 22);
         if (c == null) {
             return false;
         }
-        Widget[] child = c.getChildren();
+        InterfaceComponent[] child = c.getComponents();
         if (child != null) {
-            for (Widget children : child) {
+            for (InterfaceComponent children : child) {
                 if (hasAction(children, "Collect")) {
                     Mouse.setLocation((int) children.getBounds().getCenterX(), (int) children.getBounds().getCenterY());
                     Mouse.click(true);

@@ -2,8 +2,8 @@ package com.inubot.bundledscripts.complete.alcher;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.Inventory;
+import com.inubot.api.oldschool.Item;
 import com.inubot.api.oldschool.Skill;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.tree.SelectableSpellButtonAction;
 import com.inubot.api.oldschool.action.tree.TableAction;
@@ -21,8 +21,8 @@ import java.util.Map;
 )
 public class ProAlcher extends ProScript implements AlcherConstants {
 
-    private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));
-    private static final Filter<WidgetItem> OTHER_FILTER = (i -> !NATURE_FILTER.accept(i) && !i.getName().contains("Coins"));
+    private static final Filter<Item> NATURE_FILTER = (i -> i.getName().contains("rune"));
+    private static final Filter<Item> OTHER_FILTER = (i -> !NATURE_FILTER.accept(i) && !i.getName().contains("Coins"));
 
     @Override
     public void getPaintData(Map<String, Object> data) {
@@ -42,8 +42,8 @@ public class ProAlcher extends ProScript implements AlcherConstants {
         if (!Game.isLoggedIn()) {
             return 1200;
         }
-        WidgetItem runes = Inventory.getFirst(NATURE_FILTER);
-        WidgetItem other = Inventory.getFirst(OTHER_FILTER);
+        Item runes = Inventory.getFirst(NATURE_FILTER);
+        Item other = Inventory.getFirst(OTHER_FILTER);
         if (runes != null && other != null) {
             if (Skills.getCurrentLevel(Skill.MAGIC) < 55) {
                 Client.processAction(new SelectableSpellButtonAction(14286862), "", "");
@@ -57,12 +57,12 @@ public class ProAlcher extends ProScript implements AlcherConstants {
 
     @Override
     public boolean setup() {
-        //Client.setWidgetRendering(false);
+        //Client.setInterfaceRendering(false);
         return true;
     }
 
     @Override
     public void onFinish() {
-        Client.setWidgetRendering(true);
+        Client.setInterfaceRendering(true);
     }
 }

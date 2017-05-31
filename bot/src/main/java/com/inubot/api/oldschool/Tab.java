@@ -67,21 +67,21 @@ public enum Tab {
         return InterfaceOptions.getTabLayout() == TabLayout.BOX;
     }
 
-    public int getWidgetIndex() {
+    public int getComponentIndex() {
         if (InterfaceOptions.getViewMode() == ViewMode.FIXED_MODE)
             return fixedModeIndex;
         return isBoxLayout() ? boxLayoutIndex : lineLayoutIndex;
     }
 
-    public Widget getWidget() {
+    public InterfaceComponent getComponent() {
         if (InterfaceOptions.getViewMode() == ViewMode.FIXED_MODE)
-            return Interfaces.getWidget(MAIN_FIXED_MODE, getWidgetIndex());
-        return Interfaces.getWidget(isBoxLayout() ? BOX_LAYOUT_TABS : LINE_LAYOUT_TABS, getWidgetIndex());
+            return Interfaces.getComponent(MAIN_FIXED_MODE, getComponentIndex());
+        return Interfaces.getComponent(isBoxLayout() ? BOX_LAYOUT_TABS : LINE_LAYOUT_TABS, getComponentIndex());
     }
 
     public boolean isOpen() {
-        Widget component = getWidget();
-        return component != null && component.getTextureId() != -1;
+        InterfaceComponent component = getComponent();
+        return component != null && component.getMaterialId() != -1;
     }
 
     @Override

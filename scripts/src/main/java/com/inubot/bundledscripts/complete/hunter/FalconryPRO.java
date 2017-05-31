@@ -8,6 +8,7 @@ package com.inubot.bundledscripts.complete.hunter;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.Inventory;
+import com.inubot.api.oldschool.PathingEntity;
 import com.inubot.api.oldschool.Npc;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.util.Paintable;
@@ -53,7 +54,7 @@ public class FalconryPRO extends Script implements Paintable {
         }*/
         if (Inventory.getCount() > 20)
             Inventory.dropAllExcept(new NameFilter<>("Coins"));
-        com.inubot.api.oldschool.Character<?> target;
+        PathingEntity<?> target;
         if ((target = HintArrow.getTarget()) == null || !target.getName().contains("Gyr")) {
             Npc kebbit = Npcs.getNearest("Spotted kebbit");
             if (kebbit != null)

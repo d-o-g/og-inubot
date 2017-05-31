@@ -1,6 +1,6 @@
 package com.inubot.client.natives.oldschool;
 
-public interface RSModel extends RSRenderable {
+public interface RSModel extends RSEntity {
 
     //int[] getXVertices();
 

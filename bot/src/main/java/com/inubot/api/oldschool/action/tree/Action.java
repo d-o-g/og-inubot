@@ -176,9 +176,9 @@ public abstract class Action implements ActionFilter {
             case ActionOpcodes.TABLE_ACTION_4: {
                 return new TableAction(opcode, arg0, arg1, arg2);
             }
-            case ActionOpcodes.WIDGET_ACTION:
-            case ActionOpcodes.WIDGET_ACTION_2: {
-                return new WidgetAction(opcode, arg0, arg1, arg2);
+            case ActionOpcodes.COMPONENT_ACTION:
+            case ActionOpcodes.COMPONENT_ACTION_2: {
+                return new InterfaceComponentAction(opcode, arg0, arg1, arg2);
             }
             case ActionOpcodes.EXAMINE_OBJECT:
             case ActionOpcodes.EXAMINE_NPC:
@@ -206,8 +206,8 @@ public abstract class Action implements ActionFilter {
             case ActionOpcodes.SPELL_ON_ITEM: {
                 return new SpellOnItemAction(arg0, arg1, arg2);
             }
-            case ActionOpcodes.SPELL_ON_WIDGET: {
-                return new SpellOnWidgetAction(arg1, arg2);
+            case ActionOpcodes.SPELL_ON_COMPONENT: {
+                return new SpellOnComponentAction(arg1, arg2);
             }
             case ActionOpcodes.USE_ITEM: {
                 return new UseItemAction(arg0, arg1, arg2);

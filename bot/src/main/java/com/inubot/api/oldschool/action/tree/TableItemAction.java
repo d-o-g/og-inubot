@@ -31,16 +31,16 @@ public class TableItemAction extends AbstractTableAction {
         return opcode - ActionOpcodes.ITEM_ACTION_0;
     }
 
-    /*  public Widget getContainer() {
+    /*  public InterfaceComponent getContainer() {
           final int parent = parent();
           final int child = child();
-          return Widget.get(parent, child);
+          return InterfaceComponent.get(parent, child);
       }
 
       public Item getItem() {
-          Widget container = getContainer();
+          InterfaceComponent container = getContainer();
           if(container == null) return null;
-          return new WidgetItem(container,itemIndex());
+          return new Item(container,itemIndex());
       }
   */
     @Override

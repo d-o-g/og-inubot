@@ -24,7 +24,7 @@ public class ShootArrows implements Action {
 
     @Override
     public boolean validate() {
-        return RangeGuild.isGameStarted() && Interfaces.getWidgets(RangeGuild.DIALOGUE_FILTER).length == 0;
+        return RangeGuild.isGameStarted() && Interfaces.getComponents(RangeGuild.DIALOGUE_FILTER).length == 0;
     }
 
     @Override

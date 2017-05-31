@@ -10,19 +10,19 @@ import org.objectweb.asm.commons.cfg.tree.node.FieldMemberNode;
 import org.objectweb.asm.commons.cfg.tree.node.VariableNode;
 import org.objectweb.asm.tree.ClassNode;
 
-@VisitorInfo(hooks = {"plane", "x", "y", "worldX", "worldY", "height", "id", "renderable"})
-public class InteractableEntity extends GraphVisitor {
+@VisitorInfo(hooks = {"plane", "x", "y", "worldX", "worldY", "height", "id", "entity"})
+public class EntityMarker extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
         return cn.ownerless() && cn.getAbnormalFieldCount() == 1 && cn.getFieldTypeCount() == 2 &&
-                cn.fieldCount("I") != 5 && cn.fieldCount(desc("Renderable")) == 1;
+                cn.fieldCount("I") != 5 && cn.fieldCount(desc("Entity")) == 1;
     }
 
     @Override
     public void visit() {
         visit("Region", new ObjectHooks());
-        add("renderable", cn.getField(null, desc("Renderable")), literalDesc("Renderable"));
+        add("entity", cn.getField(null, desc("Entity")), literalDesc("Entity"));
     }
 
     private class ObjectHooks extends BlockVisitor {

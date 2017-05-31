@@ -10,7 +10,7 @@ import com.inubot.api.oldschool.Npc;
 
 import java.util.ArrayList;
 
-public class NpcPool extends CharacterPool<Npc, NpcPool> {
+public class NpcPool extends PathingEntityPool<Npc, NpcPool> {
 
     public NpcPool() {
         super(new ArrayList<>());

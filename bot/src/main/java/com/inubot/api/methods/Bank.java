@@ -10,11 +10,11 @@ import com.inubot.api.exceptions.BankClosedException;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.oldschool.action.Processable;
-import com.inubot.api.oldschool.action.tree.WidgetAction;
+import com.inubot.api.oldschool.action.tree.InterfaceComponentAction;
 import com.inubot.api.util.*;
 import com.inubot.api.util.filter.*;
 import com.inubot.client.natives.oldschool.RSVarpBit;
-import com.inubot.client.natives.oldschool.RSWidget;
+import com.inubot.client.natives.oldschool.RSInterfaceComponent;
 
 import java.awt.event.KeyEvent;
 import java.util.*;
@@ -63,35 +63,35 @@ public class Bank {
      * @return <b>true</b> if and only if the bank is open and rendered
      */
     public static boolean isOpen() {
-        Widget component = Interfaces.getWidget(BANK_PARENT, 0);
+        InterfaceComponent component = Interfaces.getComponent(BANK_PARENT, 0);
         return component != null && component.isVisible();
     }
 
     /**
      * @param filter The {@link com.inubot.api.util.filter.Filter} which should be used to select the elements
-     * @return An array of {@link com.inubot.api.oldschool.WidgetItem}'s in the bank
+     * @return An array of {@link Item}'s in the bank
      * that were accepted by the given {@link com.inubot.api.util.filter.Filter}
      */
-    public static WidgetItem[] getItems(Filter<WidgetItem> filter) {
+    public static Item[] getItems(Filter<Item> filter) {
         if (!isOpen())
-            return new WidgetItem[0];
-        Widget[] children = Interfaces.widgetsFor(BANK_PARENT);
-        Widget container = children[12];
+            return new Item[0];
+        InterfaceComponent[] children = Interfaces.componentsFor(BANK_PARENT);
+        InterfaceComponent container = children[12];
         if (container != null) {
-            List<WidgetItem> items = new ArrayList<>();
-            Widget[] slots = container.getChildren();
-            for (Widget slot : slots) {
+            List<Item> items = new ArrayList<>();
+            InterfaceComponent[] slots = container.getComponents();
+            for (InterfaceComponent slot : slots) {
                 int id = slot.getItemId();
                 if (id > 0) {
-                    WidgetItem item = new WidgetItem(slot, slot.getIndex());
+                    Item item = new Item(slot, slot.getIndex());
                     if (!filter.accept(item))
                         continue;
                     items.add(item);
                 }
             }
-            return items.toArray(new WidgetItem[items.size()]);
+            return items.toArray(new Item[items.size()]);
         }
-        return new WidgetItem[0];
+        return new Item[0];
     }
 
     /**
@@ -103,18 +103,18 @@ public class Bank {
     }
 
     /**
-     * @return All the {@link com.inubot.api.oldschool.WidgetItem}'s in the bank
+     * @return All the {@link Item}'s in the bank
      */
-    public static WidgetItem[] getItems() {
+    public static Item[] getItems() {
         return getItems(Filter.always());
     }
 
     /**
      * @param filter the {@link com.inubot.api.util.filter.Filter} to select the elements
-     * @return the first {@link com.inubot.api.oldschool.WidgetItem} selected by the {@link com.inubot.api.util.filter.Filter}
+     * @return the first {@link Item} selected by the {@link com.inubot.api.util.filter.Filter}
      */
-    public static WidgetItem getFirst(Filter<WidgetItem> filter) {
-        for (WidgetItem item : getItems()) {
+    public static Item getFirst(Filter<Item> filter) {
+        for (Item item : getItems()) {
             if (filter.accept(item))
                 return item;
         }
@@ -123,18 +123,18 @@ public class Bank {
 
     /**
      * @param ids
-     * @return Gets the first {@link com.inubot.api.oldschool.WidgetItem} with the given ids
+     * @return Gets the first {@link Item} with the given ids
      */
-    public static WidgetItem getFirst(int... ids) {
-        return getFirst(new IdFilter<WidgetItem>(ids));
+    public static Item getFirst(int... ids) {
+        return getFirst(new IdFilter<Item>(ids));
     }
 
     /**
      * @param names
-     * @return Gets the first {@link com.inubot.api.oldschool.WidgetItem} with the given names
+     * @return Gets the first {@link Item} with the given names
      */
-    public static WidgetItem getFirst(String... names) {
-        return getFirst(new NameFilter<WidgetItem>(names));
+    public static Item getFirst(String... names) {
+        return getFirst(new NameFilter<Item>(names));
     }
 
     /**
@@ -142,9 +142,9 @@ public class Bank {
      */
     public static boolean close() {
         if (Bank.isOpen()) {
-            Widget w = Interfaces.getWidget(12, 3).getChild(c -> c.getIndex() == 11);
+            InterfaceComponent w = Interfaces.getComponent(12, 3).getComponent(c -> c.getIndex() == 11);
             if (w != null) {
-                Client.processAction(new WidgetAction(ActionOpcodes.WIDGET_ACTION, 0, w.getIndex(), w.getId()), "Close", "");
+                Client.processAction(new InterfaceComponentAction(ActionOpcodes.COMPONENT_ACTION, 0, w.getIndex(), w.getId()), "Close", "");
                 return true;
             }
         }
@@ -242,8 +242,8 @@ public class Bank {
      * Clicks the deposit inventory button in the bank
      */
     public static void depositInventory() {
-        Widget[] children = Interfaces.widgetsFor(BANK_PARENT);
-        Widget button = children[29];
+        InterfaceComponent[] children = Interfaces.componentsFor(BANK_PARENT);
+        InterfaceComponent button = children[29];
         if (button != null)
             button.processAction(57, "Deposit inventory");
     }
@@ -275,16 +275,16 @@ public class Bank {
      *
      * @param filter The {@link com.inubot.api.util.filter.Filter} which will be used to select the elements
      */
-    public static void depositAllExcept(Filter<WidgetItem> filter) {
+    public static void depositAllExcept(Filter<Item> filter) {
         depositAll(Filter.not(filter));
     }
 
     public static void depositAllExcept(int... ids) {
-        depositAllExcept(new IdFilter<WidgetItem>(ids));
+        depositAllExcept(new IdFilter<Item>(ids));
     }
 
     public static void depositAllExcept(String... names) {
-        depositAllExcept(new NameFilter<WidgetItem>(names));
+        depositAllExcept(new NameFilter<Item>(names));
     }
 
     /**
@@ -294,15 +294,15 @@ public class Bank {
      * @see #depositInventory - should be used instead of this method if the entire inventory
      * is needed to be deposited
      */
-    public static void depositAll(Filter<WidgetItem> filter) {
+    public static void depositAll(Filter<Item> filter) {
         if (!isOpen())
             throw new BankClosedException();
-        WidgetItem[] items = Inventory.getItems(filter);
+        Item[] items = Inventory.getItems(filter);
         if (items.length == Inventory.getCount()) {
             depositInventory();
             return;
         }
-        for (WidgetItem item : items) {
+        for (Item item : items) {
             if (item != null && item.getDefinition() != null) {
                 item.processAction(57, "Deposit-All");
             }
@@ -310,11 +310,11 @@ public class Bank {
     }
 
     public static void depositAll(String... names) {
-        depositAll(new NameFilter<WidgetItem>(names));
+        depositAll(new NameFilter<Item>(names));
     }
 
     public static void depositAll(int... ids) {
-        depositAll(new IdFilter<WidgetItem>(ids));
+        depositAll(new IdFilter<Item>(ids));
     }
 
     /**
@@ -383,7 +383,7 @@ public class Bank {
     }
 
     public static boolean withdrawAll(int id) {
-        WidgetItem item = Bank.getFirst(new IdFilter<>(id));
+        Item item = Bank.getFirst(new IdFilter<>(id));
         if (item != null) {
             item.processAction("Withdraw-All");
             return true;
@@ -392,7 +392,7 @@ public class Bank {
     }
 
     public static boolean withdrawAll(String name) {
-        WidgetItem item = Bank.getFirst(new NameFilter<>(name));
+        Item item = Bank.getFirst(new NameFilter<>(name));
         if (item != null) {
             item.processAction("Withdraw-All");
             return true;
@@ -405,14 +405,14 @@ public class Bank {
             throw new BankClosedException();
         if (amount == 28)
             return withdrawAll(id);
-        WidgetItem item = getFirst(w -> w.getId() == id && w.getQuantity() >= amount);
+        Item item = getFirst(w -> w.getId() == id && w.getQuantity() >= amount);
         if (item != null) {
             if (item.containsAction("Withdraw-" + amount)) {
                 item.processAction("Withdraw-" + amount);
                 return true;
             }
             item.processAction("Withdraw-X");
-            if (Time.await(() -> !Interfaces.getWidget(162, 32).isExplicitlyHidden(), 1500)) {
+            if (Time.await(() -> !Interfaces.getComponent(162, 32).isExplicitlyHidden(), 1500)) {
                 Time.sleep(1000);
                 for (char c : String.valueOf(amount).toCharArray()) {
                     Game.getCanvas().pressKey(c, 200);
@@ -450,8 +450,8 @@ public class Bank {
     public static int getCapacity() { //TODO Any better way?
         if (!isOpen())
             return -1;
-        Widget textWidget = Interfaces.getWidget(12, 5);
-        return Integer.valueOf(textWidget.getText());
+        InterfaceComponent textInterfaceComponent = Interfaces.getComponent(12, 5);
+        return Integer.valueOf(textInterfaceComponent.getText());
     }
 
     /**
@@ -501,7 +501,7 @@ public class Bank {
     public static boolean isSettingsOpen() {
         // Can tell if the main tab panel is not displayed, or the texture of the button
         if (isClosed()) return false;
-        Widget settings_panel = Interfaces.getWidget(12, 7);
+        InterfaceComponent settings_panel = Interfaces.getComponent(12, 7);
         return settings_panel != null && !settings_panel.isHidden();
     }
 
@@ -685,33 +685,33 @@ public class Bank {
          * @return The dividing widget header of this tab.
          * @see #getTabDisplay
          */
-        public Widget getTab() {
-            return Interfaces.getWidget(12, 8).getChildren()[10 + getIndex()];
+        public InterfaceComponent getTab() {
+            return Interfaces.getComponent(12, 8).getComponents()[10 + getIndex()];
         }
 
-        public Widget getDivider() { // Gets the divider located at the bottom of the tab
+        public InterfaceComponent getDivider() { // Gets the divider located at the bottom of the tab
             if (Bank.isClosed()) return null;
             if (!isMainTabOpen()) return null;
             if (isCollapsed()) return null;
             //... The divider should now be active
             int base_index = getCapacity() + getIndex();
-            return Interfaces.getWidget(12, 10).getChildren()[base_index];
+            return Interfaces.getComponent(12, 10).getComponents()[base_index];
         }
 
-        public Widget getRemote() { // When searching the widget to open the respected tab
+        public InterfaceComponent getRemote() { // When searching the widget to open the respected tab
             if (Bank.isClosed())
                 return null;
             int baseIdx = getCapacity() + NUM_TABS + getIndex() - 1;
-            return Interfaces.getWidget(12, 10).getChildren()[baseIdx];
+            return Interfaces.getComponent(12, 10).getComponents()[baseIdx];
         }
 
         /**
          * @return The empty region at the end of each tab where you can drop an item to add to the tab.
          * This region is only updated if their is a gap/space of items at the end of the tab (lower,right).
          */
-        public Widget getDropRegion() {
+        public InterfaceComponent getDropRegion() {
             int baseIdx = getCapacity() + NUM_TABS * 2 + getIndex() - 1;
-            return Interfaces.getWidget(12, 10).getChildren()[baseIdx]; //TODO return null if there is no gap
+            return Interfaces.getComponent(12, 10).getComponents()[baseIdx]; //TODO return null if there is no gap
         }
 
         /**
@@ -765,7 +765,7 @@ public class Bank {
             if (isOpen()) return true;
             if (isCollapsed()) return false; // Can't open a collapsed tab
             // Now we can try an open the tab...
-            Widget divider = getTab();
+            InterfaceComponent divider = getTab();
             if (divider == null) return false;
             divider.processAction("View tab"); //TODO ensure constant action string?
             Time.sleep(500, 800);
@@ -778,19 +778,19 @@ public class Bank {
             return false;
         }
 
-        public WidgetItem getItem(int relativeIndex) {
+        public Item getItem(int relativeIndex) {
             final int idx = getItemIndex(relativeIndex);
             if (idx == -1)
                 return null;
-            return new WidgetItem(Interfaces.getWidget(12, 10).getChildren()[idx], idx);
+            return new Item(Interfaces.getComponent(12, 10).getComponents()[idx], idx);
         }
 
         public int[] getItemIds(int[] dest, int pos, int length) {
-            final Widget container = Interfaces.getWidget(12, 10);
+            final InterfaceComponent container = Interfaces.getComponent(12, 10);
             if (container == null) return new int[0];
             final int num_items = getCount();
             final int base = getContainerBaseIndex();
-            final RSWidget[] items = container.getRaw().getChildren();
+            final RSInterfaceComponent[] items = container.getRaw().getChildren();
             final int lim = base + num_items;
             for (int i = base, k = 0; k < length && i < lim; i++)
                 dest[pos + k++] = items[i].getItemId();
@@ -798,27 +798,27 @@ public class Bank {
         }
 
         public int[] getItemQuantities(int[] dest, int pos, int length) {
-            final Widget container = Interfaces.getWidget(12, 10);
+            final InterfaceComponent container = Interfaces.getComponent(12, 10);
             if (container == null) return new int[0];
             final int num_items = getCount();
             final int base = getContainerBaseIndex();
-            final RSWidget[] items = container.getRaw().getChildren();
+            final RSInterfaceComponent[] items = container.getRaw().getChildren();
             final int lim = base + num_items;
             for (int i = base, k = 0; k < length && i < lim; i++)
                 dest[pos + k++] = items[i].getItemAmount();
             return dest;
         }
 
-        public WidgetItem[] getItems() {
-            final Widget container = Interfaces.getWidget(12, 10);
+        public Item[] getItems() {
+            final InterfaceComponent container = Interfaces.getComponent(12, 10);
             if (container == null)
-                return new WidgetItem[0];
+                return new Item[0];
             final int num_items = getCount();
             final int base = getContainerBaseIndex();
             final int lim = base + num_items;
-            final WidgetItem[] dest = new WidgetItem[num_items];
+            final Item[] dest = new Item[num_items];
             for (int i = base, k = 0; i < lim; i++)
-                dest[k++] = new WidgetItem(container.getChildren()[i], i);
+                dest[k++] = new Item(container.getComponents()[i], i);
             return dest;
         }
 

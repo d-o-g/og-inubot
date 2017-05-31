@@ -35,7 +35,7 @@ public class InvokerTransform implements Transform {
         //keeeeeeeeeeek
         outer:
         for (ClassNode cn : classes.values()) {
-            if (cn.superName.equals(ModScript.getClass("CacheNode"))) {
+            if (cn.superName.equals(ModScript.getClass("DoublyLinkedNode"))) {
                 int sia = 0, spi = 0;
                 for (FieldNode fn : cn.fields) {
                     if (!Modifier.isStatic(fn.access))

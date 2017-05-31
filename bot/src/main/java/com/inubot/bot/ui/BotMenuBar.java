@@ -24,7 +24,7 @@ public class BotMenuBar extends JMenuBar {
     private final JButton stop = new JButton("Stop");
 
     public BotMenuBar() {
-//        widget.addActionListener(e -> new WidgetExplorer().setVisible(true));
+//        widget.addActionListener(e -> new InterfaceExplorer().setVisible(true));
 //        acc.addActionListener(e -> {
 //            Account a = AccountManager.generateRandomAccount();
 //            if (a != null) {

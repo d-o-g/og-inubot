@@ -1,13 +1,12 @@
 package com.inubot.client.natives.oldschool;
 
-import com.inubot.api.methods.Game;
 import com.inubot.client.natives.ClientNative;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface RSTile extends ClientNative {
-    RSInteractableEntity[] getObjects();
+    RSEntityMarker[] getObjects();
 
     RSFloorDecoration getDecoration();
 
@@ -23,7 +22,7 @@ public interface RSTile extends ClientNative {
 
     default RSTileComponent[] getComponents() {
         List<RSTileComponent> components = new ArrayList<>();
-        for (RSInteractableEntity entity : getObjects()) {
+        for (RSEntityMarker entity : getObjects()) {
             if (entity != null) {
                 components.add(entity);
             }

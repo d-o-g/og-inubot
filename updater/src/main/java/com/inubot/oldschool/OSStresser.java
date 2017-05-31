@@ -8,7 +8,7 @@ package com.inubot.oldschool;
 
 import com.inubot.Updater;
 import com.inubot.oldschool.analysis.*;
-import com.inubot.oldschool.analysis.Character;
+import com.inubot.oldschool.analysis.PathingEntity;
 import com.inubot.oldschool.analysis.Queue;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.util.Configuration;
@@ -44,12 +44,12 @@ public class OSStresser extends Updater {
 
     private static GraphVisitor[] createVisitors() {
         return new GraphVisitor[]{
-                new Node(), new CacheNode(), new Renderable(), new NodeTable(),
+                new Node(), new DoublyLinkedNode(), new Entity(), new NodeTable(),
                 new Cache(), new NodeDeque(), new Queue(), new Tile(), new Model(),
-                new AnimationSequence(), new Character(), new NpcDefinition(), new Npc(),
-                new Player(), new Item(), new ItemDefinition(), new InteractableEntity(),
-                new ObjectDefinition(), new Region(), new Canvas(), new WidgetNode(),
-                new CollisionMap(), new Widget(), new Varps(), new Client()
+                new AnimationSequence(), new PathingEntity(), new NpcDefinition(), new Npc(),
+                new Player(), new Item(), new ItemDefinition(), new EntityMarker(),
+                new ObjectDefinition(), new Region(), new Canvas(), new InterfaceNode(),
+                new CollisionMap(), new InterfaceComponent(), new Varps(), new Client()
         };
     }
 

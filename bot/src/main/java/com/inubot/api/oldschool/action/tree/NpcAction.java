@@ -13,7 +13,7 @@ import com.inubot.api.util.CacheLoader;
 import com.inubot.client.natives.oldschool.RSNpc;
 import com.inubot.client.natives.oldschool.RSNpcDefinition;
 
-public class NpcAction extends CharacterAction {
+public class NpcAction extends PathingEntityAction {
 
     public NpcAction(int opcode, int npcIndex) {
         super(opcode, npcIndex);

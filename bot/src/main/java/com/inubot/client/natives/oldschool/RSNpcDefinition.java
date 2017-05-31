@@ -4,7 +4,7 @@ import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Varps;
 import com.inubot.client.Artificial;
 
-public interface RSNpcDefinition extends RSCacheNode {
+public interface RSNpcDefinition extends RSDoublyLinkedNode {
 
     String getName();
     String[] getActions();

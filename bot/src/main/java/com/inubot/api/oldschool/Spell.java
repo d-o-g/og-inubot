@@ -17,7 +17,7 @@ public interface Spell {
 
     int getInterfaceIndex();
 
-    int getWidgetIndex();
+    int getComponentIndex();
 
     int getLevel();
 
@@ -31,8 +31,8 @@ public interface Spell {
         return !isCommon();
     }
 
-    default Widget getWidget() {
-        return Interfaces.getWidget(getInterfaceIndex(), getWidgetIndex());
+    default InterfaceComponent getComponent() {
+        return Interfaces.getComponent(getInterfaceIndex(), getComponentIndex());
     }
 
     public static enum Modern implements Spell {
@@ -118,7 +118,7 @@ public interface Spell {
         }
 
         @Override
-        public final int getWidgetIndex() {
+        public final int getComponentIndex() {
             return this.ordinal() + 1;
         }
 

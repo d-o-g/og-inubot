@@ -22,7 +22,7 @@ public class Model extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.superName.equals(clazz("Renderable")) && cn.fieldCount("[I") > 10;
+        return cn.superName.equals(clazz("Entity")) && cn.fieldCount("[I") > 10;
     }
 
     @Override

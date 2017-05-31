@@ -6,8 +6,8 @@
  */
 package com.inubot.api.methods;
 
+import com.inubot.api.oldschool.InterfaceComponent;
 import com.inubot.api.oldschool.Tab;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
 public class Tabs {
@@ -24,15 +24,15 @@ public class Tabs {
     }
 
     /**
-     * Gets the {@link Widget} of all the tabs.
+     * Gets the {@link InterfaceComponent} of all the tabs.
      *
-     * @return All the tabs in raw {@link Widget} format.
+     * @return All the tabs in raw {@link InterfaceComponent} format.
      */
-    public static Widget[] asWidgets() {
+    public static InterfaceComponent[] asComponents() {
         Tab[] values = Tab.values();
-        Widget[] tabs = new Widget[values.length];
+        InterfaceComponent[] tabs = new InterfaceComponent[values.length];
         for (int i = 0; i < values.length; i++)
-            tabs[i] = values[i].getWidget();
+            tabs[i] = values[i].getComponent();
         return tabs;
     }
 
@@ -45,9 +45,9 @@ public class Tabs {
     public static boolean open(Tab tab) {
         if (Tabs.getOpen() == tab)
             return true;
-        Widget widget = tab.getWidget();
-        if (widget != null) {
-            Client.processAction(1, -1, widget.getId(), ActionOpcodes.WIDGET_ACTION, tab.toString(), "", 50, 50);
+        InterfaceComponent interfaceComponent = tab.getComponent();
+        if (interfaceComponent != null) {
+            Client.processAction(1, -1, interfaceComponent.getId(), ActionOpcodes.COMPONENT_ACTION, tab.toString(), "", 50, 50);
             return true;
         }
         return false;

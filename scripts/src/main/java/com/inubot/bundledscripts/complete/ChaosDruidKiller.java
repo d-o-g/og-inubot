@@ -4,15 +4,11 @@ import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.methods.traversal.Path;
 import com.inubot.api.methods.traversal.graph.WebPath;
-import com.inubot.api.methods.traversal.graph.data.WebBank;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.util.Time;
 import com.inubot.api.util.filter.NameFilter;
-import com.inubot.private_.BlueDragonKiller;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
-
-import java.util.function.BooleanSupplier;
 
 /**
  * @author Septron
@@ -58,8 +54,8 @@ public class ChaosDruidKiller extends Script {
 
     private void withdrawSetup() {
         Bank.depositInventory();
-        WidgetItem food = Bank.getFirst(FOOD);
-        WidgetItem tabs = Bank.getFirst("Falador teleport");
+        Item food = Bank.getFirst(FOOD);
+        Item tabs = Bank.getFirst("Falador teleport");
         if (food != null && tabs != null) {
             tabs.processAction("Withdraw-1");
             food.processAction("Withdraw-10");
@@ -78,7 +74,7 @@ public class ChaosDruidKiller extends Script {
             }
             case BANKING: {
                 if (CHAOS_DRUIDS.distance() < 30) {
-                    WidgetItem item = Inventory.getFirst("Falador teleport");
+                    Item item = Inventory.getFirst("Falador teleport");
                     if (item != null) {
                         Tile last = Players.getLocal().getLocation();
                         item.processFirst();
@@ -108,7 +104,7 @@ public class ChaosDruidKiller extends Script {
                 GroundItem loot = GroundItems.getNearest(LOOT_TABLE);
                 if (loot != null) {
                     if (Inventory.isFull()) {
-                        WidgetItem lob = Inventory.getFirst(FOOD);
+                        Item lob = Inventory.getFirst(FOOD);
                         if (lob != null) {
                             lob.processAction("Eat");
                         }
@@ -119,7 +115,7 @@ public class ChaosDruidKiller extends Script {
                 break;
             }
             case EATING: {
-                WidgetItem food = Inventory.getFirst(FOOD);
+                Item food = Inventory.getFirst(FOOD);
                 if (food != null) {
                     food.processAction("Eat");
                 }

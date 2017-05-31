@@ -2,7 +2,6 @@ package me.mad;
 
 import com.inubot.api.methods.*;
 import com.inubot.api.methods.traversal.Movement;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Random;
 import com.inubot.api.util.StopWatch;
@@ -18,7 +17,6 @@ import me.mad.modules.Magic;
 import me.mad.util.wrappers.ModuleWrapper;
 
 import java.awt.*;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

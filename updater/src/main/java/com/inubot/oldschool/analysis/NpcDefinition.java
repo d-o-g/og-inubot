@@ -21,7 +21,7 @@ public class NpcDefinition extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.superName.equals(clazz("CacheNode")) && cn.fieldCount("Z") >= 4 && cn.fieldCount("Z") < 7;
+        return cn.superName.equals(clazz("DoublyLinkedNode")) && cn.fieldCount("Z") >= 4 && cn.fieldCount("Z") < 7;
     }
 
     @Override

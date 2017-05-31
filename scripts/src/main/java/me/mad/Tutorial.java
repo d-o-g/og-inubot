@@ -64,8 +64,8 @@ public interface Tutorial {
     }
 
     static boolean useItemOn(String item, String item2) {
-        final WidgetItem invItem = Inventory.getFirst(item);
-        final WidgetItem invItem2 = Inventory.getFirst(item2);
+        final Item invItem = Inventory.getFirst(item);
+        final Item invItem2 = Inventory.getFirst(item2);
         if(!isAnimating() && !Players.getLocal().isMoving()) {
             Inventory.use(invItem, invItem2);
         }
@@ -73,7 +73,7 @@ public interface Tutorial {
     }
 
     static boolean useItemOn(String item, GameObject item2) {
-        final WidgetItem invItem = Inventory.getFirst(item);
+        final Item invItem = Inventory.getFirst(item);
         if(!isAnimating() && !Players.getLocal().isMoving()) {
             Inventory.use(invItem, item2);
         }

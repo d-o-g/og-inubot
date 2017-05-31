@@ -9,7 +9,7 @@ public class AnimationSequence extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.superName.equals(clazz("CacheNode")) && cn.getFieldTypeCount() == 3 && cn.fieldCount("Z") == 1;
+        return cn.superName.equals(clazz("DoublyLinkedNode")) && cn.getFieldTypeCount() == 3 && cn.fieldCount("Z") == 1;
     }
 
     @Override

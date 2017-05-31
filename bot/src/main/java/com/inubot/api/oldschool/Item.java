@@ -16,23 +16,23 @@ import com.inubot.client.natives.oldschool.RSItemDefinition;
 
 import java.awt.*;
 
-public class WidgetItem implements Identifiable, Processable {
+public class Item implements Identifiable, Processable {
 
     //The client sets the bounds of an item as 32x32 [Constant]
     public static final Dimension DEFAULT_SIZE = new Dimension(32, 32);
     private int id;
     private int quantity;
     private int index;
-    private Widget owner;
+    private InterfaceComponent owner;
 
-    public WidgetItem(Widget owner, int index) {
+    public Item(InterfaceComponent owner, int index) {
         this.id = owner.getType() == 2 ? owner.getItemIds()[index] - 1 : owner.getItemId();
         this.quantity = owner.getType() == 2 ? owner.getItemQuantities()[index] : owner.getItemQuantity();
         this.owner = owner;
         this.index = index;
     }
 
-    public Widget getOwner() {
+    public InterfaceComponent getOwner() {
         return owner;
     }
 
@@ -100,10 +100,10 @@ public class WidgetItem implements Identifiable, Processable {
         }
         int index = Action.indexOf(owner.getActions(), action) + 1;
         if (index > 4) {
-            Client.processAction(new WidgetAction(true, index, this.index, owner.getId()), action, action);
+            Client.processAction(new InterfaceComponentAction(true, index, this.index, owner.getId()), action, action);
             return true;
         } else {
-            Client.processAction(new WidgetAction(opcode, index, this.index, owner.getId()), action, action);
+            Client.processAction(new InterfaceComponentAction(opcode, index, this.index, owner.getId()), action, action);
             return true;
         }
     }
@@ -117,7 +117,7 @@ public class WidgetItem implements Identifiable, Processable {
             }
         } else {
             int index = Action.indexOf(owner.getActions(), action) + 1;
-            Client.processAction(new WidgetAction(index > 4, index, this.index, owner.getId()), action, action);
+            Client.processAction(new InterfaceComponentAction(index > 4, index, this.index, owner.getId()), action, action);
             return true;
         }
         return false;
@@ -136,11 +136,11 @@ public class WidgetItem implements Identifiable, Processable {
             processAction(ActionOpcodes.ITEM_ACTION_0 + Action.indexOf(def.getActions(), action), action);
         } else {
             int index = Action.indexOf(owner.getActions(), action) + 1;
-            Client.processAction(new WidgetAction(index > 4, index, this.index - 1, owner.getId()), action, option);
+            Client.processAction(new InterfaceComponentAction(index > 4, index, this.index - 1, owner.getId()), action, option);
         }
     }
 
-    public void use(WidgetItem target) {
+    public void use(Item target) {
         Client.processAction(new UseItemAction(getId(), getIndex(), getOwner().getId()), "Use", "Use");
         Client.processAction(new ItemOnItemAction(target.getId(), target.index, target.owner.getId()), "Use", "Use " + getName() + " -> " + target.getName());
     }

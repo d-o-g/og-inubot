@@ -4,8 +4,8 @@ import com.inubot.api.methods.*;
 import com.inubot.api.methods.exchange.ExchangePricing;
 import com.inubot.api.methods.Bank;
 import com.inubot.api.methods.Inventory;
+import com.inubot.api.oldschool.Item;
 import com.inubot.api.oldschool.Skill;
-import com.inubot.api.oldschool.WidgetItem;
 import com.inubot.api.util.filter.NameFilter;
 import com.inubot.bundledscripts.proframework.ProScript;
 
@@ -74,7 +74,7 @@ public class Fletcher extends ProScript {
                 return 600;
             }
             Bank.depositAllExcept(item -> item.getName().equals("Knife"));
-            WidgetItem a = Bank.getFirst(new NameFilter<>(log()));
+            Item a = Bank.getFirst(new NameFilter<>(log()));
             if (a != null)
                 a.processAction("Withdraw-All");
             else {
@@ -84,9 +84,9 @@ public class Fletcher extends ProScript {
         } else {
             if (Bank.isOpen())
                 Bank.close();
-            WidgetItem a = Inventory.getFirst("Knife");
+            Item a = Inventory.getFirst("Knife");
             System.out.println(log());
-            WidgetItem b = Inventory.getFirst(log());
+            Item b = Inventory.getFirst(log());
             if (a != null && b != null) {
                 Client.processAction(0, -1, bow().contains("short") ? 19922950 : 19922954, 30, "Make 10", "", 50, 50);
             }

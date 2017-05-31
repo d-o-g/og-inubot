@@ -1,7 +1,6 @@
 package com.inubot.client.natives.oldschool;
 
 import com.inubot.client.Artificial;
-import com.inubot.client.natives.ClientNative;
 
 @Artificial
 public interface RSGameObject extends RSTileComponent {
@@ -13,5 +12,5 @@ public interface RSGameObject extends RSTileComponent {
 
     int getId();
 
-    RSRenderable getRenderable();
+    RSEntity getEntity();
 }

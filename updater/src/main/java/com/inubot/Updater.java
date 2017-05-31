@@ -352,4 +352,9 @@ public abstract class Updater extends Thread implements Runnable {
         ClassNode cn = classnodes.get(mmn.owner());
         return graphs.get(cn).get(cn.getMethod(mmn.name(), mmn.desc()));
     }
+
+    public FlowGraph getGraph(MethodNode mmn) {
+        ClassNode cn = classnodes.get(mmn.owner.name);
+        return graphs.get(cn).get(cn.getMethod(mmn.name, mmn.desc));
+    }
 }

@@ -7,40 +7,49 @@
 package com.inubot.api.oldschool;
 
 import com.inubot.Inubot;
-import com.inubot.api.methods.*;
+import com.inubot.api.methods.Game;
+import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.action.Processable;
-import com.inubot.api.oldschool.action.tree.Action;
-import com.inubot.api.oldschool.action.tree.WidgetAction;
 import com.inubot.api.util.filter.Filter;
-import com.inubot.client.natives.oldschool.RSWidget;
+import com.inubot.client.natives.oldschool.RSIntegerNode;
+import com.inubot.client.natives.oldschool.RSInterfaceComponent;
 
 import java.awt.*;
 
-public class Widget extends Wrapper<RSWidget> implements Processable {
+public class InterfaceComponent extends Wrapper<RSInterfaceComponent> implements Processable {
 
     private int index;
     private int ownerIndex;
 
-    public Widget(int ownerIndex, RSWidget raw, int index) {
+    public InterfaceComponent(int ownerIndex, RSInterfaceComponent raw, int index) {
         super(raw);
         this.ownerIndex = ownerIndex;
         this.index = index;
     }
 
-    public Widget(RSWidget raw, int index) {
+    public InterfaceComponent(RSInterfaceComponent raw, int index) {
         super(raw);
         this.index = index;
     }
 
-    public Widget[] getChildren() {
-        RSWidget[] children = raw.getChildren();
+    public int getConfig() {
+        NodeTable configs = new NodeTable(Game.getClient().getInterfaceConfigs());
+        RSIntegerNode node = (RSIntegerNode) configs.lookup(((long) raw.getId() << 32) + (long) raw.getIndex());
+        if (node != null) {
+            return node.getValue();
+        }
+        return raw.getConfig();
+    }
+
+    public InterfaceComponent[] getComponents() {
+        RSInterfaceComponent[] children = raw.getChildren();
         if (children == null)
-            return new Widget[0];
+            return new InterfaceComponent[0];
         int index = 0;
-        Widget[] array = new Widget[children.length];
-        for (RSWidget widget : children) {
+        InterfaceComponent[] array = new InterfaceComponent[children.length];
+        for (RSInterfaceComponent widget : children) {
             if (widget != null)
-                array[index] = new Widget(ownerIndex, widget, index);
+                array[index] = new InterfaceComponent(ownerIndex, widget, index);
             index++;
         }
         return array;
@@ -50,20 +59,20 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         return raw.getOwnerId();
     }
 
-    public Widget getOwner() {
+    public InterfaceComponent getOwner() {
         int uid = getParentHash();
         if (uid == -1)
             return null;
         int parent = uid >> 16;
         int child = uid & 0xFFFF;
-        return Interfaces.getWidget(parent, child);
+        return Interfaces.getComponent(parent, child);
     }
 
     public int getX() {
-        int[] positionsX = Inubot.getInstance().getClient().getWidgetPositionsX();
+        int[] positionsX = Inubot.getInstance().getClient().getInterfacePositionsX();
         int index = getBoundsArrayIndex();
         int relX = getRelativeX();
-        Widget owner = getOwner();
+        InterfaceComponent owner = getOwner();
         int x = 0;
         if (owner != null) {
             x = owner.getX() - getInsetX();
@@ -79,10 +88,10 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
     }
 
     public int getY() {
-        int[] positionsY = Inubot.getInstance().getClient().getWidgetPositionsY();
+        int[] positionsY = Inubot.getInstance().getClient().getInterfacePositionsY();
         int index = getBoundsArrayIndex();
         int relY = getRelativeY();
-        Widget owner = getOwner();
+        InterfaceComponent owner = getOwner();
         int x = 0;
         if (owner != null) {
             x = owner.getY() - getInsetY();
@@ -157,8 +166,8 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         return raw.getStackSizes();
     }
 
-    public int getTextureId() {
-        return raw.getTextureId();
+    public int getMaterialId() {
+        return raw.getMaterialId();
     }
 
     public String getText() {
@@ -178,7 +187,7 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
     }
 
     public boolean isHidden() {
-        Widget owner = getOwner();
+        InterfaceComponent owner = getOwner();
         return (owner != null && owner.isHidden()) || raw.isHidden();
     }
 
@@ -190,15 +199,15 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         return getBoundsArrayIndex() != -1;
     }
 
-    public Widget[] getChildren(Filter<Widget> filter) {
-        RSWidget[] children = raw.getChildren();
+    public InterfaceComponent[] getComponents(Filter<InterfaceComponent> filter) {
+        RSInterfaceComponent[] children = raw.getChildren();
         if (children == null)
-            return new Widget[0];
+            return new InterfaceComponent[0];
         int index = 0;
-        Widget[] array = new Widget[children.length];
-        for (RSWidget widget : children) {
+        InterfaceComponent[] array = new InterfaceComponent[children.length];
+        for (RSInterfaceComponent widget : children) {
             if (widget != null) {
-                Widget w = new Widget(ownerIndex, widget, index);
+                InterfaceComponent w = new InterfaceComponent(ownerIndex, widget, index);
                 if (!filter.accept(w))
                     continue;
                 array[index] = w;
@@ -208,13 +217,13 @@ public class Widget extends Wrapper<RSWidget> implements Processable {
         return array;
     }
 
-    public Widget getChild(Filter<Widget> filter) {
-        for (Widget child : getChildren()) {
+    public InterfaceComponent getComponent(Filter<InterfaceComponent> filter) {
+        for (InterfaceComponent child : getComponents()) {
             if (child == null)
                 continue;
             if (filter.accept(child))
                 return child;
-            Widget result = child.getChild(filter);
+            InterfaceComponent result = child.getComponent(filter);
             if (result != null)
                 return result;
         }

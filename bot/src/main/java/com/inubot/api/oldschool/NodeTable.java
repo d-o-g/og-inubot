@@ -49,7 +49,7 @@ public class NodeTable extends Wrapper<RSNodeTable> implements Iterator<RSNode> 
         return null;
     }
 
-    public RSNode lookup(int uid) {
+    public RSNode lookup(long uid) {
         for (RSNode node = first(); node != null; node = next()) {
             if (node.getUid() == uid)
                 return node;

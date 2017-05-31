@@ -20,9 +20,9 @@ import java.util.Map;
 import java.util.Set;
 
 @VisitorInfo(hooks = {"owner", "children", "x", "y", "width", "height", "itemId", "itemAmount",
-        "id", "type", "itemIds", "stackSizes", "scrollX", "scrollY", "textureId", "index",
-        "text", "ownerId", "hidden", "boundsIndex", "actions", "tableActions", "interactable"})
-public class Widget extends GraphVisitor {
+        "id", "type", "itemIds", "stackSizes", "scrollX", "scrollY", "materialId", "index",
+        "text", "ownerId", "hidden", "boundsIndex", "actions", "tableActions", "interactable", "config"})
+public class InterfaceComponent extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
@@ -31,8 +31,8 @@ public class Widget extends GraphVisitor {
 
     @Override
     public void visit() {
-        add("owner", cn.getField(null, "L" + cn.name + ";"), literalDesc("Widget"));
-        add("children", cn.getField(null, "[L" + cn.name + ";"), "[" + literalDesc("Widget"));
+        add("owner", cn.getField(null, "L" + cn.name + ";"), literalDesc("InterfaceComponent"));
+        add("children", cn.getField(null, "[L" + cn.name + ";"), "[" + literalDesc("InterfaceComponent"));
         visitAll(new PositionHooks());
         visitAll(new SizeHooks());
         visitAll(new TradeHooks());
@@ -96,7 +96,7 @@ public class Widget extends GraphVisitor {
         public void visit(Block block) {
             block.tree().accept(new NodeVisitor(this) {
                 public void visitField(FieldMemberNode fmn) {
-                    if (!fmn.owner().equals(clazz("Widget"))) return;
+                    if (!fmn.owner().equals(clazz("InterfaceComponent"))) return;
                     AbstractNode n = fmn.parent();
                     if (n != null) n = n.parent();
                     if (n == null) return;
@@ -361,7 +361,7 @@ public class Widget extends GraphVisitor {
                     if (fmn.opcode() == PUTSTATIC && fmn.desc().equals("I")) {
                         fmn = (FieldMemberNode) fmn.layer(IMUL, GETFIELD);
                         if (fmn != null && possible.contains(fmn.key())) {
-                            addHook(new FieldHook("textureId", fmn.fin()));
+                            addHook(new FieldHook("materialId", fmn.fin()));
                         }
                     }
                 }

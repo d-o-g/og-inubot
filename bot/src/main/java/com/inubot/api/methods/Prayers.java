@@ -50,11 +50,11 @@ public class Prayers {
     }
 
     public static void toggle(boolean endState, Prayer prayer) {
-        Widget widget = Interfaces.getWidget(271, prayer.getWidgetIndex());
-        if (widget != null) {
+        InterfaceComponent interfaceComponent = Interfaces.getComponent(271, prayer.getComponentIndex());
+        if (interfaceComponent != null) {
             boolean currState;
             if ((currState = isActive(prayer)) != endState) {
-                widget.processAction(!currState ? "Activate" : "Deactivate", prayer.toString());
+                interfaceComponent.processAction(!currState ? "Activate" : "Deactivate", prayer.toString());
             }
         }
     }
@@ -64,9 +64,9 @@ public class Prayers {
     }
 
     public static void flick(Prayer prayer, int delay) {
-        Widget widget = Interfaces.getWidget(271, prayer.getWidgetIndex());
-        if (widget != null) {
-            widget.processAction(!isActive(prayer) ? "Activate" : "Deactivate", prayer.toString());
+        InterfaceComponent interfaceComponent = Interfaces.getComponent(271, prayer.getComponentIndex());
+        if (interfaceComponent != null) {
+            interfaceComponent.processAction(!isActive(prayer) ? "Activate" : "Deactivate", prayer.toString());
             Time.sleep(delay);
         }
     }

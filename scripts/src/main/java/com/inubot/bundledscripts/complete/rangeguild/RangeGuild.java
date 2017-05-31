@@ -3,8 +3,8 @@ package com.inubot.bundledscripts.complete.rangeguild;
 import com.inubot.api.methods.Game;
 import com.inubot.api.methods.Skills;
 import com.inubot.api.methods.Varps;
+import com.inubot.api.oldschool.InterfaceComponent;
 import com.inubot.api.oldschool.Skill;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.api.util.AWTUtil;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.filter.Filter;
@@ -24,7 +24,7 @@ import java.text.DecimalFormat;
 )
 public class RangeGuild extends Script implements Paintable {
 
-    static final Filter<Widget> DIALOGUE_FILTER = w -> w.getText() != null && (w.getText().equals("Click here to continue") || w.getText().equals("Sure, I'll give it a go."));
+    static final Filter<InterfaceComponent> DIALOGUE_FILTER = w -> w.getText() != null && (w.getText().equals("Click here to continue") || w.getText().equals("Sure, I'll give it a go."));
     private final Action[] tasks = {new EquipArrows(), new DialogueHandler(), new TalkToJudge(), new ShootArrows()};
 
     private int startingRangeExperience;

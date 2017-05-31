@@ -20,18 +20,18 @@ import org.objectweb.asm.tree.ClassNode;
  * @author unsigned
  * @since 26-04-2015
  */
-@VisitorInfo(hooks = {"plane", "x", "y", "id", "renderable"})
+@VisitorInfo(hooks = {"plane", "x", "y", "id", "entity"})
 public class FloorDecoration extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.ownerless() && cn.getFieldTypeCount() == 2 && cn.fieldCount("I") == 5 && cn.fieldCount(desc("Renderable")) == 1;
+        return cn.ownerless() && cn.getFieldTypeCount() == 2 && cn.fieldCount("I") == 5 && cn.fieldCount(desc("Entity")) == 1;
     }
 
     @Override
     public void visit() {
         visit("Region", new Hooks());
-        add("renderable", cn.getField(null, desc("Renderable")), literalDesc("Renderable"));
+        add("entity", cn.getField(null, desc("Entity")), literalDesc("Entity"));
     }
 
     private class Hooks extends BlockVisitor {

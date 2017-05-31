@@ -7,12 +7,12 @@
 package com.inubot.api.oldschool.action.tree;
 
 /**
- * Character based action do not hold any geographic information, because the location is dynamic,
+ * PathingEntity based action do not hold any geographic information, because the location is dynamic,
  * though normally the default is 0,0
  */
-public abstract class CharacterAction extends EntityAction {
+public abstract class PathingEntityAction extends EntityAction {
 
-    public CharacterAction(int opcode, int entityId) {
+    public PathingEntityAction(int opcode, int entityId) {
         super(opcode, entityId, 0, 0);
     }
 

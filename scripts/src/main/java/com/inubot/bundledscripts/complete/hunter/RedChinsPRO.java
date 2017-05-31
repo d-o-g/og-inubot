@@ -12,7 +12,7 @@ import com.inubot.api.methods.traversal.Movement;
 import com.inubot.api.oldschool.*;
 import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.*;
-import com.inubot.client.natives.oldschool.RSInteractableEntity;
+import com.inubot.client.natives.oldschool.RSEntityMarker;
 import com.inubot.client.natives.oldschool.RSObjectDefinition;
 import com.inubot.script.Manifest;
 import com.inubot.script.Script;
@@ -103,7 +103,7 @@ public class RedChinsPRO extends Script implements Paintable {
                     Movement.walkTo(next);
                     return 600;
                 }
-                WidgetItem trap = Inventory.getFirst("Box trap");
+                Item trap = Inventory.getFirst("Box trap");
                 if (trap != null && Players.getLocal().getLocation().equals(next)) {
                     trap.processAction(ActionOpcodes.ITEM_ACTION_0, "Lay");
                     if (Time.await(() -> GameObjects.getNearest(t -> t.getLocation().equals(next)) != null
@@ -186,7 +186,7 @@ public class RedChinsPRO extends Script implements Paintable {
                 continue;
             }
             if (GameObjects.getNearest(o -> o.getLocation().equals(tile)
-                    && o.getRaw() instanceof RSInteractableEntity
+                    && o.getRaw() instanceof RSEntityMarker
                     && o.getName() != null && !o.getName().equals("Grass")) == null)
                 return tile;
         }

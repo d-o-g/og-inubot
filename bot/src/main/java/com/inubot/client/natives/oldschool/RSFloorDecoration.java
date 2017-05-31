@@ -13,5 +13,5 @@ public interface RSFloorDecoration extends RSGameObject {
 
     int getId();
 
-    RSRenderable getRenderable();
+    RSEntity getEntity();
 }

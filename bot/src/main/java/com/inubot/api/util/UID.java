@@ -4,7 +4,7 @@
  * License as published by the Free Software Foundation; either
  * version 2 of the license, or (at your option) any later version.
  */
-package com.inubot.api.oldschool.action;
+package com.inubot.api.util;
 
 public class UID { // 31 bit value
 

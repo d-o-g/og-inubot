@@ -17,7 +17,7 @@ import com.inubot.api.oldschool.Npc;
 public class TalkToJudge implements Action {
     @Override
     public boolean validate() {
-        return (RangeGuild.isGameFinished() || !RangeGuild.isGameStarted()) && Interfaces.getWidgets(RangeGuild.DIALOGUE_FILTER).length == 0;
+        return (RangeGuild.isGameFinished() || !RangeGuild.isGameStarted()) && Interfaces.getComponents(RangeGuild.DIALOGUE_FILTER).length == 0;
     }
 
     @Override

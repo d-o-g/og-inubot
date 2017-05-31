@@ -7,14 +7,10 @@
 package com.inubot.api.oldschool;
 
 import com.inubot.Inubot;
-import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Menu;
-import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.oldschool.action.tree.Action;
-import com.inubot.api.oldschool.action.tree.PlayerAction;
 import com.inubot.client.natives.oldschool.RSPlayer;
 
-public class Player extends Character<RSPlayer> {
+public class Player extends PathingEntity<RSPlayer> {
 
     public Player(RSPlayer raw, int index) {
         super(raw, index);

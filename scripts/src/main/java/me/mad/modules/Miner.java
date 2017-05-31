@@ -3,10 +3,9 @@ package me.mad.modules;
 import com.inubot.api.methods.GameObjects;
 import com.inubot.api.methods.Interfaces;
 import com.inubot.api.methods.Inventory;
-import com.inubot.api.methods.Mouse;
 import com.inubot.api.oldschool.GameObject;
+import com.inubot.api.oldschool.InterfaceComponent;
 import com.inubot.api.oldschool.Tile;
-import com.inubot.api.oldschool.Widget;
 import com.inubot.api.util.Random;
 import com.inubot.api.util.Time;
 import me.mad.Tutorial;
@@ -70,7 +69,7 @@ public class Miner implements Module, Tutorial {
                     Time.await(() -> setting() != 340, 1200);
                     break;
                 case 350:
-                    Widget dagger = Interfaces.getWidget(312, 2);
+                    InterfaceComponent dagger = Interfaces.getComponent(312, 2);
                     if (dagger != null && dagger.isVisible()) {
                         dagger.processAction("Smith 1");
                     }

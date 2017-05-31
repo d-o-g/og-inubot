@@ -23,11 +23,11 @@ public class Inventory {
         return Tab.INVENTORY.isOpen();
     }
 
-    public static WidgetItem[] getItems(Filter<WidgetItem> filter) {
-        Widget inventory = Interfaces.getWidget(INVENTORY_PARENT, INVENTORY_ITEM_TABLE);
+    public static Item[] getItems(Filter<Item> filter) {
+        InterfaceComponent inventory = Interfaces.getComponent(INVENTORY_PARENT, INVENTORY_ITEM_TABLE);
         if (inventory == null)
-            return new WidgetItem[0];
-        List<WidgetItem> items = new ArrayList<>();
+            return new Item[0];
+        List<Item> items = new ArrayList<>();
         if (!Bank.isOpen()) {
             int[] itemIds = inventory.getItemIds();
             int[] itemQtys = inventory.getItemQuantities();
@@ -36,31 +36,31 @@ public class Inventory {
                     int id = itemIds[i];
                     if (id == -1 || itemQtys[i] == 0)
                         continue;
-                    WidgetItem item = new WidgetItem(inventory, i);
+                    Item item = new Item(inventory, i);
                     if (!filter.accept(item))//wat
                         continue;
                     items.add(item);
                 }
             }
         } else {
-            Widget parent = Interfaces.getWidget(15, 3);
+            InterfaceComponent parent = Interfaces.getComponent(15, 3);
             if (parent != null) {
                 int i = 0;
-                for (Widget child : parent.getChildren()) {
+                for (InterfaceComponent child : parent.getComponents()) {
                     i++;
                     if (child == null || child.getItemId() == -1)
                         continue;
-                    WidgetItem item = new WidgetItem(child, i);
+                    Item item = new Item(child, i);
                     if (!filter.accept(item))
                         continue;
                     items.add(item);
                 }
             }
         }
-        return items.toArray(new WidgetItem[items.size()]);
+        return items.toArray(new Item[items.size()]);
     }
 
-    public static WidgetItem[] getItems() {
+    public static Item[] getItems() {
         return getItems(Filter.always());
     }
 
@@ -134,81 +134,81 @@ public class Inventory {
         return getCount() == 0;
     }
 
-    public static WidgetItem getFirst(Filter<WidgetItem> filter) {
-        for (WidgetItem item : getItems()) {
+    public static Item getFirst(Filter<Item> filter) {
+        for (Item item : getItems()) {
             if (item != null && filter.accept(item))
                 return item;
         }
         return null;
     }
 
-    public static WidgetItem getFirst(String... name) {
+    public static Item getFirst(String... name) {
         return getFirst(new NameFilter<>(false, name));
     }
 
-    public static WidgetItem getLast(Filter<WidgetItem> filter) {
-        WidgetItem last = null;
-        for (WidgetItem item : getItems()) {
+    public static Item getLast(Filter<Item> filter) {
+        Item last = null;
+        for (Item item : getItems()) {
             if (item != null && filter.accept(item))
                 last = item;
         }
         return last;
     }
 
-    public static WidgetItem getLast(String... name) {
+    public static Item getLast(String... name) {
         return getLast(new NameFilter<>(false, name));
     }
 
-    public static boolean dropAll(Filter<WidgetItem> filter) {
-        for (WidgetItem item : Inventory.getItems(filter))
+    public static boolean dropAll(Filter<Item> filter) {
+        for (Item item : Inventory.getItems(filter))
             item.processAction(ActionOpcodes.ITEM_ACTION_4, "Drop");
         return getItems(filter).length == 0;
     }
 
-    public static boolean dropAllExcept(Filter<WidgetItem> filter) {
-        for (WidgetItem item : Inventory.getItems(Filter.not(filter)))
+    public static boolean dropAllExcept(Filter<Item> filter) {
+        for (Item item : Inventory.getItems(Filter.not(filter)))
             item.processAction(ActionOpcodes.ITEM_ACTION_4, "Drop");
         return getItems(filter).length == getCount();
     }
 
     public static boolean dropAllExcept(int... ids) {
-        return dropAllExcept(new IdFilter<WidgetItem>(ids));
+        return dropAllExcept(new IdFilter<Item>(ids));
     }
 
     public static boolean dropAllExcept(String... names) {
-        return dropAllExcept(new NameFilter<WidgetItem>(names));
+        return dropAllExcept(new NameFilter<Item>(names));
     }
 
     public static boolean dropAll(int... ids) {
-        return dropAll(new IdFilter<WidgetItem>(ids));
+        return dropAll(new IdFilter<Item>(ids));
     }
 
     public static boolean dropAll(String... names) {
-        return dropAll(new NameFilter<WidgetItem>(names));
+        return dropAll(new NameFilter<Item>(names));
     }
 
-    public static void use(WidgetItem a, WidgetItem b) {
+    public static void use(Item a, Item b) {
         a.use(b);
     }
 
-    public static void use(WidgetItem a, GroundItem b) {
+    public static void use(Item a, GroundItem b) {
         a.use(b);
     }
 
-    public static void use(WidgetItem a, GameObject b) {
+    public static void use(Item a, GameObject b) {
         a.use(b);
     }
 
-    public static void apply(Filter<WidgetItem> filter, Consumer<WidgetItem> application) {
-        for (WidgetItem item : getItems(filter))
+    public static void apply(Filter<Item> filter, Consumer<Item> application) {
+        for (Item item : getItems(filter))
             application.accept(item);
     }
 
-    public static void apply(Consumer<WidgetItem> application) {
+    public static void apply(Consumer<Item> application) {
         apply(Filter.always(), application);
     }
 
-    public static boolean contains(Filter<WidgetItem> filter) {
+    public static boolean contains(Filter<Item> filter) {
         return getFirst(filter) != null;
     }
 }

@@ -8,14 +8,14 @@ package com.inubot.api.oldschool.action.tree;
 
 import com.inubot.api.oldschool.action.ActionOpcodes;
 
-public class SpellOnWidgetAction extends Action {
+public class SpellOnComponentAction extends Action {
 
-    public SpellOnWidgetAction(int widgetIndex, int widgetId) {
-        super(ActionOpcodes.SPELL_ON_WIDGET, 0, widgetIndex, widgetId);
+    public SpellOnComponentAction(int widgetIndex, int widgetId) {
+        super(ActionOpcodes.SPELL_ON_COMPONENT, 0, widgetIndex, widgetId);
     }
 
     public static boolean isInstance(int opcode) {
-        return pruneOpcode(opcode) == ActionOpcodes.SPELL_ON_WIDGET;
+        return pruneOpcode(opcode) == ActionOpcodes.SPELL_ON_COMPONENT;
     }
 
     @Override

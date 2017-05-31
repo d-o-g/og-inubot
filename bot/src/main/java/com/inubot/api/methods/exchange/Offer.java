@@ -1,7 +1,7 @@
 package com.inubot.api.methods.exchange;
 
 import com.inubot.api.methods.*;
-import com.inubot.api.oldschool.Widget;
+import com.inubot.api.oldschool.InterfaceComponent;
 import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.api.methods.exchange.GrandExchange.OfferType;
@@ -59,11 +59,11 @@ interface Offer {
     }
 
     default boolean isQuantityAcceptable(int quantity) {
-        Widget c = Interfaces.getWidget(465, 23);
+        InterfaceComponent c = Interfaces.getComponent(465, 23);
         if (c == null) {
             return false;
         }
-        Widget child = c.getChild(widget -> widget.getIndex() == 32);
+        InterfaceComponent child = c.getComponent(widget -> widget.getIndex() == 32);
         if (child == null || child.getText() == null) {
             return false;
         }
@@ -71,8 +71,8 @@ interface Offer {
         return Integer.parseInt(amt) == quantity;
     }
 
-    default Widget getCorrectBuyItem(Widget widgets, String name) {
-        for (Widget s : widgets.getChildren()) {
+    default InterfaceComponent getCorrectBuyItem(InterfaceComponent widgets, String name) {
+        for (InterfaceComponent s : widgets.getComponents()) {
             if (s.getText().equals(name)) {
                 return s;
             }
@@ -80,12 +80,12 @@ interface Offer {
         return null;
     }
 
-    default Widget getInventoryItem(String item) {
-        Widget c = Interfaces.getWidget(467, 0);
+    default InterfaceComponent getInventoryItem(String item) {
+        InterfaceComponent c = Interfaces.getComponent(467, 0);
         if (c == null) {
             return null;
         }
-        for (Widget child : c.getChildren()) {
+        for (InterfaceComponent child : c.getComponents()) {
             if (child.getItemId() == CacheLoader.itemIdFor(item) + 1) {
                 return child;
             }
@@ -97,11 +97,11 @@ interface Offer {
     default boolean changeItem(OfferType offerType, final String name) {
         switch (offerType) {
             case BUY:
-                Widget enterItemBox = Interfaces.getWidget(162, 33);
+                InterfaceComponent enterItemBox = Interfaces.getComponent(162, 33);
                 if (enterItemBox != null && !enterItemBox.isHidden()) {
-                    Widget c = Interfaces.getWidget(162, 33);
+                    InterfaceComponent c = Interfaces.getComponent(162, 33);
                     if (c.getText().contains(name)) {
-                        Widget item = getCorrectBuyItem(Interfaces.getWidget(162, 38), name);
+                        InterfaceComponent item = getCorrectBuyItem(Interfaces.getComponent(162, 38), name);
                         if (item == null) {
                             return false;
                         }
@@ -112,7 +112,7 @@ interface Offer {
                 break;
 
             case SELL:
-                Widget item = getInventoryItem(name);
+                InterfaceComponent item = getInventoryItem(name);
                 if (item == null) {
                     return false;
                 }
@@ -126,14 +126,14 @@ interface Offer {
     }
 
     default boolean changeQuantity(int quantity) {
-        if (Interfaces.getWidget(162, 32).isHidden()) {
+        if (Interfaces.getComponent(162, 32).isHidden()) {
             Client.processAction(Action.valueOf(57, 1, 7, 30474263), "Enter quantity", "");
         } else Game.getCanvas().sendText(String.valueOf(quantity), true, 50, 100);
         return isQuantityAcceptable(quantity);
     }
 
     default boolean changePrice(int price) {
-        if (Interfaces.getWidget(162, 32).isHidden()) {
+        if (Interfaces.getComponent(162, 32).isHidden()) {
             Client.processAction(Action.valueOf(57, 1, 12, 30474263), "Enter price", "");
         } else Game.getCanvas().sendText(String.valueOf(price), true, 50, 100);
         return isPriceAcceptable(price);

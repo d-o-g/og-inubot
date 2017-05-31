@@ -23,8 +23,8 @@ import java.util.Map;
 @Manifest(name = "ProAgility", developer = "Dogerina & luckruns0ut", version = 1.0, desc = "Does any course including rooftops except the barbarian course")
 public class PerfectAgility extends ProScript implements Paintable {
 
-    private static final Filter<Widget> DIALOGUE_FILTER = w -> w.getText() != null && (w.getText().equals("Click here to continue") || w.getText().equals("Sure, I'll give it a go."));
-    private static final Filter<Widget> LOBBY_FILTER = w -> w.getText() != null && w.getText().equals("Play RuneScape");
+    private static final Filter<InterfaceComponent> DIALOGUE_FILTER = w -> w.getText() != null && (w.getText().equals("Click here to continue") || w.getText().equals("Sure, I'll give it a go."));
+    private static final Filter<InterfaceComponent> LOBBY_FILTER = w -> w.getText() != null && w.getText().equals("Play RuneScape");
     private static final Tile ARDY_STUCK = new Tile(2654, 3299, 3);
     private final StopWatch stucktime = new StopWatch(0);
     private Course course = null;
@@ -35,14 +35,14 @@ public class PerfectAgility extends ProScript implements Paintable {
     //712 = low alch anim
 
     private static final boolean ALCHING = true;
-    private static final Filter<WidgetItem> NATURE_FILTER = (i -> i.getName().contains("rune"));
-    private static final Filter<WidgetItem> OTHER_FILTER = (i -> i.getName().contains("Rune arrow"));
+    private static final Filter<Item> NATURE_FILTER = (i -> i.getName().contains("rune"));
+    private static final Filter<Item> OTHER_FILTER = (i -> i.getName().contains("Rune arrow"));
 
     @Override
     public boolean setup() {
         setLineColor(Color.RED.darker());
         setTextColor(Color.WHITE);
-        //  Client.setWidgetRendering(false);
+        //  Client.setInterfaceRendering(false);
         //JFrame frame = new JFrame();
         //frame.setLayout(new FlowLayout());
         //JComboBox<Course> courses = new JComboBox<>(Course.values());
@@ -62,15 +62,15 @@ public class PerfectAgility extends ProScript implements Paintable {
 
     @Override
     public void onFinish() {
-        Client.setWidgetRendering(true);
+        Client.setInterfaceRendering(true);
     }
 
     private void alch() {
         if (!ALCHING) {
             return;
         }
-        WidgetItem runes = Inventory.getFirst(NATURE_FILTER);
-        WidgetItem other = Inventory.getFirst(OTHER_FILTER);
+        Item runes = Inventory.getFirst(NATURE_FILTER);
+        Item other = Inventory.getFirst(OTHER_FILTER);
         if (runes != null && other != null) {
             // low alch
             Client.processAction(new SelectableSpellButtonAction(14286862), "", "");
@@ -113,7 +113,7 @@ public class PerfectAgility extends ProScript implements Paintable {
         if (Skills.getCurrentLevel(Skill.HITPOINTS) < 10
                 || (course == Course.ARDY_COURSE && Skills.getCurrentLevel(Skill.AGILITY) < 90)) {
             //use summer pie if ardy course
-            WidgetItem food = Inventory.getFirst(item -> item.containsAction("Eat"));
+            Item food = Inventory.getFirst(item -> item.containsAction("Eat"));
             if (food != null) {
                 food.processAction("Eat");
             } else {
@@ -121,11 +121,11 @@ public class PerfectAgility extends ProScript implements Paintable {
             }
         }
 
-        if (Interfaces.getWidgets(LOBBY_FILTER).length > 0) {
-            for (Widget widget : Interfaces.getWidgets(DIALOGUE_FILTER)) {
-                if (widget.getText() == null)
+        if (Interfaces.getComponents(LOBBY_FILTER).length > 0) {
+            for (InterfaceComponent interfaceComponent : Interfaces.getComponents(DIALOGUE_FILTER)) {
+                if (interfaceComponent.getText() == null)
                     continue;
-                Client.processAction(new InputButtonAction(widget.getId()), "Play RuneScape", "");
+                Client.processAction(new InputButtonAction(interfaceComponent.getId()), "Play RuneScape", "");
             }
         }
 

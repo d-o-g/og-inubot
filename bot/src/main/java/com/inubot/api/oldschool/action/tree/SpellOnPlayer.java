@@ -10,7 +10,7 @@ import com.inubot.api.methods.Players;
 import com.inubot.client.natives.oldschool.RSPlayer;
 import com.inubot.api.oldschool.Player;
 
-public class SpellOnPlayer extends CharacterAction {
+public class SpellOnPlayer extends PathingEntityAction {
 
     public SpellOnPlayer(int opcode, int entityId) {
         super(opcode, entityId);

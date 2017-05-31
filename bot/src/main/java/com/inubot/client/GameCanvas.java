@@ -1,10 +1,7 @@
 package com.inubot.client;
 
 import com.inubot.api.methods.*;
-import com.inubot.api.oldschool.*;
 import com.inubot.api.util.*;
-import com.inubot.client.natives.oldschool.RSModel;
-import com.inubot.client.natives.oldschool.RSRenderable;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -6,20 +6,14 @@
  */
 package com.inubot.api.oldschool;
 
-import com.inubot.api.methods.Client;
 import com.inubot.api.methods.Menu;
 import com.inubot.api.oldschool.action.Processable;
-import com.inubot.api.oldschool.action.tree.Action;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.client.natives.oldschool.RSNpc;
-import com.inubot.api.oldschool.action.ActionOpcodes;
-import com.inubot.api.oldschool.action.tree.NpcAction;
 import com.inubot.api.util.Identifiable;
 import com.inubot.client.natives.oldschool.RSNpcDefinition;
 
-import java.util.Arrays;
-
-public class Npc extends Character<RSNpc> implements Identifiable, Processable {
+public class Npc extends PathingEntity<RSNpc> implements Identifiable, Processable {
 
     private final RSNpcDefinition definition;
 

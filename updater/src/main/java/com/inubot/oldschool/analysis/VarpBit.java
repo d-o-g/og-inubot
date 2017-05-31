@@ -29,7 +29,7 @@ public class VarpBit extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.superName.equals(clazz("CacheNode")) && cn.fieldCount() == 3 && cn.fieldCount("I") == 3;
+        return cn.superName.equals(clazz("DoublyLinkedNode")) && cn.fieldCount() == 3 && cn.fieldCount("I") == 3;
     }
 
     @Override

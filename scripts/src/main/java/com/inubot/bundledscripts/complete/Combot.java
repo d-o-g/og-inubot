@@ -107,7 +107,7 @@ public class Combot extends ProScript {
                 return 1000;
             }
 
-            WidgetItem ii = Inventory.getFirst(a -> a.getName().toLowerCase().contains("bone"));
+            Item ii = Inventory.getFirst(a -> a.getName().toLowerCase().contains("bone"));
             if (ii != null) {
                 ii.processAction("Bury");
                 return 600;

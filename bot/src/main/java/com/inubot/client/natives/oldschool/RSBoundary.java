@@ -15,5 +15,5 @@ public interface RSBoundary extends RSGameObject {
 
     int getId();
 
-    RSRenderable getRenderable();
+    RSEntity getEntity();
 }
