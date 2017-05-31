@@ -209,12 +209,6 @@ public class PerfectAgility extends ProScript implements Paintable {
                 .array()
         ),
 
-        WILDERNESS_COURSE(ObstacleFactory.newInstance()
-                .append(new Area(new Tile(3078, 3288, 0), new Tile(3006, 3938, 0)),
-                        "Obstacle pipe", "Squeeze through")
-                .array()
-        ),
-
         DRAYNOR_COURSE(ObstacleFactory.newInstance(true)
                 .append(new Area(new Tile(3060, 3281, 0), new Tile(3110, 3147, 0), 0),
                         "Rough wall", "Climb")

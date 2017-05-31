@@ -8,7 +8,9 @@ package com.inubot.script;
 
 import com.inubot.Bot;
 import com.inubot.Inubot;
-import com.inubot.api.methods.*;
+import com.inubot.api.methods.Game;
+import com.inubot.api.methods.Login;
+import com.inubot.api.methods.Mouse;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
@@ -75,11 +77,7 @@ public abstract class Script extends LoopTask {
                 Time.sleep(600, 700);
             }
         }
-        if (!Magic.isSpellSelected()) {
-            Inubot.getInstance().getClient().resetMouseIdleTime();
-            Mouse.setLocation(750, 15);
-            Mouse.click(true);
-        }
+        Inubot.getInstance().getClient().resetMouseIdleTime();
     }
 
     public void onLogout() {
