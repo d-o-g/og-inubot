@@ -15,7 +15,6 @@ import com.inubot.bot.util.io.Crawler;
 import com.inubot.bot.util.io.Crawler.GameType;
 import com.inubot.bot.util.io.JarNode;
 import com.inubot.client.natives.oldschool.RSClient;
-import jdk.nashorn.internal.runtime.ECMAException;
 
 import javax.swing.*;
 import java.io.File;
@@ -81,10 +80,10 @@ public class Inubot extends Bot<RSClient> {
                 new VarpBitHack(),
                 new WidgetHack(),
                 new LandscapeHack(),
-                new ProducerForceBounds(),
                 new LowMemorySetter(),
                 new StaticSetters(),
-                new CatchBlockSweeper()
+                new CatchBlockSweeper(),
+                new GraphicsProducer()
         );
         return injector;
     }

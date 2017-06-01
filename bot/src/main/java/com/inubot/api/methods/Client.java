@@ -24,7 +24,6 @@ public class Client {
     public static boolean LANDSCAPE_RENDERING_ENABLED = true;
     public static boolean MODEL_RENDERING_ENABLED = true;
     public static boolean INTERFACE_RENDERING_ENABLED = true;
-    public static boolean PAINTING = true;
     public static int GAME_TICK_SLEEP = -1;
     private static Node last;
     private static long lastProcess;

@@ -1,13 +1,19 @@
 package com.inubot.client;
 
 import com.inubot.Bot;
-import com.inubot.api.methods.*;
+import com.inubot.api.methods.Client;
+import com.inubot.api.methods.Game;
+import com.inubot.api.methods.Skills;
 import com.inubot.api.oldschool.Skill;
 import com.inubot.api.oldschool.action.tree.Action;
-import com.inubot.api.oldschool.event.*;
+import com.inubot.api.oldschool.event.ExperienceEvent;
+import com.inubot.api.oldschool.event.ExperienceListener;
+import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Time;
 import com.inubot.script.Script;
 import com.inubot.script.Task;
+
+import java.awt.*;
 
 public class Callback {
 
@@ -36,6 +42,12 @@ public class Callback {
         if (script != null && script.isRunning()) {
             script.messageReceived(new MessageEvent(sender, message, channel, type));
         }
+    }
+
+    @ClientInvoked
+    public static void draw(Image image) {
+        Graphics g = image.getGraphics().create();
+        Game.getCanvas().paintables.forEach(p -> p.render(((Graphics2D) g)));
     }
 
     @ClientInvoked

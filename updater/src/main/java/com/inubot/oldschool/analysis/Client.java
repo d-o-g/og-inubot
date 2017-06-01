@@ -3,6 +3,7 @@ package com.inubot.oldschool.analysis;
 import com.inubot.modscript.hook.FieldHook;
 import com.inubot.modscript.hook.InvokeHook;
 import com.inubot.util.ArrayIterator;
+import com.inubot.visitor.FieldTreePrinter;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.Opcodes;
@@ -31,7 +32,7 @@ import java.util.*;
         "itemTables", "lowMemory", "hintArrowNpcIndex", "hintArrowPlayerIndex", "loadItemSprite", "engineCycle",
         "screenWidth", "screenHeight", "screenZoom", "screenState", "font_p12full", "grandExchangeOffers",
         "currentWorld", "membersWorld", "onCursorUids", "onCursorCount", "menuX", "menuY", "menuWidth", "menuHeight",
-        "viewportWalking", "socket", "spellTargetFlags", "spellSelected", "interfaceConfigs"})
+        "viewportWalking", "socket", "spellTargetFlags", "spellSelected", "interfaceConfigs", "redrawMode"})
 public class Client extends GraphVisitor {
 
     private final Map<String, String> profiledStrings = new HashMap<>();
@@ -104,6 +105,8 @@ public class Client extends GraphVisitor {
         visitIfM(new ScreenState(), t -> t.desc.startsWith("([L") && t.desc.contains(";IIIIII"));
         visitAll(new HoveredTile());
         visitAll(new MenuPositionHooks());
+        visitLocalIfM(new RedrawMode(),
+                m -> Modifier.isProtected(m.access) && Modifier.isFinal(m.access) && m.desc.startsWith("(Z") && m.desc.endsWith("V"));
         visitAll(new Socket());
         visitIf("ItemDefinition", new ItemDefActions(), m -> m.name.equals("<init>"));
         visitIfM(new CursorUids(), mn -> {
@@ -270,6 +273,33 @@ public class Client extends GraphVisitor {
                     addHook(fh);
                 }
             }
+        }
+    }
+
+    private class RedrawMode extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor() {
+                @Override
+                public void visitJump(JumpNode jn) {
+                    if (jn.hasChild(ICONST_0)) {
+                        FieldMemberNode fmn = (FieldMemberNode) jn.layer(IMUL, GETSTATIC);
+                        if (fmn != null && fmn.desc().equalsIgnoreCase("I")) {
+                            String cs = getHookKey("gameState");
+                            if (!fmn.key().equalsIgnoreCase(cs)) {
+                                addHook(new FieldHook("redrawMode", fmn.fin()));
+                                lock.set(true);
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
 

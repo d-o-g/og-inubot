@@ -14,16 +14,10 @@ public class GameCanvas extends Canvas {
     public static final int INPUT_MOUSE = 0x2;
     public static final int INPUT_KEYBOARD = 0x4;
     public final List<Paintable> paintables = new LinkedList<>();
-    private final BufferedImage raw;
-    private final BufferedImage backBuffer;
     public int input = INPUT_MOUSE | INPUT_KEYBOARD;
     public int mouseX = 0, mouseY = 0;
 
     public GameCanvas() {
-        this.raw = new BufferedImage(Toolkit.getDefaultToolkit().getScreenSize().width,
-                Toolkit.getDefaultToolkit().getScreenSize().height, BufferedImage.TYPE_INT_ARGB);
-        this.backBuffer = new BufferedImage(Toolkit.getDefaultToolkit().getScreenSize().width,
-                Toolkit.getDefaultToolkit().getScreenSize().height, BufferedImage.TYPE_INT_ARGB);
         requestFocusInWindow();
     }
 
@@ -47,21 +41,6 @@ public class GameCanvas extends Canvas {
     @Override
     public void processEvent(AWTEvent e) {
         super.processEvent(e);
-    }
-
-    @Override
-    public Graphics getGraphics() {
-        Graphics g = super.getGraphics();
-        Graphics2D paint = backBuffer.createGraphics();
-        paint.drawImage(raw, 0, 0, null);
-        if (!Client.PAINTING) {
-            return raw.createGraphics();
-        }
-        paintables.forEach(p -> p.render(paint));
-        paint.dispose();
-        g.drawImage(backBuffer, 0, 0, null);
-        g.dispose();
-        return raw.createGraphics();
     }
 
     public void dispatch(AWTEvent evt) {
@@ -257,97 +236,96 @@ public class GameCanvas extends Canvas {
     public int hashCode() {
         return super.hashCode();
     }
-}
 
-/**
- * @author Dogerina
- *         Wraps the original FocusListener into a FocusProxy.
- *         This class is a proxy {@link java.awt.event.FocusListener} for receiving focus events on a component.
- *         The clients {@link java.awt.event.FocusListener} is replaced with this one, and
- *         this {@link java.awt.event.FocusListener} is registered to the component when
- *         {@link java.awt.Component#addFocusListener(java.awt.event.FocusListener)} is invoked.
- * @see java.awt.event.FocusListener
- * @see java.awt.event.FocusEvent
- */
-final class FocusProxy implements FocusListener {
 
-    private final FocusListener original;
+    /**
+     * @author Dogerina
+     *         Wraps the original FocusListener into a FocusProxy.
+     *         This class is a proxy {@link java.awt.event.FocusListener} for receiving focus events on a component.
+     *         The clients {@link java.awt.event.FocusListener} is replaced with this one, and
+     *         this {@link java.awt.event.FocusListener} is registered to the component when
+     *         {@link java.awt.Component#addFocusListener(java.awt.event.FocusListener)} is invoked.
+     * @see java.awt.event.FocusListener
+     * @see java.awt.event.FocusEvent
+     */
+    final class FocusProxy implements FocusListener {
 
-    public FocusProxy(FocusListener original) {
-        this.original = original;
-    }
+        private final FocusListener original;
 
-    @Override
-    public void focusGained(FocusEvent e) {
-        if (!Game.getClient().asApplet().hasFocus()) {
+        public FocusProxy(FocusListener original) {
+            this.original = original;
+        }
+
+        @Override
+        public void focusGained(FocusEvent e) {
+            if (!Game.getClient().asApplet().hasFocus()) {
+                getOriginal().focusGained(e);
+            }
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            //do nothing, we never lose focus
+        }
+
+        public FocusListener getOriginal() {
+            return original;
+        }
+
+        /**
+         * Dispatches a focusLost event to the component
+         *
+         * @param e The {@link java.awt.event.FocusEvent} to dispatch
+         */
+        public void loseFocus(FocusEvent e) {
+            getOriginal().focusLost(e);
+        }
+
+        /**
+         * Dispatches a focusLost event to the src component with the given event id
+         *
+         * @param src The source component
+         * @param id  The id of the {@link java.awt.event.FocusEvent}
+         */
+        public void loseFocus(Component src, int id) {
+            loseFocus(new FocusEvent(src, id));
+        }
+
+        /**
+         * Dispatches a focusLost event to the component with the given event id
+         *
+         * @param id The id of the {@link java.awt.event.FocusEvent}
+         */
+        public void loseFocus(int id) {
+            loseFocus(new FocusEvent(Game.getCanvas(), id));
+        }
+
+        /**
+         * Dispatches a focusGained event to the component
+         *
+         * @param e The {@link java.awt.event.FocusEvent} to dispatch
+         */
+        public void gainFocus(FocusEvent e) {
             getOriginal().focusGained(e);
         }
-    }
 
-    @Override
-    public void focusLost(FocusEvent e) {
-        //do nothing, we never lose focus
-    }
+        /**
+         * Dispatches a focusGained event to the src component with the given event id
+         *
+         * @param src The source component
+         * @param id  The id of the {@link java.awt.event.FocusEvent}
+         */
+        public void gainFocus(Component src, int id) {
+            gainFocus(new FocusEvent(src, id));
+        }
 
-    public FocusListener getOriginal() {
-        return original;
-    }
-
-    /**
-     * Dispatches a focusLost event to the component
-     *
-     * @param e The {@link java.awt.event.FocusEvent} to dispatch
-     */
-    public void loseFocus(FocusEvent e) {
-        getOriginal().focusLost(e);
-    }
-
-    /**
-     * Dispatches a focusLost event to the src component with the given event id
-     *
-     * @param src The source component
-     * @param id  The id of the {@link java.awt.event.FocusEvent}
-     */
-    public void loseFocus(Component src, int id) {
-        loseFocus(new FocusEvent(src, id));
-    }
-
-    /**
-     * Dispatches a focusLost event to the component with the given event id
-     *
-     * @param id The id of the {@link java.awt.event.FocusEvent}
-     */
-    public void loseFocus(int id) {
-        loseFocus(new FocusEvent(Game.getCanvas(), id));
-    }
-
-    /**
-     * Dispatches a focusGained event to the component
-     *
-     * @param e The {@link java.awt.event.FocusEvent} to dispatch
-     */
-    public void gainFocus(FocusEvent e) {
-        getOriginal().focusGained(e);
-    }
-
-    /**
-     * Dispatches a focusGained event to the src component with the given event id
-     *
-     * @param src The source component
-     * @param id  The id of the {@link java.awt.event.FocusEvent}
-     */
-    public void gainFocus(Component src, int id) {
-        gainFocus(new FocusEvent(src, id));
-    }
-
-    /**
-     * Dispatches a focusGained event to the component with the given event id
-     *
-     * @param id The id of the {@link java.awt.event.FocusEvent}
-     */
-    public void gainFocus(int id) {
-        gainFocus(new FocusEvent(Game.getCanvas(), id));
+        /**
+         * Dispatches a focusGained event to the component with the given event id
+         *
+         * @param id The id of the {@link java.awt.event.FocusEvent}
+         */
+        public void gainFocus(int id) {
+            gainFocus(new FocusEvent(Game.getCanvas(), id));
+        }
     }
 }
-
-

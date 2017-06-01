@@ -2,6 +2,10 @@ package com.inubot.api.util;
 
 import com.inubot.api.oldschool.InterfaceComponent;
 
+/**
+ * Contains various functions related to InterfaceComponent configurations.
+ * @see InterfaceComponent#getConfig()
+ */
 public final class InterfaceComponentConfig {
 
     private InterfaceComponentConfig() {
@@ -11,24 +15,22 @@ public final class InterfaceComponentConfig {
     /**
      * @param config The InterfaceComponent config
      * @return {@code true} if the component is a dialog option. This also includes continue options
-     * @see InterfaceComponent#getConfig()
      */
     public static boolean isDialogOption(int config) {
         return (config & 0x1) != 0;
     }
 
     /**
-     * @param config    The InterfaceComponent config
-     * @param optionIdx The index of the menu option
-     * @return {@code true} if a right click option is enabled or not.
      * If an option is not allowed, it will not appear in the context menu.
      * I can't think of anything this applies to in Oldschool, however the summoning orb
      * in the main game has a "dismiss" option which isn't shown when a familiar is not summoned.
-     * Maybe the XP tracker in oldschool? The "Hide" option is hidden (or changed?) when the
-     * component is hidden, and the "Show" option is hidden when the component is shown
+     *
+     * @param config      The InterfaceComponent config
+     * @param actionIndex The index of the menu option
+     * @return {@code true} if a right click option is enabled or not.
      */
-    public static boolean isOptionEnabled(int config, int optionIdx) {
-        return ((config >> (optionIdx + 1)) & 0x1) != 0;
+    public static boolean isActionEnabled(int config, int actionIndex) {
+        return ((config >> (actionIndex + 1)) & 0x1) != 0;
     }
 
     /**
@@ -62,14 +64,14 @@ public final class InterfaceComponentConfig {
         return ((config >> bit) & 0x1) != 0;
     }
 
-    //TODO for use-on
+    //TODO
     public enum ApplicationTarget {
 
         GROUND_ITEM, NPC, OBJECT,
         OTHER_PLAYER, SELF, INTERFACE_COMPONENT;
 
         public int getFlags() {
-            int flags = 1 << ordinal();
+            int flags = 0x1 << ordinal();
             flags &= ~(0x7f << 7);
             return flags;
         }
