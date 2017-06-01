@@ -1,9 +1,11 @@
 package com.inubot.client.natives.oldschool;
 
+import com.inubot.api.oldschool.NodeTable;
 import com.inubot.client.Artificial;
 import com.inubot.client.natives.ClientNative;
 
 import java.applet.Applet;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +25,11 @@ public interface RSClient extends ClientNative {
 
     int getMapRotation();
 
+    void setMapRotation(int newRotation);
+
     boolean isViewportWalking();
 
     void setViewportWalking(boolean viewportWalking);
-
-    void setMapRotation(int newRotation);
 
     int getMapOffset();
 
@@ -93,6 +95,10 @@ public interface RSClient extends ClientNative {
 
     @Artificial
     void setLowMemory(boolean lowMemory);
+
+    RSCache getVarpBitCache();
+
+    RSReferenceTable getVarpBitTable();
 
     int getEngineCycle();
 
@@ -169,7 +175,45 @@ public interface RSClient extends ClientNative {
     int getHintArrowPlayerIndex();
 
     @Artificial
-    RSVarpBit getVarpBit(int id);
+    default RSVarpBit getVarpBit(int id) {
+        RSCache cache = getVarpBitCache();
+        if (cache != null && cache.getTable() != null) {
+            RSVarpBit vb = (RSVarpBit) new NodeTable(cache.getTable()).lookup((long) id);
+            if (vb != null) {
+                return vb;
+            }
+        }
+        RSReferenceTable table = getVarpBitTable();
+        if (table != null) {
+            byte[] data = table.unpack(14, id);
+            if (data != null) {
+                ByteBuffer buffer = ByteBuffer.wrap(data);
+                int valid = buffer.get() & 0xff;
+                if (valid == 1) {
+                    int idx = buffer.getShort() & 0xff;
+                    int min = buffer.get() & 0xff;
+                    int max = buffer.get() & 0xff;
+                    return new RSVarpBit() {
+                        @Override
+                        public int getVarpIndex() {
+                            return idx;
+                        }
+
+                        @Override
+                        public int getLeft() {
+                            return min;
+                        }
+
+                        @Override
+                        public int getRight() {
+                            return max;
+                        }
+                    };
+                }
+            }
+        }
+        return null;
+    }
 
     @Artificial
     RSObjectDefinition loadObjectDefinition(int id);

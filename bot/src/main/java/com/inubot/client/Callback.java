@@ -54,7 +54,7 @@ public class Callback {
 
     @ClientInvoked
     public static void script(RSScriptEvent e, int id) {
-        System.out.println("Exec script(" + id + "): " + Arrays.toString(e.getArguments()));
+        //System.out.println("Exec script(" + id + "): " + Arrays.toString(e.getArguments()));
     }
 
     @ClientInvoked

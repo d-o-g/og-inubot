@@ -3,7 +3,6 @@ package com.inubot.oldschool.analysis;
 import com.inubot.modscript.hook.FieldHook;
 import com.inubot.modscript.hook.InvokeHook;
 import com.inubot.util.ArrayIterator;
-import com.inubot.visitor.FieldTreePrinter;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.Opcodes;
@@ -32,7 +31,8 @@ import java.util.*;
         "itemTables", "lowMemory", "hintArrowNpcIndex", "hintArrowPlayerIndex", "loadItemSprite", "engineCycle",
         "screenWidth", "screenHeight", "screenZoom", "screenState", "font_p12full", "grandExchangeOffers",
         "currentWorld", "membersWorld", "onCursorUids", "onCursorCount", "menuX", "menuY", "menuWidth", "menuHeight",
-        "viewportWalking", "socket", "spellTargetFlags", "spellSelected", "interfaceConfigs", "redrawMode"})
+        "viewportWalking", "socket", "spellTargetFlags", "spellSelected", "interfaceConfigs", "redrawMode",
+        "varpBitCache", "varpBitTable"})
 public class Client extends GraphVisitor {
 
     private final Map<String, String> profiledStrings = new HashMap<>();

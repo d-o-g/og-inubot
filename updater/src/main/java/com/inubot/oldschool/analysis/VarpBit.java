@@ -6,6 +6,7 @@
  */
 package com.inubot.oldschool.analysis;
 
+import com.inubot.modscript.hook.Hook;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
 import com.inubot.modscript.hook.FieldHook;
@@ -15,6 +16,7 @@ import org.objectweb.asm.commons.cfg.BlockVisitor;
 import org.objectweb.asm.commons.cfg.tree.NodeVisitor;
 import org.objectweb.asm.commons.cfg.tree.node.*;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldNode;
 
 import java.util.*;
 
@@ -34,13 +36,15 @@ public class VarpBit extends GraphVisitor {
 
     @Override
     public void visit() {
-        visitIfM(new VarpBitVisitor(), m -> (m.access & ACC_STATIC) != 0);
-        vars.sort(new Comparator<VarAssignment>() {
-            @Override
-            public int compare(VarAssignment o1, VarAssignment o2) {
-                return Integer.compare(o1.istore.var(), o2.istore.var());
+        for (FieldNode fn : cn.fields) {
+            if (fn.desc.equals(desc("Cache"))) {
+                updater.visitor("Client").addHook(new FieldHook("varpBitCache", fn));
+            } else if (fn.desc.equals(desc("ReferenceTable"))) {
+                updater.visitor("Client").addHook(new FieldHook("varpBitTable", fn));
             }
-        });
+        }
+        visitIfM(new VarpBitVisitor(), m -> (m.access & ACC_STATIC) != 0);
+        vars.sort(Comparator.comparingInt(o -> o.istore.var()));
         for (final VarAssignment var : vars) {
             if (hooks.get("varpIndex") == null) {
                 addHook(new FieldHook("varpIndex", var.getfield.fin()));
@@ -65,8 +69,13 @@ public class VarpBit extends GraphVisitor {
             block.tree().accept(new NodeVisitor() {
                 @Override
                 public void visitType(TypeNode tn) {
-                    if (tn.opcode() != CHECKCAST || !tn.type().equals(cn.name))
+                    if (tn.opcode() != CHECKCAST || !tn.type().equals(cn.name)) {
                         return;
+                    }
+                    Hook hook = updater.visitor("Client").hooks.get("getVarpBit");
+                    if (hook != null && !((InvokeHook) hook).desc.endsWith("V")) {
+                        return; //filter out the bad one that it was finding
+                    }
                     updater.visitor("Client").addHook(new InvokeHook("getVarpBit", tn.method()));
                 }
             });
@@ -99,22 +108,26 @@ public class VarpBit extends GraphVisitor {
             block.tree().accept(new NodeVisitor() {
                 @Override
                 public void visitVariable(VariableNode sn) {
-                    if (sn.opcode() != ISTORE)
+                    if (sn.opcode() != ISTORE) {
                         return;
+                    }
                     FieldMemberNode fmn = (FieldMemberNode) sn.layer(IMUL, GETFIELD);
-                    if (fmn == null || !fmn.owner().equals(cn.name))
+                    if (fmn == null || !fmn.owner().equals(cn.name)) {
                         return;
+                    }
                     VarAssignment var = new VarAssignment();
                     var.istore = sn;
                     var.getfield = fmn;
-                    if (!canAdd(var))
+                    if (!canAdd(var)) {
                         return;
+                    }
                     vars.add(var);
                     sn.tree().accept(new NodeVisitor() {
                         @Override
                         public void visitVariable(VariableNode sn) {
-                            if (sn.opcode() != ASTORE)
+                            if (sn.opcode() != ASTORE) {
                                 return;
+                            }
                             MethodMemberNode invokestadik = sn.firstMethod();
                             if (invokestadik != null && invokestadik.desc().contains("I")) {
                                 updater.visitor("Client").addHook(new InvokeHook("getVarpBit", invokestadik.min()));

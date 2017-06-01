@@ -68,9 +68,8 @@ public class GraphicsProducer implements Transform {
                     stack.add(new VarInsnNode(ALOAD, 0));
                     stack.add(new VarInsnNode(ILOAD, 1));
                     stack.add(new MethodInsnNode(INVOKESTATIC, Callback.class.getName().replace('.', '/'),
-                            "script", "(Lcom/inubot/client/natives/oldschool/ScriptEvent;I)V", false));
+                            "script", "(Lcom/inubot/client/natives/oldschool/RSScriptEvent;I)V", false));
                     mn.instructions.insertBefore(mn.instructions.getFirst(), stack);
-
                 }
             }
         }

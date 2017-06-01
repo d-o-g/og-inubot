@@ -22,10 +22,7 @@ public class InvokerTransform implements Transform {
 
     @Override
     public void inject(Map<String, ClassStructure> classes) {
-        String obj = ModScript.getClass("ObjectDefinition");
-        String npc = ModScript.getClass("NpcDefinition");
-       // addTransformInvoker("NpcDefinition", classes.get(npc));
-      //  addTransformInvoker("ObjectDefinition", classes.get(obj));
+        addUnpackInvoker(classes.get(ModScript.getClass("ReferenceTable")));
         addGetInvoker("ObjectDefinition", classes.get("client"));
         addGetInvoker("NpcDefinition", classes.get("client"));
         addGetInvoker("ItemDefinition", classes.get("client"));
@@ -103,11 +100,14 @@ public class InvokerTransform implements Transform {
         target.methods.add(mn);
     }
 
-    private void addTransformInvoker(String defined, ClassNode node) {
-        MethodNode mn = new MethodNode(ACC_PUBLIC, "transform", "()L" + PACKAGE + "RS" + defined + ";", null, null);
-        InvokeHook ih = ModScript.getInvoke(defined + "#transform");
+    private void addUnpackInvoker(ClassNode node) {
+        MethodNode mn = new MethodNode(ACC_PUBLIC, "unpack", "(II[I)[B", null, null);
+        InvokeHook ih = ModScript.getInvokeHook("ReferenceTable#unpack");
         InsnList instructions = new InsnList();
         instructions.add(new VarInsnNode(ALOAD, 0));
+        instructions.add(new VarInsnNode(ILOAD, 1));
+        instructions.add(new VarInsnNode(ILOAD, 2));
+        instructions.add(new VarInsnNode(ALOAD, 3));
         if (ih.predicate != Integer.MAX_VALUE) {
             instructions.add(new LdcInsnNode(ih.predicate));
         }

@@ -4,7 +4,7 @@ import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.tree.ClassNode;
 
-@VisitorInfo(hooks = {})
+@VisitorInfo(hooks = {"table", "queue"})
 public class Cache extends GraphVisitor {
 
     @Override
@@ -15,5 +15,7 @@ public class Cache extends GraphVisitor {
 
     @Override
     public void visit() {
+        add("table", cn.getField(null, desc("NodeTable")));
+        add("queue", cn.getField(null, desc("Queue")));
     }
 }
