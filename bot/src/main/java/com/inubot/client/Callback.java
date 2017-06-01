@@ -10,10 +10,12 @@ import com.inubot.api.oldschool.event.ExperienceEvent;
 import com.inubot.api.oldschool.event.ExperienceListener;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Time;
+import com.inubot.client.natives.oldschool.RSScriptEvent;
 import com.inubot.script.Script;
 import com.inubot.script.Task;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class Callback {
 
@@ -48,6 +50,11 @@ public class Callback {
     public static void draw(Image image) {
         Graphics g = image.getGraphics().create();
         Game.getCanvas().paintables.forEach(p -> p.render(((Graphics2D) g)));
+    }
+
+    @ClientInvoked
+    public static void script(RSScriptEvent e, int id) {
+        System.out.println("Exec script(" + id + "): " + Arrays.toString(e.getArguments()));
     }
 
     @ClientInvoked

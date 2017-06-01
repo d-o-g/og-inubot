@@ -15,17 +15,18 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldNode;
 import org.objectweb.asm.tree.MethodNode;
 
-@VisitorInfo(hooks = {"tail", "head"})
+@VisitorInfo(hooks = {"tail", "head", "next", "current"})
 public class NodeDeque extends GraphVisitor {
 
     @Override
     public boolean validate(ClassNode cn) {
-        return cn.ownerless() && cn.fields.size() == 2 && cn.fieldCount(desc("Node")) == 2;
+        return cn.ownerless() && cn.fieldCount() == 2 && cn.fieldCount(desc("Node")) == 2 && cn.interfaces.size() == 0;
     }
 
     @Override
     public void visit() {
         visit(new NodeHooks());
+	    methods();
     }
 
     private class NodeHooks extends BlockVisitor {
@@ -59,4 +60,26 @@ public class NodeDeque extends GraphVisitor {
             });
         }
     }
+
+	private void methods() {
+		for (MethodNode mn : cn.methods) {
+			if (mn.desc.equals("()L" + clazz("Node") + ";") && mn.referenced(updater.archive.build().get("client"))) {
+				int count = 0;
+				search: {
+					for (AbstractInsnNode ain : mn.instructions.toArray()) {
+						if (ain.opcode() == Opcodes.GETFIELD) {
+							count++;
+						} else if (ain.opcode() == Opcodes.INVOKEVIRTUAL) {
+							break search;
+						}
+					}
+					if (count == 4) {
+                        hooks.put("current", new InvokeHook("current", mn));
+					} else if (count == 3) {
+						hooks.put("next", new InvokeHook("next", mn));
+					}
+				}
+			}
+		}
+	}
 }
