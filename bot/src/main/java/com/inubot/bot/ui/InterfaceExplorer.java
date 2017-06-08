@@ -40,7 +40,7 @@ public class InterfaceExplorer extends JFrame implements Paintable {
     public InterfaceExplorer() {
         super("InterfaceComponent Explorer");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setPreferredSize(new Dimension(640, 480));
+        setPreferredSize(new Dimension(640, 660));
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
         setAlwaysOnTop(true);
@@ -318,8 +318,17 @@ public class InterfaceExplorer extends JFrame implements Paintable {
                             + "<b> Text: </b>" + c.getText() + "<br>"
                             + "<b> Id: </b>" + c.getId() + "<br>"
                             + "<b> Type: </b>" + c.getType() + "<br>"
+                            + "<b> Content type: </b>" + c.getContentType() + "<br>"
+                            + "<b> Padding: </b>" + c.getXPadding() + ", " + c.getYPadding() + "<br>"
+                            + "<b> Sprite Id: </b>" + c.getSpriteId() + "<br>"
+                            + "<b> Model Id: </b>" + c.getModelId() + "<br>"
+                            + "<b> Font Id: </b>" + c.getFontId() + "<br>"
+                            + "<b> Text color: </b>" + c.getTextColor() + "<br>"
+                            + "<b> Shadow color: </b>" + c.getShadowColor() + "<br>"
+                            + "<b> Selected action: </b>" + c.getSelectedAction() + "<br>"
+                            + "<b> Border thickness: </b>" + c.getBorderThickness() + "<br>"
                             + "<b> Config: </b>" + c.getConfig() + "<br>"
-                            + "<b> Config_Application: </b>" + InterfaceComponentConfig.getApplicationTargets(c.getConfig()) + "<br>"
+                            + "<b> Config Application Targets: </b>" + InterfaceComponentConfig.getApplicationTargets(c.getConfig()) + "<br>"
                             + "<b> Script depth: </b>" + InterfaceComponentConfig.getScriptEventDepth(c.getConfig()) + "<br>"
                             + "<b> Is dialog option: </b>" + InterfaceComponentConfig.isDialogOption(c.getConfig()) + "<br>"
                             + "<b> Hidden: </b>" + c.isHidden() + "<br>"

@@ -27,8 +27,9 @@ public abstract class UnusedMethodTransform extends Transform {
     }
 
     private void follow(Map<String, ClassFactory> classes, List<ClassMethod> followed, ClassMethod method) {
-        if (validMethodKeys.contains(method.key()))
+        if (validMethodKeys.contains(method.key())) {
             return;
+        }
         validMethodKeys.add(method.key());
         followed.add(method);
         method.method.accept(new MethodVisitor() {
@@ -51,24 +52,34 @@ public abstract class UnusedMethodTransform extends Transform {
         });
     }
 
+    private int removed = 0;
+
     @Override
     public void transform(Map<String, ClassNode> classes) {
         Map<String, ClassFactory> factories = new HashMap<>();
-        for (ClassNode cn : classes.values())
+        for (ClassNode cn : classes.values()) {
             factories.put(cn.name, new ClassFactory(cn));
-        populateEntryPoints(entryPoints);
-        for (ClassNode cn : classes.values())
             totalMethods += cn.methods.size();
-        for (ClassMethod method : entryPoints)
-            follow(factories, validMethods, method);
-        for (ClassFactory cf : factories.values()) {
-            cf.findMethods(mf -> !validMethodKeys.contains(mf.key())).forEach(ClassMethod::remove);
+        }
+
+        int rm = -1;
+        while (rm != 0) {
+            rm = 0;
+            populateEntryPoints(entryPoints);
+            for (ClassMethod method : entryPoints)
+                follow(factories, validMethods, method);
+            for (ClassFactory cf : factories.values()) {
+                for (ClassMethod m : cf.findMethods(mf -> !validMethodKeys.contains(mf.key()))) {
+                    removed++;
+                    rm++;
+                    m.remove();
+                }
+            }
         }
     }
 
     @Override
     public String toString() {
-        int removed = totalMethods - validMethods.size();
         return String.format("^ Removed %d/%d dummy methods", removed, totalMethods);
     }
 

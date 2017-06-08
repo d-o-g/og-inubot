@@ -174,6 +174,20 @@ public interface RSClient extends ClientNative {
 
     int getHintArrowPlayerIndex();
 
+    String getClanChatName();
+
+    byte getClanChatRank();
+
+    String getClanChatOwner();
+
+    int getClanMateCount();
+
+    int getFriendCount();
+
+    int getIgnoreCount();
+
+    int getRights();
+
     @Artificial
     default RSVarpBit getVarpBit(int id) {
         RSCache cache = getVarpBitCache();

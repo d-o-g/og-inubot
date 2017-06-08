@@ -41,6 +41,46 @@ public class InterfaceComponent extends Wrapper<RSInterfaceComponent> implements
         return raw.getConfig();
     }
 
+    public int getXPadding() {
+        return raw.getXPadding();
+    }
+
+    public int getYPadding() {
+        return raw.getYPadding();
+    }
+
+    public int getSpriteId() {
+        return raw.getSpriteId();
+    }
+
+    public int getModelId() {
+        return raw.getModelId();
+    }
+
+    public int getShadowColor() {
+        return raw.getShadowColor();
+    }
+
+    public int getTextColor() {
+        return raw.getTextColor();
+    }
+
+    public int getBorderThickness() {
+        return raw.getBorderThickness();
+    }
+
+    public int getFontId() {
+        return raw.getFontId();
+    }
+
+    public String getSelectedAction() {
+        return raw.getSelectedAction();
+    }
+
+    public int getContentType() {
+        return raw.getContentType();
+    }
+
     public InterfaceComponent[] getComponents() {
         RSInterfaceComponent[] children = raw.getChildren();
         if (children == null)

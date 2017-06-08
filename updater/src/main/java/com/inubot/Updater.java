@@ -2,8 +2,11 @@ package com.inubot;
 
 import com.inubot.constraint.InverseVisitor;
 import com.inubot.constraint.OpaquePredicateVisitor;
+import com.inubot.deobber.RemoveOpaquePredicates;
 import com.inubot.modscript.ModScript;
-import com.inubot.modscript.hook.*;
+import com.inubot.modscript.hook.FieldHook;
+import com.inubot.modscript.hook.Hook;
+import com.inubot.modscript.hook.InvokeHook;
 import com.inubot.util.io.Crawler;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
@@ -16,7 +19,9 @@ import org.objectweb.asm.commons.util.Assembly;
 import org.objectweb.asm.commons.util.JarArchive;
 import org.objectweb.asm.commons.wrapper.ClassFactory;
 import org.objectweb.asm.commons.wrapper.ClassMethod;
-import org.objectweb.asm.tree.*;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldNode;
+import org.objectweb.asm.tree.MethodNode;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,10 +48,6 @@ public abstract class Updater extends Thread implements Runnable {
     private boolean updated = false;
     private boolean removeUnusedMethods = true;
 
-    protected final void setRemoveUnusedMethods(boolean yes) {
-        this.removeUnusedMethods = yes;
-    }
-
     public Updater(File file, GraphVisitor[] visitors, boolean closeOnOld) throws Exception {
         if (file == null) {
             Crawler crawler = new Crawler(Crawler.GameType.OSRS);
@@ -65,6 +66,10 @@ public abstract class Updater extends Thread implements Runnable {
         this.classnodes = archive.build();
         this.visitors = visitors;
         this.hash = getHash();
+    }
+
+    protected final void setRemoveUnusedMethods(boolean yes) {
+        this.removeUnusedMethods = yes;
     }
 
     public abstract String getType();
@@ -184,7 +189,7 @@ public abstract class Updater extends Thread implements Runnable {
                 graph.graph(visitor.graph);
                 for (Block block : graph) {
                     start = System.nanoTime();
-                    block.tree();
+                    RemoveOpaquePredicates.dostuff(block.tree());
                     trees++;
                     end = System.nanoTime();
                     treeTime += (end - start);
@@ -279,7 +284,7 @@ public abstract class Updater extends Thread implements Runnable {
             VisitorInfo vi = gv.getClass().getAnnotation(VisitorInfo.class);
             if (vi != null) {
                 gv.hooks.keySet().stream().filter(hook -> !Arrays.asList(vi.hooks()).contains(hook)).forEach(hook ->
-                                System.out.println("not in VisitorInfo annotation --> " + hook)
+                        System.out.println("not in VisitorInfo annotation --> " + hook)
                 );
                 for (String hook : vi.hooks()) {
                     if (!gv.hooks.containsKey(hook)) {

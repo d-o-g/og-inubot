@@ -28,6 +28,26 @@ public interface RSInterfaceComponent extends ClientNative {
 
     int getConfig();
 
+    int getXPadding();
+
+    int getYPadding();
+
+    int getSpriteId();
+
+    int getModelId();
+
+    int getShadowColor();
+
+    int getTextColor();
+
+    int getBorderThickness();
+
+    int getFontId();
+
+    String getSelectedAction();
+
+    int getContentType();
+
     @Artificial
     int getContainerX();
 

@@ -32,26 +32,33 @@ import java.util.*;
         "screenWidth", "screenHeight", "screenZoom", "screenState", "font_p12full", "grandExchangeOffers",
         "currentWorld", "membersWorld", "onCursorUids", "onCursorCount", "menuX", "menuY", "menuWidth", "menuHeight",
         "viewportWalking", "socket", "spellTargetFlags", "spellSelected", "interfaceConfigs", "redrawMode",
-        "varpBitCache", "varpBitTable"})
+        "varpBitCache", "varpBitTable", "clanChatName", "clanMateCount", "friendCount", "rights", "clanChatRank",
+        "clanChatOwner", "ignoreCount"})
 public class Client extends GraphVisitor {
 
     private final Map<String, String> profiledStrings = new HashMap<>();
 
     private static FieldInsnNode next(AbstractInsnNode from, int op, String desc, String owner, int skips) {
         int skipped = 0;
+        int maxfollow = 20;
+        int follow = 0;
         while ((from = from.next()) != null) {
             if (from.opcode() == op) {
                 FieldInsnNode topkek = (FieldInsnNode) from;
-                if (topkek.desc.equals(desc) && (owner == null || owner.equals(topkek.owner))) {
+                if ((desc == null || topkek.desc.equals(desc)) && (owner == null || owner.equals(topkek.owner))) {
                     if (skipped == skips) {
                         return topkek;
                     }
                     skipped++;
                 }
+            } else if (from.opcode() == GOTO && follow < maxfollow) {
+                from = ((JumpInsnNode) from).label.next();
+                follow++;
             }
         }
         return null;
     }
+
 
     @Override
     public String iface() {
@@ -126,13 +133,85 @@ public class Client extends GraphVisitor {
             }
             return false;
         });
+
+        GraphVisitor icomp = updater.visitor("InterfaceComponent");
         for (ClassNode cn : updater.classnodes.values()) {
             for (MethodNode mn : cn.methods) {
-                if (mn.desc.startsWith("(L")) {
+                if (mn.desc.contains(desc("ScriptEvent")) || mn.desc.contains(desc("RuneScript"))) {
                     for (AbstractInsnNode ain : mn.instructions.toArray()) {
                         if (ain instanceof IntInsnNode) {
                             int oper = ((IntInsnNode) ain).operand;
-                            if (oper == 3912) {
+                            if (oper == 3600) {
+                                FieldInsnNode fin = next(ain, GETSTATIC, "I", null, 0);
+                                if (fin != null) {
+                                    addHook(new FieldHook("friendCount", fin));
+                                }
+                            } else if (oper == 3621) {
+                                FieldInsnNode fin = next(ain, GETSTATIC, "I", null, 0);
+                                if (fin != null) {
+                                    addHook(new FieldHook("ignoreCount", fin));
+                                }
+                            } else if (oper == 3611) {
+                                FieldInsnNode fin = next(ain, GETSTATIC, "Ljava/lang/String;", null, 0);
+                                if (fin != null) {
+                                    addHook(new FieldHook("clanChatOwner", fin));
+                                }
+                            } else if (oper == 3625) {
+                                FieldInsnNode fin = next(ain, GETSTATIC, "Ljava/lang/String;", null, 0);
+                                if (fin != null) {
+                                    addHook(new FieldHook("clanChatName", fin));
+                                }
+                            } else if (oper == 3618) {
+                                FieldInsnNode fin = next(ain, GETSTATIC, "B", null, 0);
+                                if (fin != null) {
+                                    addHook(new FieldHook("clanChatRank", fin));
+                                }
+                            } else if (oper == 3612) {
+                                FieldInsnNode fin = next(ain, GETSTATIC, "I", null, 0);
+                                if (fin != null) {
+                                    addHook(new FieldHook("clanMateCount", fin));
+                                }
+                            } else if (oper == 3316) {
+                                FieldInsnNode fin = next(ain, GETSTATIC, "I", null, 0);
+                                if (fin != null) {
+                                    addHook(new FieldHook("rights", fin));
+                                }
+                            } else if (oper == 1201) {
+                                FieldInsnNode fin = next(ain, PUTFIELD, "I", icomp.cn.name, 1);
+                                if (fin != null) {
+                                    icomp.addHook(new FieldHook("modelId", fin));
+                                }
+                            } else if (oper == 1106) {
+                                FieldInsnNode fin = next(ain, PUTFIELD, "I", icomp.cn.name, 0);
+                                if (fin != null) {
+                                    icomp.addHook(new FieldHook("spriteId", fin));
+                                }
+                            } else if (oper == 1117) {
+                                FieldInsnNode fin = next(ain, PUTFIELD, "I", icomp.cn.name, 0);
+                                if (fin != null) {
+                                    icomp.addHook(new FieldHook("shadowColor", fin));
+                                }
+                            } else if (oper == 1113) {
+                                FieldInsnNode fin = next(ain, PUTFIELD, "I", icomp.cn.name, 0);
+                                if (fin != null) {
+                                    icomp.addHook(new FieldHook("fontId", fin));
+                                }
+                            } else if (oper == 1101) {
+                                FieldInsnNode fin = next(ain, PUTFIELD, "I", icomp.cn.name, 0);
+                                if (fin != null) {
+                                    icomp.addHook(new FieldHook("textColor", fin));
+                                }
+                            } else if (oper == 1116) {
+                                FieldInsnNode fin = next(ain, PUTFIELD, "I", icomp.cn.name, 0);
+                                if (fin != null) {
+                                    icomp.addHook(new FieldHook("borderThickness", fin));
+                                }
+                            } else if (oper == 1306) {
+                                FieldInsnNode fin = next(ain, PUTFIELD, "Ljava/lang/String;", icomp.cn.name, 0);
+                                if (fin != null) {
+                                    icomp.addHook(new FieldHook("selectedAction", fin));
+                                }
+                            } else if (oper == 3912) {
                                 FieldInsnNode fin = next(ain, GETSTATIC, "Z", null, 0);
                                 if (fin != null) {
                                     addHook(new FieldHook("membersWorld", fin));
@@ -146,11 +225,7 @@ public class Client extends GraphVisitor {
                         }
                     }
                 }
-            }
-        }
-        //because the blocks fuck this hook up...
-        for (ClassNode cn : updater.classnodes.values()) {
-            for (MethodNode mn : cn.methods) {
+
                 if (!mn.desc.startsWith("(Ljava/lang/String;Ljava/lang/String;IIII"))
                     continue;
                 TreeBuilder.build(mn).accept(new NodeVisitor() {
@@ -1279,20 +1354,20 @@ public class Client extends GraphVisitor {
                         if (tn != null && tn.type().equals(clazz("IntegerNode"))) {
                             FieldMemberNode fmn = (FieldMemberNode) vn.layer(INVOKEVIRTUAL, GETSTATIC);
                             if (fmn != null && fmn.desc().equals(desc("NodeTable"))) {
-                                addHook(new FieldHook("interfaceConfigs", fmn.fin()));
                                 updater.getGraph(block.owner).forEach(b -> b.tree().accept(new NodeVisitor() {
                                     @Override
-                                    public void visitField(FieldMemberNode fmn) {
-                                        if (fmn.owner().equals(clazz("InterfaceComponent"))) {
-                                            //System.out.println("YEEHAW " + fmn.key());
-                                            AbstractNode ireturn = fmn.preLayer(IMUL, IRETURN);
+                                    public void visitField(FieldMemberNode f) {
+                                        if (f.owner().equals(clazz("InterfaceComponent"))) {
+                                            AbstractNode ireturn = f.preLayer(IMUL, IRETURN);
                                             if (ireturn != null) {
-                                                updater.visitor("InterfaceComponent").addHook(new FieldHook("config", fmn.fin()));
+                                                addHook(new FieldHook("interfaceConfigs", fmn.fin()));
+                                                updater.visitor("InterfaceComponent").addHook(new FieldHook("config", f.fin()));
+                                                lock.set(true);
                                             }
                                         }
                                     }
                                 }));
-                                lock.set(true);
+
                             }
                         }
                     }

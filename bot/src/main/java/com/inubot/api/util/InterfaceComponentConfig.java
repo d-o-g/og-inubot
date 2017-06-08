@@ -1,10 +1,27 @@
 package com.inubot.api.util;
 
-import com.inubot.api.oldschool.InterfaceComponent;
-
 /**
  * Contains various functions related to InterfaceComponent configurations.
- * @see InterfaceComponent#getConfig()
+ *
+ * Hooks needed (R143)
+ * Class gw: IntegerNode
+ * Field gw.i: IntegerNode.value (int)
+ *
+ * Field hf.ci InterfaceComponent.config (int)
+ * Field client.mp Client.interfaceConfigs (NodeTable)
+ *
+ * <code>
+ *  public int getConfig() {
+ *      RSNodeTable<RSIntegerNode> configs = Game.getClient().getInterfaceConfigs();
+ *      RSIntegerNode node = configs.lookup(((long) peer.getId() << 32) + (long) peer.getIndex());
+ *      if (node != null) {
+ *          return node.getValue();
+ *      }
+ *      return peer.getConfig();
+ *  }
+ * </code>
+ *
+ * @author Dogerina
  */
 public final class InterfaceComponentConfig {
 
@@ -12,9 +29,12 @@ public final class InterfaceComponentConfig {
         throw new IllegalAccessError();
     }
 
+
+    //note: the isDialogOption method in this class does not work for old style tutorial island components
+
     /**
      * @param config The InterfaceComponent config
-     * @return {@code true} if the component is a dialog option. This also includes continue options
+     * @return {@code true} if the component is a dialog option. This also includes the continue options
      */
     public static boolean isDialogOption(int config) {
         return (config & 0x1) != 0;
@@ -45,8 +65,8 @@ public final class InterfaceComponentConfig {
 
     /**
      * @param config The InterfaceComponent config
-     * @return The script event invocation depth. A higher depth means parent interfaces
-     * will have the script invoked on them too
+     * @return The script event invocation depth. A higher depth means higher interfaces
+     * in the hierarchy will have scripts invoked on them too
      */
     public static int getScriptEventDepth(int config) {
         return (config >> 17) & 0x7;
@@ -60,11 +80,11 @@ public final class InterfaceComponentConfig {
     //bit 30 tells whether to allow item actions or nah
     //bit 31 tells whether to allow item usability or nah
     //TODO bits 22-27
-    public static boolean isBitEnabled(int config, int bit) {
+    public static boolean isEnabled(int config, int bit) {
         return ((config >> bit) & 0x1) != 0;
     }
 
-    //TODO
+    //TODO soon tm
     public enum ApplicationTarget {
 
         GROUND_ITEM, NPC, OBJECT,

@@ -35,7 +35,7 @@ public class OSUpdater extends Updater {
                 new FloorDecoration(), new Boundary(), new BoundaryDecoration(), new Socket(),
                 new ObjectDefinition(), new Region(), new Canvas(), new InterfaceNode(), new IntegerNode(),
                 new ItemTable(), new CollisionMap(), new Buffer(), new InterfaceComponent(), new Producer(),
-                new HealthBarDefinition(), new Hitbar(), new NodeIterable(), new HealthBar(),
+                new HealthBarDefinition(), new Hitbar(), new NodeIterable(), new HealthBar(), new RuneScript(),
                 new Sprite(), new Varps(), new VarpBit(), new Font(), new GrandExchangeOffer(), new Client()
         };
     }

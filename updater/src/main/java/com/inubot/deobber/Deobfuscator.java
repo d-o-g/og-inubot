@@ -6,10 +6,15 @@
  */
 package com.inubot.deobber;
 
+import org.objectweb.asm.commons.cfg.Block;
+import org.objectweb.asm.commons.cfg.FlowVisitor;
+import org.objectweb.asm.commons.cfg.graph.FlowGraph;
 import org.objectweb.asm.commons.cfg.transform.Transform;
+import org.objectweb.asm.commons.cfg.tree.util.TreeBuilder;
 import org.objectweb.asm.commons.util.JarArchive;
 import org.objectweb.asm.commons.wrapper.ClassFactory;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodNode;
 
 import java.io.File;
 import java.util.*;
@@ -29,8 +34,8 @@ public class Deobfuscator {
     }
 
     public static void main(String... args) {
-        Deobfuscator deobfuscator = new Deobfuscator("C:\\Users\\Inspiron\\Documents\\inubot\\cache\\gamepack.jar",
-                "C:\\Users\\Inspiron\\Documents\\inubot\\cache\\gamepack_deob.jar");
+        Deobfuscator deobfuscator = new Deobfuscator("C:\\Users\\Asus\\Documents\\inubot\\cache\\gamepack.jar",
+                "C:\\Users\\Asus\\Documents\\inubot\\cache\\gamepack_deob.jar");
         deobfuscator.run();
     }
 
@@ -51,6 +56,22 @@ public class Deobfuscator {
             t.transform(nodes);
             System.out.println(t.toString());
         });
+
+        for (ClassNode node : nodes.values()) {
+            for (MethodNode mn : node.methods) {
+                FlowGraph graph = new FlowGraph(mn);
+                FlowVisitor visitor = new FlowVisitor();
+                visitor.accept(mn);
+                graph.graph(visitor.graph);
+                for (Block b : graph) {
+                    RemoveOpaquePredicates.dostuff(TreeBuilder.build(b));
+                }
+            }
+        }
+
+
+        System.out.println("^ Removed " + RemoveOpaquePredicates.removed + " opaque predicates");
+
         System.out.printf("^ Executed deobfuscation transforms in %d millis%n", System.currentTimeMillis() - time);
         getArchive().write(new File(output));
     }

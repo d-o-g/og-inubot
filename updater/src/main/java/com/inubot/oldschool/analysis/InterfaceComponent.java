@@ -21,7 +21,9 @@ import java.util.Set;
 
 @VisitorInfo(hooks = {"owner", "children", "x", "y", "width", "height", "itemId", "itemAmount",
         "id", "type", "itemIds", "stackSizes", "scrollX", "scrollY", "materialId", "index",
-        "text", "ownerId", "hidden", "boundsIndex", "actions", "tableActions", "interactable", "config"})
+        "text", "ownerId", "hidden", "boundsIndex", "actions", "tableActions", "interactable",
+        "config", "xPadding", "yPadding", "spriteId", "modelId", "shadowColor", "textColor",
+        "borderThickness", "fontId", "selectedAction", "contentType"})
 public class InterfaceComponent extends GraphVisitor {
 
     @Override
@@ -47,6 +49,8 @@ public class InterfaceComponent extends GraphVisitor {
         visitAll(new Hidden());
         visitAll(new BoundsIndex());
         visitAll(new Actions());
+        visitAll(new Padding());
+        visitIfM(new ContentType(), m -> m.desc.startsWith("([L" + cn.name + ";IIII"));
         visitIfM(new Interactable(), m -> m.desc.startsWith("(IIIILjava/lang/String;Ljava/lang/String;II"));
         for (FieldNode fn : cn.fields) {
             if ((fn.access & ACC_STATIC) == 0 && fn.desc.equals("[Ljava/lang/String;")) {
@@ -55,6 +59,68 @@ public class InterfaceComponent extends GraphVisitor {
                     addHook(new FieldHook("tableActions", fn));
                 }
             }
+        }
+    }
+
+    private class Padding extends BlockVisitor {
+
+        private int added = 0;
+
+        @Override
+        public boolean validate() {
+            return added < 2;
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor() {
+                @Override
+                public void visitField(FieldMemberNode fmn) {
+                    if (fmn.opcode() == GETFIELD && fmn.desc().equals("I")) {
+                        VariableNode vn = (VariableNode) fmn.preLayer(IMUL, IADD, IMUL, IADD, ISTORE);
+                        if (vn != null) {
+                            String name = null;
+                            int var = vn.var();
+                            if (var == 23) {
+                                name = "xPadding";
+                            } else if (var == 24) {
+                                name = "yPadding";
+                            }
+                            if (name == null || hooks.containsKey(name)) {
+                                return;
+                            }
+                            added++;
+                            addHook(new FieldHook(name, fmn.fin()));
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private class ContentType extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.follow().tree().accept(new NodeVisitor() {
+                @Override
+                public void visitJump(JumpNode jn) {
+                    if (jn.opcode() == IF_ICMPNE && jn.hasChild(SIPUSH)) {
+                        NumberNode nn = jn.firstNumber();
+                        if (nn.number() == 1337 || nn.number() == 1338 || nn.number() == 1339) {
+                            FieldMemberNode fmn = (FieldMemberNode) jn.layer(IMUL, GETFIELD);
+                            if (fmn != null && fmn.owner().equals(cn.name)) {
+                                addHook(new FieldHook("contentType", fmn.fin()));
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
 
