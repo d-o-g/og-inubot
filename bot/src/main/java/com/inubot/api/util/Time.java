@@ -6,9 +6,13 @@
  */
 package com.inubot.api.util;
 
+import com.inubot.api.methods.Game;
+
 import java.util.function.BooleanSupplier;
 
 public class Time {
+
+    private static final Object CYCLE_LOCK = new Object();
 
     public static boolean sleep(int millis) {
         try {
@@ -35,5 +39,47 @@ public class Time {
             Time.sleep(10, 20);
         }
         return false;
+    }
+
+    public static Object getCycleLock() {
+        return CYCLE_LOCK;
+    }
+
+    public static boolean waitCycle() {
+        return waitCycle(1000000);
+    }
+
+    public static boolean waitCycles(int cycles) {
+        return waitCycles(cycles, 1000000);
+    }
+
+    public static boolean waitCycle(long timeout) {
+        return waitCycles(1, timeout);
+    }
+
+    public static boolean waitCycles(int cycles, long timeout) {
+        if (cycles < 0) {
+            throw new IllegalArgumentException("cycles must be positive (" + cycles + ")");
+        }
+        if (cycles == 0) {
+            return true;
+        }
+        long endTimeout = System.currentTimeMillis() + timeout;
+        int destCycle = Game.getEngineCycle() + cycles;
+        int currentCycle;
+        synchronized (CYCLE_LOCK) {
+            while ((currentCycle = Game.getEngineCycle()) < destCycle) {
+                if (timeout <= 0) {
+                    break;
+                }
+                try {
+                    CYCLE_LOCK.wait(timeout);
+                } catch (InterruptedException ignored) {
+                    break;
+                }
+                timeout = (System.currentTimeMillis() - endTimeout);
+            }
+        }
+        return currentCycle >= destCycle;
     }
 }

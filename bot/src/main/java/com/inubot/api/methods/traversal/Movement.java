@@ -15,6 +15,7 @@ import com.inubot.api.methods.traversal.graph.Web;
 import com.inubot.api.oldschool.Locatable;
 import com.inubot.api.oldschool.Player;
 import com.inubot.api.oldschool.Tile;
+import com.inubot.api.oldschool.action.ActionOpcodes;
 import com.inubot.api.util.Random;
 import com.inubot.api.util.Time;
 
@@ -80,6 +81,9 @@ public class Movement {
         if (y < 0)  y = 0;
         if (y > 104) y = 104;
 
+        int mouseX = Random.nextInt(5, 500);
+        int mouseY = Random.nextInt(5, 330);
+        Client.processAction(0, mouseX, mouseY, ActionOpcodes.WALK_HERE, "", "", mouseX, mouseY);
         Inubot.getInstance().getClient().setViewportWalking(true);
         Inubot.getInstance().getClient().setHoveredRegionTileX(x);
         Inubot.getInstance().getClient().setHoveredRegionTileY(y);

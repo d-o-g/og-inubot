@@ -4,11 +4,11 @@ package com.inubot.api.util;
  * Contains various functions related to InterfaceComponent configurations.
  *
  * Hooks needed (R143)
- * Class gw: IntegerNode
- * Field gw.i: IntegerNode.value (int)
+ * Class gw        : IntegerNode
+ * Field gw.i      : IntegerNode.value (int)
  *
- * Field hf.ci InterfaceComponent.config (int)
- * Field client.mp Client.interfaceConfigs (NodeTable)
+ * Field hf.ci     : InterfaceComponent.config (int)
+ * Field client.mp : Client.interfaceConfigs (NodeTable)
  *
  * <code>
  *  public int getConfig() {
@@ -22,6 +22,8 @@ package com.inubot.api.util;
  * </code>
  *
  * @author Dogerina
+ *
+ * These functions have been confirmed to be working as of 31-05-2017
  */
 public final class InterfaceComponentConfig {
 
@@ -33,6 +35,7 @@ public final class InterfaceComponentConfig {
     //note: the isDialogOption method in this class does not work for old style tutorial island components
 
     /**
+     * Note: To differentiate between continue and a chat option, text color can be used
      * @param config The InterfaceComponent config
      * @return {@code true} if the component is a dialog option. This also includes the continue options
      */
@@ -72,7 +75,6 @@ public final class InterfaceComponentConfig {
         return (config >> 17) & 0x7;
     }
 
-    //up to date as of 31/05/2017 -dog
     //bit 20 tells whether the component is draggable or nah
     //bit 21 tells whether to allow spells or nah
     //bit 28 is related to drag and drop but i am not sure what it is
@@ -80,7 +82,7 @@ public final class InterfaceComponentConfig {
     //bit 30 tells whether to allow item actions or nah
     //bit 31 tells whether to allow item usability or nah
     //TODO bits 22-27
-    public static boolean isEnabled(int config, int bit) {
+    public static boolean isBitSet(int config, int bit) {
         return ((config >> bit) & 0x1) != 0;
     }
 

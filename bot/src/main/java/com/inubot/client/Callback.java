@@ -59,6 +59,9 @@ public class Callback {
 
     @ClientInvoked
     public static void onEngineTick() {
+        synchronized (Time.getCycleLock()) {
+            Time.getCycleLock().notifyAll();
+        }
         Client.processActions();
         if (Client.GAME_TICK_SLEEP != -1)
             Time.sleep(Client.GAME_TICK_SLEEP);
