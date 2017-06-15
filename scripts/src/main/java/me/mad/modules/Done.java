@@ -13,16 +13,10 @@ import me.mad.util.interfaces.Module;
 public class Done implements Module {
     @Override
     public boolean validate() {
-        return !Game.isLoggedIn() ||  Varps.get(281) >= 1000; //TODO get var
+        return !Game.isLoggedIn() ||  Varps.get(281) >= 1000;
     }
 
     @Override
     public void execute() {
-        if (Game.isLoggedIn()) {
-            while (Game.isLoggedIn()) {
-                LogoutTab.logout();
-                Time.sleep(3000);
-            }
-        }
     }
 }

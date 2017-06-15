@@ -38,13 +38,22 @@ public class ObjectAction extends EntityAction {
     }
 
     public String getName() {
-        return getDefinition().getName();
+        RSObjectDefinition def = getDefinition();
+        if (def != null) {
+            return getDefinition().getName();
+        }
+        return "";
     }
 
     public String getAction() {
-        String[] actions = getDefinition().getActions();
-        if (actions == null)
-            return null;
+        RSObjectDefinition def = getDefinition();
+        if (def == null) {
+            return "";
+        }
+        String[] actions = def.getActions();
+        if (actions == null) {
+            return "";
+        }
         int actionIndex = getActionIndex();
         return actionIndex >= 0 && actionIndex < actions.length ? actions[actionIndex] : null;
     }

@@ -6,6 +6,7 @@ import com.inubot.util.ArrayIterator;
 import com.inubot.visitor.GraphVisitor;
 import com.inubot.visitor.VisitorInfo;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.cfg.Block;
 import org.objectweb.asm.commons.cfg.BlockVisitor;
 import org.objectweb.asm.commons.cfg.query.InsnQuery;
@@ -116,23 +117,24 @@ public class Client extends GraphVisitor {
                 m -> Modifier.isProtected(m.access) && Modifier.isFinal(m.access) && m.desc.startsWith("(Z") && m.desc.endsWith("V"));
         visitAll(new Socket());
         visitIf("ItemDefinition", new ItemDefActions(), m -> m.name.equals("<init>"));
-        visitIfM(new CursorUids(), mn -> {
-            if (Modifier.isStatic(mn.access) || !mn.desc.endsWith("V") || !mn.desc.startsWith("(IIIIIIIII")) {
-                return false;
-            }
-            ClassNode r = updater.classnodes.get(clazz("Entity"));
-            if (r != null) {
-                if (mn.owner.name.equals(r.name)) {
-                    return true;
-                }
-                for (MethodNode rmn : r.methods) {
-                    if (rmn.name.equals(mn.name) && rmn.desc.equals(mn.desc)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+
+
+        //if this ever breaks:
+        //find int[] init'd of size 1000 new int[1000]
+        //and then find thatArray[anotherInt++] = x;
+        //for validation, check that its used in some model calc
+        CursorUidsP1 cursorUidsP1 = new CursorUidsP1();
+        CursorUidsP2 cursorUidsP2 = new CursorUidsP2();
+        visitIfM(cursorUidsP1, mn -> !Modifier.isStatic(mn.access) && mn.desc.endsWith("V")
+                && mn.desc.startsWith("(ZZZI") && mn.owner.name.equals(clazz("Model")));
+        //just incase it gets inlined
+        visitIfM(cursorUidsP2, mn -> !Modifier.isStatic(mn.access) && mn.desc.endsWith("V")
+                && mn.desc.startsWith("(ZZZI") && mn.owner.name.equals(clazz("Model")));
+        if (cursorUidsP1.invoke == null) {
+            System.out.println("haha rip cursor uids");
+        } else {
+            visitIfM(cursorUidsP2, mn -> mn.key().equals(cursorUidsP1.invoke.key()));
+        }
 
         GraphVisitor icomp = updater.visitor("InterfaceComponent");
         for (ClassNode cn : updater.classnodes.values()) {
@@ -565,30 +567,60 @@ public class Client extends GraphVisitor {
         }
     }
 
-    private class CursorUids extends BlockVisitor {
+    private class CursorUidsP1 extends BlockVisitor {
 
-        private int added = 0;
+        private MethodMemberNode invoke = null;
 
         @Override
         public boolean validate() {
-            return added < 2;
+            return invoke == null;
         }
 
         @Override
         public void visit(Block block) {
-            if (block.count(new MemberQuery(GETSTATIC, "[I")) == 1 && block.count(new MemberQuery(PUTSTATIC, "I")) == 1
-                    && block.count(ICONST_1) == 1 && block.count(IASTORE) == 1) {
-                block.tree().accept(new NodeVisitor() {
-                    @Override
-                    public void visitField(FieldMemberNode fmn) {
-                        if (fmn.desc().equals("[I")) {
-                            addHook(new FieldHook("onCursorUids", fmn.fin()));
-                        } else if (fmn.desc().equals("I")) {
-                            addHook(new FieldHook("onCursorCount", fmn.fin()));
+            block.tree().accept(new NodeVisitor() {
+                @Override
+                public void visitMethod(MethodMemberNode mmn) {
+                    //length <= 2 to allow room for 1 dummy arg
+                    if (mmn.desc().startsWith("(I") && mmn.desc().endsWith("V") && Type.getArgumentTypes(mmn.desc()).length <= 2) {
+                        VariableNode fourthParam = mmn.firstVariable();
+                        if (fourthParam != null && fourthParam.var() == 4) {
+                            invoke = mmn;
                         }
                     }
-                });
-            }
+                }
+            });
+        }
+    }
+
+    private class CursorUidsP2 extends BlockVisitor {
+
+        @Override
+        public boolean validate() {
+            return !lock.get();
+        }
+
+        @Override
+        public void visit(Block block) {
+            block.tree().accept(new NodeVisitor() {
+                @Override
+                public void visitAny(AbstractNode n) {
+                    if (n.opcode() == IASTORE) {
+                        FieldMemberNode targetArray = (FieldMemberNode) n.layer(GETSTATIC);
+                        if (targetArray != null) {
+                            FieldMemberNode incremented = (FieldMemberNode) n.layer(ISUB, IMUL, PUTSTATIC);
+                            if (incremented != null) {
+                                FieldMemberNode check = (FieldMemberNode) incremented.layer(DUP, IADD, GETSTATIC);
+                                if (check != null && check.key().equals(incremented.key())) {
+                                    addHook(new FieldHook("onCursorCount", check.fin()));
+                                    addHook(new FieldHook("onCursorUids", targetArray.fin()));
+                                    lock.set(true);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
 

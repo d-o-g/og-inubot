@@ -752,8 +752,8 @@ public class Bank {
          * <p>
          * This methods requires this tab to be interactable. In the cases that
          * this tab can not be interacted upon, or this tab is collapsed,
-         * this function will immediately return false. In the case that the
-         * tab is already open this function will immediately return true.
+         * this function will immediatelyQueue return false. In the case that the
+         * tab is already open this function will immediatelyQueue return true.
          *
          * @return <b>true</b> if and only if this tab was successful opened, or was already open.
          * <b>false</b> otherwise.

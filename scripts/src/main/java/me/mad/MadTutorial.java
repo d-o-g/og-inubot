@@ -33,7 +33,6 @@ public class MadTutorial extends Script implements Paintable {
 
     private final ModuleWrapper mw = new ModuleWrapper();
     private final StopWatch timer = new StopWatch(0);
-    private static final LinkedList<Account> accs = new LinkedList<>();
 
     @Override
     public boolean setup() {
@@ -50,72 +49,16 @@ public class MadTutorial extends Script implements Paintable {
         mw.submit(new Bank(), 0);
         mw.submit(new Monk(), 0);
         mw.submit(new Magic(), 0);
-
-//        try {
-//            List<String> lines = Files.readAllLines(Paths.get(Configuration.CACHE + "accs.txt"));
-//            for (String line : lines) {
-//                String[] split = line.split("\\|");
-//                for (String acc : split) {
-//                    String[] details = acc.split(":");
-//                    if (details.length != 2) {
-//                        continue;
-//                    }
-//                    accs.add(new Account(details[0], details[1]));
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
-//        nextAcc();
         return true;
-    }
-
-    public static void main(String[] args) {
-
-        try {
-            List<String> lines = Files.readAllLines(Paths.get(Configuration.CACHE + "accs.txt"));
-            for (String line : lines) {
-                String[] split = line.split("\\|");
-                for (String acc : split) {
-                    String[] details = acc.split(":");
-                    if (details.length != 2) {
-                        continue;
-                    }
-                    System.out.println(details[0] + ":" + details[1]);
-                    accs.add(new Account(details[0], details[1]));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(accs.size());
-    }
-
-    public static void nextAcc() {
-        AccountManager.setCurrentAccount(accs.pop());
     }
 
     @Override
     public int loop() {
-//        if (accs.size() == 0) {
-//            stop();
-//        }
-        int var = setting();
 
-        if (var > 0 && !Movement.isRunEnabled() && Movement.getRunEnergy() > 1) {
+        if (setting() > 0 && !Movement.isRunEnabled() && Movement.getRunEnergy() > 1) {
             Movement.toggleRun(true);
         }
 
-        if (!com.inubot.api.methods.Bank.isOpen() && (var == 120 || var == 210 || var == 360 || var == 510)) {
-            Inventory.dropAll(t -> true);
-        }
-
-        //state 120: drop
-        //state 210: drop
-        //state 360: drop
         mw.execute();
         return Random.nextInt(260, 420);
     }
