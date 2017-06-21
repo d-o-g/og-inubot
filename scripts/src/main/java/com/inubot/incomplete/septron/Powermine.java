@@ -19,7 +19,7 @@ import java.awt.*;
 @Manifest(name = "Powermin", developer = "a", desc = "a")
 public class Powermine extends Script implements Paintable {
 
-    private static final Rock SELECTED = Rock.COPPER;
+    private static final Rock SELECTED = Rock.TIN;
 
     private int price = 0, xp = 0;
 
@@ -55,15 +55,18 @@ public class Powermine extends Script implements Paintable {
     @Override
     public int loop() {
         if (Game.isLoggedIn()) {
-            if (Inventory.isFull()) {
+            //if (Inventory.isFull()) {
+            if (Inventory.getCount("Tin ore") > 0) {
                 Inventory.dropAll(item -> !item.getName().contains("pickaxe"));
             }
             if (rock != null) {
                 rock = GameObjects.getNearest(t -> t.getLocation().equals(rock.getLocation()));
             }
-            if (Players.getLocal().getAnimation() == -1 || rock != null && !SELECTED.accept(rock)) {
+            //if (Players.getLocal().getAnimation() == -1 || rock != null && !SELECTED.accept(rock)) {
+            if (Players.getLocal().getAnimation() == -1 || rock != null && rock.getId() != 7486) {
                 rock = GameObjects.getNearest(go ->
-                        go.distance(Players.getLocal().getLocation()) <= 2 && SELECTED.accept(go)
+                        //go.distance(Players.getLocal().getLocation()) <= 2 && SELECTED.accept(go)
+                        go.distance(Players.getLocal().getLocation()) <= 2 && go.getId() == 7486
                 );
                 if (rock != null)
                     rock.processAction("Mine");

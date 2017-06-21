@@ -6,6 +6,7 @@
  */
 package com.inubot.deobber;
 
+import jdk.internal.org.objectweb.asm.util.Printer;
 import org.objectweb.asm.commons.cfg.Block;
 import org.objectweb.asm.commons.cfg.FlowVisitor;
 import org.objectweb.asm.commons.cfg.graph.FlowGraph;
@@ -13,11 +14,13 @@ import org.objectweb.asm.commons.cfg.transform.Transform;
 import org.objectweb.asm.commons.cfg.tree.util.TreeBuilder;
 import org.objectweb.asm.commons.util.JarArchive;
 import org.objectweb.asm.commons.wrapper.ClassFactory;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.*;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Dogerina
@@ -34,8 +37,8 @@ public class Deobfuscator {
     }
 
     public static void main(String... args) {
-        Deobfuscator deobfuscator = new Deobfuscator("C:\\Users\\Asus\\Documents\\inubot\\cache\\gamepack.jar",
-                "C:\\Users\\Asus\\Documents\\inubot\\cache\\gamepack_deob.jar");
+        Deobfuscator deobfuscator = new Deobfuscator("C:\\Users\\Asus\\Documents\\inubot\\cache\\gamepack_rl.jar",
+                "C:\\Users\\Asus\\Documents\\inubot\\cache\\gamepack_rl_deob.jar");
         deobfuscator.run();
     }
 
@@ -58,17 +61,21 @@ public class Deobfuscator {
         });
 
         for (ClassNode node : nodes.values()) {
-            for (MethodNode mn : node.methods) {
-                FlowGraph graph = new FlowGraph(mn);
-                FlowVisitor visitor = new FlowVisitor();
-                visitor.accept(mn);
-                graph.graph(visitor.graph);
-                for (Block b : graph) {
-                    RemoveOpaquePredicates.dostuff(TreeBuilder.build(b));
+            if (node.visibleAnnotations != null) {
+                node.visibleAnnotations.clear();
+            }
+            for (FieldNode fn : node.fields) {
+                if (fn.visibleAnnotations != null) {
+                    fn.visibleAnnotations.clear();
                 }
             }
-        }
+            for (MethodNode mn : node.methods) {
+                if (mn.visibleAnnotations != null) {
+                    mn.visibleAnnotations.clear();
+                }
 
+            }
+        }
 
         System.out.println("^ Removed " + RemoveOpaquePredicates.removed + " opaque predicates");
 

@@ -51,7 +51,7 @@ import org.objectweb.asm.tree.*;
  * <tt>visitLocalVariable</tt>, <tt>visitLocalVariableAnnotation</tt> and
  * <tt>visitLineNumber</tt> methods must be called <i>after</i> the labels
  * passed as arguments have been visited.
- * 
+ *
  * @author Eric Bruneton
  */
 public abstract class MethodVisitor {
@@ -469,7 +469,7 @@ public abstract class MethodVisitor {
     /**
      * Visits the maximum stack size and the maximum number of local variables
      * of the method.
-     * 
+     *
      * @param maxStack
      *            maximum stack size of the method.
      * @param maxLocals

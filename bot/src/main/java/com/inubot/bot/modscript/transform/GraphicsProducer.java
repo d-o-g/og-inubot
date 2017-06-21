@@ -61,17 +61,6 @@ public class GraphicsProducer implements Transform {
                     }
                 }
             }
-
-            for (MethodNode mn : cn.methods) {
-                if (mn.desc.startsWith("(L" + ModScript.getClass("ScriptEvent") + ";I")) {
-                    InsnList stack = new InsnList();
-                    stack.add(new VarInsnNode(ALOAD, 0));
-                    stack.add(new VarInsnNode(ILOAD, 1));
-                    stack.add(new MethodInsnNode(INVOKESTATIC, Callback.class.getName().replace('.', '/'),
-                            "script", "(Lcom/inubot/client/natives/oldschool/RSScriptEvent;I)V", false));
-                    mn.instructions.insertBefore(mn.instructions.getFirst(), stack);
-                }
-            }
         }
     }
 }

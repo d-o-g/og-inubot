@@ -44,6 +44,6 @@ public class StaticSetters implements Transform {
     }
 
     private int getInverse(int num) {
-        return BigInteger.valueOf(num).modInverse(new BigInteger(String.valueOf(1L << 32))).intValue();
+        return BigInteger.valueOf(num).modInverse(BigInteger.ONE.shiftLeft(32)).intValue();
     }
 }

@@ -195,7 +195,7 @@ public class FrameNode extends AbstractInsnNode {
         return Arrays.asList(o).subList(0, n);
     }
 
-    private static Object[] asArray(final List<Object> l) {
+    public static Object[] asArray(final List<Object> l) {
         Object[] objs = new Object[l.size()];
         for (int i = 0; i < objs.length; ++i) {
             Object o = l.get(i);

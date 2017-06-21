@@ -29,7 +29,7 @@ public class DummyMethodVisitor extends UnusedMethodTransform {
     public void populateEntryPoints(List<ClassMethod> entries) {
         for (ClassFactory factory : factories.values()) {
             entries.addAll(factory.findMethods(cm ->
-                    cm.method.name.length() > 2));
+                    cm.method.name.length() > 3 || cm.method.name.equals("run")));
             entries.addAll(factory.findMethods(cm -> {
                 String superName = factory.node.superName;
                 while (superName != null) {

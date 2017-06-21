@@ -165,6 +165,13 @@ public class Client {
         private void fire() {
             Inubot.getInstance().getClient().processAction(arg1, arg2, opcode, arg0, actionText, targetText,
                     Random.nextInt(10, 250), Random.nextInt(10, 250));
+
+            Mouse.setLocation(750, 15);
+            if (Magic.isSpellSelected()) { //TODO add item selected hook from rd
+                Mouse.click(false);
+            } else {
+                Mouse.click(true);
+            }
         }
     }
 }
