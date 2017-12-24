@@ -13,6 +13,11 @@ public abstract class BlockVisitor implements Opcodes {
 
     public abstract boolean validate();
 
+    public final void visitInternal(Block block) {
+        //System.out.println(getClass().getSimpleName());
+        visit(block);
+    }
+
     public abstract void visit(Block block);
 
     public void visitEnd() {}

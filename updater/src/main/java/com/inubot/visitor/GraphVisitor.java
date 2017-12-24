@@ -99,7 +99,7 @@ public abstract class GraphVisitor implements Opcodes {
             this.graph = graph;
             for (Block block : graph) {
                 if (bv.validate()) {
-                    bv.visit(block);
+                    bv.visitInternal(block);
                 }
             }
         }
@@ -117,7 +117,7 @@ public abstract class GraphVisitor implements Opcodes {
                 for (Block block : graph) {
                     for (BlockVisitor b : bv) {
                         if (b.validate())
-                            b.visit(block);
+                            b.visitInternal(block);
                     }
                 }
             }
@@ -137,7 +137,7 @@ public abstract class GraphVisitor implements Opcodes {
             this.graph = graph;
             for (Block block : graph) {
                 if (bv.validate()) {
-                    bv.visit(block);
+                    bv.visitInternal(block);
                 }
             }
         }
@@ -149,7 +149,7 @@ public abstract class GraphVisitor implements Opcodes {
                 this.graph = graph;
                 for (Block block : graph) {
                     if (bv.validate() && blockPredicate.test(block))
-                        bv.visit(block);
+                        bv.visitInternal(block);
                 }
             }
         }
@@ -164,7 +164,7 @@ public abstract class GraphVisitor implements Opcodes {
                 this.graph = graph.getValue();
                 for (Block block : this.graph) {
                     if (bv.validate())
-                        bv.visit(block);
+                        bv.visitInternal(block);
                 }
             }
         }
@@ -178,7 +178,7 @@ public abstract class GraphVisitor implements Opcodes {
             this.graph = graph.getValue();
             for (Block block : this.graph) {
                 if (bv.validate())
-                    bv.visit(block);
+                    bv.visitInternal(block);
             }
         }
         bv.visitEnd();

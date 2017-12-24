@@ -63,7 +63,7 @@ public class JarArchive {
                 if (name.endsWith(".class")) {
                     ClassNode cn = new ClassNode();
                     ClassReader reader = new ClassReader(jar.getInputStream(entry));
-                    reader.accept(cn, ClassReader.EXPAND_FRAMES);
+                    reader.accept(cn, ClassReader.SKIP_FRAMES);
                     nodes.put(name.replace(".class", ""), cn);
                 } else {
                     if (!name.equals("META-INF/MANIFEST.MF"))
@@ -81,7 +81,7 @@ public class JarArchive {
         try (JarOutputStream output = new JarOutputStream(new FileOutputStream(target))) {
             for (Map.Entry<String, ClassNode> entry : build().entrySet()) {
                 output.putNextEntry(new JarEntry(entry.getValue().name + ".class"));
-                ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+                ClassWriter writer = new ClassWriter(0);
                 entry.getValue().accept(writer);
                 output.write(writer.toByteArray());
                 output.closeEntry();

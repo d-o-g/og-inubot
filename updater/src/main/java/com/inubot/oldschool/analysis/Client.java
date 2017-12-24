@@ -39,22 +39,27 @@ public class Client extends GraphVisitor {
 
     private final Map<String, String> profiledStrings = new HashMap<>();
 
-    private static FieldInsnNode next(AbstractInsnNode from, int op, String desc, String owner, int skips) {
+    private FieldInsnNode next(AbstractInsnNode from, int op, String desc, String owner, int skips) {
+        return next(0, from, op, desc, owner, skips);
+    }
+
+    private FieldInsnNode next(int followed, AbstractInsnNode from, int op, String desc, String owner, int skips) {
         int skipped = 0;
         int maxfollow = 20;
-        int follow = 0;
-        while ((from = from.next()) != null) {
-            if (from.opcode() == op) {
-                FieldInsnNode topkek = (FieldInsnNode) from;
+
+        AbstractInsnNode curr = from;
+        while ((curr = curr.next()) != null) {
+            if (curr.opcode() == op) {
+                FieldInsnNode topkek = (FieldInsnNode) curr;
                 if ((desc == null || topkek.desc.equals(desc)) && (owner == null || owner.equals(topkek.owner))) {
                     if (skipped == skips) {
                         return topkek;
                     }
                     skipped++;
                 }
-            } else if (from.opcode() == GOTO && follow < maxfollow) {
-                from = ((JumpInsnNode) from).label.next();
-                follow++;
+            } else if (curr.opcode() == GOTO && followed < maxfollow) {
+                curr = ((JumpInsnNode) curr).label.next();
+                followed++;
             }
         }
         return null;
@@ -114,7 +119,11 @@ public class Client extends GraphVisitor {
         visitAll(new HoveredTile());
         visitAll(new MenuPositionHooks());
         visitLocalIfM(new RedrawMode(),
-                m -> Modifier.isProtected(m.access) && Modifier.isFinal(m.access) && m.desc.startsWith("(Z") && m.desc.endsWith("V"));
+                m -> !Modifier.isPublic(m.access)
+                        && !Modifier.isStatic(m.access)
+                        && Modifier.isFinal(m.access)
+                        && Type.getArgumentTypes(m.desc).length <= 1
+                        && m.desc.endsWith("V"));
         //visitAll(new Socket());
         visitIf("ItemDefinition", new ItemDefActions(), m -> m.name.equals("<init>"));
 
@@ -355,6 +364,8 @@ public class Client extends GraphVisitor {
 
     private class RedrawMode extends BlockVisitor {
 
+        private final List<FieldMemberNode> test = new ArrayList<>();
+
         @Override
         public boolean validate() {
             return !lock.get();
@@ -365,18 +376,43 @@ public class Client extends GraphVisitor {
             block.tree().accept(new NodeVisitor() {
                 @Override
                 public void visitJump(JumpNode jn) {
-                    if (jn.hasChild(ICONST_0)) {
+                    if (jn.hasChild(ICONST_3)) {
                         FieldMemberNode fmn = (FieldMemberNode) jn.layer(IMUL, GETSTATIC);
-                        if (fmn != null && fmn.desc().equalsIgnoreCase("I")) {
+                        if (fmn != null && fmn.desc().equals("I")) {
                             String cs = getHookKey("gameState");
-                            if (!fmn.key().equalsIgnoreCase(cs)) {
-                                addHook(new FieldHook("redrawMode", fmn.fin()));
-                                lock.set(true);
+                            if (!fmn.key().equals(cs)) {
+                                test.add(fmn);
                             }
                         }
                     }
                 }
             });
+        }
+
+        @Override
+        public void visitEnd() {
+            for (ClassNode cn : updater.classnodes.values()) {
+                for (MethodNode mn : cn.methods) {
+                    for (AbstractInsnNode ain : mn.instructions.toArray()) {
+                        if (ain.opcode() != PUTSTATIC) {
+                            continue;
+                        }
+                        FieldInsnNode fin = (FieldInsnNode) ain;
+                        if (fin.owner.equals("client") && fin.desc.equals("I")) {
+                            for (int i = 0; i < test.size(); i++) {
+                                FieldMemberNode t = test.get(i);
+                                if (fin.name.equals(t.name()) && !mn.name.equals("<clinit>")) {
+                                    test.remove(i);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //should only be 1 left but loop just incase, so updater prints warning if overwrite
+            for (FieldMemberNode t : test) {
+                addHook(new FieldHook("redrawMode", t.fin()));
+            }
         }
     }
 
@@ -545,7 +581,7 @@ public class Client extends GraphVisitor {
 
         @Override
         public void visitEnd() {
-            addHook(new FieldHook("socket", mostCommon(fields).fin()));
+//            addHook(new FieldHook("socket", mostCommon(fields).fin()));
         }
 
         public <T> T mostCommon(List<T> list) {
