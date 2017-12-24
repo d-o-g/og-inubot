@@ -29,14 +29,6 @@ public class GraphicsProducer implements Transform {
                     }
                 }
                 for (MethodNode mn : cn.methods) {
-                    if (mn.name.equals("<init>")) {
-                        InsnList set = new InsnList();
-                        set.add(new IntInsnNode(SIPUSH, 765));
-                        set.add(new VarInsnNode(ISTORE, 1));
-                        set.add(new IntInsnNode(SIPUSH, 503));
-                        set.add(new VarInsnNode(ISTORE, 2));
-                        mn.instructions.insert(mn.instructions.getFirst(), set);
-                    }
 
                     if (ih.method.equalsIgnoreCase(mn.name) && ih.desc.equalsIgnoreCase(mn.desc)) {
                         InsnList stack = new InsnList();

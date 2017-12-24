@@ -81,8 +81,8 @@ public class Inubot extends Bot<RSClient> {
                 new LandscapeHack(),
                 new LowMemorySetter(),
                 new StaticSetters(),
-                new CatchBlockSweeper()//,
-                //new GraphicsProducer()
+                new CatchBlockSweeper(),
+                new GraphicsProducer()
         );
         return injector;
     }
