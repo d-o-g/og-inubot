@@ -157,14 +157,16 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         if (useProxy && ProxyUtils.useAliveUSProxy())
             setTitle(Configuration.APPLICATION_NAME + " - Proxy [" + ProxyUtils.getLastIP() + ":" + ProxyUtils.getLastPort() + "]");
 
+        setSize(780, 500);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
         Container container = getContentPane();
         container.setLayout(new BorderLayout());
         container.setBackground(Color.BLACK);
+
         this.client = (Client) crawler.start(classloader);
         container.add(((Applet) client), BorderLayout.CENTER);
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
 
         if (instance == null) {
             instance = this;

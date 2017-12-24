@@ -39,6 +39,7 @@ public class Crawler {
             applet.setLayout(null);
             applet.setStub(getEnvironment(applet));
             applet.init();
+            applet.setSize(800, 800);
             applet.start();
             applet.setVisible(true);
             return applet;

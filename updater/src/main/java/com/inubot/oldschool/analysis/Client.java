@@ -115,7 +115,7 @@ public class Client extends GraphVisitor {
         visitAll(new MenuPositionHooks());
         visitLocalIfM(new RedrawMode(),
                 m -> Modifier.isProtected(m.access) && Modifier.isFinal(m.access) && m.desc.startsWith("(Z") && m.desc.endsWith("V"));
-        visitAll(new Socket());
+        //visitAll(new Socket());
         visitIf("ItemDefinition", new ItemDefActions(), m -> m.name.equals("<init>"));
 
 

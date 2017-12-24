@@ -19,6 +19,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 
 @Manifest(name = "ProAgility", developer = "Dogerina & luckruns0ut", version = 1.0, desc = "Does any course including rooftops except the barbarian course")
 public class PerfectAgility extends ProScript implements Paintable {
@@ -170,6 +171,7 @@ public class PerfectAgility extends ProScript implements Paintable {
                 alch();
             }
             obj.processAction(obstacle.action);
+            Time.await(() -> Players.getLocal().getAnimation() != -1, 5000);
         }
         return 300;
     }

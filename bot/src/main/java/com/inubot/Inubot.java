@@ -25,6 +25,9 @@ public class Inubot extends Bot<RSClient> {
     public static void main(String... args) {
         SwingUtilities.invokeLater(() -> {
             try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                instance = new Inubot();
+                instance.initArgs(args);
                 for (int i = 0; i < args.length; i++) {
                     String arg = args[i];
                     if (arg.equals("-login")) {
@@ -46,9 +49,6 @@ public class Inubot extends Bot<RSClient> {
 
                     }
                 }
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                instance = new Inubot();
-                instance.initArgs(args);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -81,8 +81,8 @@ public class Inubot extends Bot<RSClient> {
                 new LandscapeHack(),
                 new LowMemorySetter(),
                 new StaticSetters(),
-                new CatchBlockSweeper(),
-                new GraphicsProducer()
+                new CatchBlockSweeper()//,
+                //new GraphicsProducer()
         );
         return injector;
     }
