@@ -38,8 +38,8 @@ public class GroundItemPosition implements Transform {
     @Override
     public void inject(Map<String, ClassStructure> classes) {
         /* Insert fields */
-        final String gi = ModScript.getClass("Item");
-        final ClassNode groundItem = classes.get(gi);
+        String gi = ModScript.getClass("Item");
+        ClassNode groundItem = classes.get(gi);
 
         FieldNode xField = new FieldNode(ACC_PUBLIC, "strictX", "I", null, null);
         FieldNode yField = new FieldNode(ACC_PUBLIC, "strictY", "I", null, null);
@@ -57,7 +57,7 @@ public class GroundItemPosition implements Transform {
         for (final ClassNode cn : classes.values()) {
             out:
             for (MethodNode mn : cn.methods) {
-                if (mn.desc.endsWith("V") && (mn.desc.indexOf(')') - mn.desc.indexOf('(')) <= 2) {
+                if (mn.desc.endsWith("V")) {
                     RIS searcher = new RIS(mn.instructions);
                     List<AbstractInsnNode[]> matches = new ArrayList<>();
                     for (int[] pattern : PATTERNS)
@@ -90,6 +90,7 @@ public class GroundItemPosition implements Transform {
                             code.add(new InsnNode(IADD));
                             code.add(new FieldInsnNode(PUTFIELD, gi, "strictY", "I"));
                             mn.instructions.insert(match[10], code);
+                            System.out.println("Injected grounditems");
                             continue out;
                         }
                     }
