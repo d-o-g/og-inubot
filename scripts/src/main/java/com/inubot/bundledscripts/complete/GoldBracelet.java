@@ -5,10 +5,12 @@ import com.inubot.api.oldschool.GameObject;
 import com.inubot.api.oldschool.InterfaceComponent;
 import com.inubot.api.oldschool.Item;
 import com.inubot.api.util.Time;
+import com.inubot.api.util.filter.Filter;
 import com.inubot.bundledscripts.proframework.ProScript;
 import com.inubot.script.Manifest;
 
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 
 @Manifest(name = "Gold Bracelets", developer = "Septron", desc = "")
 public class GoldBracelet extends ProScript {
@@ -50,7 +52,12 @@ public class GoldBracelet extends ProScript {
                     if (Inventory.contains("Gold bracelet")) {
                         Bank.depositAllExcept("Bracelet mould");
                     } else {
-                        Bank.withdrawAll("Gold bar");
+                        if (Bank.getCount(entry -> entry.getName().equals("Gold bar")) > 0) {
+                            Bank.withdrawAll("Gold bar");
+                            Time.await(() -> Inventory.contains("Gold bar"), 2000);
+                        } else {
+                            stop();
+                        }
                     }
                 } else {
                     Bank.open();

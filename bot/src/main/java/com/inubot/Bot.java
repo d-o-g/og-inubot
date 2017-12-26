@@ -157,7 +157,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         if (useProxy && ProxyUtils.useAliveUSProxy())
             setTitle(Configuration.APPLICATION_NAME + " - Proxy [" + ProxyUtils.getLastIP() + ":" + ProxyUtils.getLastPort() + "]");
 
-        setSize(780, 500);
+        setSize(780, 565);
         setLocationRelativeTo(null);
         setVisible(true);
 
@@ -192,6 +192,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         if (instance == null) {
             instance = this;
         }
+        pack();
     }
 
     private void deleteRandom() {
