@@ -167,6 +167,7 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
 
         this.client = (Client) crawler.start(classloader);
         container.add(((Applet) client), BorderLayout.CENTER);
+        pack();
 
         if (instance == null) {
             instance = this;
@@ -192,7 +193,6 @@ public abstract class Bot<Client extends ClientNative> extends JFrame implements
         if (instance == null) {
             instance = this;
         }
-        pack();
     }
 
     private void deleteRandom() {
