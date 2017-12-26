@@ -49,7 +49,7 @@ public class Callback {
     @ClientInvoked
     public static void draw(Image image) {
         Graphics g = image.getGraphics().create();
-        Game.getCanvas().paintables.forEach(p -> p.render(((Graphics2D) g)));
+        GameCanvas.paintables.forEach(p -> p.render(((Graphics2D) g)));
     }
 
     @ClientInvoked

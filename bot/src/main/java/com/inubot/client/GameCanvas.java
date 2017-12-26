@@ -13,7 +13,7 @@ public class GameCanvas extends Canvas {
 
     public static final int INPUT_MOUSE = 0x2;
     public static final int INPUT_KEYBOARD = 0x4;
-    public final List<Paintable> paintables = new LinkedList<>();
+    public static final List<Paintable> paintables = new LinkedList<>();
     public int input = INPUT_MOUSE | INPUT_KEYBOARD;
     public int mouseX = 0, mouseY = 0;
 

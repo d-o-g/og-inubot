@@ -6,6 +6,7 @@ import com.inubot.api.methods.Interfaces;
 import com.inubot.api.oldschool.InterfaceComponent;
 import com.inubot.api.util.InterfaceComponentConfig;
 import com.inubot.api.util.Paintable;
+import com.inubot.client.GameCanvas;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -116,7 +117,7 @@ public class InterfaceExplorer extends JFrame implements Paintable {
         this.add(searchPanel, BorderLayout.SOUTH);
 
         //EventManager.subscribeListener(this);
-        Bot.getInstance().getCanvas().paintables.add(this);
+        GameCanvas.paintables.add(this);
     }
 
 

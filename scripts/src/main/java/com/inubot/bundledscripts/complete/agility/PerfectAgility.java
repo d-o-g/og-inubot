@@ -171,7 +171,9 @@ public class PerfectAgility extends ProScript implements Paintable {
                 alch();
             }
             obj.processAction(obstacle.action);
-            Time.await(() -> Players.getLocal().getAnimation() != -1, 5000);
+            if (Time.await(() -> Players.getLocal().isMoving(), 600)) {
+                Time.await(() -> Players.getLocal().getAnimation() != -1, 5000);
+            }
         }
         return 300;
     }

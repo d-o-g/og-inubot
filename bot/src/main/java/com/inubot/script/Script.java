@@ -16,6 +16,7 @@ import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
 import com.inubot.bot.account.Account;
 import com.inubot.bot.account.AccountManager;
+import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.oldschool.RSClient;
 
 import java.util.ArrayList;
@@ -39,11 +40,11 @@ public abstract class Script extends LoopTask {
                     AccountManager.setCurrentAccount(new Account(c.getUsername(), c.getPassword()));
                 }
                 if (this instanceof Paintable) {
-                    Bot.getInstance().getCanvas().paintables.add((Paintable) this);
+                    GameCanvas.paintables.add((Paintable) this);
                 }
                 super.run();
             } else {
-                Bot.getInstance().getCanvas().paintables.clear();
+                GameCanvas.paintables.clear();
                 stop();
             }
             System.out.println("Finished script");
@@ -58,7 +59,7 @@ public abstract class Script extends LoopTask {
     public final void onExit() {
         shutdownTasks.forEach(Task::execute);
         if (this instanceof Paintable) {
-            Bot.getInstance().getCanvas().paintables.clear();
+            GameCanvas.paintables.clear();
         }
     }
 
