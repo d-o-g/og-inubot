@@ -61,6 +61,7 @@ public class BotMenuBar extends JMenuBar {
         stop.setEnabled(false);
 
         NexusToggleableButton farm = new NexusToggleableButton("Low CPU", () -> !Client.LANDSCAPE_RENDERING_ENABLED);
+
         farm.addActionListener(e -> {
             Client.LANDSCAPE_RENDERING_ENABLED = !Client.LANDSCAPE_RENDERING_ENABLED;
             Client.MODEL_RENDERING_ENABLED = !Client.MODEL_RENDERING_ENABLED;
