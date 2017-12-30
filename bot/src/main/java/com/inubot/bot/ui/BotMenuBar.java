@@ -61,10 +61,11 @@ public class BotMenuBar extends JMenuBar {
         stop.setEnabled(false);
 
         NexusToggleableButton farm = new NexusToggleableButton("Low CPU", () -> !Client.LANDSCAPE_RENDERING_ENABLED);
+
         farm.addActionListener(e -> {
             Client.LANDSCAPE_RENDERING_ENABLED = !Client.LANDSCAPE_RENDERING_ENABLED;
             Client.MODEL_RENDERING_ENABLED = !Client.MODEL_RENDERING_ENABLED;
-            //Client.GAME_TICK_SLEEP = Client.LANDSCAPE_RENDERING_ENABLED ? -1 : 125;
+            Client.GAME_TICK_SLEEP = Client.LANDSCAPE_RENDERING_ENABLED ? -1 : 125;
             Client.setLowMemory(!Client.isLowMemory());
         });
 
