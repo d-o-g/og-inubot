@@ -9,10 +9,12 @@ package com.inubot.private_;
 import com.inubot.Bot;
 import com.inubot.api.methods.*;
 import com.inubot.api.oldschool.Npc;
+import com.inubot.script.Manifest;
 import com.inubot.script.Script;
 
 import java.awt.event.KeyEvent;
 
+@Manifest(name = "Zoo Fighter", developer = "XX", desc = "")
 public class ZooFighter extends Script {
 
     private static final String[] names = new String[]{"Cyclops", "Jogre", "Wolf"};

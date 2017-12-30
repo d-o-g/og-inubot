@@ -88,7 +88,7 @@ public abstract class ProScript extends Script implements Paintable, ExperienceL
     }
 
     @Override
-    public final void experienceChanged(ExperienceEvent e) {
+    public void experienceChanged(ExperienceEvent e) {
         if (!trackedSkills.containsKey(e.getSkill())) {
             trackedSkills.put(e.getSkill(), new TrackedSkill(e.getSkill()));
         }
