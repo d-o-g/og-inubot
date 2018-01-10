@@ -148,19 +148,24 @@ public final class WaterOrbs extends ProScript {
     }
 
     private void penis() {
-        GameObject obelisk = GameObjects.getNearest("Obelisk of Water");
-        if (obelisk != null) {
-            if (meme()) {
-                int xp = Skills.getExperience(Skill.MAGIC);
-                Client.processAction(Action.valueOf(ActionOpcodes.COMPONENT_ACTION, 1, -1, 17694734), "Charge", "");
-                Time.await(() -> Skills.getExperience(Skill.MAGIC) != xp, 1000);
-            } else {
-                Magic.select(Spell.Modern.CHARGE_WATER_ORB);
-                Magic.cast(Spell.Modern.CHARGE_WATER_ORB, obelisk);
-                if (Inventory.getCount("Unpowered orb") == 1) {
-                    Time.await(() -> Inventory.getCount("Unpowered orb") == 0, 3000);
+        Item item = Inventory.getFirst("Cosmic rune");
+        if (item == null || item.getQuantity() < 3) {
+            stop();
+        } else {
+            GameObject obelisk = GameObjects.getNearest("Obelisk of Water");
+            if (obelisk != null) {
+                if (meme()) {
+                    int xp = Skills.getExperience(Skill.MAGIC);
+                    Client.processAction(Action.valueOf(ActionOpcodes.COMPONENT_ACTION, 1, -1, 17694734), "Charge", "");
+                    Time.await(() -> Skills.getExperience(Skill.MAGIC) != xp, 1000);
                 } else {
-                    Time.await(this::meme, ThreadLocalRandom.current().nextInt(600, 800));
+                    Magic.select(Spell.Modern.CHARGE_WATER_ORB);
+                    Magic.cast(Spell.Modern.CHARGE_WATER_ORB, obelisk);
+                    if (Inventory.getCount("Unpowered orb") == 1) {
+                        Time.await(() -> Inventory.getCount("Unpowered orb") == 0, 3000);
+                    } else {
+                        Time.await(this::meme, ThreadLocalRandom.current().nextInt(600, 800));
+                    }
                 }
             }
         }

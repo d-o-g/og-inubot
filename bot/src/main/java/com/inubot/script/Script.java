@@ -14,11 +14,13 @@ import com.inubot.api.methods.Mouse;
 import com.inubot.api.oldschool.event.MessageEvent;
 import com.inubot.api.util.Paintable;
 import com.inubot.api.util.Time;
+import com.inubot.api.util.TimeBasedOneTimePasswordUtil;
 import com.inubot.bot.account.Account;
 import com.inubot.bot.account.AccountManager;
 import com.inubot.client.GameCanvas;
 import com.inubot.client.natives.oldschool.RSClient;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +77,20 @@ public abstract class Script extends LoopTask {
                 AccountManager.getCurrentAccount().enterCredentials();
                 Mouse.setLocation(Login.LOGIN.x, Login.LOGIN.y);
                 Mouse.click(true);
-                Time.sleep(600, 700);
+                Time.await(Game::isLoggedIn, 5000);
+            } else if (Login.getState() == Login.STATE_AUTHENTICATOR) {
+                String authenticator = System.getProperty("com.inubot.authenticator", null);
+                if (authenticator != null) {
+                    try {
+                        String code = TimeBasedOneTimePasswordUtil.generateCurrentNumberString(authenticator);
+                        Inubot.getInstance().getCanvas().sendText(code,true);
+                    } catch (GeneralSecurityException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("Unable to log in without an authenticator secret code.");
+                    stop();
+                }
             }
         }
         Inubot.getInstance().getClient().resetMouseIdleTime();

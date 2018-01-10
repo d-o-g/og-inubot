@@ -13,6 +13,7 @@
         <module>updater</module>
         <module>server</module>
         <module>scripts</module>
+        <module>tools</module>
     </modules>
 
     <properties>

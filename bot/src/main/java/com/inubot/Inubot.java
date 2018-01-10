@@ -9,6 +9,8 @@ package com.inubot;
 import com.inubot.api.methods.Login;
 import com.inubot.api.util.CacheLoader;
 import com.inubot.api.util.Time;
+import com.inubot.bot.account.Account;
+import com.inubot.bot.account.AccountManager;
 import com.inubot.bot.modscript.Injector;
 import com.inubot.bot.modscript.transform.*;
 import com.inubot.bot.util.io.Crawler;
@@ -33,20 +35,7 @@ public class Inubot extends Bot<RSClient> {
                     if (arg.equals("-login")) {
                         String username = args[i + 1];
                         String password = args[i + 2];
-                        new Thread(() -> {
-                            while (true) {
-                                Time.sleep(100);
-                                if (getInstance() == null || getInstance().getClient() == null)
-                                    continue;
-                                if (Login.getState() != Login.STATE_CREDENTIALS)
-                                    continue;
-                                break;
-                            }
-                            System.out.println("Setting username and password.");
-                            Login.setUsername(username);
-                            Login.setPassword(password);
-                        }).start();
-
+                        AccountManager.setCurrentAccount(new Account(username, password));
                     }
                 }
             } catch (Exception e) {

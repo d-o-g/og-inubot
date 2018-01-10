@@ -16,6 +16,7 @@ public class Login {
     public static final Point EXISTING_USER = new Point(465, 290);
     public static final int STATE_MAIN_MENU = 0;
     public static final int STATE_CREDENTIALS = 2;
+    public static final int STATE_AUTHENTICATOR = 4;
 
     public static void setUsername(String to) {
         Inubot.getInstance().getClient().setUsername(to);
